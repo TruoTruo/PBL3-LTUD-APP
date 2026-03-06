@@ -1,4 +1,4 @@
-namespace ReminderAPI.DTOs
+namespace LTUDAPI.DTOs
 {
     public class ReminderRequest
     {

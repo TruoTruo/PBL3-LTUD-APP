@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "jgxRbFfGt5o=",
+  "dgSpecHash": "ukwxkE5gcFM=",
   "success": true,
-  "projectFilePath": "D:\\IT\\HỌC\\PBL3\\PBL3-LTUD-APP\\server\\LTUDAPI\\ReminderAPI.csproj",
+  "projectFilePath": "D:\\IT\\HỌC\\PBL3\\PBL3-LTUD-APP\\server\\LTUDAPI\\LTUDAPI.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\OS\\.nuget\\packages\\azure.core\\1.47.1\\azure.core.1.47.1.nupkg.sha512",
     "C:\\Users\\OS\\.nuget\\packages\\azure.identity\\1.14.2\\azure.identity.1.14.2.nupkg.sha512",

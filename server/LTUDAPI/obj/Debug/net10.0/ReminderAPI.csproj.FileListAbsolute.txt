@@ -1,0 +1,9 @@
+D:\IT\HỌC\PBL3\PBL3-LTUD-APP\server\LTUDAPI\obj\Debug\net10.0\ReminderAPI.csproj.AssemblyReference.cache
+D:\IT\HỌC\PBL3\PBL3-LTUD-APP\server\LTUDAPI\obj\Debug\net10.0\rpswa.dswa.cache.json
+D:\IT\HỌC\PBL3\PBL3-LTUD-APP\server\LTUDAPI\obj\Debug\net10.0\ReminderAPI.GeneratedMSBuildEditorConfig.editorconfig
+D:\IT\HỌC\PBL3\PBL3-LTUD-APP\server\LTUDAPI\obj\Debug\net10.0\ReminderAPI.AssemblyInfoInputs.cache
+D:\IT\HỌC\PBL3\PBL3-LTUD-APP\server\LTUDAPI\obj\Debug\net10.0\ReminderAPI.AssemblyInfo.cs
+D:\IT\HỌC\PBL3\PBL3-LTUD-APP\server\LTUDAPI\obj\Debug\net10.0\ReminderAPI.csproj.CoreCompileInputs.cache
+D:\IT\HỌC\PBL3\PBL3-LTUD-APP\server\LTUDAPI\obj\Debug\net10.0\ReminderAPI.MvcApplicationPartsAssemblyInfo.cs
+D:\IT\HỌC\PBL3\PBL3-LTUD-APP\server\LTUDAPI\obj\Debug\net10.0\ReminderAPI.MvcApplicationPartsAssemblyInfo.cache
+D:\IT\HỌC\PBL3\PBL3-LTUD-APP\server\LTUDAPI\obj\Debug\net10.0\ReminderAPI.sourcelink.json

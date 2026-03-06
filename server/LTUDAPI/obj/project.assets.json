@@ -3508,9 +3508,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\IT\\HỌC\\PBL3\\PBL3-LTUD-APP\\server\\LTUDAPI\\ReminderAPI.csproj",
-      "projectName": "ReminderAPI",
-      "projectPath": "D:\\IT\\HỌC\\PBL3\\PBL3-LTUD-APP\\server\\LTUDAPI\\ReminderAPI.csproj",
+      "projectUniqueName": "D:\\IT\\HỌC\\PBL3\\PBL3-LTUD-APP\\server\\LTUDAPI\\LTUDAPI.csproj",
+      "projectName": "LTUDAPI",
+      "projectPath": "D:\\IT\\HỌC\\PBL3\\PBL3-LTUD-APP\\server\\LTUDAPI\\LTUDAPI.csproj",
       "packagesPath": "C:\\Users\\OS\\.nuget\\packages\\",
       "outputPath": "D:\\IT\\HỌC\\PBL3\\PBL3-LTUD-APP\\server\\LTUDAPI\\obj\\",
       "projectStyle": "PackageReference",
