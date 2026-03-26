@@ -1,0 +1,149 @@
+<Page x:Class="StudentReminderApp.Views.Pages.ProfilePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Background="{StaticResource BgBrush}">
+    <ScrollViewer>
+        <StackPanel Margin="32,28" MaxWidth="760">
+
+            <TextBlock Text="Hồ sơ cá nhân" FontSize="22" FontWeight="Bold"
+                       Foreground="{StaticResource TextPrimaryBrush}" Margin="0,0,0,24"/>
+
+            <!-- Avatar card -->
+            <Border Style="{StaticResource Card}" Margin="0,0,0,20">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/><ColumnDefinition/><ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Border Grid.Column="0" Width="72" Height="72" CornerRadius="36"
+                            Background="{StaticResource PrimaryLightBrush}" Margin="0,0,20,0">
+                        <TextBlock x:Name="TxtAvatar" FontSize="28" FontWeight="Bold"
+                                   Foreground="{StaticResource PrimaryBrush}"
+                                   HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                    <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                        <TextBlock x:Name="TxtFullName" FontSize="20" FontWeight="Bold"
+                                   Foreground="{StaticResource TextPrimaryBrush}"/>
+                        <TextBlock x:Name="TxtUsernameDisplay" FontSize="13"
+                                   Foreground="{StaticResource TextSecondaryBrush}" Margin="0,4,0,0"/>
+                        <Border Background="{StaticResource PrimaryLightBrush}" CornerRadius="12"
+                                Padding="10,4" HorizontalAlignment="Left" Margin="0,8,0,0">
+                            <TextBlock x:Name="TxtRole" FontSize="11" FontWeight="SemiBold"
+                                       Foreground="{StaticResource PrimaryBrush}"/>
+                        </Border>
+                    </StackPanel>
+                    <Border Grid.Column="2" VerticalAlignment="Center"
+                            Background="{StaticResource SuccessBrush}" CornerRadius="12" Padding="10,4">
+                        <TextBlock Text="● Active" FontSize="11" Foreground="White" FontWeight="SemiBold"/>
+                    </Border>
+                </Grid>
+            </Border>
+
+            <!-- Personal info -->
+            <Border Style="{StaticResource Card}" Margin="0,0,0,20">
+                <StackPanel>
+                    <TextBlock Text="Thông tin cá nhân" FontSize="15" FontWeight="SemiBold"
+                               Foreground="{StaticResource TextPrimaryBrush}" Margin="0,0,0,20"/>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/><ColumnDefinition Width="20"/><ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/><RowDefinition Height="16"/>
+                            <RowDefinition/><RowDefinition Height="20"/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <StackPanel Grid.Row="0" Grid.Column="0">
+                            <TextBlock Text="HỌ VÀ TÊN" Style="{StaticResource FieldLabel}"/>
+                            <TextBox x:Name="TxtEditName" Style="{StaticResource InputModern}"/>
+                        </StackPanel>
+                        <StackPanel Grid.Row="0" Grid.Column="2">
+                            <TextBlock Text="EMAIL" Style="{StaticResource FieldLabel}"/>
+                            <TextBox x:Name="TxtEditEmail" Style="{StaticResource InputModern}"/>
+                        </StackPanel>
+                        <StackPanel Grid.Row="2" Grid.Column="0">
+                            <TextBlock Text="SỐ ĐIỆN THOẠI" Style="{StaticResource FieldLabel}"/>
+                            <TextBox x:Name="TxtEditSdt" Style="{StaticResource InputModern}"/>
+                        </StackPanel>
+                        <StackPanel Grid.Row="2" Grid.Column="2">
+                            <TextBlock Text="NGÀY SINH" Style="{StaticResource FieldLabel}"/>
+                            <DatePicker x:Name="DpNgaySinh" Height="42"/>
+                        </StackPanel>
+                        <StackPanel Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3"
+                                    Orientation="Horizontal">
+                            <Button Content="Lưu thay đổi" Style="{StaticResource BtnPrimary}"
+                                    Width="160" Click="BtnSaveProfile_Click"/>
+                            <TextBlock x:Name="TxtProfileMsg" VerticalAlignment="Center"
+                                       FontSize="12" Margin="16,0,0,0" Visibility="Collapsed"/>
+                        </StackPanel>
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+            <!-- Change password -->
+            <Border Style="{StaticResource Card}" Margin="0,0,0,20">
+                <StackPanel>
+                    <TextBlock Text="Đổi mật khẩu" FontSize="15" FontWeight="SemiBold"
+                               Foreground="{StaticResource TextPrimaryBrush}" Margin="0,0,0,20"/>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/><ColumnDefinition Width="20"/><ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0">
+                            <TextBlock Text="MẬT KHẨU HIỆN TẠI" Style="{StaticResource FieldLabel}"/>
+                            <PasswordBox x:Name="PwdCurrent" Style="{StaticResource PwdModern}"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="2">
+                            <TextBlock Text="MẬT KHẨU MỚI" Style="{StaticResource FieldLabel}"/>
+                            <PasswordBox x:Name="PwdNew" Style="{StaticResource PwdModern}"/>
+                        </StackPanel>
+                    </Grid>
+                    <StackPanel Margin="0,16,0,0">
+                        <TextBlock Text="XÁC NHẬN MẬT KHẨU MỚI" Style="{StaticResource FieldLabel}"/>
+                        <PasswordBox x:Name="PwdConfirm" Style="{StaticResource PwdModern}"
+                                     MaxWidth="360" HorizontalAlignment="Left"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="0,16,0,0">
+                        <Button Content="Đổi mật khẩu" Style="{StaticResource BtnSecondary}"
+                                Width="160" Click="BtnChangePwd_Click"/>
+                        <TextBlock x:Name="TxtPwdMsg" VerticalAlignment="Center"
+                                   FontSize="12" Margin="16,0,0,0" Visibility="Collapsed"/>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+
+            <!-- Reminder settings -->
+            <Border Style="{StaticResource Card}">
+                <StackPanel>
+                    <TextBlock Text="Cài đặt nhắc nhở" FontSize="15" FontWeight="SemiBold"
+                               Foreground="{StaticResource TextPrimaryBrush}" Margin="0,0,0,20"/>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/><ColumnDefinition Width="20"/><ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0">
+                            <TextBlock Text="NHẮC TRƯỚC (PHÚT)" Style="{StaticResource FieldLabel}"/>
+                            <TextBox x:Name="TxtMinsBefore" Style="{StaticResource InputModern}" Text="15"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="2">
+                            <TextBlock Text="KÊNH THÔNG BÁO" Style="{StaticResource FieldLabel}"/>
+                            <ComboBox x:Name="CmbChannel" Height="42">
+                                <ComboBoxItem Content="PUSH (Popup)" IsSelected="True"/>
+                                <ComboBoxItem Content="EMAIL"/>
+                            </ComboBox>
+                        </StackPanel>
+                    </Grid>
+                    <StackPanel Orientation="Horizontal" Margin="0,16,0,0" VerticalAlignment="Center">
+                        <CheckBox x:Name="ChkEnabled" Content="Bật nhắc nhở" IsChecked="True"
+                                  FontSize="13" Foreground="{StaticResource TextPrimaryBrush}"
+                                  Margin="0,0,24,0"/>
+                        <Button Content="Lưu cài đặt" Style="{StaticResource BtnPrimary}"
+                                Width="160" Click="BtnSaveReminder_Click"/>
+                        <TextBlock x:Name="TxtReminderMsg" VerticalAlignment="Center"
+                                   FontSize="12" Margin="16,0,0,0" Visibility="Collapsed"/>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+
+        </StackPanel>
+    </ScrollViewer>
+</Page>

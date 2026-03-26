@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net48</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <AssemblyName>StudentReminderApp</AssemblyName>
+    <RootNamespace>StudentReminderApp</RootNamespace>
+    <Nullable>enable</Nullable>
+    <LangVersion>9.0</LangVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="BCrypt.Net-Next"          Version="4.0.3"/>
+    <PackageReference Include="System.Data.SqlClient"    Version="4.8.6"/>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Colors.xaml"/>
+    <Resource Include="Resources\Styles.xaml"/>
+  </ItemGroup>
+</Project>

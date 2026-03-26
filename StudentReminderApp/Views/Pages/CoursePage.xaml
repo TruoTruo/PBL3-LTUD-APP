@@ -1,0 +1,80 @@
+<Page x:Class="StudentReminderApp.Views.Pages.CoursePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Background="{StaticResource BgBrush}">
+    <Grid Margin="32,28">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" Text="Danh sách học phần"
+                   FontSize="22" FontWeight="Bold"
+                   Foreground="{StaticResource TextPrimaryBrush}" Margin="0,0,0,20"/>
+
+        <!-- Filter -->
+        <Grid Grid.Row="1" Margin="0,0,0,16">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="16"/>
+                <ColumnDefinition Width="160"/>
+                <ColumnDefinition Width="16"/>
+                <ColumnDefinition Width="160"/>
+                <ColumnDefinition Width="16"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <TextBox x:Name="TxtSearch" Grid.Column="0" Style="{StaticResource InputModern}"
+                     TextChanged="Filter_Changed"/>
+            <ComboBox x:Name="CmbHocKy" Grid.Column="2" Height="42"
+                      SelectionChanged="Filter_Changed">
+                <ComboBoxItem Content="Học kỳ 1" IsSelected="True"/>
+                <ComboBoxItem Content="Học kỳ 2"/>
+                <ComboBoxItem Content="Học kỳ hè"/>
+            </ComboBox>
+            <TextBox x:Name="TxtNamHoc" Grid.Column="4"
+                     Style="{StaticResource InputModern}" Text="2024-2025"/>
+            <Button Grid.Column="6" Content="Tải lại" Style="{StaticResource BtnSecondary}"
+                    Height="42" Padding="16,0" Click="BtnReload_Click"/>
+        </Grid>
+
+        <!-- DataGrid -->
+        <DataGrid x:Name="DgCourses" Grid.Row="2"
+                  AutoGenerateColumns="False" IsReadOnly="True"
+                  GridLinesVisibility="Horizontal" HeadersVisibility="Column"
+                  RowBackground="White" AlternatingRowBackground="#F8FAFC"
+                  BorderBrush="{StaticResource BorderBrush}" BorderThickness="1"
+                  CanUserResizeRows="False" RowHeight="46" FontSize="13">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Mã MH"      Binding="{Binding MaMonHoc}"     Width="90"/>
+                <DataGridTextColumn Header="Tên môn học" Binding="{Binding TenMonHoc}"   Width="*"/>
+                <DataGridTextColumn Header="TC"          Binding="{Binding SoTinChi}"    Width="50"/>
+                <DataGridTextColumn Header="Giảng viên"  Binding="{Binding TenGiangVien}" Width="160"/>
+                <DataGridTextColumn Header="Phòng"       Binding="{Binding TenPhong}"    Width="80"/>
+                <DataGridTemplateColumn Header="Trạng thái" Width="120">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Border CornerRadius="12" Padding="10,4" HorizontalAlignment="Center"
+                                    Background="{Binding DaDangKy, Converter={StaticResource BoolToBgConverter}}">
+                                <TextBlock
+                                    Text="{Binding DaDangKy, Converter={StaticResource BoolToStatusConverter}}"
+                                    FontSize="11" FontWeight="SemiBold"
+                                    Foreground="{Binding DaDangKy, Converter={StaticResource BoolToFgConverter}}"/>
+                            </Border>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Thao tác" Width="110">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Tag="{Binding}" Click="BtnRegister_Click"
+                                    Style="{StaticResource BtnPrimary}" Height="32" FontSize="12">
+                                <TextBlock Text="{Binding DaDangKy, Converter={StaticResource BoolToActionConverter}}"/>
+                            </Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Page>
