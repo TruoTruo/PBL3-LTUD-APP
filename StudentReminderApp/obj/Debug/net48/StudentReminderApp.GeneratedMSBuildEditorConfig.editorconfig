@@ -1,6 +1,6 @@
 is_global = true
 build_property.RootNamespace = StudentReminderApp
-build_property.ProjectDir = D:\IT\HỌC\PBL3\StudentReminderApp\StudentReminderApp\
+build_property.ProjectDir = D:\IT\HỌC\PBL3\PBL3-LTUD-APP\StudentReminderApp\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.CsWinRTUseWindowsUIXamlProjections = false
