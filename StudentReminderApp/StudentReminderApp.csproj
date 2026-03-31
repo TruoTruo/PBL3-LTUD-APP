@@ -8,12 +8,32 @@
     <Nullable>enable</Nullable>
     <LangVersion>9.0</LangVersion>
   </PropertyGroup>
+
   <ItemGroup>
-    <PackageReference Include="BCrypt.Net-Next"          Version="4.0.3"/>
-    <PackageReference Include="System.Data.SqlClient"    Version="4.8.6"/>
+    <PackageReference Include="BCrypt.Net-Next" Version="4.0.3"/>
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.6"/>
   </ItemGroup>
+
   <ItemGroup>
     <Resource Include="Resources\Colors.xaml"/>
     <Resource Include="Resources\Styles.xaml"/>
+    <Resource Include="Resources\Images\APUIp.jpg" />
+    <Resource Include="Resources\Images\user.png" />
+    <Resource Include="Resources\Fonts\FontAwesome7Solid.otf" />
+    
+    <Page Update="Views\Pages\ForumPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+
+    <Page Update="Views\Dialogs\CreatePostDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+
+    <Compile Update="Views\Pages\ForumPage.xaml.cs">
+      <DependentUpon>ForumPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Dialogs\CreatePostDialog.xaml.cs">
+      <DependentUpon>CreatePostDialog.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
 </Project>
