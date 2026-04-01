@@ -38,7 +38,6 @@ namespace StudentReminderApp.Views.Dialogs
 
         private void BtnAnonymous_Toggle(object sender, RoutedEventArgs e)
         {
-            // Kiểm tra null để tránh lỗi khi InitializeComponent chưa xong
             if (TxtUserName == null || BtnAnonymous == null) return;
             
             TxtUserName.Text = (BtnAnonymous.IsChecked == true) 

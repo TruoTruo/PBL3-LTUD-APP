@@ -1,13 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using StudentReminderApp.BLL;
 using StudentReminderApp.Models;
 using StudentReminderApp.Helpers;
-
 
 namespace StudentReminderApp.ViewModels
 {
@@ -17,6 +17,8 @@ namespace StudentReminderApp.ViewModels
         public ObservableCollection<Post> Posts { get; set; }
         public Action? CloseAction { get; set; }
 
+        private Post? _sharingPost; 
+
         private string _newContent = string.Empty;
         public string NewContent
         {
@@ -24,7 +26,6 @@ namespace StudentReminderApp.ViewModels
             set { _newContent = value; OnPropertyChanged(); CommandManager.InvalidateRequerySuggested(); }
         }
 
-        // Thêm Property này để Binding với Toggle/Checkbox ẩn danh trên giao diện
         private bool _isAnonymous;
         public bool IsAnonymous
         {
@@ -41,44 +42,75 @@ namespace StudentReminderApp.ViewModels
 
         public ICommand PostCommand { get; }
         public ICommand DeletePostCommand { get; set; }
+        public ICommand LikeCommand { get; }
+        public ICommand OpenShareCommand { get; } 
 
         public ForumViewModel()
         {
             Posts = new ObservableCollection<Post>();
+            
             PostCommand = new RelayCommand(
                 async (obj) => await ExecutePost(obj),
                 (obj) => !string.IsNullOrWhiteSpace(NewContent) && !IsBusy
             );
+
             DeletePostCommand = new RelayCommand(ExecuteDeletePostWrapper);
+            LikeCommand = new RelayCommand(async (obj) => await ExecuteLike(obj));
+            
+            OpenShareCommand = new RelayCommand((obj) => {
+                if (obj is Post p) {
+                    _sharingPost = p;
+                    NewContent = "Đã chia sẻ một bài viết"; 
+                }
+            });
+
             _ = LoadDataAsync();
         }
 
         public async Task LoadDataAsync()
         {
-            var data = await Task.Run(() => _forumBLL.GetAllPosts());
-            Application.Current.Dispatcher.Invoke(() =>
+            try 
             {
-                Posts.Clear();
+                var data = await Task.Run(() => _forumBLL.GetAllPosts());
+                
                 if (data != null)
                 {
-                    foreach (var p in data) Posts.Add(p);
+                    var postDict = data.ToDictionary(p => p.IdPost, p => p);
+
+                    foreach (var item in data)
+                    {
+                        if (item.IdOriginalPost.HasValue && postDict.ContainsKey(item.IdOriginalPost.Value))
+                        {
+                            item.OriginalPost = postDict[item.IdOriginalPost.Value];
+                        }
+                    }
+
+                    Application.Current.Dispatcher.Invoke(() =>
+                    {
+                        Posts.Clear();
+                        foreach (var p in data.OrderByDescending(x => x.CreatedAt))
+                        {
+                            Posts.Add(p);
+                        }
+                    });
                 }
-            });
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Lỗi nạp dữ liệu Diễn đàn: " + ex.Message);
+            }
         }
 
         private async Task ExecutePost(object? parameter)
         {
             if (SessionManager.CurrentUser == null) return;
             IsBusy = true;
-
             try
             {
-                // Lấy ID người dùng thật để hệ thống vẫn quản lý được
                 long currentUserId = SessionManager.CurrentUser.IdAcc;
-
-                // Gọi hàm CreatePost với ĐỦ 4 tham số (tham số cuối là IsAnonymous)
+                long? originalId = _sharingPost?.IdPost; 
                 bool success = await Task.Run(() =>
-                    _forumBLL.CreatePost(currentUserId, "Thảo luận", NewContent, IsAnonymous)
+                    _forumBLL.CreatePost(currentUserId, "Thảo luận", NewContent, IsAnonymous, originalId)
                 );
 
                 if (success)
@@ -86,7 +118,8 @@ namespace StudentReminderApp.ViewModels
                     Application.Current.Dispatcher.Invoke(() =>
                     {
                         NewContent = string.Empty;
-                        IsAnonymous = false; // Reset trạng thái sau khi đăng
+                        IsAnonymous = false;
+                        _sharingPost = null; 
                         CloseAction?.Invoke();
                     });
                     await LoadDataAsync();
@@ -94,58 +127,43 @@ namespace StudentReminderApp.ViewModels
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Có lỗi xảy ra: " + ex.Message);
+                MessageBox.Show("Có lỗi xảy ra khi đăng bài: " + ex.Message);
             }
-            finally
+            finally { IsBusy = false; }
+        }
+
+        private async Task ExecuteLike(object? parameter)
+        {
+            if (parameter is Post post && SessionManager.CurrentUser != null)
             {
-                IsBusy = false;
+                long currentUserId = SessionManager.CurrentUser.IdAcc;
+                bool success = await Task.Run(() => _forumBLL.ToggleLike(currentUserId, post.IdPost));
+                if (success)
+                {
+                    post.IsLiked = !post.IsLiked;
+                    if (post.IsLiked) post.Likes++;
+                    else post.Likes--;
+                }
             }
         }
 
         private void ExecuteDeletePostWrapper(object? parameter)
         {
-            // Kiểm tra ép kiểu an toàn
             if (parameter is Post post)
             {
-                // Thêm hộp thoại xác nhận để tránh bấm nhầm
-                var result = MessageBox.Show("Bạn có chắc chắn muốn xóa bài viết này không?",
-                                           "Xác nhận xóa",
-                                           MessageBoxButton.YesNo,
-                                           MessageBoxImage.Question);
-
-                if (result == MessageBoxResult.Yes)
-                {
-                    ExecuteDeletePost(post);
-                }
+                var result = MessageBox.Show("Bạn có chắc chắn muốn xóa bài viết này không?", "Xác nhận xóa", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (result == MessageBoxResult.Yes) ExecuteDeletePost(post);
             }
         }
 
         private void ExecuteDeletePost(Post post)
         {
-            if (post == null) return;
-
             try
             {
-                // Gọi BLL để xóa trong Database
-                bool success = _forumBLL.RemovePost(post.IdPost);
-
-                if (success)
-                {
-                    // Xóa khỏi ObservableCollection để giao diện cập nhật ngay lập tức
-                    Posts.Remove(post);
-                }
-                else
-                {
-                    MessageBox.Show("Không thể xóa bài viết. Vui lòng thử lại sau.", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
+                if (_forumBLL.RemovePost(post.IdPost)) Posts.Remove(post);
+                else MessageBox.Show("Không thể xóa bài viết này.");
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Lỗi hệ thống: " + ex.Message);
-            }
+            catch (Exception ex) { MessageBox.Show("Lỗi: " + ex.Message); }
         }
-
-        // Hàm xóa chính của bạn (giữ nguyên hoặc sửa nhẹ)
-
     }
 }

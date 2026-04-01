@@ -1,40 +1,81 @@
 using System;
-using StudentReminderApp.Helpers; // Đảm bảo có namespace này để dùng SessionManager
+using StudentReminderApp.Helpers;
+using StudentReminderApp.ViewModels;
 
 namespace StudentReminderApp.Models
 {
-    public class Post
+    public class Post : BaseViewModel 
     {
         public long IdPost { get; set; }
         public long IdAcc { get; set; }
-        public string Title { get; set; }
-        public string Content { get; set; }
+        public long? IdOriginalPost { get; set; } 
+        public string Title { get; set; } = string.Empty;
+        public string Content { get; set; } = string.Empty;
         public DateTime CreatedAt { get; set; }
-        public int Likes { get; set; }
-        public bool IsAnonymous { get; set; } 
-        public string AuthorName { get; set; }
-        public string AuthorAvatar { get; set; }
+        public bool IsAnonymous { get; set; }
+        public string AuthorName { get; set; } = string.Empty;
+        public string AuthorAvatar { get; set; } = string.Empty;
 
-        // --- THÊM DÒNG NÀY ---
-        // Kiểm tra xem ID người đăng bài có trùng với ID người đang đăng nhập không
-        public bool IsMyPost => SessionManager.CurrentUser != null && IdAcc == SessionManager.CurrentUser.IdAcc;
-        // ---------------------
+        public bool IsShared => IdOriginalPost.HasValue && IdOriginalPost.Value > 0;
 
-        public string DisplayName 
+        private Post? _originalPost;
+        public Post? OriginalPost
         {
-            get 
+            get => _originalPost;
+            set 
+            { 
+                _originalPost = value; 
+                OnPropertyChanged(); 
+                OnPropertyChanged(nameof(IsShared)); 
+            }
+        }
+
+        private bool _isPublic = true;
+        public bool IsPublic
+        {
+            get => _isPublic;
+            set { _isPublic = value; OnPropertyChanged(); OnPropertyChanged(nameof(PrivacyIcon)); }
+        }
+
+        public string PrivacyIcon => IsPublic ? "🌎" : "🔒";
+
+        private int _likes;
+        public int Likes
+        {
+            get => _likes;
+            set { _likes = value; OnPropertyChanged(); }
+        }
+
+        private bool _isLiked;
+        public bool IsLiked
+        {
+            get => _isLiked;
+            set 
+            { 
+                _isLiked = value; 
+                OnPropertyChanged();
+            }
+        }
+
+        public bool IsMyPost => SessionManager.CurrentUser != null && IdAcc == SessionManager.CurrentUser.IdAcc;
+
+        public string DisplayName
+        {
+            get
             {
                 if (IsAnonymous) return "Người dùng ẩn danh";
                 return string.IsNullOrWhiteSpace(AuthorName) ? "Thành viên" : AuthorName;
             }
         }
 
-        public string DisplayAvatar 
+        public string DisplayAvatar
         {
-            get 
+            get
             {
-                if (IsAnonymous) return "/Resources/Images/user.png";
-                return string.IsNullOrWhiteSpace(AuthorAvatar) ? "/Resources/Images/user.png" : AuthorAvatar;
+                string defaultImg = "pack://application:,,,/Resources/Images/user.png";
+                if (IsAnonymous || string.IsNullOrWhiteSpace(AuthorAvatar)) return defaultImg;
+                
+                return AuthorAvatar;
             }
         }
 
