@@ -236,6 +236,14 @@ CREATE TABLE BAI_VIET (
 
 );
 
+ALTER TABLE BAI_VIET 
+ADD is_anonymous BIT DEFAULT 0;
+GO
+
+-- Cập nhật các bài viết cũ mặc định là không ẩn danh
+UPDATE BAI_VIET SET is_anonymous = 0 WHERE is_anonymous IS NULL;
+GO
+
 -- Thêm cột để nhận biết đây là bài chia sẻ (nếu chưa có)
 -- IdPostGoc: ID của bài gốc, nếu = 0 hoặc NULL thì là bài viết tự đăng
 -- NoiDungShare: Lời nhắn của người chia sẻ (UserComment trong code của bạn)
