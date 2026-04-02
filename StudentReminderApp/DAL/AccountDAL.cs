@@ -9,23 +9,23 @@ namespace StudentReminderApp.DAL
         {
             const string sql = @"
                 SELECT a.id_acc, a.username, a.password_hash,
-                       a.id_role, a.status, r.role_name
+                       a.id_role, a.trang_thai, r.role_name
                 FROM   ACCOUNT a
                 LEFT JOIN ROLES r ON a.id_role = r.id_role
                 WHERE  a.username = @u";
             using var conn = GetConnection();
-            using var cmd  = new SqlCommand(sql, conn);
+            using var cmd = new SqlCommand(sql, conn);
             cmd.Parameters.AddWithValue("@u", username);
             using var r = cmd.ExecuteReader();
             if (!r.Read()) return null;
             return new Account
             {
-                IdAcc        = (long)r["id_acc"],
-                Username     = r["username"].ToString(),
+                IdAcc = (long)r["id_acc"],
+                Username = r["username"].ToString(),
                 PasswordHash = r["password_hash"].ToString(),
-                IdRole       = (long)r["id_role"],
-                Status       = r["status"].ToString(),
-                RoleName     = r["role_name"].ToString()
+                //  IdRole = (long)r["id_role"],
+                IsActive = r["trang_thai"].ToString() == "Active",
+                RoleName = r["role_name"].ToString()
             };
         }
 
@@ -33,7 +33,7 @@ namespace StudentReminderApp.DAL
         {
             const string sql = "SELECT COUNT(1) FROM ACCOUNT WHERE username=@u";
             using var conn = GetConnection();
-            using var cmd  = new SqlCommand(sql, conn);
+            using var cmd = new SqlCommand(sql, conn);
             cmd.Parameters.AddWithValue("@u", username);
             return (int)cmd.ExecuteScalar() > 0;
         }
@@ -41,8 +41,8 @@ namespace StudentReminderApp.DAL
         public long CreateWithProfile(string username, string hash,
                                       string hoTen, string email, string sdt)
         {
-            const string sqlAcc  = @"
-                INSERT INTO ACCOUNT(username,password_hash,id_role,status)
+            const string sqlAcc = @"
+                INSERT INTO ACCOUNT(username,password_hash,id_role,trang_thai)
                 OUTPUT INSERTED.id_acc VALUES(@u,@h,2,'Active')";
             const string sqlUser = @"
                 INSERT INTO [USER](id_acc,ho_ten,email,sdt)
@@ -63,7 +63,7 @@ namespace StudentReminderApp.DAL
                     cmd.Parameters.AddWithValue("@id", newId);
                     cmd.Parameters.AddWithValue("@ht", hoTen);
                     cmd.Parameters.AddWithValue("@em", email ?? "");
-                    cmd.Parameters.AddWithValue("@sd", sdt   ?? "");
+                    cmd.Parameters.AddWithValue("@sd", sdt ?? "");
                     cmd.ExecuteNonQuery();
                 }
                 tran.Commit();

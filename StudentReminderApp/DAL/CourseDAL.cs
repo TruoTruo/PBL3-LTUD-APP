@@ -23,7 +23,7 @@ namespace StudentReminderApp.DAL
                 WHERE  lhp.hoc_ky=@hk AND lhp.nam_hoc=@nh";
             var list = new List<LopHocPhan>();
             using var conn = GetConnection();
-            using var cmd  = new SqlCommand(sql, conn);
+            using var cmd = new SqlCommand(sql, conn);
             cmd.Parameters.AddWithValue("@hk", hocKy);
             cmd.Parameters.AddWithValue("@nh", namHoc);
             cmd.Parameters.AddWithValue("@sv", idSv);
@@ -31,19 +31,19 @@ namespace StudentReminderApp.DAL
             while (r.Read())
                 list.Add(new LopHocPhan
                 {
-                    IdLopHp      = (long)r["id_lop_hp"],
-                    MaLopHp      = r["ma_lop_hp"]?.ToString(),
-                    IdMonHoc     = (long)r["id_mon_hoc"],
-                    MaMonHoc     = r["ma_mon_hoc"].ToString(),
-                    TenMonHoc    = r["ten_mon_hoc"].ToString(),
-                    SoTinChi     = (int)r["so_tin_chi"],
-                    IdGiangVien  = (long)r["id_giang_vien"],
+                    IdLopHp = (long)r["id_lop_hp"],
+                    MaLopHp = r["ma_lop_hp"]?.ToString(),
+                    IdMonHoc = (long)r["id_mon_hoc"],
+                    MaMonHoc = r["ma_mon_hoc"].ToString(),
+                    TenMonHoc = r["ten_mon_hoc"].ToString(),
+                    SoTinChi = (int)r["so_tin_chi"],
+                    IdGiangVien = (long)r["id_giang_vien"],
                     TenGiangVien = r["ten_giang_vien"].ToString(),
-                    IdPhong      = (long)r["id_phong"],
-                    TenPhong     = r["ten_phong"].ToString(),
-                    HocKy        = (int)r["hoc_ky"],
-                    NamHoc       = r["nam_hoc"].ToString(),
-                    DaDangKy     = (int)r["da_dang_ky"] == 1
+                    IdPhong = (long)r["id_phong"],
+                    TenPhong = r["ten_phong"].ToString(),
+                    HocKy = (int)r["hoc_ky"],
+                    NamHoc = r["nam_hoc"].ToString(),
+                    DaDangKy = (int)r["da_dang_ky"] == 1
                 });
             return list;
         }
@@ -51,11 +51,11 @@ namespace StudentReminderApp.DAL
         public void Register(long idSv, long idLopHp)
         {
             const string sql = @"
-                INSERT INTO DANG_KY_HOC_PHAN(id_sv,id_lop_hp,status)
+                INSERT INTO DANG_KY_HOC_PHAN(id_sv,id_lop_hp,trang_thai)
                 VALUES(@sv,@lhp,'Scheduled')";
             using var conn = GetConnection();
-            using var cmd  = new SqlCommand(sql, conn);
-            cmd.Parameters.AddWithValue("@sv",  idSv);
+            using var cmd = new SqlCommand(sql, conn);
+            cmd.Parameters.AddWithValue("@sv", idSv);
             cmd.Parameters.AddWithValue("@lhp", idLopHp);
             cmd.ExecuteNonQuery();
         }
@@ -65,8 +65,8 @@ namespace StudentReminderApp.DAL
             const string sql =
                 "DELETE FROM DANG_KY_HOC_PHAN WHERE id_sv=@sv AND id_lop_hp=@lhp";
             using var conn = GetConnection();
-            using var cmd  = new SqlCommand(sql, conn);
-            cmd.Parameters.AddWithValue("@sv",  idSv);
+            using var cmd = new SqlCommand(sql, conn);
+            cmd.Parameters.AddWithValue("@sv", idSv);
             cmd.Parameters.AddWithValue("@lhp", idLopHp);
             cmd.ExecuteNonQuery();
         }
