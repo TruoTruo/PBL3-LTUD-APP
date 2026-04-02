@@ -41,3 +41,47 @@ D:\IT\HỌC\PBL3\StudentReminderApp\StudentReminderApp\obj\Debug\net48\StudentRe
 D:\IT\HỌC\PBL3\StudentReminderApp\StudentReminderApp\obj\Debug\net48\StudentR.5E4BD3BF.Up2Date
 D:\IT\HỌC\PBL3\StudentReminderApp\StudentReminderApp\obj\Debug\net48\StudentReminderApp.exe
 D:\IT\HỌC\PBL3\StudentReminderApp\StudentReminderApp\obj\Debug\net48\StudentReminderApp.pdb
+C:\Users\Nguyen Quang Hien\Downloads\DTBS\PBL3-LTUD-APP\StudentReminderApp\bin\Debug\net48\StudentReminderApp.exe.config
+C:\Users\Nguyen Quang Hien\Downloads\DTBS\PBL3-LTUD-APP\StudentReminderApp\bin\Debug\net48\StudentReminderApp.exe
+C:\Users\Nguyen Quang Hien\Downloads\DTBS\PBL3-LTUD-APP\StudentReminderApp\bin\Debug\net48\StudentReminderApp.pdb
+C:\Users\Nguyen Quang Hien\Downloads\DTBS\PBL3-LTUD-APP\StudentReminderApp\bin\Debug\net48\BCrypt.Net-Next.dll
+C:\Users\Nguyen Quang Hien\Downloads\DTBS\PBL3-LTUD-APP\StudentReminderApp\bin\Debug\net48\System.Buffers.dll
+C:\Users\Nguyen Quang Hien\Downloads\DTBS\PBL3-LTUD-APP\StudentReminderApp\bin\Debug\net48\System.Data.SqlClient.dll
+C:\Users\Nguyen Quang Hien\Downloads\DTBS\PBL3-LTUD-APP\StudentReminderApp\bin\Debug\net48\System.Memory.dll
+C:\Users\Nguyen Quang Hien\Downloads\DTBS\PBL3-LTUD-APP\StudentReminderApp\bin\Debug\net48\System.Numerics.Vectors.dll
+C:\Users\Nguyen Quang Hien\Downloads\DTBS\PBL3-LTUD-APP\StudentReminderApp\bin\Debug\net48\System.Runtime.CompilerServices.Unsafe.dll
+C:\Users\Nguyen Quang Hien\Downloads\DTBS\PBL3-LTUD-APP\StudentReminderApp\obj\Debug\net48\StudentReminderApp.csproj.AssemblyReference.cache
+C:\Users\Nguyen Quang Hien\Downloads\DTBS\PBL3-LTUD-APP\StudentReminderApp\obj\Debug\net48\Views\Auth\LoginWindow.baml
+C:\Users\Nguyen Quang Hien\Downloads\DTBS\PBL3-LTUD-APP\StudentReminderApp\obj\Debug\net48\Views\Auth\RegisterWindow.baml
+C:\Users\Nguyen Quang Hien\Downloads\DTBS\PBL3-LTUD-APP\StudentReminderApp\obj\Debug\net48\Views\Dialogs\EventDialog.baml
+C:\Users\Nguyen Quang Hien\Downloads\DTBS\PBL3-LTUD-APP\StudentReminderApp\obj\Debug\net48\Views\Dialogs\NotificationPopup.baml
+C:\Users\Nguyen Quang Hien\Downloads\DTBS\PBL3-LTUD-APP\StudentReminderApp\obj\Debug\net48\Views\Main\MainWindow.baml
+C:\Users\Nguyen Quang Hien\Downloads\DTBS\PBL3-LTUD-APP\StudentReminderApp\obj\Debug\net48\Views\Pages\AdvisorPage.baml
+C:\Users\Nguyen Quang Hien\Downloads\DTBS\PBL3-LTUD-APP\StudentReminderApp\obj\Debug\net48\Views\Pages\CalendarPage.baml
+C:\Users\Nguyen Quang Hien\Downloads\DTBS\PBL3-LTUD-APP\StudentReminderApp\obj\Debug\net48\Views\Pages\CoursePage.baml
+C:\Users\Nguyen Quang Hien\Downloads\DTBS\PBL3-LTUD-APP\StudentReminderApp\obj\Debug\net48\Views\Pages\DashboardPage.baml
+C:\Users\Nguyen Quang Hien\Downloads\DTBS\PBL3-LTUD-APP\StudentReminderApp\obj\Debug\net48\Views\Pages\ProfilePage.baml
+C:\Users\Nguyen Quang Hien\Downloads\DTBS\PBL3-LTUD-APP\StudentReminderApp\obj\Debug\net48\Views\Auth\LoginWindow.g.cs
+C:\Users\Nguyen Quang Hien\Downloads\DTBS\PBL3-LTUD-APP\StudentReminderApp\obj\Debug\net48\Views\Auth\RegisterWindow.g.cs
+C:\Users\Nguyen Quang Hien\Downloads\DTBS\PBL3-LTUD-APP\StudentReminderApp\obj\Debug\net48\Views\Dialogs\EventDialog.g.cs
+C:\Users\Nguyen Quang Hien\Downloads\DTBS\PBL3-LTUD-APP\StudentReminderApp\obj\Debug\net48\Views\Dialogs\NotificationPopup.g.cs
+C:\Users\Nguyen Quang Hien\Downloads\DTBS\PBL3-LTUD-APP\StudentReminderApp\obj\Debug\net48\Views\Main\MainWindow.g.cs
+C:\Users\Nguyen Quang Hien\Downloads\DTBS\PBL3-LTUD-APP\StudentReminderApp\obj\Debug\net48\Views\Pages\AdvisorPage.g.cs
+C:\Users\Nguyen Quang Hien\Downloads\DTBS\PBL3-LTUD-APP\StudentReminderApp\obj\Debug\net48\Views\Pages\CalendarPage.g.cs
+C:\Users\Nguyen Quang Hien\Downloads\DTBS\PBL3-LTUD-APP\StudentReminderApp\obj\Debug\net48\Views\Pages\CoursePage.g.cs
+C:\Users\Nguyen Quang Hien\Downloads\DTBS\PBL3-LTUD-APP\StudentReminderApp\obj\Debug\net48\Views\Pages\DashboardPage.g.cs
+C:\Users\Nguyen Quang Hien\Downloads\DTBS\PBL3-LTUD-APP\StudentReminderApp\obj\Debug\net48\Views\Pages\ProfilePage.g.cs
+C:\Users\Nguyen Quang Hien\Downloads\DTBS\PBL3-LTUD-APP\StudentReminderApp\obj\Debug\net48\App.g.cs
+C:\Users\Nguyen Quang Hien\Downloads\DTBS\PBL3-LTUD-APP\StudentReminderApp\obj\Debug\net48\GeneratedInternalTypeHelper.g.cs
+C:\Users\Nguyen Quang Hien\Downloads\DTBS\PBL3-LTUD-APP\StudentReminderApp\obj\Debug\net48\StudentReminderApp_MarkupCompile.cache
+C:\Users\Nguyen Quang Hien\Downloads\DTBS\PBL3-LTUD-APP\StudentReminderApp\obj\Debug\net48\StudentReminderApp_MarkupCompile.lref
+C:\Users\Nguyen Quang Hien\Downloads\DTBS\PBL3-LTUD-APP\StudentReminderApp\obj\Debug\net48\App.baml
+C:\Users\Nguyen Quang Hien\Downloads\DTBS\PBL3-LTUD-APP\StudentReminderApp\obj\Debug\net48\StudentReminderApp.g.resources
+C:\Users\Nguyen Quang Hien\Downloads\DTBS\PBL3-LTUD-APP\StudentReminderApp\obj\Debug\net48\StudentReminderApp.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Nguyen Quang Hien\Downloads\DTBS\PBL3-LTUD-APP\StudentReminderApp\obj\Debug\net48\StudentReminderApp.AssemblyInfoInputs.cache
+C:\Users\Nguyen Quang Hien\Downloads\DTBS\PBL3-LTUD-APP\StudentReminderApp\obj\Debug\net48\StudentReminderApp.AssemblyInfo.cs
+C:\Users\Nguyen Quang Hien\Downloads\DTBS\PBL3-LTUD-APP\StudentReminderApp\obj\Debug\net48\StudentReminderApp.csproj.CoreCompileInputs.cache
+C:\Users\Nguyen Quang Hien\Downloads\DTBS\PBL3-LTUD-APP\StudentReminderApp\obj\Debug\net48\StudentReminderApp.sourcelink.json
+C:\Users\Nguyen Quang Hien\Downloads\DTBS\PBL3-LTUD-APP\StudentReminderApp\obj\Debug\net48\StudentR.5E4BD3BF.Up2Date
+C:\Users\Nguyen Quang Hien\Downloads\DTBS\PBL3-LTUD-APP\StudentReminderApp\obj\Debug\net48\StudentReminderApp.exe
+C:\Users\Nguyen Quang Hien\Downloads\DTBS\PBL3-LTUD-APP\StudentReminderApp\obj\Debug\net48\StudentReminderApp.pdb
