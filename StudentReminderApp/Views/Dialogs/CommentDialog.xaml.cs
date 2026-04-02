@@ -1,5 +1,5 @@
 using System.Windows;
-using StudentReminderApp.Models; 
+using StudentReminderApp.Models;
 using StudentReminderApp.ViewModels;
 
 namespace StudentReminderApp.Views.Dialogs
@@ -8,7 +8,7 @@ namespace StudentReminderApp.Views.Dialogs
     {
         public CommentDialog(Post post)
         {
-            InitializeComponent(); 
+            InitializeComponent();
 
             if (post != null)
             {
@@ -18,6 +18,10 @@ namespace StudentReminderApp.Views.Dialogs
             {
                 this.Close();
             }
+        }
+        private void CloseButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
     }
 }

@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("StudentReminderApp")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0c4cea83287e26957bdd44d38b2bba755a7de4e1")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+365b6acced49e713190d103538196b0053f5e7f7")]
 [assembly: System.Reflection.AssemblyProductAttribute("StudentReminderApp")]
 [assembly: System.Reflection.AssemblyTitleAttribute("StudentReminderApp")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

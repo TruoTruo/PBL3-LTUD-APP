@@ -3,111 +3,114 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Chi tiết bài viết" Height="650" Width="500" 
         WindowStartupLocation="CenterOwner"
-        Background="White">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/> <RowDefinition Height="*"/>    <RowDefinition Height="Auto"/> </Grid.RowDefinitions>
+        WindowStyle="None" 
+        AllowsTransparency="True"
+        Background="Transparent">
 
-        <Border Grid.Row="0" Background="White" Padding="15" BorderBrush="#E2E8F0" BorderThickness="0,0,0,1">
-            <TextBlock Text="Chi tiết bài viết" FontSize="16" FontWeight="Bold" HorizontalAlignment="Center"/>
-        </Border>
+    <Border CornerRadius="15" Background="White" BorderBrush="#E2E8F0" BorderThickness="1">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/> <RowDefinition Height="*"/>    <RowDefinition Height="Auto"/> </Grid.RowDefinitions>
 
-        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
-            <StackPanel Margin="0,0,0,15">
-                
-                <Border Padding="15">
-                    <StackPanel>
-                        <Grid Margin="0,0,0,12">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-                            <Border Width="40" Height="40" CornerRadius="20" ClipToBounds="True">
-                                <Image Source="{Binding CurrentPost.DisplayAvatar}" Stretch="UniformToFill"/>
-                            </Border>
-                            <StackPanel Grid.Column="1" Margin="10,0" VerticalAlignment="Center">
-                                <TextBlock Text="{Binding CurrentPost.DisplayName}" FontWeight="Bold" FontSize="15"/>
-                                <TextBlock Text="{Binding CurrentPost.TimeAgo}" FontSize="12" Foreground="#65676B"/>
-                            </StackPanel>
-                        </Grid>
+            <Border Grid.Row="0" Background="White" Padding="15" BorderBrush="#E2E8F0" BorderThickness="0,0,0,1">
+                <Grid>
+                    <TextBlock Text="Chi tiết bài viết" FontSize="18" FontWeight="Bold" HorizontalAlignment="Center" Foreground="#050505"/>
+                    <Button Content="✕" HorizontalAlignment="Right" VerticalAlignment="Center"
+                            Background="Transparent" BorderThickness="0" FontWeight="Bold" FontSize="18"
+                            Foreground="#65676B" Cursor="Hand" Click="CloseButton_Click"/>
+                </Grid>
+            </Border>
 
-                        <TextBlock Text="{Binding CurrentPost.Content}" FontSize="15" TextWrapping="Wrap" Margin="0,0,0,10" LineHeight="20"/>
-                        
-                        <Border CornerRadius="8" ClipToBounds="True" Margin="0,5,0,5">
-                            <Image Source="{Binding CurrentPost.PostImage}" Stretch="Uniform" MaxHeight="350"/>
-                        </Border>
-                    </StackPanel>
-                </Border>
-
-                <Separator Background="#F0F2F5" Height="8" BorderThickness="0"/>
-
-                <ItemsControl ItemsSource="{Binding Comments}" Margin="0,10,0,0">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <Grid Margin="15,5,15,5">
+            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+                <StackPanel Margin="0,0,0,15">
+                    <Border Padding="15">
+                        <StackPanel>
+                            <Grid Margin="0,0,0,12">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
-                                
-                                <Border Width="32" Height="32" CornerRadius="16" ClipToBounds="True" VerticalAlignment="Top">
-                                    <Image Source="/Resources/Images/user.png" Stretch="UniformToFill"/>
+                                <Border Width="40" Height="40" CornerRadius="20" ClipToBounds="True">
+                                    <Image Source="{Binding CurrentPost.DisplayAvatar}" Stretch="UniformToFill"/>
                                 </Border>
-
-                                <StackPanel Grid.Column="1" Margin="8,0,0,0">
-                                    <Border Background="#F0F2F5" CornerRadius="18" Padding="12,8" HorizontalAlignment="Left">
-                                        <StackPanel MaxWidth="350">
-                                            <TextBlock Text="{Binding AuthorName}" FontWeight="Bold" FontSize="13" Margin="0,0,0,2"/>
-                                            <TextBlock Text="{Binding Content}" TextWrapping="Wrap" FontSize="14"/>
-                                        </StackPanel>
-                                    </Border>
-                                    <TextBlock Text="{Binding TimeDisplay}" FontSize="11" Foreground="#65676B" Margin="10,2,0,0"/>
+                                <StackPanel Grid.Column="1" Margin="10,0" VerticalAlignment="Center">
+                                    <TextBlock Text="{Binding CurrentPost.DisplayName}" FontWeight="Bold" FontSize="15" Foreground="#050505"/>
+                                    <TextBlock Text="{Binding CurrentPost.TimeAgo}" FontSize="12" Foreground="#65676B"/>
                                 </StackPanel>
                             </Grid>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-            </StackPanel>
-        </ScrollViewer>
 
-        <Border Grid.Row="2" Background="White" Padding="12,8" BorderBrush="#E2E8F0" BorderThickness="0,1,0,0">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="Auto"/>
-                </Grid.ColumnDefinitions>
-                
-                <Border Width="32" Height="32" CornerRadius="16" ClipToBounds="True" Margin="0,0,10,0">
-                    <Image Source="/Resources/Images/user.png" Stretch="UniformToFill"/>
-                </Border>
+                            <TextBlock Text="{Binding CurrentPost.Content}" FontSize="15" TextWrapping="Wrap" Margin="0,0,0,10" LineHeight="20" Foreground="#050505"/>
+                            
+                            <Border CornerRadius="8" ClipToBounds="True" Margin="0,5,0,5">
+                                <Image Source="{Binding CurrentPost.PostImage}" Stretch="Uniform" MaxHeight="350"/>
+                            </Border>
+                        </StackPanel>
+                    </Border>
 
-                <TextBox Grid.Column="1" 
-                         Text="{Binding CommentText, UpdateSourceTrigger=PropertyChanged}" 
-                         Padding="15,8" 
-                         FontSize="14" 
-                         Background="#F0F2F5" 
-                         BorderThickness="0" 
-                         VerticalAlignment="Center">
-                    <TextBox.Resources>
-                        <Style TargetType="{x:Type Border}">
-                            <Setter Property="CornerRadius" Value="20"/>
-                        </Style>
-                    </TextBox.Resources>
-                </TextBox>
+                    <Separator Background="#F0F2F5" Height="8" BorderThickness="0"/>
 
-                <Button Grid.Column="2" 
-                        Command="{Binding SendCommentCommand}" 
-                        Content="Gửi" 
-                        Margin="10,0,0,0" 
-                        Padding="15,0"
-                        Foreground="#1877F2" 
-                        Background="Transparent" 
-                        FontWeight="Bold" 
-                        BorderThickness="0" 
-                        Cursor="Hand"
-                        VerticalAlignment="Center"/>
-            </Grid>
-        </Border>
-    </Grid>
+                    <ItemsControl ItemsSource="{Binding Comments}" Margin="0,10,0,0">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Margin="15,5,15,5">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    
+                                    <Border Width="32" Height="32" CornerRadius="16" ClipToBounds="True" VerticalAlignment="Top">
+                                        <Image Source="/Resources/Images/user.png" Stretch="UniformToFill"/>
+                                    </Border>
+
+                                    <StackPanel Grid.Column="1" Margin="8,0,0,0">
+                                        <Border Background="#F0F2F5" CornerRadius="18" Padding="12,8" HorizontalAlignment="Left">
+                                            <StackPanel MaxWidth="350">
+                                                <TextBlock Text="{Binding AuthorName}" FontWeight="Bold" FontSize="13" Margin="0,0,0,2" Foreground="#050505"/>
+                                                <TextBlock Text="{Binding Content}" TextWrapping="Wrap" FontSize="14" Foreground="#050505"/>
+                                            </StackPanel>
+                                        </Border>
+                                        <TextBlock Text="{Binding TimeDisplay}" FontSize="11" Foreground="#65676B" Margin="10,2,0,0"/>
+                                    </StackPanel>
+                                </Grid>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </StackPanel>
+            </ScrollViewer>
+
+            <Border Grid.Row="2" Background="White" Padding="12,8" BorderBrush="#E2E8F0" BorderThickness="0,1,0,0">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    
+                    <Border Width="32" Height="32" CornerRadius="16" ClipToBounds="True" Margin="0,0,10,0">
+                        <Image Source="/Resources/Images/user.png" Stretch="UniformToFill"/>
+                    </Border>
+
+                    <TextBox Grid.Column="1" 
+                             Text="{Binding CommentText, UpdateSourceTrigger=PropertyChanged}" 
+                             Padding="15,8" FontSize="14" 
+                             Background="#F0F2F5" BorderThickness="0" 
+                             VerticalAlignment="Center">
+                        <TextBox.Resources>
+                            <Style TargetType="{x:Type Border}">
+                                <Setter Property="CornerRadius" Value="20"/>
+                            </Style>
+                        </TextBox.Resources>
+                    </TextBox>
+
+                    <Button Grid.Column="2" 
+                            Command="{Binding SendCommentCommand}" 
+                            Content="Gửi" 
+                            Margin="10,0,0,0" Padding="15,0"
+                            Foreground="#1877F2" Background="Transparent" 
+                            FontWeight="Bold" BorderThickness="0" 
+                            Cursor="Hand" VerticalAlignment="Center"/>
+                </Grid>
+            </Border>
+        </Grid>
+    </Border>
 </Window>
