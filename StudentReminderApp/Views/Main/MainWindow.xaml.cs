@@ -32,6 +32,7 @@ namespace StudentReminderApp.Views.Main
                 "Calendar"  => new CalendarPage(),
                 "Course"    => new CoursePage(),
                 "Advisor"   => new AdvisorPage(),
+                "Forum"     => new ForumPage(),
                 "Profile"   => new ProfilePage(),
                 _           => new DashboardPage()
             });
