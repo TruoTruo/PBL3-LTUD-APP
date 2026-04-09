@@ -232,9 +232,13 @@ CREATE TABLE BAI_VIET (
     ngay_dang     DATETIME DEFAULT GETDATE(),
     so_luot_thich INT,
     status        NVARCHAR(50),
+    background_color NVARCHAR(20) DEFAULT 'Transparent',
     CONSTRAINT FK_BV_User FOREIGN KEY (id_acc) REFERENCES [USER](id_acc)
 
 );
+
+ALTER TABLE BAI_VIET ALTER COLUMN IdPostGoc BIGINT;
+GO
 
 ALTER TABLE BAI_VIET 
 ADD is_anonymous BIT DEFAULT 0;
@@ -292,6 +296,15 @@ BEGIN
     ELSE 
         SELECT CAST(0 AS BIT) AS Success;
 END
+GO
+
+-- Thêm cột lưu màu nền vào bảng bài viết
+ALTER TABLE BAI_VIET 
+ADD background_color NVARCHAR(20) DEFAULT 'Transparent';
+GO
+
+-- Cập nhật các bài cũ về mặc định là không màu (Transparent)
+UPDATE BAI_VIET SET background_color = 'Transparent' WHERE background_color IS NULL;
 GO
 
 -- Likes
