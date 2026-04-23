@@ -92,9 +92,9 @@ namespace StudentReminderApp.DAL
             return list;
         }
 
-        public long InsertPost(long idAcc, string title, string content, bool isPublic, long? idOriginalPost = null, string backgroundColor = "Transparent")
+        public long InsertPost(long idAcc, string title, string content, bool isAnonymous, long? idOriginalPost = null, string backgroundColor = "Transparent")
         {
-            return AddPostAndGetId(idAcc, title, content, !isPublic, idOriginalPost, backgroundColor);
+            return AddPostAndGetId(idAcc, title, content, isAnonymous, idOriginalPost, backgroundColor);
         }
 
         public long AddPostAndGetId(long idAcc, string title, string content, bool isAnonymous, long? idOriginalPost = null, string backgroundColor = "Transparent")

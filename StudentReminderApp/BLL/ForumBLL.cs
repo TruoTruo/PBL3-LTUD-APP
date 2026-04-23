@@ -48,7 +48,7 @@ namespace StudentReminderApp.BLL
 
                 if (newPostId > 0 && filePaths != null)
                 {
-                    
+
                     string folderPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources", "Images");
 
                     if (!Directory.Exists(folderPath)) Directory.CreateDirectory(folderPath);
@@ -59,10 +59,9 @@ namespace StudentReminderApp.BLL
                         {
                             string fileName = Guid.NewGuid().ToString() + Path.GetExtension(originalPath);
                             string destPath = Path.Combine(folderPath, fileName);
-
                             File.Copy(originalPath, destPath, true);
-
-                            _forumDAL.AddDocument(newPostId, fileName, fileName);
+                            
+                            _forumDAL.AddDocument(newPostId, fileName, destPath);
                         }
                     }
                     return true;
@@ -82,7 +81,7 @@ namespace StudentReminderApp.BLL
 
             try
             {
-                
+
                 return CreatePost(idAccNguoiChiaSe, "Chia sẻ bài viết", noiDungThem, false, null, idPostGoc, "Transparent");
             }
             catch (Exception ex)

@@ -18,7 +18,7 @@ namespace StudentReminderApp.Models
         public bool IsAnonymous { get; set; }
         public string AuthorName { get; set; } = string.Empty;
         public string AuthorAvatar { get; set; } = string.Empty;
-        public string FilePath { get; set; }
+        public string FilePath { get; set; } 
 
         private List<string> _filePaths = new List<string>();
         public List<string> FilePaths
