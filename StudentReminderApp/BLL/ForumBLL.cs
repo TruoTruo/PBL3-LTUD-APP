@@ -48,20 +48,27 @@ namespace StudentReminderApp.BLL
 
                 if (newPostId > 0 && filePaths != null)
                 {
-
                     string folderPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources", "Images");
-
                     if (!Directory.Exists(folderPath)) Directory.CreateDirectory(folderPath);
+
+                    // Định nghĩa các đuôi ảnh cho phép
+                    string[] allowedExtensions = { ".jpg", ".png", ".jpeg", ".bmp", ".gif" };
 
                     foreach (string originalPath in filePaths)
                     {
                         if (File.Exists(originalPath))
                         {
-                            string fileName = Guid.NewGuid().ToString() + Path.GetExtension(originalPath);
-                            string destPath = Path.Combine(folderPath, fileName);
-                            File.Copy(originalPath, destPath, true);
-                            
-                            _forumDAL.AddDocument(newPostId, fileName, destPath);
+                            string ext = Path.GetExtension(originalPath).ToLower();
+
+                            // CHỈ XỬ LÝ NẾU LÀ FILE ẢNH
+                            if (Array.Exists(allowedExtensions, e => e.Equals(ext, StringComparison.OrdinalIgnoreCase)))
+                            {
+                                string fileName = Guid.NewGuid().ToString() + ext;
+                                string destPath = Path.Combine(folderPath, fileName);
+                                File.Copy(originalPath, destPath, true);
+
+                                _forumDAL.AddDocument(newPostId, fileName, destPath);
+                            }
                         }
                     }
                     return true;
@@ -70,7 +77,7 @@ namespace StudentReminderApp.BLL
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Lỗi khi lưu bài viết: " + ex.Message);
+                Console.WriteLine("Lỗi khi lưu bài viết (BLL): " + ex.Message);
                 return false;
             }
         }
@@ -82,7 +89,7 @@ namespace StudentReminderApp.BLL
             try
             {
 
-                return CreatePost(idAccNguoiChiaSe, "Chia sẻ bài viết", noiDungThem, false, null, idPostGoc, "Transparent");
+                return CreatePost(idAccNguoiChiaSe, "Chia sẻ bài viết", noiDungThem, false, new List<string>(), idPostGoc, "Transparent");
             }
             catch (Exception ex)
             {

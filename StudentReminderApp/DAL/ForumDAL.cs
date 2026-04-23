@@ -16,15 +16,15 @@ namespace StudentReminderApp.DAL
             var list = new List<Post>();
 
             const string sql = @"
-        SELECT bv.*, u.ho_ten,
-        (SELECT COUNT(*) FROM YEU_THICH WHERE id_bai_viet = bv.id_bai_viet) as TotalLikes,
-        CASE 
-            WHEN EXISTS (SELECT 1 FROM YEU_THICH WHERE id_bai_viet = bv.id_bai_viet AND id_acc = @currentUserId) 
-            THEN 1 ELSE 0 
-        END as IsLikedByMe
-        FROM BAI_VIET bv 
-        LEFT JOIN [USER] u ON bv.id_acc = u.id_acc 
-        ORDER BY bv.ngay_dang DESC";
+            SELECT bv.*, u.ho_ten,
+            (SELECT COUNT(*) FROM YEU_THICH WHERE id_bai_viet = bv.id_bai_viet) as TotalLikes,
+            CASE 
+                WHEN EXISTS (SELECT 1 FROM YEU_THICH WHERE id_bai_viet = bv.id_bai_viet AND id_acc = @currentUserId) 
+                THEN 1 ELSE 0 
+            END as IsLikedByMe
+            FROM BAI_VIET bv 
+            LEFT JOIN [USER] u ON bv.id_acc = u.id_acc 
+            ORDER BY bv.ngay_dang DESC";
 
             try
             {
@@ -52,13 +52,12 @@ namespace StudentReminderApp.DAL
                                     IsLiked = Convert.ToBoolean(r["IsLikedByMe"]),
                                     IsAnonymous = r["is_anonymous"] != DBNull.Value && Convert.ToBoolean(r["is_anonymous"]),
                                     AuthorName = r["ho_ten"]?.ToString() ?? "",
-                                    ImagePaths = new List<string>(),
+                                    //ImagePaths = new List<string>(),
                                     FilePaths = new List<string>()
                                 });
                             }
                         }
                     }
-
                     foreach (var post in list)
                     {
                         const string sqlImages = "SELECT duong_dan FROM DOCUMENTS WHERE id_bai_viet = @idP";
@@ -73,11 +72,6 @@ namespace StudentReminderApp.DAL
                                     if (!string.IsNullOrEmpty(path))
                                     {
                                         post.FilePaths.Add(path);
-                                        string ext = Path.GetExtension(path).ToLower();
-                                        if (ext == ".jpg" || ext == ".png" || ext == ".jpeg" || ext == ".bmp")
-                                        {
-                                            post.ImagePaths.Add(path);
-                                        }
                                     }
                                 }
                             }
@@ -174,9 +168,9 @@ namespace StudentReminderApp.DAL
                                     IdComment = Convert.ToInt64(r["id_binh_luan"]),
                                     IdAcc = Convert.ToInt64(r["id_acc"]),
                                     IdPost = Convert.ToInt64(r["id_bai_viet"]),
-                                    Content = r["noi_dung"].ToString(),
+                                    Content = r["noi_dung"].ToString() ?? string.Empty,
                                     CreatedAt = Convert.ToDateTime(r["ngay_binh_luan"]),
-                                    AuthorName = r["ho_ten"].ToString()
+                                    AuthorName = r["ho_ten"].ToString() ?? "Thành viên"
                                 });
                             }
                         }

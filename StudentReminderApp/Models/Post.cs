@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
-using System.Linq; 
-using System.IO;   
+using System.Linq;
+using System.IO;
 using StudentReminderApp.Helpers;
 using StudentReminderApp.ViewModels;
 
@@ -18,7 +18,7 @@ namespace StudentReminderApp.Models
         public bool IsAnonymous { get; set; }
         public string AuthorName { get; set; } = string.Empty;
         public string AuthorAvatar { get; set; } = string.Empty;
-        public string FilePath { get; set; } 
+        public string FilePath { get; set; } = string.Empty;
 
         private List<string> _filePaths = new List<string>();
         public List<string> FilePaths
@@ -29,7 +29,6 @@ namespace StudentReminderApp.Models
                 _filePaths = value;
                 OnPropertyChanged();
                 OnPropertyChanged(nameof(ImagePaths));
-                OnPropertyChanged(nameof(DocumentFiles));
             }
         }
 
@@ -37,32 +36,12 @@ namespace StudentReminderApp.Models
         {
             get
             {
+                if (FilePaths == null) return new List<string>();
                 string[] imgExtensions = { ".jpg", ".png", ".jpeg", ".bmp", ".gif" };
-                return FilePaths.Where(path => 
-                    !string.IsNullOrEmpty(path) && 
-                    imgExtensions.Contains(Path.GetExtension(path).ToLower())).ToList();
-            }
-            set { OnPropertyChanged(); } 
-        }
-
-        public List<string> DocumentFiles
-        {
-            get
-            {
-                if (FilePaths == null || FilePaths.Count == 0) return new List<string>();
-
-                string[] docExtensions = { ".pdf", ".docx", ".doc", ".xlsx", ".xls", ".pptx", ".ppt", ".txt", ".zip", ".rar" };
-
                 return FilePaths.Where(path =>
-                {
-                    if (string.IsNullOrWhiteSpace(path)) return false;
-                    try
-                    {
-                        string ext = Path.GetExtension(path);
-                        return !string.IsNullOrEmpty(ext) && docExtensions.Contains(ext.ToLower());
-                    }
-                    catch { return false; }
-                }).ToList();
+                    !string.IsNullOrEmpty(path) &&
+                    imgExtensions.Contains(Path.GetExtension(path).ToLower()))
+                    .ToList();
             }
         }
 

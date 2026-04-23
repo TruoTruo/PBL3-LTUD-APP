@@ -1,20 +1,20 @@
 ﻿StudentReminderApp
-1.0.0.0
+
 
 winexe
 C#
 .cs
-d:\pbl3\PBL3-LTUD-APP\StudentReminderApp\obj\Debug\net48\
+D:\pbl3\PBL3-LTUD-APP\StudentReminderApp\obj\Debug\net48\
 StudentReminderApp
 none
 false
 TRACE;DEBUG;NETFRAMEWORK;NET48;NET30_OR_GREATER;NET35_OR_GREATER;NET40_OR_GREATER;NET45_OR_GREATER;NET451_OR_GREATER;NET452_OR_GREATER;NET46_OR_GREATER;NET461_OR_GREATER;NET462_OR_GREATER;NET47_OR_GREATER;NET471_OR_GREATER;NET472_OR_GREATER;NET48_OR_GREATER
-d:\pbl3\PBL3-LTUD-APP\StudentReminderApp\App.xaml
+D:\pbl3\PBL3-LTUD-APP\StudentReminderApp\App.xaml
 14934908664
 
-47-1169715376
+451425878262
 25991758162
 Views\Auth\LoginWindow.xaml;Views\Auth\RegisterWindow.xaml;Views\Dialogs\CommentDialog.xaml;Views\Dialogs\CreatePostDialog.xaml;Views\Dialogs\EventDialog.xaml;Views\Dialogs\NotificationPopup.xaml;Views\Dialogs\ShareDialog.xaml;Views\Main\MainWindow.xaml;Views\Pages\AdvisorPage.xaml;Views\Pages\CalendarPage.xaml;Views\Pages\CoursePage.xaml;Views\Pages\DashboardPage.xaml;Views\Pages\ForumPage.xaml;Views\Pages\ProfilePage.xaml;
 
-True
+False
 
