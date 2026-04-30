@@ -449,6 +449,155 @@ CREATE TABLE DIEU_KIEN_TIEN_QUYET (
 GO
 
 -- =============================================
+-- MIGRATION: Hệ thống phân quyền Admin Diễn đàn
+-- Chạy script này trên database PBL3 đang có sẵn
+-- =============================================
+
+USE PBL3;
+GO
+
+-- BƯỚC 1: Thêm cột status vào BAI_VIET (nếu chưa có)
+-- status: 0 = Chờ duyệt, 1 = Đã duyệt, 2 = Từ chối
+IF NOT EXISTS (
+    SELECT 1 FROM INFORMATION_SCHEMA.COLUMNS 
+    WHERE TABLE_NAME = 'BAI_VIET' AND COLUMN_NAME = 'approval_status'
+)
+BEGIN
+    ALTER TABLE BAI_VIET ADD approval_status INT NOT NULL DEFAULT 1;
+    -- Mặc định là 1 (Đã duyệt) để bài cũ vẫn hiển thị bình thường
+    PRINT N'Đã thêm cột approval_status vào BAI_VIET';
+END
+ELSE
+BEGIN
+    PRINT N'Cột approval_status đã tồn tại, bỏ qua.';
+END
+GO
+
+-- BƯỚC 2: Thêm cột rejected_reason (lý do từ chối) - tuỳ chọn nhưng rất hữu ích
+IF NOT EXISTS (
+    SELECT 1 FROM INFORMATION_SCHEMA.COLUMNS 
+    WHERE TABLE_NAME = 'BAI_VIET' AND COLUMN_NAME = 'rejected_reason'
+)
+BEGIN
+    ALTER TABLE BAI_VIET ADD rejected_reason NVARCHAR(500) NULL;
+    PRINT N'Đã thêm cột rejected_reason vào BAI_VIET';
+END
+GO
+
+-- BƯỚC 3: Kiểm tra và đảm bảo data ROLES có 'Admin'
+IF NOT EXISTS (SELECT 1 FROM ROLES WHERE role_name = N'Admin')
+BEGIN
+    INSERT INTO ROLES (role_name) VALUES (N'Admin');
+    PRINT N'Đã thêm role Admin';
+END
+GO
+
+IF NOT EXISTS (SELECT 1 FROM ROLES WHERE role_name = N'Student')
+BEGIN
+    INSERT INTO ROLES (role_name) VALUES (N'Student');
+    PRINT N'Đã thêm role Student';
+END
+GO
+
+-- BƯỚC 4: Stored Procedure để lấy bài chờ duyệt (status = 0)
+CREATE OR ALTER PROCEDURE sp_GetPendingPosts
+AS
+BEGIN
+    SET NOCOUNT ON;
+    SELECT 
+        bv.*,
+        u.ho_ten,
+        (SELECT COUNT(*) FROM YEU_THICH WHERE id_bai_viet = bv.id_bai_viet) AS TotalLikes,
+        (SELECT COUNT(*) FROM BINH_LUAN WHERE id_bai_viet = bv.id_bai_viet) AS TotalComments,
+        (SELECT COUNT(*) FROM BAI_VIET WHERE IdPostGoc = bv.id_bai_viet)    AS TotalShares,
+        0 AS IsLikedByMe
+    FROM BAI_VIET bv
+    LEFT JOIN [USER] u ON bv.id_acc = u.id_acc
+    WHERE bv.approval_status = 0
+    ORDER BY bv.ngay_dang ASC; -- Bài cũ nhất duyệt trước
+END
+GO
+
+-- BƯỚC 5: Stored Procedure cập nhật trạng thái duyệt
+CREATE OR ALTER PROCEDURE sp_UpdatePostStatus
+    @idPost       BIGINT,
+    @newStatus    INT,        -- 0=Chờ, 1=Duyệt, 2=Từ chối
+    @adminIdAcc   BIGINT,
+    @reason       NVARCHAR(500) = NULL
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    -- Kiểm tra quyền Admin
+    IF NOT EXISTS (
+        SELECT 1 FROM ACCOUNT a
+        JOIN ROLES r ON a.id_role = r.id_role
+        WHERE a.id_acc = @adminIdAcc AND r.role_name = N'Admin'
+    )
+    BEGIN
+        RAISERROR(N'Tài khoản không có quyền Admin!', 16, 1);
+        RETURN;
+    END
+
+    UPDATE BAI_VIET
+    SET 
+        approval_status  = @newStatus,
+        rejected_reason  = CASE WHEN @newStatus = 2 THEN @reason ELSE NULL END
+    WHERE id_bai_viet = @idPost;
+
+    SELECT @@ROWCOUNT AS RowsAffected;
+END
+GO
+
+-- BƯỚC 6: Stored Procedure Admin xóa bài bất kỳ (có ghi log)
+CREATE OR ALTER PROCEDURE sp_AdminDeletePost
+    @idPost     BIGINT,
+    @adminIdAcc BIGINT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    -- Kiểm tra quyền Admin
+    IF NOT EXISTS (
+        SELECT 1 FROM ACCOUNT a
+        JOIN ROLES r ON a.id_role = r.id_role
+        WHERE a.id_acc = @adminIdAcc AND r.role_name = N'Admin'
+    )
+    BEGIN
+        RAISERROR(N'Không có quyền Admin!', 16, 1);
+        RETURN;
+    END
+
+    BEGIN TRANSACTION;
+    BEGIN TRY
+        -- Xóa các bảng con trước (tránh lỗi FK)
+        DELETE FROM DOCUMENTS  WHERE id_bai_viet = @idPost;
+        DELETE FROM YEU_THICH  WHERE id_bai_viet = @idPost;
+        DELETE FROM BINH_LUAN  WHERE id_bai_viet = @idPost;
+        -- Nullify các bài share tham chiếu tới bài này
+        UPDATE BAI_VIET SET IdPostGoc = NULL WHERE IdPostGoc = @idPost;
+        -- Xóa bài chính
+        DELETE FROM BAI_VIET WHERE id_bai_viet = @idPost;
+
+        -- Ghi log hành động Admin (nếu bảng USER_LOG hỗ trợ)
+        INSERT INTO USER_LOG (hanh_dong, id_acc)
+        VALUES (CONCAT(N'Admin xóa bài viết ID: ', @idPost), @adminIdAcc);
+
+        COMMIT TRANSACTION;
+        SELECT 1 AS Success;
+    END TRY
+    BEGIN CATCH
+        ROLLBACK TRANSACTION;
+        THROW;
+    END CATCH
+END
+GO
+
+PRINT N'Migration hoàn tất! Hệ thống Admin đã sẵn sàng.';
+GO
+
+
+-- =============================================
 -- DỮ LIỆU MẪU
 -- =============================================
 
