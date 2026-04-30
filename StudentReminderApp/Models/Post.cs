@@ -7,6 +7,16 @@ using StudentReminderApp.ViewModels;
 
 namespace StudentReminderApp.Models
 {
+    /// <summary>
+    /// Hằng số trạng thái duyệt bài — dùng chung toàn dự án.
+    /// </summary>
+    public static class PostStatus
+    {
+        public const int Pending = 0; // Chờ duyệt
+        public const int Approved = 1; // Đã duyệt
+        public const int Rejected = 2; // Bị từ chối
+    }
+
     public class Post : BaseViewModel
     {
         public long IdPost { get; set; }
@@ -19,9 +29,56 @@ namespace StudentReminderApp.Models
         public string AuthorName { get; set; } = string.Empty;
         public string AuthorAvatar { get; set; } = string.Empty;
         public string FilePath { get; set; } = string.Empty;
+        public string? RejectedReason { get; set; }
 
-        // --- Cập nhật ngay lập tức nhờ OnPropertyChanged ---
+        // -------------------------------------------------------
+        // TRẠNG THÁI DUYỆT BÀI — REACTIVE (gọi OnPropertyChanged)
+        // -------------------------------------------------------
+        private int _approvalStatus = PostStatus.Approved;
+        /// <summary>0=Chờ duyệt | 1=Đã duyệt | 2=Từ chối</summary>
+        public int ApprovalStatus
+        {
+            get => _approvalStatus;
+            set
+            {
+                if (_approvalStatus == value) return;
+                _approvalStatus = value;
+                OnPropertyChanged();
+                // Kéo theo các computed props phụ thuộc vào ApprovalStatus
+                OnPropertyChanged(nameof(StatusBadge));
+                OnPropertyChanged(nameof(StatusColor));
+                OnPropertyChanged(nameof(IsPending));
+                OnPropertyChanged(nameof(IsApproved));
+                OnPropertyChanged(nameof(IsRejected));
+            }
+        }
 
+        // -------------------------------------------------------
+        // COMPUTED: derived từ ApprovalStatus — dùng trong XAML
+        // -------------------------------------------------------
+        public bool IsPending => ApprovalStatus == PostStatus.Pending;
+        public bool IsApproved => ApprovalStatus == PostStatus.Approved;
+        public bool IsRejected => ApprovalStatus == PostStatus.Rejected;
+
+        public string StatusBadge => ApprovalStatus switch
+        {
+            PostStatus.Pending => "⏳ Chờ duyệt",
+            PostStatus.Approved => "✅ Đã duyệt",
+            PostStatus.Rejected => "❌ Từ chối",
+            _ => "Không rõ"
+        };
+
+        public string StatusColor => ApprovalStatus switch
+        {
+            PostStatus.Pending => "#FF9800",
+            PostStatus.Approved => "#4CAF50",
+            PostStatus.Rejected => "#F44336",
+            _ => "#9E9E9E"
+        };
+
+        // -------------------------------------------------------
+        // LIKES / COMMENTS / SHARES — REACTIVE
+        // -------------------------------------------------------
         private int _likes;
         public int Likes
         {
@@ -40,25 +97,19 @@ namespace StudentReminderApp.Models
         public int CommentCount
         {
             get => _commentCount;
-            set 
-            { 
-                _commentCount = value; 
-                OnPropertyChanged(); // Tự động lấy tên property là CommentCount
-            }
+            set { _commentCount = value; OnPropertyChanged(); }
         }
 
         private int _shareCount;
         public int ShareCount
         {
             get => _shareCount;
-            set 
-            { 
-                _shareCount = value; 
-                OnPropertyChanged(); 
-            }
+            set { _shareCount = value; OnPropertyChanged(); }
         }
 
-        // --- Xử lý hình ảnh và File ---
+        // -------------------------------------------------------
+        // FILES / IMAGES
+        // -------------------------------------------------------
         private List<string> _filePaths = new List<string>();
         public List<string> FilePaths
         {
@@ -84,7 +135,9 @@ namespace StudentReminderApp.Models
             }
         }
 
-        // --- Hiển thị giao diện ---
+        // -------------------------------------------------------
+        // GIAO DIỆN / MÀU SẮC
+        // -------------------------------------------------------
         private string _backgroundColor = "Transparent";
         public string BackgroundColor
         {
@@ -125,9 +178,31 @@ namespace StudentReminderApp.Models
         }
 
         public string PrivacyIcon => IsPublic ? "🌎" : "🔒";
+
+        // -------------------------------------------------------
+        // QUYỀN XÓA BÀI — tích hợp phân quyền Admin
+        // -------------------------------------------------------
+        /// <summary>
+        /// True nếu người đăng nhập là Admin — Admin thấy nút Xóa trên mọi bài.
+        /// True nếu bài viết thuộc về người đang đăng nhập.
+        /// Binding trực tiếp trong XAML: Visibility="{Binding CanDelete, Converter=...}"
+        /// </summary>
+        public bool CanDelete
+        {
+            get
+            {
+                if (SessionManager.CurrentAccount == null) return false;
+                if (SessionManager.IsAdmin) return true;
+                return IdAcc == SessionManager.CurrentAccount.IdAcc;
+            }
+        }
+
+        /// <summary>Bài của người đang đăng nhập (dùng để hiện menu tuỳ chọn).</summary>
         public bool IsMyPost => SessionManager.CurrentUser != null && IdAcc == SessionManager.CurrentUser.IdAcc;
 
-        public string DisplayName => IsAnonymous ? "Người dùng ẩn danh" : (string.IsNullOrWhiteSpace(AuthorName) ? "Thành viên" : AuthorName);
+        public string DisplayName => IsAnonymous
+            ? "Người dùng ẩn danh"
+            : (string.IsNullOrWhiteSpace(AuthorName) ? "Thành viên" : AuthorName);
 
         public string DisplayAvatar
         {
