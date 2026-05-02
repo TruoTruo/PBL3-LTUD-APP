@@ -145,3 +145,6 @@ c:\Users\Nguyen Quang Hien\LT_UD_PBL3\PBL3-LTUD-APP\StudentReminderApp\obj\Debug
 c:\Users\Nguyen Quang Hien\LT_UD_PBL3\PBL3-LTUD-APP\StudentReminderApp\obj\Debug\net48\StudentReminderApp.csproj.CoreCompileInputs.cache
 c:\Users\Nguyen Quang Hien\LT_UD_PBL3\PBL3-LTUD-APP\StudentReminderApp\obj\Debug\net48\StudentReminderApp.sourcelink.json
 c:\Users\Nguyen Quang Hien\LT_UD_PBL3\PBL3-LTUD-APP\StudentReminderApp\obj\Debug\net48\StudentR.5E4BD3BF.Up2Date
+c:\Users\Nguyen Quang Hien\LT_UD_PBL3\PBL3-LTUD-APP\StudentReminderApp\obj\Debug\net48\Views\Pages\PreferencePage.baml
+c:\Users\Nguyen Quang Hien\LT_UD_PBL3\PBL3-LTUD-APP\StudentReminderApp\obj\Debug\net48\Views\Pages\PreferencePage.g.cs
+c:\Users\Nguyen Quang Hien\LT_UD_PBL3\PBL3-LTUD-APP\StudentReminderApp\bin\Debug\net48\Newtonsoft.Json.dll

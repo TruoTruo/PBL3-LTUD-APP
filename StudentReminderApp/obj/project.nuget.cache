@@ -1,10 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "vRCE82d4W7k=",
+  "dgSpecHash": "xR4kOTIh46Y=",
   "success": true,
   "projectFilePath": "c:\\Users\\Nguyen Quang Hien\\LT_UD_PBL3\\PBL3-LTUD-APP\\StudentReminderApp\\StudentReminderApp.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Nguyen Quang Hien\\.nuget\\packages\\bcrypt.net-next\\4.0.3\\bcrypt.net-next.4.0.3.nupkg.sha512",
+    "C:\\Users\\Nguyen Quang Hien\\.nuget\\packages\\newtonsoft.json\\13.0.4\\newtonsoft.json.13.0.4.nupkg.sha512",
     "C:\\Users\\Nguyen Quang Hien\\.nuget\\packages\\system.buffers\\4.5.1\\system.buffers.4.5.1.nupkg.sha512",
     "C:\\Users\\Nguyen Quang Hien\\.nuget\\packages\\system.data.sqlclient\\4.8.6\\system.data.sqlclient.4.8.6.nupkg.sha512",
     "C:\\Users\\Nguyen Quang Hien\\.nuget\\packages\\system.memory\\4.5.4\\system.memory.4.5.4.nupkg.sha512",
