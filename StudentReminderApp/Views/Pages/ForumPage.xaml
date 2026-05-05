@@ -16,267 +16,584 @@
         <vm:ForumViewModel />
     </UserControl.DataContext>
 
-    <Grid x:Name="MainGrid">
-        <ScrollViewer x:Name="PostScrollViewer" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
-            <StackPanel x:Name="MainStackPanel">
-                <Border
-                    x:Name="HeaderBorder"
-                    Background="#2D3436"
-                    ClipToBounds="True"
-                    CornerRadius="0,0,20,20">
-                    <Grid>
-                        <Image
-                            Source="/Resources/Images/APUIp.jpg"
-                            Stretch="Uniform" 
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Top" />
-                        
-                        <Border VerticalAlignment="Bottom" Height="120">
-                            <Border.Background>
-                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                                    <GradientStop Color="Transparent" Offset="0" />
-                                    <GradientStop Color="#CC000000" Offset="1" />
-                                </LinearGradientBrush>
-                            </Border.Background>
-                        </Border>
+    <!-- ═══════════════════════════════════════════════════════
+         TabControl: Tab 1 = Diễn đàn (cũ), Tab 2 = Duyệt bài (Admin)
+         ═══════════════════════════════════════════════════════ -->
+    <TabControl>
 
-                        <StackPanel Margin="40,0,40,25" VerticalAlignment="Bottom">
-                            <TextBlock
-                                FontSize="32"
-                                FontWeight="Bold"
-                                Foreground="White"
-                                Text="Nhóm Sinh viên Đại học">
-                                <TextBlock.Effect>
-                                    <DropShadowEffect BlurRadius="10" ShadowDepth="2" Opacity="0.8" />
-                                </TextBlock.Effect>
-                            </TextBlock>
-                            <TextBlock
-                                FontSize="14"
-                                Foreground="#E2E8F0"
-                                Text="Chia sẻ kiến thức • Kết nối bạn bè" />
-                        </StackPanel>
-                    </Grid>
-                </Border>
+        <!-- ══════════════════════════════════════════
+             TAB 1: DIỄN ĐÀN — giữ nguyên giao diện cũ
+             ══════════════════════════════════════════ -->
+        <TabItem Header="🏠 Diễn đàn">
+            <Grid x:Name="MainGrid">
+                <ScrollViewer
+                    x:Name="PostScrollViewer"
+                    HorizontalScrollBarVisibility="Disabled"
+                    VerticalScrollBarVisibility="Auto">
+                    <StackPanel x:Name="MainStackPanel">
 
-                <Border
-                    x:Name="CreatePostArea"
-                    MaxWidth="500"
-                    Margin="0,20"
-                    Background="White"
-                    BorderBrush="#E2E8F0"
-                    BorderThickness="1"
-                    CornerRadius="12">
-                    <Grid Margin="15">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-
-                        <Border Width="45" Height="45" Margin="0,0,12,0" ClipToBounds="True" CornerRadius="22.5">
-                            <Image Source="/Resources/Images/user.png" Stretch="UniformToFill" />
-                        </Border>
-
+                        <!-- HEADER ảnh bìa — GIỮ NGUYÊN -->
                         <Border
-                            x:Name="PostInputTrigger"
-                            Grid.Column="1"
-                            Height="45"
-                            Background="#F0F2F5"
-                            CornerRadius="22.5"
-                            Cursor="Hand"
-                            MouseLeftButtonUp="OpenCreatePost_Click">
-                            <TextBlock
-                                Margin="20,0"
-                                VerticalAlignment="Center"
-                                FontSize="15"
-                                Foreground="#65676B"
-                                Text="Bạn đang nghĩ gì?" />
+                            x:Name="HeaderBorder"
+                            Background="#2D3436"
+                            ClipToBounds="True"
+                            CornerRadius="0,0,20,20">
+                            <Grid>
+                                <Image
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Top"
+                                    Source="/Resources/Images/APUIp.jpg"
+                                    Stretch="Uniform" />
+                                <Border Height="120" VerticalAlignment="Bottom">
+                                    <Border.Background>
+                                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                            <GradientStop Offset="0" Color="Transparent" />
+                                            <GradientStop Offset="1" Color="#CC000000" />
+                                        </LinearGradientBrush>
+                                    </Border.Background>
+                                </Border>
+                                <StackPanel Margin="40,0,40,25" VerticalAlignment="Bottom">
+                                    <TextBlock
+                                        FontSize="32"
+                                        FontWeight="Bold"
+                                        Foreground="White"
+                                        Text="Nhóm Sinh viên Đại học">
+                                        <TextBlock.Effect>
+                                            <DropShadowEffect BlurRadius="10" Opacity="0.8" ShadowDepth="2" />
+                                        </TextBlock.Effect>
+                                    </TextBlock>
+                                    <TextBlock
+                                        FontSize="14"
+                                        Foreground="#E2E8F0"
+                                        Text="Chia sẻ kiến thức • Kết nối bạn bè" />
+                                </StackPanel>
+                            </Grid>
                         </Border>
 
+                        <!-- Ô tạo bài viết — GIỮ NGUYÊN -->
+                        <Border
+                            x:Name="CreatePostArea"
+                            MaxWidth="500"
+                            Margin="0,20,0,20"
+                            Background="White"
+                            BorderBrush="#E2E8F0"
+                            BorderThickness="1"
+                            CornerRadius="12">
+                            <Grid Margin="15">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <Border
+                                    Width="45" Height="45"
+                                    Margin="0,0,12,0"
+                                    ClipToBounds="True"
+                                    CornerRadius="22.5">
+                                    <Image Source="/Resources/Images/user.png" Stretch="UniformToFill" />
+                                </Border>
+                                <Border
+                                    x:Name="PostInputTrigger"
+                                    Grid.Column="1"
+                                    Height="45"
+                                    Background="#F0F2F5"
+                                    CornerRadius="22.5"
+                                    Cursor="Hand"
+                                    MouseLeftButtonUp="OpenCreatePost_Click">
+                                    <TextBlock
+                                        Margin="20,0,20,0"
+                                        VerticalAlignment="Center"
+                                        FontSize="15"
+                                        Foreground="#65676B"
+                                        Text="Bạn đang nghĩ gì?" />
+                                </Border>
+                                <Button
+                                    x:Name="BtnCreatePost"
+                                    Grid.Column="2"
+                                    Margin="12,0,0,0"
+                                    Background="#1877F2"
+                                    Click="OpenCreatePost_Click"
+                                    Content="Đăng bài"
+                                    Cursor="Hand"
+                                    FontWeight="Bold"
+                                    Foreground="White">
+                                    <Button.Template>
+                                        <ControlTemplate TargetType="Button">
+                                            <Border
+                                                Padding="15,0,15,0"
+                                                Background="{TemplateBinding Background}"
+                                                CornerRadius="18">
+                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                            </Border>
+                                        </ControlTemplate>
+                                    </Button.Template>
+                                </Button>
+                            </Grid>
+                        </Border>
+
+                        <!-- DANH SÁCH BÀI VIẾT — GIỮ NGUYÊN + thêm nút Admin Delete -->
+                        <ItemsControl
+                            x:Name="ForumPostsControl"
+                            MaxWidth="500"
+                            Margin="0,0,0,30"
+                            ItemsSource="{Binding Posts}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Border
+                                        Margin="0,0,0,15"
+                                        Background="White"
+                                        BorderBrush="#E2E8F0"
+                                        BorderThickness="1"
+                                        CornerRadius="12">
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto" />
+                                                <RowDefinition Height="Auto" />
+                                                <RowDefinition Height="Auto" />
+                                                <RowDefinition Height="Auto" />
+                                                <RowDefinition Height="Auto" />
+                                                <RowDefinition Height="Auto" />
+                                            </Grid.RowDefinitions>
+
+                                            <!-- Header: Avatar + Tên + Nút xóa -->
+                                            <Border Grid.Row="0" Padding="15,12,15,10">
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="Auto" />
+                                                        <ColumnDefinition Width="*" />
+                                                        <ColumnDefinition Width="Auto" />
+                                                    </Grid.ColumnDefinitions>
+                                                    <Border
+                                                        Width="40" Height="40"
+                                                        ClipToBounds="True"
+                                                        CornerRadius="20">
+                                                        <Image Source="{Binding DisplayAvatar}" Stretch="UniformToFill" />
+                                                    </Border>
+                                                    <StackPanel
+                                                        Grid.Column="1"
+                                                        Margin="12,0,12,0"
+                                                        VerticalAlignment="Center">
+                                                        <TextBlock
+                                                            FontSize="15" FontWeight="Bold"
+                                                            Foreground="#050505"
+                                                            Text="{Binding DisplayName}" />
+                                                        <TextBlock
+                                                            FontSize="12" Foreground="#65676B"
+                                                            Text="{Binding TimeAgo}" />
+                                                    </StackPanel>
+
+                                                    <!-- Nút 3 chấm: hiện khi là bài của mình HOẶC là Admin -->
+                                                    <Button
+                                                        Grid.Column="2"
+                                                        Width="32" Height="32"
+                                                        Background="Transparent"
+                                                        BorderThickness="0"
+                                                        Click="OptionButton_Click"
+                                                        Cursor="Hand"
+                                                        FontSize="18"
+                                                        Foreground="#65676B"
+                                                        Visibility="{Binding CanDelete, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                                        <Button.Template>
+                                                            <ControlTemplate TargetType="Button">
+                                                                <Border
+                                                                    Background="{TemplateBinding Background}"
+                                                                    CornerRadius="16">
+                                                                    <Border.Style>
+                                                                        <Style TargetType="Border">
+                                                                            <Style.Triggers>
+                                                                                <Trigger Property="IsMouseOver" Value="True">
+                                                                                    <Setter Property="Background" Value="#F0F2F5" />
+                                                                                </Trigger>
+                                                                            </Style.Triggers>
+                                                                        </Style>
+                                                                    </Border.Style>
+                                                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                                                </Border>
+                                                            </ControlTemplate>
+                                                        </Button.Template>
+                                                        <Button.ContextMenu>
+                                                            <ContextMenu>
+                                                                <!-- Xóa bài của mình (User thường) -->
+                                                                <MenuItem
+                                                                    Command="{Binding DataContext.DeletePostCommand,
+                                                                              Source={x:Reference ForumPostsControl}}"
+                                                                    CommandParameter="{Binding}"
+                                                                    FontWeight="SemiBold"
+                                                                    Foreground="#E53935"
+                                                                    Header="🗑️  Xóa bài viết"
+                                                                    Visibility="{Binding IsMyPost, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                                                                <!-- Xóa bài bất kỳ (Admin) -->
+                                                                <MenuItem
+                                                                    Command="{Binding DataContext.AdminDeleteCommand,
+                                                                              Source={x:Reference ForumPostsControl}}"
+                                                                    CommandParameter="{Binding}"
+                                                                    FontWeight="SemiBold"
+                                                                    Foreground="#B71C1C"
+                                                                    Header="🛡️  Xóa (Admin)"
+                                                                    Visibility="{Binding DataContext.IsAdmin,
+                                                                                  Source={x:Reference ForumPostsControl},
+                                                                                  Converter={StaticResource BooleanToVisibilityConverter}}" />
+                                                            </ContextMenu>
+                                                        </Button.ContextMenu>
+                                                        <TextBlock Text="···" FontSize="16" FontWeight="Bold" VerticalAlignment="Center" />
+                                                    </Button>
+                                                </Grid>
+                                            </Border>
+
+                                            <!-- Nội dung bài — GIỮ NGUYÊN -->
+                                            <Border Grid.Row="1">
+                                                <Border.Style>
+                                                    <Style TargetType="Border">
+                                                        <Setter Property="Background" Value="Transparent" />
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding IsColored}" Value="True">
+                                                                <Setter Property="Background" Value="{Binding BackgroundColor}" />
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Border.Style>
+                                                <TextBlock
+                                                    Margin="15,5,15,10"
+                                                    LineHeight="22"
+                                                    Text="{Binding Content}"
+                                                    TextWrapping="Wrap">
+                                                    <TextBlock.Style>
+                                                        <Style TargetType="TextBlock">
+                                                            <Setter Property="FontSize" Value="15" />
+                                                            <Setter Property="Foreground" Value="#050505" />
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding IsColored}" Value="True">
+                                                                    <Setter Property="FontSize" Value="24" />
+                                                                    <Setter Property="FontWeight" Value="Bold" />
+                                                                    <Setter Property="Foreground" Value="White" />
+                                                                    <Setter Property="TextAlignment" Value="Center" />
+                                                                    <Setter Property="Margin" Value="30,60,30,60" />
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </TextBlock.Style>
+                                                </TextBlock>
+                                            </Border>
+
+                                            <!-- Ảnh đính kèm — GIỮ NGUYÊN -->
+                                            <ItemsControl Grid.Row="2" ItemsSource="{Binding ImagePaths}">
+                                                <ItemsControl.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <Border BorderBrush="#F0F2F5" BorderThickness="0,1,0,1">
+                                                            <Image MaxHeight="500" Source="{Binding}" Stretch="Uniform" />
+                                                        </Border>
+                                                    </DataTemplate>
+                                                </ItemsControl.ItemTemplate>
+                                            </ItemsControl>
+
+                                            <!-- Bài gốc (share) — GIỮ NGUYÊN -->
+                                            <Border
+                                                Grid.Row="3"
+                                                Margin="15,10,15,0"
+                                                Padding="12"
+                                                Background="#F8F9FA"
+                                                BorderBrush="#CED0D4"
+                                                BorderThickness="1"
+                                                CornerRadius="10">
+                                                <Border.Style>
+                                                    <Style TargetType="Border">
+                                                        <Setter Property="Visibility" Value="Collapsed" />
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding IsShared}" Value="True">
+                                                                <Setter Property="Visibility" Value="Visible" />
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Border.Style>
+                                                <StackPanel>
+                                                    <TextBlock
+                                                        Margin="0,0,0,5"
+                                                        FontWeight="Bold"
+                                                        Foreground="#050505"
+                                                        Text="{Binding OriginalPost.DisplayName}" />
+                                                    <TextBlock
+                                                        MaxHeight="60"
+                                                        Foreground="#050505"
+                                                        Text="{Binding OriginalPost.Content}"
+                                                        TextWrapping="Wrap" />
+                                                </StackPanel>
+                                            </Border>
+
+                                            <!-- Thống kê like/comment/share — GIỮ NGUYÊN -->
+                                            <StackPanel Grid.Row="4" Margin="15,10,15,5">
+                                                <DockPanel LastChildFill="False">
+                                                    <StackPanel DockPanel.Dock="Left" Orientation="Horizontal">
+                                                        <TextBlock FontSize="13" Text="👍 " />
+                                                        <TextBlock
+                                                            FontSize="13" Foreground="#65676B"
+                                                            Text="{Binding Likes, StringFormat='{}{0} lượt thích'}" />
+                                                    </StackPanel>
+                                                    <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
+                                                        <TextBlock
+                                                            FontSize="13" Foreground="#65676B"
+                                                            Text="{Binding CommentCount, StringFormat='{}{0} bình luận'}" />
+                                                        <TextBlock
+                                                            Margin="5,0,5,0" VerticalAlignment="Center"
+                                                            Foreground="#65676B" Text=" • " />
+                                                        <TextBlock
+                                                            FontSize="13" Foreground="#65676B"
+                                                            Text="{Binding ShareCount, StringFormat='{}{0} chia sẻ'}" />
+                                                    </StackPanel>
+                                                </DockPanel>
+                                                <Rectangle Height="1" Margin="0,8,0,0" Fill="#E2E8F0" />
+                                            </StackPanel>
+
+                                            <!-- Nút hành động Like/Bình luận/Chia sẻ — GIỮ NGUYÊN -->
+                                            <UniformGrid Grid.Row="5" Margin="5,0,5,5" Columns="3">
+                                                <Button
+                                                    Padding="8"
+                                                    Background="Transparent"
+                                                    BorderThickness="0"
+                                                    Command="{Binding DataContext.LikeCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                                    CommandParameter="{Binding}"
+                                                    Cursor="Hand">
+                                                    <Button.Style>
+                                                        <Style TargetType="Button">
+                                                            <Setter Property="Foreground" Value="#65676B" />
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding IsLiked}" Value="True">
+                                                                    <Setter Property="Foreground" Value="#1877F2" />
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </Button.Style>
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <TextBlock Text="👍 " />
+                                                        <TextBlock FontWeight="SemiBold" Text="Thích" />
+                                                    </StackPanel>
+                                                </Button>
+
+                                                <Button
+                                                    Padding="8"
+                                                    Background="Transparent"
+                                                    BorderThickness="0"
+                                                    Click="CommentButton_Click"
+                                                    Cursor="Hand"
+                                                    Foreground="#65676B">
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <TextBlock Text="💬 " />
+                                                        <TextBlock FontWeight="SemiBold" Text="Bình luận" />
+                                                    </StackPanel>
+                                                </Button>
+
+                                                <Button
+                                                    Padding="8"
+                                                    Background="Transparent"
+                                                    BorderThickness="0"
+                                                    Click="ShareButton_Click"
+                                                    CommandParameter="{Binding}"
+                                                    Cursor="Hand"
+                                                    Foreground="#65676B">
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <TextBlock Text="↪️ " />
+                                                        <TextBlock FontWeight="SemiBold" Text="Chia sẻ" />
+                                                    </StackPanel>
+                                                </Button>
+                                            </UniformGrid>
+
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+
+                    </StackPanel>
+                </ScrollViewer>
+            </Grid>
+        </TabItem>
+
+        <!-- ══════════════════════════════════════════════════════
+             TAB 2: DUYỆT BÀI — CHỈ HIỆN KHI IsAdmin = true
+             ══════════════════════════════════════════════════════ -->
+        <TabItem Header="🛡️ Duyệt bài"
+                 Visibility="{Binding IsAdmin, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <!-- Toolbar Admin -->
+                <Border Grid.Row="0" Background="#FFF3E0" Padding="16,10">
+                    <DockPanel LastChildFill="False">
+                        <StackPanel DockPanel.Dock="Left" Orientation="Horizontal">
+                            <TextBlock
+                                VerticalAlignment="Center"
+                                FontSize="14" FontWeight="SemiBold"
+                                Text="🛡️ Bài chờ duyệt: " />
+                            <Border
+                                Margin="4,0,0,0" Padding="8,2"
+                                Background="#E65100" CornerRadius="10">
+                                <TextBlock
+                                    FontWeight="Bold" Foreground="White"
+                                    Text="{Binding PendingPosts.Count}" />
+                            </Border>
+                        </StackPanel>
                         <Button
-                            x:Name="BtnCreatePost"
-                            Grid.Column="2"
-                            Margin="12,0,0,0"
+                            DockPanel.Dock="Right"
+                            Padding="14,6"
                             Background="#1877F2"
-                            Click="OpenCreatePost_Click"
-                            Content="Đăng bài"
+                            Click="RefreshPending_Click"
                             Cursor="Hand"
-                            FontWeight="Bold"
+                            FontWeight="SemiBold"
                             Foreground="White">
                             <Button.Template>
                                 <ControlTemplate TargetType="Button">
                                     <Border
-                                        Padding="15,0"
+                                        Padding="{TemplateBinding Padding}"
                                         Background="{TemplateBinding Background}"
-                                        CornerRadius="18">
+                                        CornerRadius="8">
                                         <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
                                     </Border>
                                 </ControlTemplate>
                             </Button.Template>
+                            <TextBlock Text="🔄 Làm mới" />
                         </Button>
-                    </Grid>
+                    </DockPanel>
                 </Border>
 
-                <ItemsControl
-                    x:Name="ForumPostsControl"
-                    MaxWidth="500"
-                    Margin="0,0,0,30"
-                    ItemsSource="{Binding Posts}">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <Border
-                                Margin="0,0,0,15"
-                                Background="White"
-                                BorderBrush="#E2E8F0"
-                                BorderThickness="1"
-                                CornerRadius="12">
-                                <Grid>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto" />
-                                        <RowDefinition Height="Auto" />
-                                        <RowDefinition Height="Auto" />
-                                        <RowDefinition Height="Auto" />
-                                        <RowDefinition Height="Auto" />
-                                        <RowDefinition Height="Auto" />
-                                    </Grid.RowDefinitions>
+                <!-- Danh sách bài chờ duyệt -->
+                <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+                    <ItemsControl ItemsSource="{Binding PendingPosts}" Margin="0,10,0,20">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Border
+                                    MaxWidth="600"
+                                    Margin="20,0,20,12"
+                                    Background="White"
+                                    BorderBrush="#FF9800"
+                                    BorderThickness="2"
+                                    CornerRadius="12">
+                                    <StackPanel Margin="15">
 
-                                    <Border Grid.Row="0" Padding="15,12,15,10">
-                                        <Grid>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="Auto" />
-                                                <ColumnDefinition Width="*" />
-                                                <ColumnDefinition Width="Auto" />
-                                            </Grid.ColumnDefinitions>
-                                            <Border Width="40" Height="40" ClipToBounds="True" CornerRadius="20">
-                                                <Image Source="{Binding DisplayAvatar}" Stretch="UniformToFill" />
+                                        <!-- Header: Badge + Tên + Thời gian -->
+                                        <StackPanel Margin="0,0,0,10" Orientation="Horizontal">
+                                            <Border Background="#FFF3E0" CornerRadius="6" Padding="8,3">
+                                                <TextBlock
+                                                    FontSize="11" FontWeight="Bold"
+                                                    Foreground="#E65100"
+                                                    Text="⏳ CHỜ DUYỆT" />
                                             </Border>
-                                            <StackPanel Grid.Column="1" Margin="12,0" VerticalAlignment="Center">
-                                                <TextBlock FontSize="15" FontWeight="Bold" Foreground="#050505" Text="{Binding DisplayName}" />
-                                                <TextBlock FontSize="12" Foreground="#65676B" Text="{Binding TimeAgo}" />
-                                            </StackPanel>
-                                            <Button
-                                                Grid.Column="2"
-                                                Background="Transparent"
-                                                BorderThickness="0"
-                                                Command="{Binding DataContext.DeletePostCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
-                                                CommandParameter="{Binding}"
-                                                Content="✕"
-                                                Cursor="Hand"
-                                                FontWeight="Bold"
-                                                Foreground="#65676B"
-                                                Visibility="{Binding IsMyPost, Converter={StaticResource BooleanToVisibilityConverter}}" />
-                                        </Grid>
-                                    </Border>
-
-                                    <Border Grid.Row="1">
-                                        <Border.Style>
-                                            <Style TargetType="Border">
-                                                <Setter Property="Background" Value="Transparent" />
-                                                <Style.Triggers>
-                                                    <DataTrigger Binding="{Binding IsColored}" Value="True">
-                                                        <Setter Property="Background" Value="{Binding BackgroundColor}" />
-                                                    </DataTrigger>
-                                                </Style.Triggers>
-                                            </Style>
-                                        </Border.Style>
-                                        <TextBlock
-                                            Margin="15,5,15,10"
-                                            LineHeight="22"
-                                            Text="{Binding Content}"
-                                            TextWrapping="Wrap">
-                                            <TextBlock.Style>
-                                                <Style TargetType="TextBlock">
-                                                    <Setter Property="FontSize" Value="15" />
-                                                    <Setter Property="Foreground" Value="#050505" />
-                                                    <Style.Triggers>
-                                                        <DataTrigger Binding="{Binding IsColored}" Value="True">
-                                                            <Setter Property="FontSize" Value="24" />
-                                                            <Setter Property="FontWeight" Value="Bold" />
-                                                            <Setter Property="Foreground" Value="White" />
-                                                            <Setter Property="TextAlignment" Value="Center" />
-                                                            <Setter Property="Margin" Value="30,60" />
-                                                        </DataTrigger>
-                                                    </Style.Triggers>
-                                                </Style>
-                                            </TextBlock.Style>
-                                        </TextBlock>
-                                    </Border>
-
-                                    <ItemsControl Grid.Row="2" ItemsSource="{Binding ImagePaths}">
-                                        <ItemsControl.ItemTemplate>
-                                            <DataTemplate>
-                                                <Border BorderBrush="#F0F2F5" BorderThickness="0,1">
-                                                    <Image MaxHeight="500" Source="{Binding}" Stretch="Uniform" />
-                                                </Border>
-                                            </DataTemplate>
-                                        </ItemsControl.ItemTemplate>
-                                    </ItemsControl>
-
-                                    <Border Grid.Row="3" Margin="15,10,15,0" Padding="12"
-                                            Background="#F8F9FA" BorderBrush="#CED0D4" BorderThickness="1" CornerRadius="10">
-                                        <Border.Style>
-                                            <Style TargetType="Border">
-                                                <Setter Property="Visibility" Value="Collapsed" />
-                                                <Style.Triggers>
-                                                    <DataTrigger Binding="{Binding IsShared}" Value="True">
-                                                        <Setter Property="Visibility" Value="Visible" />
-                                                    </DataTrigger>
-                                                </Style.Triggers>
-                                            </Style>
-                                        </Border.Style>
-                                        <StackPanel>
-                                            <TextBlock Margin="0,0,0,5" FontWeight="Bold" Foreground="#050505" Text="{Binding OriginalPost.DisplayName}" />
-                                            <TextBlock MaxHeight="60" Foreground="#050505" Text="{Binding OriginalPost.Content}" TextWrapping="Wrap" />
+                                            <TextBlock
+                                                Margin="10,0,0,0"
+                                                VerticalAlignment="Center"
+                                                FontWeight="SemiBold"
+                                                Text="{Binding DisplayName}" />
+                                            <TextBlock
+                                                Margin="6,0,0,0"
+                                                VerticalAlignment="Center"
+                                                FontSize="12" Foreground="#65676B"
+                                                Text="{Binding TimeAgo}" />
                                         </StackPanel>
-                                    </Border>
 
-                                    <StackPanel Grid.Row="4" Margin="15,10,15,5">
-                                        <TextBlock FontSize="13" Foreground="#65676B" Text="{Binding Likes, StringFormat='👍 {0} lượt thích'}" />
-                                        <Rectangle Height="1" Margin="0,5,0,0" Fill="#E2E8F0" />
+                                        <!-- Nội dung -->
+                                        <TextBlock
+                                            Margin="0,0,0,10"
+                                            FontSize="14"
+                                            Text="{Binding Content}"
+                                            TextWrapping="Wrap" />
+
+                                        <!-- Ảnh (nếu có) -->
+                                        <ItemsControl ItemsSource="{Binding ImagePaths}">
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate>
+                                                    <Image
+                                                        Margin="0,0,0,8"
+                                                        MaxHeight="200"
+                                                        Source="{Binding}"
+                                                        Stretch="Uniform" />
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
+
+                                        <Rectangle Height="1" Margin="0,8,0,10" Fill="#E2E8F0" />
+
+                                        <!-- Nút hành động Admin -->
+                                        <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+
+                                            <!-- Nút DUYỆT -->
+                                            <Button
+                                                Margin="0,0,8,0"
+                                                Padding="16,8"
+                                                Background="#4CAF50"
+                                                Command="{Binding DataContext.ApprovePostCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                                CommandParameter="{Binding}"
+                                                Cursor="Hand"
+                                                FontWeight="SemiBold"
+                                                Foreground="White">
+                                                <Button.Template>
+                                                    <ControlTemplate TargetType="Button">
+                                                        <Border
+                                                            Padding="{TemplateBinding Padding}"
+                                                            Background="{TemplateBinding Background}"
+                                                            CornerRadius="8">
+                                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                                        </Border>
+                                                    </ControlTemplate>
+                                                </Button.Template>
+                                                <TextBlock Text="✅ Duyệt bài" />
+                                            </Button>
+
+                                            <!-- Nút TỪ CHỐI -->
+                                            <Button
+                                                Margin="0,0,8,0"
+                                                Padding="16,8"
+                                                Background="#FF9800"
+                                                Command="{Binding DataContext.RejectPostCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                                CommandParameter="{Binding}"
+                                                Cursor="Hand"
+                                                FontWeight="SemiBold"
+                                                Foreground="White">
+                                                <Button.Template>
+                                                    <ControlTemplate TargetType="Button">
+                                                        <Border
+                                                            Padding="{TemplateBinding Padding}"
+                                                            Background="{TemplateBinding Background}"
+                                                            CornerRadius="8">
+                                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                                        </Border>
+                                                    </ControlTemplate>
+                                                </Button.Template>
+                                                <TextBlock Text="🚫 Từ chối" />
+                                            </Button>
+
+                                            <!-- Nút XÓA -->
+                                            <Button
+                                                Padding="16,8"
+                                                Background="#F44336"
+                                                Command="{Binding DataContext.AdminDeleteCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                                CommandParameter="{Binding}"
+                                                Cursor="Hand"
+                                                FontWeight="SemiBold"
+                                                Foreground="White">
+                                                <Button.Template>
+                                                    <ControlTemplate TargetType="Button">
+                                                        <Border
+                                                            Padding="{TemplateBinding Padding}"
+                                                            Background="{TemplateBinding Background}"
+                                                            CornerRadius="8">
+                                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                                        </Border>
+                                                    </ControlTemplate>
+                                                </Button.Template>
+                                                <TextBlock Text="🗑️ Xóa bài" />
+                                            </Button>
+                                        </StackPanel>
+
                                     </StackPanel>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
 
-                                    <UniformGrid Grid.Row="5" Columns="3" Margin="5,0,5,5">
-                                        <Button Padding="8" Background="Transparent" BorderThickness="0" Cursor="Hand"
-                                                Command="{Binding DataContext.LikeCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
-                                                CommandParameter="{Binding}">
-                                            <Button.Style>
-                                                <Style TargetType="Button">
-                                                    <Setter Property="Foreground" Value="#65676B" />
-                                                    <Style.Triggers>
-                                                        <DataTrigger Binding="{Binding IsLiked}" Value="True">
-                                                            <Setter Property="Foreground" Value="#1877F2" />
-                                                        </DataTrigger>
-                                                    </Style.Triggers>
-                                                </Style>
-                                            </Button.Style>
-                                            <StackPanel Orientation="Horizontal">
-                                                <TextBlock Text="👍 " />
-                                                <TextBlock FontWeight="SemiBold" Text="Thích" />
-                                            </StackPanel>
-                                        </Button>
-                                        
-                                        <Button Padding="8" Background="Transparent" BorderThickness="0" Cursor="Hand"
-                                                Click="CommentButton_Click" Foreground="#65676B">
-                                            <StackPanel Orientation="Horizontal">
-                                                <TextBlock Text="💬 " />
-                                                <TextBlock FontWeight="SemiBold" Text="Bình luận" />
-                                            </StackPanel>
-                                        </Button>
-                                        
-                                        <Button Padding="8" Background="Transparent" BorderThickness="0" Cursor="Hand"
-                                                Click="ShareButton_Click" CommandParameter="{Binding}" Foreground="#65676B">
-                                            <StackPanel Orientation="Horizontal">
-                                                <TextBlock Text="↪️ " />
-                                                <TextBlock FontWeight="SemiBold" Text="Chia sẻ" />
-                                            </StackPanel>
-                                        </Button>
-                                    </UniformGrid>
-                                </Grid>
-                            </Border>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-            </StackPanel>
-        </ScrollViewer>
-    </Grid>
+            </Grid>
+        </TabItem>
+
+    </TabControl>
 </UserControl>
