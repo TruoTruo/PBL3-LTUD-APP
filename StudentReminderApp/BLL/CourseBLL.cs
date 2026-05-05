@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using StudentReminderApp.DAL;
 using StudentReminderApp.Models;
+using System.Threading.Tasks;
 
 namespace StudentReminderApp.BLL
 {
@@ -8,24 +9,15 @@ namespace StudentReminderApp.BLL
     {
         private readonly CourseDAL _dal = new CourseDAL();
 
-        public List<LopHocPhan> GetAvailable(int hocKy, string namHoc, long idSv)
-            => _dal.GetAvailable(hocKy, namHoc, idSv);
+        public Task<List<LopHocPhan>> GetAvailableAsync(int hocKy, string namHoc, long idSv) => _dal.GetAvailableAsync(hocKy, namHoc, idSv);
 
-        public (bool ok, string msg) Register(long idSv, long idLopHp)
+        public async Task<(bool, string)> RegisterAsync(long idSv, long idLopHp)
         {
-            try
-            {
-                _dal.Register(idSv, idLopHp);
-                return (true, "Đăng ký thành công!");
-            }
-            catch (System.Exception ex)
-            {
-                if (ex.Message.Contains("idx_unique_dki"))
-                    return (false, "Bạn đã đăng ký lớp học phần này rồi.");
-                return (false, "Lỗi: " + ex.Message);
-            }
+            bool ok = await _dal.RegisterAsync(idSv, idLopHp);
+            if (ok) return (true, "Đăng ký thành công!");
+            return (false, "Lỗi: Môn học này có thể đã bị trùng giờ hoặc bạn đã đăng ký rồi.");
         }
 
-        public void Unregister(long idSv, long idLopHp) => _dal.Unregister(idSv, idLopHp);
+        public Task UnregisterAsync(long idSv, long idLopHp) => _dal.UnregisterAsync(idSv, idLopHp);
     }
 }

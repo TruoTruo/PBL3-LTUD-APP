@@ -1,0 +1,95 @@
+version: '3.8'
+
+# Services - Defines all containers that make up your application
+services:
+  # SQL Server Database Service
+  sqlserver:
+    # The image to use for this container - Microsoft SQL Server 2022 for Linux
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    
+    # Container name for easy reference and networking
+    container_name: pbl3_sqlserver
+    
+    # Environment variables for SQL Server configuration
+    environment:
+      # Enable SQL Server to run in containers
+      - ACCEPT_EULA=Y
+      # SA (System Administrator) password - CHANGE THIS for production!
+      - SA_PASSWORD=YourStrong@Password123
+      # Set SQL Server edition to Express (free tier)
+      - MSSQL_PID=Express
+    
+    # Port mapping: host_port:container_port
+    # Maps port 1433 on your machine to port 1433 in the container
+    ports:
+      - "1433:1433"
+    
+    # Mount volumes to persist database data and load initialization scripts
+    volumes:
+      # Named volume to persist SQL Server data between container restarts
+      - sqlserver_data:/var/opt/mssql
+      # Bind mount your SQL initialization script into the container
+      - ./database_setup.sql:/docker-entrypoint-initdb.d/init.sql
+    
+    # Healthcheck to verify the database is running properly
+    healthcheck:
+      # Command to check if SQL Server is responsive using sqlcmd
+      test: /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P $${SA_PASSWORD} -Q "SELECT 1"
+      # Interval between health checks in seconds
+      interval: 10s
+      # How long to wait for the command to respond before considering it failed
+      timeout: 3s
+      # Number of consecutive failures before marking container as unhealthy
+      retries: 3
+      # Delay before starting health checks after container starts
+      start_period: 40s
+    
+    # Network for container communication
+    networks:
+      - pbl3_network
+
+  # ASP.NET Core API Service (Optional - if you have a backend API)
+  api:
+    # Build the image from your Dockerfile in the current directory
+    build:
+      context: .
+      dockerfile: Dockerfile
+    
+    # Container name
+    container_name: pbl3_api
+    
+    # Port mapping for the API service
+    ports:
+      - "5000:5000"
+      - "5001:5001"
+    
+    # Environment variables for your application
+    environment:
+      # Connection string to reach the SQL Server container by service name
+      - ConnectionStrings__DefaultConnection=Server=sqlserver,1433;Initial Catalog=StudentReminder;User Id=sa;Password=YourStrong@Password123;
+      - ASPNETCORE_ENVIRONMENT=Development
+    
+    # Make the container wait for SQL Server to be healthy before starting
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+    
+    # Mount source code for development (optional - for hot reload)
+    volumes:
+      - .:/app
+    
+    # Network for communication with other services
+    networks:
+      - pbl3_network
+
+# Volumes - Named volumes for persistent data storage
+volumes:
+  # Named volume to store SQL Server database files
+  sqlserver_data:
+    driver: local
+
+# Networks - Custom network for service-to-service communication
+networks:
+  # Create a custom network so containers can communicate by service name
+  pbl3_network:
+    driver: bridge

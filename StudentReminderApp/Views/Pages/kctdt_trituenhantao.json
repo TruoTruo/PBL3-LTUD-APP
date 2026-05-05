@@ -1,0 +1,96 @@
+{
+  "program_info": {
+    "id": "1024021",
+    "name": "Công nghệ Thông tin K2024 ĐT - KHDL_TTNT _ Kỹ Sư",
+    "major": "7480201 - Công nghệ Thông tin",
+    "total_credits": 180,
+    "duration": "10 học kỳ"
+  },
+  "semesters": [
+    {
+      "semester": 1,
+      "courses": [
+        { "id": "1022113", "name": "Nhập môn ngành CNTT & Khoa học dữ liệu", "credits": 2, "lecturer": "TS. Huỳnh Công Pháp", "weeks": "1-10", "session": "Sáng" },
+        { "id": "1022063", "name": "Kỹ thuật lập trình", "credits": 3, "lecturer": "TS. Ninh Khánh Duy", "weeks": "1-15", "session": "Chiều" },
+        { "id": "1012513", "name": "Giải tích 1", "credits": 3, "lecturer": "ThS. Trần Liên Anh", "weeks": "1-15", "session": "Sáng" },
+        { "id": "1012523", "name": "Đại số tuyến tính", "credits": 3, "lecturer": "TS. Nguyễn Công Bằng", "weeks": "1-15", "session": "Chiều" },
+        { "id": "1090013", "name": "Triết học Mác-Lênin", "credits": 3, "lecturer": "TS. Lê Thị C", "weeks": "1-15", "session": "Sáng" }
+      ]
+    },
+    {
+      "semester": 2,
+      "courses": [
+        { "id": "1020053", "name": "Cấu trúc dữ liệu và Giải thuật", "credits": 3, "lecturer": "TS. Đặng Hoài Phương", "weeks": "1-15", "session": "Chiều" },
+        { "id": "1022083", "name": "Lập trình hướng đối tượng", "credits": 3, "lecturer": "PGS.TS. Lê Văn Sơn", "weeks": "1-15", "session": "Sáng" },
+        { "id": "1012533", "name": "Giải tích 2", "credits": 3, "lecturer": "ThS. Nguyễn Hữu Hiệp", "weeks": "1-15", "session": "Sáng" },
+        { "id": "1012543", "name": "Xác suất thống kê và Phân tích dữ liệu", "credits": 3, "lecturer": "TS. Trần Văn F", "weeks": "1-15", "session": "Chiều" },
+        { "id": "1022073", "name": "Toán rời rạc", "credits": 3, "lecturer": "TS. Nguyễn Trần Quốc Vinh", "weeks": "1-15", "session": "Chiều" }
+      ]
+    },
+    {
+      "semester": 3,
+      "courses": [
+        { "id": "1022103", "name": "Cơ sở dữ liệu", "credits": 3, "lecturer": "ThS. Đỗ Thị Tuyết Hoa", "weeks": "1-15", "session": "Sáng" },
+        { "id": "1024503", "name": "Toán cho Trí tuệ nhân tạo", "credits": 3, "lecturer": "TS. Nguyễn Công Bằng", "weeks": "1-15", "session": "Chiều" },
+        { "id": "1022093", "name": "Kiến trúc máy tính", "credits": 3, "lecturer": "TS. Trương Ngọc Châu", "weeks": "1-15", "session": "Sáng" },
+        { "id": "1024513", "name": "Lập trình Python cho Khoa học dữ liệu", "credits": 3, "lecturer": "TS. Đặng Trung Hiếu", "weeks": "1-15", "session": "Chiều" }
+      ]
+    },
+    {
+      "semester": 4,
+      "courses": [
+        { "id": "1022123", "name": "Hệ điều hành", "credits": 3, "lecturer": "TS. Nguyễn Thanh Bình", "weeks": "1-15", "session": "Sáng" },
+        { "id": "1023134", "name": "PBL 1: Dự án lập trình (Data Crawling)", "credits": 4, "lecturer": "Hội đồng bộ môn AI", "weeks": "1-15", "session": "Chiều" },
+        { "id": "1024523", "name": "Cơ sở học máy", "credits": 3, "lecturer": "TS. Đặng Hoài Phương", "weeks": "1-15", "session": "Sáng" },
+        { "id": "1022143", "name": "Mạng máy tính", "credits": 3, "lecturer": "TS. Nguyễn Thanh Bình", "weeks": "1-15", "session": "Chiều" }
+      ]
+    },
+    {
+      "semester": 5,
+      "courses": [
+        { "id": "INT3002", "name": "Trí tuệ nhân tạo nâng cao", "credits": 3, "lecturer": "PGS.TS. Phạm Thị Hoa", "weeks": "1-15", "session": "Sáng" },
+        { "id": "1024533", "name": "Học sâu (Deep Learning)", "credits": 3, "lecturer": "TS. Nguyễn Văn G", "weeks": "1-15", "session": "Chiều" },
+        { "id": "1023154", "name": "PBL 2: Dự án phân tích dữ liệu", "credits": 4, "lecturer": "ThS. Đỗ Thị Tuyết Hoa", "weeks": "1-15", "session": "Sáng" },
+        { "id": "1022183", "name": "Lập trình Web", "credits": 3, "lecturer": "TS. Đặng Trung Hiếu", "weeks": "1-15", "session": "Chiều" }
+      ]
+    },
+    {
+      "semester": 6,
+      "courses": [
+        { "id": "1024543", "name": "Xử lý ngôn ngữ tự nhiên", "credits": 3, "lecturer": "TS. Đặng Hoài Phương", "weeks": "1-15", "session": "Sáng" },
+        { "id": "1024553", "name": "Thị giác máy tính", "credits": 3, "lecturer": "TS. Nguyễn Văn H", "weeks": "1-15", "session": "Chiều" },
+        { "id": "1023164", "name": "PBL 3: Dự án Học máy ứng dụng", "credits": 4, "lecturer": "PGS.TS. Lê Văn Sơn", "weeks": "1-15", "session": "Sáng" },
+        { "id": "1022153", "name": "Phân tích và thiết kế hệ thống", "credits": 3, "lecturer": "ThS. Phạm Thị Hoa", "weeks": "1-15", "session": "Chiều" }
+      ]
+    },
+    {
+      "semester": 7,
+      "courses": [
+        { "id": "1024563", "name": "Hệ thống khuyến nghị", "credits": 3, "lecturer": "TS. Đặng Trung Hiếu", "weeks": "1-15", "session": "Sáng" },
+        { "id": "1024573", "name": "Dữ liệu lớn (Big Data)", "credits": 3, "lecturer": "TS. Nguyễn Thanh Bình", "weeks": "1-15", "session": "Chiều" },
+        { "id": "1023174", "name": "PBL 4: Dự án Hệ thống thông minh", "credits": 4, "lecturer": "TS. Trương Ngọc Châu", "weeks": "1-15", "session": "Sáng" }
+      ]
+    },
+    {
+      "semester": 8,
+      "courses": [
+        { "id": "1024583", "name": "Tối ưu hóa trong Học máy", "credits": 3, "lecturer": "TS. Nguyễn Văn I", "weeks": "1-15", "session": "Chiều" },
+        { "id": "1023184", "name": "PBL 5: Dự án KHDL & TTNT chuyên sâu", "credits": 4, "lecturer": "TS. Huỳnh Công Pháp", "weeks": "1-15", "session": "Sáng" },
+        { "id": "1022203", "name": "An toàn và bảo mật hệ thống", "credits": 3, "lecturer": "TS. Nguyễn Thanh Bình", "weeks": "1-15", "session": "Sáng" }
+      ]
+    },
+    {
+      "semester": 9,
+      "courses": [
+        { "id": "1022285", "name": "Thực tập tốt nghiệp (AI Lab)", "credits": 5, "lecturer": "Doanh nghiệp/Lab AI", "weeks": "1-15", "session": "Cả ngày" },
+        { "id": "1023194", "name": "PBL 6: Dự án cuối khóa", "credits": 4, "lecturer": "Hội đồng bộ môn AI", "weeks": "1-15", "session": "Chiều" }
+      ]
+    },
+    {
+      "semester": 10,
+      "courses": [
+        { "id": "10223110", "name": "Đồ án tốt nghiệp (Kỹ sư KHDL-TTNT)", "credits": 10, "lecturer": "Hội đồng tốt nghiệp", "weeks": "1-15", "session": "Sáng/Chiều" }
+      ]
+    }
+  ]
+}

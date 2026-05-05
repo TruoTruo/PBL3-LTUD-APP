@@ -4,6 +4,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using StudentReminderApp.DAL;
 using StudentReminderApp.Helpers;
+using StudentReminderApp.Models;
 
 namespace StudentReminderApp.Views.Pages
 {
@@ -15,18 +16,18 @@ namespace StudentReminderApp.Views.Pages
 
         private void LoadProfile()
         {
-            var acc  = SessionManager.CurrentAccount;
+            var acc = SessionManager.CurrentAccount;
             var user = SessionManager.CurrentUser;
             if (acc == null || user == null) return;
 
-            TxtAvatar.Text          = user.HoTen?.Length > 0 ? user.HoTen[0].ToString().ToUpper() : "?";
-            TxtFullName.Text        = user.HoTen;
+            TxtAvatar.Text = user.HoTen?.Length > 0 ? user.HoTen[0].ToString().ToUpper() : "?";
+            TxtFullName.Text = user.HoTen;
             TxtUsernameDisplay.Text = "@" + acc.Username;
-            TxtRole.Text            = acc.RoleName == "Admin" ? "Quản trị viên" : "Sinh viên";
+            TxtRole.Text = acc.RoleName == "Admin" ? "Quản trị viên" : "Sinh viên";
 
-            TxtEditName.Text        = user.HoTen;
-            TxtEditEmail.Text       = user.Email;
-            TxtEditSdt.Text         = user.Sdt;
+            TxtEditName.Text = user.HoTen;
+            TxtEditEmail.Text = user.Email;
+            TxtEditSdt.Text = user.Sdt;
             DpNgaySinh.SelectedDate = user.NgaySinh;
         }
 
@@ -38,15 +39,15 @@ namespace StudentReminderApp.Views.Pages
             if (string.IsNullOrWhiteSpace(TxtEditName.Text))
             { ShowMsg(TxtProfileMsg, "Họ tên không được để trống.", false); return; }
 
-            user.HoTen    = TxtEditName.Text.Trim();
-            user.Email    = TxtEditEmail.Text.Trim();
-            user.Sdt      = TxtEditSdt.Text.Trim();
+            user.HoTen = TxtEditName.Text.Trim();
+            user.Email = TxtEditEmail.Text.Trim();
+            user.Sdt = TxtEditSdt.Text.Trim();
             user.NgaySinh = DpNgaySinh.SelectedDate;
 
             _userDal.Update(user);
             SessionManager.SetSession(SessionManager.CurrentAccount, user);
             TxtFullName.Text = user.HoTen;
-            TxtAvatar.Text   = user.HoTen[0].ToString().ToUpper();
+            TxtAvatar.Text = user.HoTen[0].ToString().ToUpper();
             ShowMsg(TxtProfileMsg, "✓ Lưu thành công!", true);
         }
 
@@ -88,7 +89,7 @@ namespace StudentReminderApp.Views.Pages
 
         private static void ShowMsg(TextBlock tb, string msg, bool success)
         {
-            tb.Text       = msg;
+            tb.Text = msg;
             tb.Foreground = success
                 ? new SolidColorBrush(Color.FromRgb(16, 185, 129))
                 : new SolidColorBrush(Color.FromRgb(239, 68, 68));
@@ -98,12 +99,16 @@ namespace StudentReminderApp.Views.Pages
         private static void UpdatePasswordHash(long idAcc, string hash)
         {
             const string sql = "UPDATE ACCOUNT SET password_hash=@h, updated_at=GETDATE() WHERE id_acc=@id";
-            using var conn = new SqlConnection(AppConfig.ConnectionString);
-            conn.Open();
-            using var cmd = new SqlCommand(sql, conn);
-            cmd.Parameters.AddWithValue("@h",  hash);
-            cmd.Parameters.AddWithValue("@id", idAcc);
-            cmd.ExecuteNonQuery();
+            using (var conn = new SqlConnection(AppConfig.ConnectionString))
+            {
+                conn.Open();
+                using (var cmd = new SqlCommand(sql, conn))
+                {
+                    cmd.Parameters.AddWithValue("@h", hash);
+                    cmd.Parameters.AddWithValue("@id", idAcc);
+                    cmd.ExecuteNonQuery();
+                }
+            }
         }
 
         private static void SaveReminderConfig(long idAcc, int mins, bool isEnabled, string channel)
@@ -114,14 +119,18 @@ namespace StudentReminderApp.Views.Pages
                 ELSE
                     INSERT INTO REMINDER_CONFIG(id_acc,mins_before,is_enabled,channel)
                     VALUES(@acc,@m,@en,@ch)";
-            using var conn = new SqlConnection(AppConfig.ConnectionString);
-            conn.Open();
-            using var cmd = new SqlCommand(sql, conn);
-            cmd.Parameters.AddWithValue("@acc", idAcc);
-            cmd.Parameters.AddWithValue("@m",   mins);
-            cmd.Parameters.AddWithValue("@en",  isEnabled ? 1 : 0);
-            cmd.Parameters.AddWithValue("@ch",  channel);
-            cmd.ExecuteNonQuery();
+            using (var conn = new SqlConnection(AppConfig.ConnectionString))
+            {
+                conn.Open();
+                using (var cmd = new SqlCommand(sql, conn))
+                {
+                    cmd.Parameters.AddWithValue("@acc", idAcc);
+                    cmd.Parameters.AddWithValue("@m", mins);
+                    cmd.Parameters.AddWithValue("@en", isEnabled ? 1 : 0);
+                    cmd.Parameters.AddWithValue("@ch", channel);
+                    cmd.ExecuteNonQuery();
+                }
+            }
         }
     }
 }
