@@ -68,6 +68,7 @@ namespace StudentReminderApp.ViewModels
 
                 if (success)
                 {
+                    _originalPost.ShareCount++;
                     MessageBox.Show("✅ Chia sẻ bài viết thành công!");
                     window.DialogResult = true; 
                     window.Close(); 

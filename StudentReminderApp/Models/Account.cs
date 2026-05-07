@@ -8,5 +8,7 @@ namespace StudentReminderApp.Models
         public long   IdRole       { get; set; }
         public string Status       { get; set; }
         public string RoleName     { get; set; }
+
+        public bool IsAdmin => RoleName == "Admin";
     }
 }

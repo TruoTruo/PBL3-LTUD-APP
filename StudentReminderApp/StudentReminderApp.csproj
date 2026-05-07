@@ -10,13 +10,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="BCrypt.Net-Next" Version="4.0.3"/>
-    <PackageReference Include="System.Data.SqlClient" Version="4.8.6"/>
+    <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.6" />
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Resources\Colors.xaml"/>
-    <Resource Include="Resources\Styles.xaml"/>
+    <Resource Include="Resources\Colors.xaml" />
+    <Resource Include="Resources\Styles.xaml" />
     <Resource Include="Resources\Images\APUIp.jpg" />
     <Resource Include="Resources\Images\user.png" />
     <Resource Include="Resources\Icons\image-gallery.png" />

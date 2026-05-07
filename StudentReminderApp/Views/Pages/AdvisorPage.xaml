@@ -1,203 +1,593 @@
 <Page x:Class="StudentReminderApp.Views.Pages.AdvisorPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      Background="{StaticResource BgBrush}">
-    <ScrollViewer VerticalScrollBarVisibility="Auto">
-        <StackPanel Margin="32,28">
+      Background="#f8fafc">
+    <Grid>
+        <!-- MAIN CONTENT -->
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <StackPanel Margin="32,28">
 
-            <TextBlock Text="Tư vấn đăng ký học phần" FontSize="22" FontWeight="Bold"
-                       Foreground="{StaticResource TextPrimaryBrush}" Margin="0,0,0,4"/>
-            <TextBlock Text="Gợi ý môn học phù hợp dựa trên tiến độ học tập của bạn"
-                       FontSize="13" Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,24"/>
-
-            <!-- Filter -->
-            <Grid Margin="0,0,0,20">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="12"/>
-                    <ColumnDefinition Width="160"/>
-                    <ColumnDefinition Width="12"/>
-                    <ColumnDefinition Width="140"/>
-                    <ColumnDefinition Width="12"/>
-                    <ColumnDefinition Width="Auto"/>
-                </Grid.ColumnDefinitions>
-                <TextBlock Grid.Column="0" Text="Học kỳ:" VerticalAlignment="Center"
-                           FontSize="13" Foreground="{StaticResource TextSecondaryBrush}"/>
-                <ComboBox x:Name="CmbHocKy" Grid.Column="2" Height="40">
-                    <ComboBoxItem Content="Học kỳ 1" IsSelected="True"/>
-                    <ComboBoxItem Content="Học kỳ 2"/>
-                    <ComboBoxItem Content="Học kỳ hè"/>
-                </ComboBox>
-                <TextBox x:Name="TxtNamHoc" Grid.Column="4"
-                         Style="{StaticResource InputModern}" Text="2024-2025" Height="40"/>
-                <Button Grid.Column="6" Content="Phân tích" Style="{StaticResource BtnPrimary}"
-                        Height="40" Padding="20,0" Click="BtnAnalyze_Click"/>
-            </Grid>
-
-            <!-- Summary cards -->
-            <Grid Margin="0,0,0,24">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/><ColumnDefinition Width="14"/>
-                    <ColumnDefinition/><ColumnDefinition Width="14"/>
-                    <ColumnDefinition/><ColumnDefinition Width="14"/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-                <Border Grid.Column="0" Style="{StaticResource Card}">
-                    <StackPanel>
-                        <TextBlock Text="Tín chỉ tích lũy" FontSize="12"
-                                   Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,6"/>
-                        <TextBlock x:Name="TxtAccCredit" Text="—" FontSize="30" FontWeight="Bold"
-                                   Foreground="{StaticResource PrimaryBrush}"/>
-                        <TextBlock Text="/ 130 TC chương trình" FontSize="11"
-                                   Foreground="{StaticResource TextMutedBrush}" Margin="0,4,0,0"/>
-                    </StackPanel>
-                </Border>
-                <Border Grid.Column="2" Style="{StaticResource Card}">
-                    <StackPanel>
-                        <TextBlock Text="Đã đăng ký HK này" FontSize="12"
-                                   Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,6"/>
-                        <TextBlock x:Name="TxtRegCredit" Text="—" FontSize="30" FontWeight="Bold"
-                                   Foreground="{StaticResource SuccessBrush}"/>
-                        <TextBlock x:Name="TxtRemaining" Text="Còn lại: —" FontSize="11"
-                                   Foreground="{StaticResource TextMutedBrush}" Margin="0,4,0,0"/>
-                    </StackPanel>
-                </Border>
-                <Border Grid.Column="4" Style="{StaticResource Card}">
-                    <StackPanel>
-                        <TextBlock Text="GPA tích lũy" FontSize="12"
-                                   Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,6"/>
-                        <TextBlock x:Name="TxtGpa" Text="—" FontSize="30" FontWeight="Bold"
-                                   Foreground="{StaticResource InfoBrush}"/>
-                        <TextBlock x:Name="TxtGpaLevel" Text="—" FontSize="11"
-                                   Foreground="{StaticResource TextMutedBrush}" Margin="0,4,0,0"/>
-                    </StackPanel>
-                </Border>
-                <Border Grid.Column="6" Style="{StaticResource Card}">
-                    <StackPanel>
-                        <TextBlock Text="Môn được gợi ý" FontSize="12"
-                                   Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,6"/>
-                        <TextBlock x:Name="TxtSuggestCount" Text="—" FontSize="30" FontWeight="Bold"
-                                   Foreground="{StaticResource WarningBrush}"/>
-                        <TextBlock Text="môn học phù hợp" FontSize="11"
-                                   Foreground="{StaticResource TextMutedBrush}" Margin="0,4,0,0"/>
-                    </StackPanel>
-                </Border>
-            </Grid>
-
-            <!-- Two columns -->
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="16"/>
-                    <ColumnDefinition Width="360"/>
-                </Grid.ColumnDefinitions>
-
-                <!-- Suggested courses -->
-                <Border Grid.Column="0" Style="{StaticResource Card}">
-                    <StackPanel>
-                        <TextBlock Text="Môn học được gợi ý" FontSize="15" FontWeight="SemiBold"
-                                   Foreground="{StaticResource TextPrimaryBrush}" Margin="0,0,0,4"/>
-                        <TextBlock Text="Đủ điều kiện tiên quyết · Chưa học · Phù hợp tín chỉ"
-                                   FontSize="11" Foreground="{StaticResource TextMutedBrush}"
-                                   Margin="0,0,0,14"/>
-                        <DataGrid x:Name="DgSuggested"
-                                  AutoGenerateColumns="False" IsReadOnly="True"
-                                  GridLinesVisibility="Horizontal" HeadersVisibility="Column"
-                                  RowBackground="White" AlternatingRowBackground="#FAFAFA"
-                                  BorderThickness="0" CanUserResizeRows="False"
-                                  RowHeight="44" FontSize="12.5">
-                            <DataGrid.Columns>
-                                <DataGridTextColumn Header="Mã MH"      Binding="{Binding MaMonHoc}"     Width="85"/>
-                                <DataGridTextColumn Header="Tên môn học" Binding="{Binding TenMonHoc}"   Width="*"/>
-                                <DataGridTextColumn Header="TC"          Binding="{Binding SoTinChi}"    Width="45"/>
-                                <DataGridTextColumn Header="Giảng viên"  Binding="{Binding TenGiangVien}" Width="140"/>
-                                <DataGridTextColumn Header="Phòng"       Binding="{Binding TenPhong}"    Width="80"/>
-                                <DataGridTemplateColumn Header="Thao tác" Width="95">
-                                    <DataGridTemplateColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <Button Content="+ Đăng ký" Tag="{Binding}"
-                                                    Style="{StaticResource BtnPrimary}"
-                                                    Height="30" FontSize="11"
-                                                    Click="BtnQuickRegister_Click"/>
-                                        </DataTemplate>
-                                    </DataGridTemplateColumn.CellTemplate>
-                                </DataGridTemplateColumn>
-                            </DataGrid.Columns>
-                        </DataGrid>
-                        <TextBlock x:Name="TxtNoSuggest" Visibility="Collapsed"
-                                   Text="Không có môn học nào được gợi ý. Bạn có thể đã đăng ký đủ hoặc chưa có dữ liệu tích lũy."
-                                   Foreground="{StaticResource TextMutedBrush}" FontSize="13"
-                                   TextWrapping="Wrap" HorizontalAlignment="Center" Margin="0,20"/>
+                <!-- Loading Overlay -->
+                <Border x:Name="LoadingOverlay"
+                        Grid.RowSpan="3"
+                        Background="#80FFFFFF"
+                        Visibility="Collapsed"
+                        Panel.ZIndex="10"
+                        Margin="-32,-28">
+                    <StackPanel HorizontalAlignment="Center"
+                                VerticalAlignment="Center">
+                        <ProgressBar IsIndeterminate="True"
+                                     Width="100"
+                                     Height="10"/>
+                        <TextBlock Text="Đang phân tích dữ liệu..."
+                                   Margin="0,10,0,0"
+                                   Foreground="{StaticResource TextSecondaryBrush}"/>
                     </StackPanel>
                 </Border>
 
-                <!-- Registered list -->
-                <Border Grid.Column="2" Style="{StaticResource Card}">
+                <!-- NEW HEADER & ACTION BAR -->
+                <Grid Margin="0,0,0,24">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Button x:Name="BtnBack"
+                            Grid.Column="0"
+                            Content="←"
+                            Background="Transparent"
+                            BorderThickness="0"
+                            Foreground="#64748B"
+                            FontSize="20"
+                            FontWeight="Bold"
+                            Margin="0,0,16,0"
+                            Cursor="Hand"
+                            Click="BtnBack_Click"
+                            VerticalAlignment="Center"/>
+
+                    <StackPanel Grid.Column="1"
+                                VerticalAlignment="Center">
+                        <TextBlock Text="Tư vấn đăng ký học phần"
+                                   FontSize="24"
+                                   FontWeight="Bold"
+                                   Foreground="#0F172A"/>
+                        <TextBlock Text="Gợi ý môn học phù hợp dựa trên tiến độ học tập của bạn"
+                                   FontSize="13"
+                                   Foreground="#64748B"/>
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="2"
+                                Orientation="Horizontal"
+                                VerticalAlignment="Center">
+                        <Button x:Name="BtnWizardHome"
+                                Content="Trang chủ"
+                                Background="White"
+                                Foreground="#64748B"
+                                BorderBrush="#E2E8F0"
+                                BorderThickness="1"
+                                Padding="16,8"
+                                Margin="0,0,8,0"
+                                Cursor="Hand"
+                                Click="BtnWizardHome_Click">
+                            <Button.Resources>
+                                <Style TargetType="Border">
+                                    <Setter Property="CornerRadius"
+                                            Value="6"/>
+                                </Style>
+                            </Button.Resources>
+                        </Button>
+                        <Button x:Name="BtnWizardReset"
+                                Content="Làm mới"
+                                Background="White"
+                                Foreground="#EF4444"
+                                BorderBrush="#FCA5A5"
+                                BorderThickness="1"
+                                Padding="16,8"
+                                Cursor="Hand"
+                                Click="BtnWizardReset_Click">
+                            <Button.Resources>
+                                <Style TargetType="Border">
+                                    <Setter Property="CornerRadius"
+                                            Value="6"/>
+                                </Style>
+                            </Button.Resources>
+                        </Button>
+                    </StackPanel>
+                </Grid>
+
+                <!-- SEGMENTED CONTROL TABS -->
+                <Border Background="#F1F5F9"
+                        CornerRadius="8"
+                        Padding="4"
+                        HorizontalAlignment="Left"
+                        Margin="0,0,0,24">
+                    <StackPanel Orientation="Horizontal">
+                        <Button x:Name="BtnTabNhat"
+                                Content="Hệ Nhật Bản"
+                                Tag="nhat"
+                                Click="ProgramTab_Click"
+                                Background="Transparent"
+                                Foreground="#64748B"
+                                BorderThickness="0"
+                                Padding="24,10"
+                                Cursor="Hand"
+                                FontSize="14"
+                                FontWeight="SemiBold">
+                            <Button.Resources>
+                                <Style TargetType="Border">
+                                    <Setter Property="CornerRadius"
+                                            Value="6"/>
+                                </Style>
+                            </Button.Resources>
+                        </Button>
+                        <Button x:Name="BtnTabDacthu"
+                                Content="Hệ Đặc thù"
+                                Tag="dacthu"
+                                Click="ProgramTab_Click"
+                                Background="Transparent"
+                                Foreground="#64748B"
+                                BorderThickness="0"
+                                Padding="24,10"
+                                Cursor="Hand"
+                                FontSize="14"
+                                FontWeight="SemiBold">
+                            <Button.Resources>
+                                <Style TargetType="Border">
+                                    <Setter Property="CornerRadius"
+                                            Value="6"/>
+                                </Style>
+                            </Button.Resources>
+                        </Button>
+                        <Button x:Name="BtnTabAi"
+                                Content="Hệ Trí tuệ nhân tạo"
+                                Tag="ai"
+                                Click="ProgramTab_Click"
+                                Background="White"
+                                Foreground="#2563eb"
+                                BorderThickness="0"
+                                Padding="24,10"
+                                Cursor="Hand"
+                                FontSize="14"
+                                FontWeight="SemiBold">
+                            <Button.Resources>
+                                <Style TargetType="Border">
+                                    <Setter Property="CornerRadius"
+                                            Value="6"/>
+                                </Style>
+                            </Button.Resources>
+                            <Button.Effect>
+                                <DropShadowEffect BlurRadius="4"
+                                                  ShadowDepth="1"
+                                                  Color="#000000"
+                                                  Opacity="0.05"/>
+                            </Button.Effect>
+                        </Button>
+                    </StackPanel>
+                </Border>
+
+                <!-- STATS CARDS -->
+                <Grid Margin="0,0,0,24">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="14"/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="14"/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="14"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <Border Grid.Column="0"
+                            Background="White"
+                            BorderBrush="#E2E8F0"
+                            BorderThickness="1"
+                            CornerRadius="12"
+                            Padding="20,16">
+                        <StackPanel>
+                            <TextBlock Text="Tín chỉ tích lũy"
+                                       FontSize="13"
+                                       Foreground="#64748B"
+                                       Margin="0,0,0,8"
+                                       FontWeight="Medium"/>
+                            <TextBlock x:Name="TxtAccCredit"
+                                       Text="0"
+                                       FontSize="32"
+                                       FontWeight="Bold"
+                                       Foreground="#0F172A"/>
+                            <TextBlock x:Name="TxtTotalCreditProgram"
+                                       Text="/ 180 TC chương trình"
+                                       FontSize="12"
+                                       Foreground="#94A3B8"
+                                       Margin="0,4,0,0"/>
+                        </StackPanel>
+                    </Border>
+                    <Border Grid.Column="2"
+                            Background="White"
+                            BorderBrush="#E2E8F0"
+                            BorderThickness="1"
+                            CornerRadius="12"
+                            Padding="20,16">
+                        <StackPanel>
+                            <TextBlock Text="Đã đăng ký HK này"
+                                       FontSize="13"
+                                       Foreground="#64748B"
+                                       Margin="0,0,0,8"
+                                       FontWeight="Medium"/>
+                            <TextBlock x:Name="TxtRegCredit"
+                                       Text="0"
+                                       FontSize="32"
+                                       FontWeight="Bold"
+                                       Foreground="#2563eb"/>
+                            <TextBlock x:Name="TxtRemaining"
+                                       Text="Còn lại: 25 TC"
+                                       FontSize="12"
+                                       Foreground="#94A3B8"
+                                       Margin="0,4,0,8"/>
+                            <Border Height="4"
+                                    CornerRadius="2"
+                                    Background="#F1F5F9">
+                                <Border x:Name="CreditProgressBar"
+                                        Height="4"
+                                        CornerRadius="2"
+                                        Background="#2563eb"
+                                        HorizontalAlignment="Left"
+                                        Width="0"/>
+                            </Border>
+                        </StackPanel>
+                    </Border>
+                    <Border Grid.Column="4"
+                            Background="White"
+                            BorderBrush="#E2E8F0"
+                            BorderThickness="1"
+                            CornerRadius="12"
+                            Padding="20,16">
+                        <StackPanel>
+                            <TextBlock Text="GPA tích lũy"
+                                       FontSize="13"
+                                       Foreground="#64748B"
+                                       Margin="0,0,0,8"
+                                       FontWeight="Medium"/>
+                            <TextBlock x:Name="TxtGpa"
+                                       Text="0.0"
+                                       FontSize="32"
+                                       FontWeight="Bold"
+                                       Foreground="#0EA5E9"/>
+                            <TextBlock x:Name="TxtGpaLevel"
+                                       Text="—"
+                                       FontSize="12"
+                                       Foreground="#94A3B8"
+                                       Margin="0,4,0,0"/>
+                        </StackPanel>
+                    </Border>
+                    <Border Grid.Column="6"
+                            Background="White"
+                            BorderBrush="#E2E8F0"
+                            BorderThickness="1"
+                            CornerRadius="12"
+                            Padding="20,16">
+                        <StackPanel>
+                            <TextBlock Text="Môn được gợi ý"
+                                       FontSize="13"
+                                       Foreground="#64748B"
+                                       Margin="0,0,0,8"
+                                       FontWeight="Medium"/>
+                            <TextBlock x:Name="TxtSuggestCount"
+                                       Text="0"
+                                       FontSize="32"
+                                       FontWeight="Bold"
+                                       Foreground="#F59E0B"/>
+                            <TextBlock Text="môn học phù hợp"
+                                       FontSize="12"
+                                       Foreground="#94A3B8"
+                                       Margin="0,4,0,8"/>
+                            <Border Height="4"
+                                    CornerRadius="2"
+                                    Background="#F1F5F9">
+                                <Border x:Name="GpaProgressBar"
+                                        Height="4"
+                                        CornerRadius="2"
+                                        Background="#10B981"
+                                        HorizontalAlignment="Left"
+                                        Width="0"/>
+                            </Border>
+                        </StackPanel>
+                    </Border>
+                </Grid>
+
+                <!-- STEP 1: SEMESTER SELECTOR -->
+                <Border x:Name="Step1Panel"
+                        Background="#F0F9FF"
+                        BorderBrush="#BAE6FD"
+                        BorderThickness="1"
+                        CornerRadius="12"
+                        Padding="24"
+                        Margin="0,0,0,24">
                     <StackPanel>
-                        <TextBlock Text="Đã đăng ký học kỳ này" FontSize="15" FontWeight="SemiBold"
-                                   Foreground="{StaticResource TextPrimaryBrush}" Margin="0,0,0,14"/>
-                        <ItemsControl x:Name="RegisteredList">
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate>
-                                    <Border BorderBrush="{StaticResource BorderBrush}"
-                                            BorderThickness="1" CornerRadius="8"
-                                            Padding="12,10" Margin="0,0,0,8">
-                                        <Grid>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition/><ColumnDefinition Width="Auto"/>
-                                            </Grid.ColumnDefinitions>
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition/><RowDefinition/>
-                                            </Grid.RowDefinitions>
-                                            <TextBlock Grid.Row="0" Grid.Column="0"
-                                                       Text="{Binding TenMonHoc}"
-                                                       FontWeight="SemiBold" FontSize="12.5"
-                                                       Foreground="{StaticResource TextPrimaryBrush}"/>
-                                            <Border Grid.Row="0" Grid.Column="1"
-                                                    Background="{StaticResource PrimaryLightBrush}"
-                                                    CornerRadius="10" Padding="8,2">
-                                                <TextBlock FontSize="11" FontWeight="SemiBold"
-                                                           Foreground="{StaticResource PrimaryBrush}">
+                        <TextBlock x:Name="TxtStep1Greeting"
+                                   Text="🤖 Trợ lý AI - Tổng quan tiến độ"
+                                   FontSize="16"
+                                   FontWeight="Bold"
+                                   Foreground="#0284C7"
+                                   Margin="0,0,0,8"/>
+                        <TextBlock Text="Chào bạn! Hãy chọn học kỳ để hệ thống phân tích và gợi ý giới hạn đăng ký tín chỉ phù hợp."
+                                   FontSize="14"
+                                   Foreground="#0369A1"
+                                   Margin="0,0,0,16"/>
+                        <StackPanel Orientation="Horizontal">
+                            <ComboBox x:Name="CmbHocKy"
+                                      Width="140"
+                                      Height="40"
+                                      Margin="0,0,16,0"
+                                      SelectedIndex="0"
+                                      Padding="10,0"
+                                      FontSize="14"
+                                      BorderBrush="#E2E8F0"
+                                      Background="#F8FAFC">
+                                <ComboBoxItem Content="Học kỳ 1"/>
+                                <ComboBoxItem Content="Học kỳ 2"/>
+                                <ComboBoxItem Content="Học kỳ 3"/>
+                                <ComboBoxItem Content="Học kỳ 4"/>
+                                <ComboBoxItem Content="Học kỳ 5"/>
+                                <ComboBoxItem Content="Học kỳ 6"/>
+                                <ComboBoxItem Content="Học kỳ 7"/>
+                                <ComboBoxItem Content="Học kỳ 8"/>
+                            </ComboBox>
+                            <ComboBox x:Name="CmbNamHoc"
+                                      Width="140"
+                                      Height="40"
+                                      Margin="0,0,16,0"
+                                      SelectedIndex="1"
+                                      Padding="10,0"
+                                      FontSize="14"
+                                      BorderBrush="#E2E8F0"
+                                      Background="#F8FAFC">
+                                <ComboBoxItem Content="2023-2024"/>
+                                <ComboBoxItem Content="2024-2025"/>
+                                <ComboBoxItem Content="2025-2026"/>
+                            </ComboBox>
+                            <Button x:Name="BtnAiChonHk"
+                                    Content="Bắt đầu phân tích"
+                                    Background="#2563eb"
+                                    Foreground="White"
+                                    BorderThickness="0"
+                                    Padding="24,0"
+                                    Height="40"
+                                    Cursor="Hand"
+                                    FontWeight="SemiBold"
+                                    Click="BtnAiChonHk_Click">
+                                <Button.Resources>
+                                    <Style TargetType="Border">
+                                        <Setter Property="CornerRadius"
+                                                Value="6"/>
+                                    </Style>
+                                </Button.Resources>
+                            </Button>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+
+                <!-- Two columns -->
+                <Grid x:Name="RegistrationGrid"
+                      Visibility="Collapsed">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="5*"/>
+                        <ColumnDefinition Width="24"/>
+                        <ColumnDefinition Width="3*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Suggested courses -->
+                    <Border Grid.Column="0"
+                            Style="{StaticResource Card}">
+                        <StackPanel>
+                            <TextBlock Text="Môn học được gợi ý"
+                                       FontSize="15"
+                                       FontWeight="SemiBold"
+                                       Foreground="{StaticResource TextPrimaryBrush}"
+                                       Margin="0,0,0,12"/>
+
+                            <!-- QUICK FILTERS -->
+                            <Border Background="#F8FAFC"
+                                    BorderBrush="#E2E8F0"
+                                    BorderThickness="1"
+                                    CornerRadius="6"
+                                    Padding="12,8"
+                                    Margin="0,0,0,12">
+                                <StackPanel>
+                                    <TextBlock Text="⚙ Cài đặt ưu tiên nhanh:"
+                                               FontWeight="SemiBold"
+                                               FontSize="12"
+                                               Foreground="#475569"
+                                               Margin="0,0,0,8"/>
+                                    <StackPanel Orientation="Horizontal">
+                                        <RadioButton x:Name="RbPrioritySubject"
+                                                     Content="Ưu tiên Môn bắt buộc"
+                                                     GroupName="Priority"
+                                                     IsChecked="True"
+                                                     Foreground="#334155"
+                                                     Margin="0,0,16,0"
+                                                     Checked="QuickFilter_Changed"/>
+                                        <RadioButton x:Name="RbPriorityTeacher"
+                                                     Content="Ưu tiên Giảng viên"
+                                                     GroupName="Priority"
+                                                     Foreground="#334155"
+                                                     Checked="QuickFilter_Changed"/>
+                                    </StackPanel>
+                                    <ComboBox x:Name="CmbTeacherFilter"
+                                              Margin="0,8,0,0"
+                                              Height="28"
+                                              Visibility="Collapsed"
+                                              SelectionChanged="QuickFilter_Changed">
+                                        <ComboBoxItem Content="Tất cả giảng viên"
+                                                      IsSelected="True"/>
+                                        <ComboBoxItem Content="PGS.TS Phạm Thị Hoa"/>
+                                        <ComboBoxItem Content="TS. Nguyễn Văn A"/>
+                                        <ComboBoxItem Content="ThS. Trần Thị B"/>
+                                    </ComboBox>
+                                </StackPanel>
+                            </Border>
+
+                            <DataGrid x:Name="DgSuggested"
+                                      AutoGenerateColumns="False"
+                                      IsReadOnly="True"
+                                      GridLinesVisibility="Horizontal"
+                                      HeadersVisibility="Column"
+                                      RowBackground="White"
+                                      AlternatingRowBackground="#FAFAFA"
+                                      BorderThickness="0"
+                                      CanUserResizeRows="False"
+                                      RowHeight="44"
+                                      FontSize="12.5">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="Mã MH"
+                                                        Binding="{Binding MaMonHoc}"
+                                                        Width="85"/>
+                                    <DataGridTextColumn Header="Tên môn học"
+                                                        Binding="{Binding TenMonHoc}"
+                                                        Width="*"/>
+                                    <DataGridTextColumn Header="TC"
+                                                        Binding="{Binding SoTinChi}"
+                                                        Width="45"/>
+                                    <DataGridTextColumn Header="Giảng viên"
+                                                        Binding="{Binding TenGiangVien}"
+                                                        Width="140"/>
+                                    <DataGridTextColumn Header="Phòng"
+                                                        Binding="{Binding TenPhong}"
+                                                        Width="80"/>
+                                    <DataGridTemplateColumn Header="Thao tác"
+                                                            Width="95">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Button Content="+ Đăng ký"
+                                                        Tag="{Binding}"
+                                                        Style="{StaticResource BtnPrimary}"
+                                                        Height="30"
+                                                        FontSize="11"
+                                                        Click="BtnQuickRegister_Click"
+                                                        Loaded="BtnQuickRegister_Loaded"/>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                            <TextBlock x:Name="TxtNoSuggest"
+                                       Visibility="Collapsed"
+                                       Text="Không có môn học nào được gợi ý. Bạn có thể đã đăng ký đủ hoặc chưa có dữ liệu tích lũy."
+                                       Foreground="{StaticResource TextMutedBrush}"
+                                       FontSize="13"
+                                       TextWrapping="Wrap"
+                                       HorizontalAlignment="Center"
+                                       Margin="0,20"/>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Registered list -->
+                    <Border Grid.Column="2"
+                            Style="{StaticResource Card}">
+                        <StackPanel>
+                            <TextBlock Text="Đã đăng ký học kỳ này"
+                                       FontSize="15"
+                                       FontWeight="SemiBold"
+                                       Foreground="{StaticResource TextPrimaryBrush}"
+                                       Margin="0,0,0,14"/>
+                            <ItemsControl x:Name="RegisteredList">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Border BorderBrush="{StaticResource BorderBrush}"
+                                                BorderThickness="1"
+                                                CornerRadius="8"
+                                                Padding="12,10"
+                                                Margin="0,0,0,8">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition/>
+                                                    <ColumnDefinition Width="Auto"/>
+                                                    <ColumnDefinition Width="Auto"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition/>
+                                                    <RowDefinition/>
+                                                </Grid.RowDefinitions>
+                                                <TextBlock Grid.Row="0"
+                                                           Grid.Column="0"
+                                                           Text="{Binding TenMonHoc}"
+                                                           FontWeight="SemiBold"
+                                                           FontSize="12.5"
+                                                           Foreground="{StaticResource TextPrimaryBrush}"/>
+                                                <Border Grid.Row="0"
+                                                        Grid.Column="1"
+                                                        Background="{StaticResource PrimaryLightBrush}"
+                                                        CornerRadius="10"
+                                                        Padding="8,2">
+                                                    <TextBlock FontSize="11"
+                                                               FontWeight="SemiBold"
+                                                               Foreground="{StaticResource PrimaryBrush}">
                                                     <Run Text="{Binding SoTinChi}"/><Run Text=" TC"/>
-                                                </TextBlock>
-                                            </Border>
-                                            <TextBlock Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
-                                                       FontSize="11"
-                                                       Foreground="{StaticResource TextSecondaryBrush}"
-                                                       Margin="0,4,0,0">
+                                                    </TextBlock>
+                                                </Border>
+                                                <TextBlock Grid.Row="1"
+                                                           Grid.Column="0"
+                                                           Grid.ColumnSpan="2"
+                                                           FontSize="11"
+                                                           Foreground="{StaticResource TextSecondaryBrush}"
+                                                           Margin="0,4,0,0">
                                                 <Run Text="{Binding TenGiangVien}"/>
                                                 <Run Text=" · "/>
                                                 <Run Text="{Binding TenPhong}"/>
-                                            </TextBlock>
-                                        </Grid>
-                                    </Border>
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                        </ItemsControl>
+                                                </TextBlock>
 
-                        <!-- Credit progress -->
-                        <Border BorderBrush="{StaticResource BorderBrush}" BorderThickness="1"
-                                CornerRadius="8" Padding="12,10" Margin="0,8,0,0" Background="#F8FAFC">
-                            <StackPanel>
-                                <DockPanel Margin="0,0,0,8">
-                                    <TextBlock Text="Tín chỉ học kỳ" FontSize="12" FontWeight="SemiBold"
-                                               Foreground="{StaticResource TextPrimaryBrush}"/>
-                                    <TextBlock x:Name="TxtCreditFraction" HorizontalAlignment="Right"
-                                               FontSize="12" FontWeight="SemiBold"
-                                               Foreground="{StaticResource PrimaryBrush}"/>
-                                </DockPanel>
-                                <Border Height="8" CornerRadius="4" Background="{StaticResource BorderBrush}">
-                                    <Border x:Name="ProgressBar" Height="8" CornerRadius="4"
-                                            Background="{StaticResource PrimaryBrush}"
-                                            HorizontalAlignment="Left" Width="0"/>
+                                                <!-- Nút Xoá môn học -->
+                                                <Button Grid.Row="0"
+                                                        Grid.RowSpan="2"
+                                                        Grid.Column="2"
+                                                        Content="❌"
+                                                        Foreground="#EF4444"
+                                                        Background="Transparent"
+                                                        BorderThickness="0"
+                                                        Margin="12,0,0,0"
+                                                        FontSize="12"
+                                                        Cursor="Hand"
+                                                        ToolTip="Hủy đăng ký môn này"
+                                                        Tag="{Binding}"
+                                                        Click="BtnRemoveRegistered_Click"/>
+                                            </Grid>
+                                        </Border>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+
+                            <StackPanel Margin="0,16,0,0">
+                                <StackPanel Orientation="Horizontal"
+                                            HorizontalAlignment="Right">
+                                    <TextBlock Text="Tín chỉ đăng ký: "
+                                               FontSize="13"
+                                               Foreground="#64748B"
+                                               VerticalAlignment="Center"/>
+                                    <TextBlock x:Name="TxtCreditFraction"
+                                               Text="0 / 25 TC"
+                                               FontSize="14"
+                                               FontWeight="Bold"
+                                               Foreground="#10B981"
+                                               VerticalAlignment="Center"/>
+                                </StackPanel>
+                                <Border Width="250"
+                                        Height="6"
+                                        CornerRadius="3"
+                                        Background="#F1F5F9"
+                                        Margin="0,8,0,0"
+                                        HorizontalAlignment="Right">
+                                    <Border x:Name="BottomCreditProgressBar"
+                                            Height="6"
+                                            CornerRadius="3"
+                                            Background="#10B981"
+                                            HorizontalAlignment="Left"
+                                            Width="0"/>
                                 </Border>
-                                <TextBlock x:Name="TxtProgressLabel" FontSize="11"
-                                           Foreground="{StaticResource TextMutedBrush}" Margin="0,6,0,0"/>
                             </StackPanel>
-                        </Border>
-                    </StackPanel>
-                </Border>
-            </Grid>
-        </StackPanel>
-    </ScrollViewer>
+                        </StackPanel>
+                    </Border>
+                </Grid>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
 </Page>

@@ -5,6 +5,7 @@ using System.Windows.Controls;
 using StudentReminderApp.BLL;
 using StudentReminderApp.Helpers;
 using StudentReminderApp.Views.Dialogs;
+using StudentReminderApp.Models;
 
 namespace StudentReminderApp.Views.Pages
 {
@@ -17,21 +18,21 @@ namespace StudentReminderApp.Views.Pages
         private void LoadData()
         {
             var idAcc = SessionManager.CurrentAccount.IdAcc;
-            var user  = SessionManager.CurrentUser;
-            var hour  = DateTime.Now.Hour;
+            var user = SessionManager.CurrentUser;
+            var hour = DateTime.Now.Hour;
             var greet = hour < 12 ? "Chào buổi sáng" : hour < 18 ? "Chào buổi chiều" : "Chào buổi tối";
 
             TxtGreeting.Text = $"{greet}, {user?.HoTen ?? "bạn"}!";
-            TxtDate.Text     = $"Hôm nay là {DateTime.Now:dddd, dd/MM/yyyy}";
+            TxtDate.Text = $"Hôm nay là {DateTime.Now:dddd, dd/MM/yyyy}";
 
-            var upcoming  = _eventBll.GetUpcoming(idAcc, 7);
+            var upcoming = _eventBll.GetUpcoming(idAcc, 7);
             var deadlines = upcoming.Count(e => e.EventType == "DEADLINE");
-            var today     = upcoming.Count(e => e.StartTime.Date == DateTime.Today);
+            var today = upcoming.Count(e => e.StartTime.Date == DateTime.Today);
 
-            StatEvents.Text    = today.ToString();
+            StatEvents.Text = today.ToString();
             StatDeadlines.Text = deadlines.ToString();
-            StatCourses.Text   = "—";
-            StatNotifs.Text    = "0";
+            StatCourses.Text = "—";
+            StatNotifs.Text = "0";
 
             if (upcoming.Count > 0)
             {
