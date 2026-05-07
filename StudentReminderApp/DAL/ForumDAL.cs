@@ -566,28 +566,42 @@ namespace StudentReminderApp.DAL
             var list = new List<Post>();
 
             const string sql = @"
-        SELECT TOP 50
-            bv.*,
-            u.ho_ten,
-            (SELECT COUNT(*) FROM YEU_THICH WHERE id_bai_viet = bv.id_bai_viet) AS TotalLikes,
-            (SELECT COUNT(*) FROM BINH_LUAN  WHERE id_bai_viet = bv.id_bai_viet) AS TotalComments,
-            (SELECT COUNT(*) FROM BAI_VIET   WHERE IdPostGoc   = bv.id_bai_viet) AS TotalShares,
-            CASE WHEN EXISTS (
-                SELECT 1 FROM YEU_THICH
-                WHERE id_bai_viet = bv.id_bai_viet AND id_acc = @currentUserId
-            ) THEN 1 ELSE 0 END AS IsLikedByMe,
-            -- Tính điểm HOT
-            (
-                (SELECT COUNT(*) FROM YEU_THICH WHERE id_bai_viet = bv.id_bai_viet) * 1 +
-                (SELECT COUNT(*) FROM BINH_LUAN  WHERE id_bai_viet = bv.id_bai_viet) * 2 +
-                (SELECT COUNT(*) FROM BAI_VIET   WHERE IdPostGoc   = bv.id_bai_viet) * 3
-            ) AS HotScore
-        FROM BAI_VIET bv
-        LEFT JOIN [USER] u ON bv.id_acc = u.id_acc
-        WHERE 
-            bv.approval_status = 1                          -- Chỉ bài đã duyệt
-            AND bv.ngay_dang >= DATEADD(DAY, -7, GETDATE()) -- Trong 7 ngày qua
-        ORDER BY HotScore DESC, bv.ngay_dang DESC";
+            SELECT * FROM (
+                SELECT TOP 50
+                    bv.*,
+                    u.ho_ten,
+                    (SELECT COUNT(*) FROM YEU_THICH WHERE id_bai_viet = bv.id_bai_viet) AS TotalLikes,
+                    (SELECT COUNT(*) FROM BINH_LUAN  WHERE id_bai_viet = bv.id_bai_viet) AS TotalComments,
+                    (SELECT COUNT(*) FROM BAI_VIET   WHERE IdPostGoc   = bv.id_bai_viet) AS TotalShares,
+                    CASE WHEN EXISTS (
+                        SELECT 1 FROM YEU_THICH
+                        WHERE id_bai_viet = bv.id_bai_viet AND id_acc = @currentUserId
+                    ) THEN 1 ELSE 0 END AS IsLikedByMe,
+
+                    CASE
+                        WHEN (
+                            (SELECT COUNT(*) FROM YEU_THICH WHERE id_bai_viet = bv.id_bai_viet) * 1 +
+                            (SELECT COUNT(*) FROM BINH_LUAN  WHERE id_bai_viet = bv.id_bai_viet) * 2 +
+                            (SELECT COUNT(*) FROM BAI_VIET   WHERE IdPostGoc   = bv.id_bai_viet) * 3
+                            - DATEDIFF(DAY, bv.ngay_dang, GETDATE()) * 10
+                        ) > 0
+                        THEN (
+                            (SELECT COUNT(*) FROM YEU_THICH WHERE id_bai_viet = bv.id_bai_viet) * 1 +
+                            (SELECT COUNT(*) FROM BINH_LUAN  WHERE id_bai_viet = bv.id_bai_viet) * 2 +
+                            (SELECT COUNT(*) FROM BAI_VIET   WHERE IdPostGoc   = bv.id_bai_viet) * 3
+                            - DATEDIFF(DAY, bv.ngay_dang, GETDATE()) * 10
+                        )
+                        ELSE 0
+                    END AS HotScore
+
+                FROM BAI_VIET bv
+                LEFT JOIN [USER] u ON bv.id_acc = u.id_acc
+                WHERE
+                    bv.approval_status = 1
+                    AND bv.ngay_dang >= DATEADD(DAY, -7, GETDATE())
+            ) AS ranked
+            WHERE HotScore >= 50          
+            ORDER BY HotScore DESC, ngay_dang DESC";
 
             try
             {
@@ -598,9 +612,7 @@ namespace StudentReminderApp.DAL
                     {
                         cmd.Parameters.AddWithValue("@currentUserId", currentUserId);
                         using (var r = cmd.ExecuteReader())
-                        {
                             while (r.Read()) list.Add(MapReaderToPost(r));
-                        }
                     }
                     LoadFilePaths(list, conn);
                 }
@@ -611,7 +623,6 @@ namespace StudentReminderApp.DAL
             }
             return list;
         }
-
         // -------------------------------------------------------
         // GetStudentPosts: Bài từ sinh viên (role_name != 'Admin')
         // -------------------------------------------------------
