@@ -37,7 +37,7 @@ namespace StudentReminderApp.BLL
         {
             if (idPost <= 0) return false;
 
-            if (newStatus != PostStatus.Pending  &&
+            if (newStatus != PostStatus.Pending &&
                 newStatus != PostStatus.Approved &&
                 newStatus != PostStatus.Rejected)
                 return false;
@@ -105,15 +105,23 @@ namespace StudentReminderApp.BLL
         }
 
         public bool CreatePost(long idAcc, string title, string content, bool isPublic,
-                               List<string> filePaths, long? idPostGoc = null, string theme = "Transparent")
+                        List<string> filePaths, long? idPostGoc = null, string theme = "Transparent")
         {
             try
             {
-                long newPostId = _forumDAL.InsertPost(idAcc, title, content, isPublic, idPostGoc, theme);
+                // ✅ Kiểm tra role để quyết định approval_status
+                bool isAdmin = SessionManager.IsAdmin;
+
+                long newPostId = _forumDAL.InsertPost(
+                    idAcc, title, content, isPublic,
+                    idPostGoc, theme,
+                    isAdmin); // ✅ truyền isAdmin xuống DAL
+
                 if (newPostId > 0 && filePaths != null)
                 {
                     string folderPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources", "Images");
                     if (!Directory.Exists(folderPath)) Directory.CreateDirectory(folderPath);
+
                     string[] allowedExtensions = { ".jpg", ".png", ".jpeg", ".bmp", ".gif" };
                     foreach (string originalPath in filePaths)
                     {
@@ -133,7 +141,11 @@ namespace StudentReminderApp.BLL
                 }
                 return newPostId > 0;
             }
-            catch (Exception ex) { Console.WriteLine("Lỗi khi lưu bài viết (BLL): " + ex.Message); return false; }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Lỗi khi lưu bài viết (BLL): " + ex.Message);
+                return false;
+            }
         }
 
         public bool SharePost(long idPostGoc, long idAccNguoiChiaSe, string noiDungThem, bool laCongKhai)
@@ -160,5 +172,51 @@ namespace StudentReminderApp.BLL
             try { return _forumDAL.DeleteComment(idComment); }
             catch (Exception ex) { System.Diagnostics.Debug.WriteLine("Lỗi BLL DeleteComment: " + ex.Message); return false; }
         }
+
+        public List<Post> GetHotPosts()
+        {
+            try
+            {
+                return _forumDAL.GetHotPosts();
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("BLL GetHotPosts Error: " + ex.Message);
+                return new List<Post>();
+            }
+        }
+
+        // -------------------------------------------------------
+        // GetStudentPosts: Bài từ sinh viên (không phải Admin)
+        // -------------------------------------------------------
+        public List<Post> GetStudentPosts()
+        {
+            try
+            {
+                return _forumDAL.GetStudentPosts();
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("BLL GetStudentPosts Error: " + ex.Message);
+                return new List<Post>();
+            }
+        }
+
+        // -------------------------------------------------------
+        // GetAnnouncementPosts: Bảng tin chính thống từ Admin
+        // -------------------------------------------------------
+        public List<Post> GetAnnouncementPosts()
+        {
+            try
+            {
+                return _forumDAL.GetAnnouncementPosts();
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("BLL GetAnnouncementPosts Error: " + ex.Message);
+                return new List<Post>();
+            }
+        }
+
     }
 }
