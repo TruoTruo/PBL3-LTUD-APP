@@ -1,4 +1,4 @@
--- =============================================
+﻿-- =============================================
 -- StudentReminderApp - Full Database Setup
 -- Chạy script này trong SQL Server Management Studio
 -- Database: PBL3
@@ -233,6 +233,77 @@ CREATE TABLE BAI_VIET (
     so_luot_thich INT,
     status        NVARCHAR(50),
     CONSTRAINT FK_BV_User FOREIGN KEY (id_acc) REFERENCES [USER](id_acc)
+
+);
+
+ALTER TABLE BAI_VIET 
+ADD is_anonymous BIT DEFAULT 0;
+GO
+
+-- Cập nhật các bài viết cũ mặc định là không ẩn danh
+UPDATE BAI_VIET SET is_anonymous = 0 WHERE is_anonymous IS NULL;
+GO
+
+-- Thêm cột để nhận biết đây là bài chia sẻ (nếu chưa có)
+-- IdPostGoc: ID của bài gốc, nếu = 0 hoặc NULL thì là bài viết tự đăng
+-- NoiDungShare: Lời nhắn của người chia sẻ (UserComment trong code của bạn)
+ALTER TABLE BAI_VIET 
+ADD IdPostGoc INT NULL,
+    NoiDungShare NVARCHAR(MAX) NULL,
+    IsPublic BIT DEFAULT 1;
+GO
+
+CREATE PROCEDURE sp_SharePost
+    @IdPostGoc BIGINT,           -- Đổi sang BIGINT cho khớp với PRIMARY KEY của BAI_VIET
+    @IdAcc BIGINT,               -- Đổi sang BIGINT
+    @NoiDungShare NVARCHAR(MAX), 
+    @IsPublic BIT                
+AS
+BEGIN
+    SET NOCOUNT ON;
+    
+    -- Chèn vào bảng BAI_VIET (không phải bảng Post)
+    INSERT INTO BAI_VIET (
+        id_acc, 
+        tieu_de, 
+        noi_dung, 
+        ngay_dang, 
+        so_luot_thich, 
+        status, 
+        IdPostGoc, 
+        NoiDungShare, 
+        IsPublic
+    )
+    VALUES (
+        @IdAcc, 
+        N'Chia sẻ bài viết',         -- Tiêu đề mặc định
+        N'Đã chia sẻ một bài viết',   -- Nội dung mặc định
+        GETDATE(), 
+        0,                           -- Lượt thích ban đầu là 0
+        N'Active',                   -- Trạng thái mặc định
+        @IdPostGoc, 
+        @NoiDungShare, 
+        @IsPublic
+    );
+    
+    -- Trả về kết quả để C# nhận diện success
+    IF @@ROWCOUNT > 0 
+        SELECT CAST(1 AS BIT) AS Success;
+    ELSE 
+        SELECT CAST(0 AS BIT) AS Success;
+END
+GO
+
+-- Likes
+CREATE TABLE YEU_THICH (
+    id_yeu_thich BIGINT PRIMARY KEY IDENTITY(1,1),
+    id_acc       BIGINT NOT NULL,
+    id_bai_viet  BIGINT NOT NULL,
+    ngay_thich   DATETIME DEFAULT GETDATE(),
+    CONSTRAINT FK_Like_User FOREIGN KEY (id_acc) REFERENCES [USER](id_acc),
+    CONSTRAINT FK_Like_BaiViet FOREIGN KEY (id_bai_viet) REFERENCES BAI_VIET(id_bai_viet),
+    -- Ràng buộc UNIQUE để 1 người chỉ like 1 bài 1 lần
+    CONSTRAINT UC_User_Post UNIQUE (id_acc, id_bai_viet) 
 );
 
 -- BINH_LUAN
@@ -244,6 +315,13 @@ CREATE TABLE BINH_LUAN (
     CONSTRAINT FK_BL_User    FOREIGN KEY (id_acc)       REFERENCES [USER](id_acc),
     CONSTRAINT FK_BL_BaiViet FOREIGN KEY (id_bai_viet) REFERENCES BAI_VIET(id_bai_viet)
 );
+
+-- 1. Thêm cột ngay_binh_luan vào bảng đã tồn tại
+ALTER TABLE BINH_LUAN 
+ADD ngay_binh_luan DATETIME DEFAULT GETDATE();
+
+-- 2. (Tùy chọn) Cập nhật các dòng cũ đã lỡ tạo (nếu có) thành thời gian hiện tại
+UPDATE BINH_LUAN SET ngay_binh_luan = GETDATE() WHERE ngay_binh_luan IS NULL;
 
 -- DOCUMENTS
 CREATE TABLE DOCUMENTS (

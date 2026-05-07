@@ -42,6 +42,10 @@
                             Style="{StaticResource NavBtn}">
                         <TextBlock Text="🎯  Tư vấn ĐKHP"/>
                     </Button>
+                    <Button x:Name="BtnForum" Tag="Forum" Click="NavBtn_Click"
+                            Style="{StaticResource NavBtn}">
+                        <TextBlock Text="💬   Diễn đàn"/>
+                    </Button>
                     <Button x:Name="BtnProfile" Tag="Profile" Click="NavBtn_Click"
                             Style="{StaticResource NavBtn}">
                         <TextBlock Text="👤  Hồ sơ"/>
