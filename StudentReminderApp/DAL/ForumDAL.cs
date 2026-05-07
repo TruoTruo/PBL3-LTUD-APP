@@ -10,21 +10,155 @@ namespace StudentReminderApp.DAL
 {
     public class ForumDAL : BaseDAL
     {
+        // -------------------------------------------------------
+        // HELPER: Đọc một hàng SqlDataReader → Post object
+        // Tách ra để tái dùng giữa GetPosts / GetPendingPosts
+        // -------------------------------------------------------
+        private Post MapReaderToPost(SqlDataReader r)
+        {
+            return new Post
+            {
+                IdPost = Convert.ToInt64(r["id_bai_viet"]),
+                IdAcc = Convert.ToInt64(r["id_acc"]),
+                IdOriginalPost = r["IdPostGoc"] != DBNull.Value ? Convert.ToInt64(r["IdPostGoc"]) : (long?)null,
+                Title = r["tieu_de"]?.ToString() ?? "",
+                Content = r["noi_dung"]?.ToString() ?? "",
+                BackgroundColor = r["background_color"] != DBNull.Value ? r["background_color"].ToString() : "Transparent",
+                CreatedAt = Convert.ToDateTime(r["ngay_dang"]),
+                Likes = r["so_luot_thich"] != DBNull.Value ? Convert.ToInt32(r["so_luot_thich"]) : 0,
+                CommentCount = r["so_luot_binh_luan"] != DBNull.Value ? Convert.ToInt32(r["so_luot_binh_luan"]) : 0,
+                ShareCount = r["so_luot_chia_se"] != DBNull.Value ? Convert.ToInt32(r["so_luot_chia_se"]) : 0,
+                IsLiked = r["IsLikedByMe"] != DBNull.Value && Convert.ToBoolean(r["IsLikedByMe"]),
+                IsAnonymous = r["is_anonymous"] != DBNull.Value && Convert.ToBoolean(r["is_anonymous"]),
+                AuthorName = r["ho_ten"]?.ToString() ?? "",
+                FilePaths = new List<string>(),
+                // approval_status: mặc định 1 nếu cột chưa tồn tại (tương thích ngược)
+                ApprovalStatus = r.GetOrdinal("approval_status") >= 0 && r["approval_status"] != DBNull.Value
+                                    ? Convert.ToInt32(r["approval_status"])
+                                    : PostStatus.Approved,
+                RejectedReason = r.GetOrdinal("rejected_reason") >= 0 && r["rejected_reason"] != DBNull.Value
+                                    ? r["rejected_reason"].ToString()
+                                    : null,
+            };
+        }
+
+        // -------------------------------------------------------
+        // Helper: Load ảnh đính kèm cho danh sách bài (dùng chung)
+        // -------------------------------------------------------
+        private void LoadFilePaths(List<Post> list, SqlConnection conn)
+        {
+            const string sqlImages = "SELECT id_bai_viet, duong_dan FROM DOCUMENTS WHERE id_bai_viet = @idP";
+            foreach (var post in list)
+            {
+                using (var cmdImg = new SqlCommand(sqlImages, conn))
+                {
+                    cmdImg.Parameters.AddWithValue("@idP", post.IdPost);
+                    using (var rImg = cmdImg.ExecuteReader())
+                    {
+                        while (rImg.Read())
+                        {
+                            string path = rImg["duong_dan"].ToString();
+                            if (!string.IsNullOrEmpty(path))
+                                post.FilePaths.Add(path);
+                        }
+                    }
+                }
+            }
+        }
+
+        // -------------------------------------------------------
+        // GetPosts: Chỉ lấy bài đã duyệt (approval_status = 1)
+        // -------------------------------------------------------
         public List<Post> GetPosts()
         {
             long currentUserId = SessionManager.CurrentUser?.IdAcc ?? 0;
             var list = new List<Post>();
 
             const string sql = @"
-        SELECT bv.*, u.ho_ten,
-        (SELECT COUNT(*) FROM YEU_THICH WHERE id_bai_viet = bv.id_bai_viet) as TotalLikes,
-        CASE 
-            WHEN EXISTS (SELECT 1 FROM YEU_THICH WHERE id_bai_viet = bv.id_bai_viet AND id_acc = @currentUserId) 
-            THEN 1 ELSE 0 
-        END as IsLikedByMe
-        FROM BAI_VIET bv 
-        LEFT JOIN [USER] u ON bv.id_acc = u.id_acc 
-        ORDER BY bv.ngay_dang DESC";
+                SELECT bv.*, u.ho_ten,
+                    (SELECT COUNT(*) FROM YEU_THICH WHERE id_bai_viet = bv.id_bai_viet) AS TotalLikes,
+                    (SELECT COUNT(*) FROM BINH_LUAN  WHERE id_bai_viet = bv.id_bai_viet) AS TotalComments,
+                    (SELECT COUNT(*) FROM BAI_VIET   WHERE IdPostGoc   = bv.id_bai_viet) AS TotalShares,
+                    CASE WHEN EXISTS (
+                        SELECT 1 FROM YEU_THICH
+                        WHERE id_bai_viet = bv.id_bai_viet AND id_acc = @currentUserId
+                    ) THEN 1 ELSE 0 END AS IsLikedByMe
+                FROM BAI_VIET bv
+                LEFT JOIN [USER] u ON bv.id_acc = u.id_acc
+                WHERE bv.approval_status = 1          -- CHỈ BÀI ĐÃ DUYỆT
+                ORDER BY bv.ngay_dang DESC";
+
+            try
+            {
+                using (var conn = GetConnection())
+                {
+                    if (conn.State == ConnectionState.Closed) conn.Open();
+                    using (var cmd = new SqlCommand(sql, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@currentUserId", currentUserId);
+                        using (var r = cmd.ExecuteReader())
+                        {
+                            while (r.Read()) list.Add(MapReaderToPost(r));
+                        }
+                    }
+                    LoadFilePaths(list, conn);
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("Lỗi GetPosts: " + ex.Message);
+            }
+            return list;
+        }
+
+        // -------------------------------------------------------
+        // GetPendingPosts: Lấy bài chờ duyệt — CHỈ DÀNH CHO ADMIN
+        // -------------------------------------------------------
+        public List<Post> GetPendingPosts()
+        {
+            var list = new List<Post>();
+
+            const string sql = @"
+                SELECT bv.*, u.ho_ten,
+                    (SELECT COUNT(*) FROM YEU_THICH WHERE id_bai_viet = bv.id_bai_viet) AS TotalLikes,
+                    (SELECT COUNT(*) FROM BINH_LUAN  WHERE id_bai_viet = bv.id_bai_viet) AS TotalComments,
+                    (SELECT COUNT(*) FROM BAI_VIET   WHERE IdPostGoc   = bv.id_bai_viet) AS TotalShares,
+                    0 AS IsLikedByMe
+                FROM BAI_VIET bv
+                LEFT JOIN [USER] u ON bv.id_acc = u.id_acc
+                WHERE bv.approval_status = 0          -- CHỜ DUYỆT
+                ORDER BY bv.ngay_dang ASC";
+
+            try
+            {
+                using (var conn = GetConnection())
+                {
+                    if (conn.State == ConnectionState.Closed) conn.Open();
+                    using (var cmd = new SqlCommand(sql, conn))
+                    using (var r = cmd.ExecuteReader())
+                    {
+                        while (r.Read()) list.Add(MapReaderToPost(r));
+                    }
+                    LoadFilePaths(list, conn);
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("Lỗi GetPendingPosts: " + ex.Message);
+            }
+            return list;
+        }
+
+        // -------------------------------------------------------
+        // UpdatePostStatus: Duyệt / Từ chối bài — Admin only
+        // -------------------------------------------------------
+        public bool UpdatePostStatus(long idPost, int newStatus, long adminIdAcc, string? reason = null)
+        {
+            // Bảo vệ tầng DAL: kiểm tra quyền trước khi gọi DB
+            const string checkAdminSql = @"
+                SELECT COUNT(1) FROM ACCOUNT a
+                JOIN ROLES r ON a.id_role = r.id_role
+                WHERE a.id_acc = @adminId AND r.role_name = N'Admin'";
 
             try
             {
@@ -32,85 +166,155 @@ namespace StudentReminderApp.DAL
                 {
                     if (conn.State == ConnectionState.Closed) conn.Open();
 
-                    using (var cmd = new SqlCommand(sql, conn))
+                    // --- Kiểm tra quyền Admin ---
+                    using (var cmdCheck = new SqlCommand(checkAdminSql, conn))
                     {
-                        cmd.Parameters.AddWithValue("@currentUserId", currentUserId);
-                        using (var r = cmd.ExecuteReader())
+                        cmdCheck.Parameters.AddWithValue("@adminId", adminIdAcc);
+                        int isAdmin = (int)cmdCheck.ExecuteScalar();
+                        if (isAdmin == 0)
                         {
-                            while (r.Read())
-                            {
-                                list.Add(new Post
-                                {
-                                    IdPost = Convert.ToInt64(r["id_bai_viet"]),
-                                    IdAcc = Convert.ToInt64(r["id_acc"]),
-                                    IdOriginalPost = r["IdPostGoc"] != DBNull.Value ? Convert.ToInt64(r["IdPostGoc"]) : (long?)null,
-                                    Title = r["tieu_de"]?.ToString() ?? "",
-                                    Content = r["noi_dung"]?.ToString() ?? "",
-                                    BackgroundColor = r["background_color"] != DBNull.Value ? r["background_color"].ToString() : "Transparent",
-                                    CreatedAt = Convert.ToDateTime(r["ngay_dang"]),
-                                    Likes = Convert.ToInt32(r["TotalLikes"]),
-                                    IsLiked = Convert.ToBoolean(r["IsLikedByMe"]),
-                                    IsAnonymous = r["is_anonymous"] != DBNull.Value && Convert.ToBoolean(r["is_anonymous"]),
-                                    AuthorName = r["ho_ten"]?.ToString() ?? "",
-                                    ImagePaths = new List<string>(),
-                                    FilePaths = new List<string()
-                                });
-                            }
+                            System.Diagnostics.Debug.WriteLine("DAL UpdatePostStatus: Tài khoản không phải Admin!");
+                            return false;
                         }
                     }
 
-                    foreach (var post in list)
+                    // --- Cập nhật trạng thái ---
+                    const string updateSql = @"
+                        UPDATE BAI_VIET
+                        SET 
+                            approval_status = @status,
+                            rejected_reason = CASE WHEN @status = 2 THEN @reason ELSE NULL END
+                        WHERE id_bai_viet = @idPost";
+
+                    using (var cmd = new SqlCommand(updateSql, conn))
                     {
-                        const string sqlImages = "SELECT duong_dan FROM DOCUMENTS WHERE id_bai_viet = @idP";
-                        using (var cmdImg = new SqlCommand(sqlImages, conn))
+                        cmd.Parameters.AddWithValue("@idPost", idPost);
+                        cmd.Parameters.AddWithValue("@status", newStatus);
+                        cmd.Parameters.AddWithValue("@reason", (object?)reason ?? DBNull.Value);
+                        return cmd.ExecuteNonQuery() > 0;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("Lỗi UpdatePostStatus DAL: " + ex.Message);
+                return false;
+            }
+        }
+
+        // -------------------------------------------------------
+        // AdminDeletePost: Xóa bài bất kỳ — Admin only
+        // Dùng transaction để đảm bảo toàn vẹn dữ liệu
+        // Không làm xung đột Trigger TRG_UpdateShareCount vì
+        // chúng ta NULL hóa IdPostGoc trước khi xóa bài con
+        // -------------------------------------------------------
+        public bool AdminDeletePost(long idPost, long adminIdAcc)
+        {
+            const string checkAdminSql = @"
+                SELECT COUNT(1) FROM ACCOUNT a
+                JOIN ROLES r ON a.id_role = r.id_role
+                WHERE a.id_acc = @adminId AND r.role_name = N'Admin'";
+
+            try
+            {
+                using (var conn = GetConnection())
+                {
+                    if (conn.State == ConnectionState.Closed) conn.Open();
+
+                    // Kiểm tra quyền
+                    using (var cmdCheck = new SqlCommand(checkAdminSql, conn))
+                    {
+                        cmdCheck.Parameters.AddWithValue("@adminId", adminIdAcc);
+                        if ((int)cmdCheck.ExecuteScalar() == 0)
                         {
-                            cmdImg.Parameters.AddWithValue("@idP", post.IdPost);
-                            using (var rImg = cmdImg.ExecuteReader())
+                            System.Diagnostics.Debug.WriteLine("AdminDeletePost: Không có quyền Admin!");
+                            return false;
+                        }
+                    }
+
+                    // Xóa theo đúng thứ tự để tránh lỗi FK + tránh xung đột Trigger
+                    using (var tx = conn.BeginTransaction())
+                    {
+                        try
+                        {
+                            void Exec(string sql, long id)
                             {
-                                while (rImg.Read())
-                                {
-                                    string path = rImg["duong_dan"].ToString();
-                                    if (!string.IsNullOrEmpty(path))
-                                    {
-                                        post.FilePaths.Add(path);
-                                        string ext = Path.GetExtension(path).ToLower();
-                                        if (ext == ".jpg" || ext == ".png" || ext == ".jpeg" || ext == ".bmp")
-                                        {
-                                            post.ImagePaths.Add(path);
-                                        }
-                                    }
-                                }
+                                using var cmd = new SqlCommand(sql, conn, tx);
+                                cmd.Parameters.Add("@id", SqlDbType.BigInt).Value = id;
+                                cmd.ExecuteNonQuery();
                             }
+
+                            // 1. Xóa tài liệu đính kèm
+                            Exec("DELETE FROM DOCUMENTS WHERE id_bai_viet = @id", idPost);
+
+                            // 2. Xóa lượt thích → TRG_UpdateLikeCount tự cập nhật so_luot_thich
+                            Exec("DELETE FROM YEU_THICH WHERE id_bai_viet = @id", idPost);
+
+                            // 3. Xóa bình luận → TRG_UpdateCommentCount tự cập nhật so_luot_binh_luan
+                            Exec("DELETE FROM BINH_LUAN WHERE id_bai_viet = @id", idPost);
+
+                            // 4. NULL hóa IdPostGoc của bài share con
+                            //    → KHÔNG xóa bài share, chỉ cắt liên kết
+                            //    → TRG_UpdateShareCount sẽ KHÔNG kích hoạt vì IdPostGoc thay đổi
+                            //      nhưng bản ghi BAI_VIET vẫn tồn tại (không DELETE)
+                            Exec("UPDATE BAI_VIET SET IdPostGoc = NULL WHERE IdPostGoc = @id", idPost);
+
+                            // 5. Xóa bài chính → TRG_UpdateShareCount của bài CHA cập nhật đúng
+                            Exec("DELETE FROM BAI_VIET WHERE id_bai_viet = @id", idPost);
+
+                            // 6. Ghi log Admin
+                            using var logCmd = new SqlCommand(
+                                "INSERT INTO USER_LOG (hanh_dong, id_acc) VALUES (@action, @aid)", conn, tx);
+                            logCmd.Parameters.AddWithValue("@action", $"Admin xóa bài viết ID: {idPost}");
+                            logCmd.Parameters.AddWithValue("@aid", adminIdAcc);
+                            logCmd.ExecuteNonQuery();
+
+                            tx.Commit();
+                            return true;
+                        }
+                        catch (Exception ex)
+                        {
+                            tx.Rollback();
+                            System.Diagnostics.Debug.WriteLine("AdminDeletePost transaction lỗi: " + ex.Message);
+                            return false;
                         }
                     }
                 }
             }
-            catch (SqlException sqlEx)
-            {
-                System.Diagnostics.Debug.WriteLine($"SQL Error in GetPosts: {sqlEx.Message}");
-                System.Diagnostics.Debug.WriteLine($"Error Number: {sqlEx.Number}");
-                throw new InvalidOperationException("Lỗi truy cập cơ sở dữ liệu trong GetPosts", sqlEx);
-            }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine($"Error in GetPosts: {ex.Message}");
-                throw new InvalidOperationException("Lỗi không xác định trong GetPosts", ex);
+                System.Diagnostics.Debug.WriteLine("AdminDeletePost DAL lỗi: " + ex.Message);
+                return false;
             }
-            return list;
         }
 
-        public long InsertPost(long idAcc, string title, string content, bool isPublic, long? idOriginalPost = null, string backgroundColor = "Transparent")
+        // -------------------------------------------------------
+        // =========== CÁC HÀM CŨ GIỮ NGUYÊN ====================
+        // -------------------------------------------------------
+
+        public long InsertPost(long idAcc, string title, string content, bool isAnonymous,
+                               long? idOriginalPost = null, string backgroundColor = "Transparent")
         {
-            return AddPostAndGetId(idAcc, title, content, !isPublic, idOriginalPost, backgroundColor);
+            return AddPostAndGetId(idAcc, title, content, isAnonymous, idOriginalPost, backgroundColor);
         }
 
-        public long AddPostAndGetId(long idAcc, string title, string content, bool isAnonymous, long? idOriginalPost = null, string backgroundColor = "Transparent")
+        public long AddPostAndGetId(long idAcc, string title, string content, bool isAnonymous,
+                            long? idOriginalPost = null, string backgroundColor = "Transparent",
+                            bool isAdmin = false) // ✅ thêm param isAdmin
         {
             if (string.IsNullOrWhiteSpace(title)) title = "Thảo luận";
+
+            // ✅ Admin → duyệt ngay (1), Student → chờ duyệt (0)
+            int approvalStatus = isAdmin ? PostStatus.Approved : PostStatus.Pending;
+
             const string sql = @"
-                INSERT INTO BAI_VIET (id_acc, tieu_de, noi_dung, ngay_dang, so_luot_thich, is_anonymous, IdPostGoc, background_color, status, IsPublic) 
-                VALUES (@id, @t, @c, GETDATE(), 0, @isAnon, @idOriginal, @bg, 'Active', 1);
-                SELECT SCOPE_IDENTITY();";
+        INSERT INTO BAI_VIET 
+            (id_acc, tieu_de, noi_dung, ngay_dang, so_luot_thich,
+             is_anonymous, IdPostGoc, background_color, status, IsPublic, approval_status)
+        VALUES
+            (@id, @t, @c, GETDATE(), 0,
+             @isAnon, @idOriginal, @bg, 'Active', 1, @approvalStatus);
+        SELECT SCOPE_IDENTITY();";
             try
             {
                 using (var conn = GetConnection())
@@ -120,26 +324,29 @@ namespace StudentReminderApp.DAL
                     {
                         cmd.Parameters.AddWithValue("@id", idAcc);
                         cmd.Parameters.AddWithValue("@t", title);
-                        cmd.Parameters.AddWithValue("@c", (object)content ?? DBNull.Value);
+                        cmd.Parameters.AddWithValue("@c", (object?)content ?? DBNull.Value);
                         cmd.Parameters.AddWithValue("@isAnon", isAnonymous);
-                        cmd.Parameters.AddWithValue("@idOriginal", (object)idOriginalPost ?? DBNull.Value);
+                        cmd.Parameters.AddWithValue("@idOriginal", (object?)idOriginalPost ?? DBNull.Value);
                         cmd.Parameters.AddWithValue("@bg", backgroundColor ?? "Transparent");
+                        cmd.Parameters.AddWithValue("@approvalStatus", approvalStatus); // ✅
                         object result = cmd.ExecuteScalar();
                         return result != null ? Convert.ToInt64(result) : -1;
                     }
                 }
             }
-            catch (SqlException sqlEx)
-            {
-                System.Diagnostics.Debug.WriteLine($"SQL Error in AddPostAndGetId: {sqlEx.Message}");
-                System.Diagnostics.Debug.WriteLine($"Error Number: {sqlEx.Number}");
-                throw new InvalidOperationException("Lỗi khi thêm bài viết (SQL)", sqlEx);
-            }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine($"Error in AddPostAndGetId: {ex.Message}");
-                throw new InvalidOperationException("Lỗi khi thêm bài viết", ex);
+                System.Diagnostics.Debug.WriteLine("Lỗi AddPostAndGetId: " + ex.Message);
+                return -1;
             }
+        }
+
+        // Cập nhật alias InsertPost để truyền isAdmin xuống
+        public long InsertPost(long idAcc, string title, string content, bool isAnonymous,
+                               long? idOriginalPost = null, string backgroundColor = "Transparent",
+                               bool isAdmin = false) // ✅ thêm param
+        {
+            return AddPostAndGetId(idAcc, title, content, isAnonymous, idOriginalPost, backgroundColor, isAdmin);
         }
 
         public bool AddDocument(long idPost, string fileName, string filePath)
@@ -159,22 +366,22 @@ namespace StudentReminderApp.DAL
                     }
                 }
             }
-            catch (SqlException sqlEx)
-            {
-                System.Diagnostics.Debug.WriteLine($"SQL Error in AddDocument: {sqlEx.Message}");
-                throw new InvalidOperationException("Lỗi khi thêm tài liệu (SQL)", sqlEx);
-            }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine($"Error in AddDocument: {ex.Message}");
-                throw new InvalidOperationException("Lỗi khi thêm tài liệu", ex);
+                System.Diagnostics.Debug.WriteLine("Lỗi AddDocument: " + ex.Message);
+                return false;
             }
         }
 
         public List<Comment> GetCommentsByPostId(long idPost)
         {
             var list = new List<Comment>();
-            string sql = @"SELECT bl.*, u.ho_ten FROM BINH_LUAN bl JOIN [USER] u ON bl.id_acc = u.id_acc WHERE bl.id_bai_viet = @idPost ORDER BY bl.ngay_binh_luan ASC";
+            const string sql = @"
+                SELECT bl.*, u.ho_ten
+                FROM BINH_LUAN bl
+                JOIN [USER] u ON bl.id_acc = u.id_acc
+                WHERE bl.id_bai_viet = @idPost
+                ORDER BY bl.ngay_binh_luan ASC";
             try
             {
                 using (var conn = GetConnection())
@@ -192,31 +399,29 @@ namespace StudentReminderApp.DAL
                                     IdComment = Convert.ToInt64(r["id_binh_luan"]),
                                     IdAcc = Convert.ToInt64(r["id_acc"]),
                                     IdPost = Convert.ToInt64(r["id_bai_viet"]),
-                                    Content = r["noi_dung"].ToString(),
-                                    CreatedAt = Convert.ToDateTime(r["ngay_binh_luan"]),
-                                    AuthorName = r["ho_ten"].ToString()
+                                    Content = r["noi_dung"]?.ToString() ?? "",
+                                    CreatedAt = r["ngay_binh_luan"] != DBNull.Value
+                                                    ? Convert.ToDateTime(r["ngay_binh_luan"])
+                                                    : DateTime.Now,
+                                    AuthorName = r["ho_ten"]?.ToString() ?? "",
                                 });
                             }
                         }
                     }
                 }
             }
-            catch (SqlException sqlEx) 
-            { 
-                System.Diagnostics.Debug.WriteLine($"SQL Error in GetCommentsByPostId: {sqlEx.Message}");
-                throw new InvalidOperationException("Lỗi truy cập bình luận (SQL)", sqlEx);
-            }
-            catch (Exception ex) 
-            { 
-                System.Diagnostics.Debug.WriteLine($"Error in GetCommentsByPostId: {ex.Message}");
-                throw new InvalidOperationException("Lỗi truy cập bình luận", ex);
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("Lỗi GetCommentsByPostId: " + ex.Message);
             }
             return list;
         }
 
         public bool AddComment(long idPost, long idAcc, string content)
         {
-            string sql = "INSERT INTO BINH_LUAN (id_bai_viet, id_acc, noi_dung, ngay_binh_luan) VALUES (@idP, @idA, @c, GETDATE())";
+            const string sql = @"
+                INSERT INTO BINH_LUAN (id_bai_viet, id_acc, noi_dung, ngay_binh_luan)
+                VALUES (@idP, @idA, @c, GETDATE())";
             try
             {
                 using (var conn = GetConnection())
@@ -231,15 +436,10 @@ namespace StudentReminderApp.DAL
                     }
                 }
             }
-            catch (SqlException sqlEx) 
-            { 
-                System.Diagnostics.Debug.WriteLine($"SQL Error in AddComment: {sqlEx.Message}");
-                throw new InvalidOperationException("Lỗi khi thêm bình luận (SQL)", sqlEx);
-            }
-            catch (Exception ex) 
-            { 
-                System.Diagnostics.Debug.WriteLine($"Error in AddComment: {ex.Message}");
-                throw new InvalidOperationException("Lỗi khi thêm bình luận", ex);
+            catch (Exception ex)
+            {
+                Console.WriteLine("Lỗi AddComment: " + ex.Message);
+                return false;
             }
         }
 
@@ -269,21 +469,69 @@ namespace StudentReminderApp.DAL
                     }
                 }
             }
-            catch (SqlException sqlEx) 
-            { 
-                System.Diagnostics.Debug.WriteLine($"SQL Error in ToggleLike: {sqlEx.Message}");
-                throw new InvalidOperationException("Lỗi khi toggle like (SQL)", sqlEx);
+            catch (Exception ex) { Console.WriteLine("Lỗi ToggleLike: " + ex.Message); return false; }
+        }
+
+        public bool DeletePost(long idPost)
+        {
+            try
+            {
+                using (var conn = GetConnection())
+                {
+                    if (conn.State == ConnectionState.Closed) conn.Open();
+                    using (var tx = conn.BeginTransaction())
+                    {
+                        try
+                        {
+                            void Exec(string sql, long id)
+                            {
+                                using var cmd = new SqlCommand(sql, conn, tx);
+                                cmd.Parameters.Add("@id", SqlDbType.BigInt).Value = id;
+                                cmd.ExecuteNonQuery();
+                            }
+                            Exec("DELETE FROM DOCUMENTS WHERE id_bai_viet = @id", idPost);
+                            Exec("DELETE FROM YEU_THICH WHERE id_bai_viet = @id", idPost);
+                            Exec("DELETE FROM BINH_LUAN WHERE id_bai_viet = @id", idPost);
+                            Exec("UPDATE BAI_VIET SET IdPostGoc = NULL WHERE IdPostGoc = @id", idPost);
+                            Exec("DELETE FROM BAI_VIET WHERE id_bai_viet = @id", idPost);
+                            tx.Commit();
+                            return true;
+                        }
+                        catch (Exception ex)
+                        {
+                            tx.Rollback();
+                            throw;
+                        }
+                    }
+                }
             }
-            catch (Exception ex) 
-            { 
-                System.Diagnostics.Debug.WriteLine($"Error in ToggleLike: {ex.Message}");
-                throw new InvalidOperationException("Lỗi khi toggle like", ex);
+            catch (Exception ex)
+            {
+                Console.WriteLine("Lỗi khi xóa bài viết DAL: " + ex.Message);
+                return false;
             }
         }
 
-        public bool AddPost(long idAcc, string title, string content, bool isAnonymous, long? idOriginalPost = null, string backgroundColor = "Transparent")
+        public bool DeleteComment(long idComment)
         {
-            return AddPostAndGetId(idAcc, title, content, isAnonymous, idOriginalPost, backgroundColor) > 0;
+            const string sql = "DELETE FROM BINH_LUAN WHERE id_binh_luan = @id";
+            try
+            {
+                using (var conn = GetConnection())
+                {
+                    if (conn.State == ConnectionState.Closed) conn.Open();
+                    using (var cmd = new SqlCommand(sql, conn))
+                    {
+                        cmd.Parameters.Add("@id", SqlDbType.BigInt).Value = idComment;
+                        return cmd.ExecuteNonQuery() > 0;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("Lỗi khi xóa bình luận DAL: " + ex.Message);
+                return false;
+            }
         }
 
         public bool AddSharedPost(long idPostGoc, long idAccNguoiChiaSe, string noiDungThem, bool laCongKhai)
@@ -301,117 +549,169 @@ namespace StudentReminderApp.DAL
                         cmd.Parameters.AddWithValue("@NoiDungShare", noiDungThem ?? "");
                         cmd.Parameters.AddWithValue("@IsPublic", laCongKhai);
                         object result = cmd.ExecuteScalar();
-                        if (result != null) return Convert.ToInt32(result) > 0;
-                        return false;
+                        return result != null && Convert.ToInt32(result) > 0;
                     }
                 }
             }
-            catch (SqlException sqlEx)
-            {
-                System.Diagnostics.Debug.WriteLine($"SQL Error in AddSharedPost: {sqlEx.Message}");
-                throw new InvalidOperationException("Lỗi khi chia sẻ bài viết (SQL)", sqlEx);
-            }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine($"Error in AddSharedPost: {ex.Message}");
-                throw new InvalidOperationException("Lỗi khi chia sẻ bài viết", ex);
+                System.Diagnostics.Debug.WriteLine("Lỗi DAL AddSharedPost: " + ex.Message);
+                return false;
             }
         }
 
-        public bool DeletePost(long idPost)
+        public List<Post> GetHotPosts()
         {
-            try
-            {
-                using (var conn = GetConnection())
-                {
-                    if (conn.State == ConnectionState.Closed) conn.Open();
-                    using (var transaction = conn.BeginTransaction())
-                    {
-                        try
-                        {
-                            string sqlDelDocs = "DELETE FROM DOCUMENTS WHERE id_bai_viet = @id";
-                            using (var cmd0 = new SqlCommand(sqlDelDocs, conn, transaction))
-                            {
-                                cmd0.Parameters.AddWithValue("@id", idPost);
-                                cmd0.ExecuteNonQuery();
-                            }
-                            string sqlDelLikes = "DELETE FROM YEU_THICH WHERE id_bai_viet = @id";
-                            using (var cmd1 = new SqlCommand(sqlDelLikes, conn, transaction))
-                            {
-                                cmd1.Parameters.AddWithValue("@id", idPost);
-                                cmd1.ExecuteNonQuery();
-                            }
-                            string sqlDelComments = "DELETE FROM BINH_LUAN WHERE id_bai_viet = @id";
-                            using (var cmd2 = new SqlCommand(sqlDelComments, conn, transaction))
-                            {
-                                cmd2.Parameters.AddWithValue("@id", idPost);
-                                cmd2.ExecuteNonQuery();
-                            }
-                            string sqlNullifyShared = "UPDATE BAI_VIET SET IdPostGoc = NULL WHERE IdPostGoc = @id";
-                            using (var cmd3 = new SqlCommand(sqlNullifyShared, conn, transaction))
-                            {
-                                cmd3.Parameters.AddWithValue("@id", idPost);
-                                cmd3.ExecuteNonQuery();
-                            }
-                            const string sqlMain = "DELETE FROM BAI_VIET WHERE id_bai_viet = @id";
-                            using (var cmd4 = new SqlCommand(sqlMain, conn, transaction))
-                            {
-                                cmd4.Parameters.AddWithValue("@id", idPost);
-                                int result = cmd4.ExecuteNonQuery();
-                                transaction.Commit();
-                                return result > 0;
-                            }
-                        }
-                        catch (Exception ex)
-                        {
-                            transaction.Rollback();
-                            System.Diagnostics.Debug.WriteLine($"Transaction Error in DeletePost: {ex.Message}");
-                            throw;
-                        }
-                    }
-                }
-            }
-            catch (SqlException sqlEx)
-            {
-                System.Diagnostics.Debug.WriteLine($"SQL Error in DeletePost: {sqlEx.Message}");
-                throw new InvalidOperationException("Lỗi khi xóa bài viết (SQL)", sqlEx);
-            }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine($"Error in DeletePost: {ex.Message}");
-                throw new InvalidOperationException("Lỗi khi xóa bài viết", ex);
-            }
-        }
+            long currentUserId = SessionManager.CurrentUser?.IdAcc ?? 0;
+            var list = new List<Post>();
 
-        public bool DeleteComment(long idComment)
-        {
-            const string sql = "DELETE FROM BINH_LUAN WHERE id_binh_luan = @id";
+            const string sql = @"
+        SELECT TOP 50
+            bv.*,
+            u.ho_ten,
+            (SELECT COUNT(*) FROM YEU_THICH WHERE id_bai_viet = bv.id_bai_viet) AS TotalLikes,
+            (SELECT COUNT(*) FROM BINH_LUAN  WHERE id_bai_viet = bv.id_bai_viet) AS TotalComments,
+            (SELECT COUNT(*) FROM BAI_VIET   WHERE IdPostGoc   = bv.id_bai_viet) AS TotalShares,
+            CASE WHEN EXISTS (
+                SELECT 1 FROM YEU_THICH
+                WHERE id_bai_viet = bv.id_bai_viet AND id_acc = @currentUserId
+            ) THEN 1 ELSE 0 END AS IsLikedByMe,
+            -- Tính điểm HOT
+            (
+                (SELECT COUNT(*) FROM YEU_THICH WHERE id_bai_viet = bv.id_bai_viet) * 1 +
+                (SELECT COUNT(*) FROM BINH_LUAN  WHERE id_bai_viet = bv.id_bai_viet) * 2 +
+                (SELECT COUNT(*) FROM BAI_VIET   WHERE IdPostGoc   = bv.id_bai_viet) * 3
+            ) AS HotScore
+        FROM BAI_VIET bv
+        LEFT JOIN [USER] u ON bv.id_acc = u.id_acc
+        WHERE 
+            bv.approval_status = 1                          -- Chỉ bài đã duyệt
+            AND bv.ngay_dang >= DATEADD(DAY, -7, GETDATE()) -- Trong 7 ngày qua
+        ORDER BY HotScore DESC, bv.ngay_dang DESC";
 
             try
             {
                 using (var conn = GetConnection())
                 {
-                    if (conn.State == ConnectionState.Closed) conn.Open();
-
-                    using (var cmd = new SqlCommand(sql, conn))
+                    if (conn.State == System.Data.ConnectionState.Closed) conn.Open();
+                    using (var cmd = new System.Data.SqlClient.SqlCommand(sql, conn))
                     {
-                        cmd.Parameters.Add("@id", SqlDbType.BigInt).Value = idComment;
-
-                        int rowsAffected = cmd.ExecuteNonQuery();
-                        return rowsAffected > 0;
+                        cmd.Parameters.AddWithValue("@currentUserId", currentUserId);
+                        using (var r = cmd.ExecuteReader())
+                        {
+                            while (r.Read()) list.Add(MapReaderToPost(r));
+                        }
                     }
+                    LoadFilePaths(list, conn);
                 }
-            }
-            catch (SqlException sqlEx)
-            {
-                System.Diagnostics.Debug.WriteLine($"SQL Error in DeleteComment: {sqlEx.Message}");
-                throw new InvalidOperationException("Lỗi khi xóa bình luận (SQL)", sqlEx);
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine($"Error in DeleteComment: {ex.Message}");
-                throw new InvalidOperationException("Lỗi khi xóa bình luận", ex);
+                System.Diagnostics.Debug.WriteLine("Lỗi GetHotPosts: " + ex.Message);
             }
+            return list;
+        }
+
+        // -------------------------------------------------------
+        // GetStudentPosts: Bài từ sinh viên (role_name != 'Admin')
+        // -------------------------------------------------------
+        public List<Post> GetStudentPosts()
+        {
+            long currentUserId = SessionManager.CurrentUser?.IdAcc ?? 0;
+            var list = new List<Post>();
+
+            const string sql = @"
+        SELECT 
+            bv.*,
+            u.ho_ten,
+            (SELECT COUNT(*) FROM YEU_THICH WHERE id_bai_viet = bv.id_bai_viet) AS TotalLikes,
+            (SELECT COUNT(*) FROM BINH_LUAN  WHERE id_bai_viet = bv.id_bai_viet) AS TotalComments,
+            (SELECT COUNT(*) FROM BAI_VIET   WHERE IdPostGoc   = bv.id_bai_viet) AS TotalShares,
+            CASE WHEN EXISTS (
+                SELECT 1 FROM YEU_THICH
+                WHERE id_bai_viet = bv.id_bai_viet AND id_acc = @currentUserId
+            ) THEN 1 ELSE 0 END AS IsLikedByMe
+        FROM BAI_VIET bv
+        LEFT JOIN [USER]    u ON bv.id_acc   = u.id_acc
+        LEFT JOIN ACCOUNT   a ON bv.id_acc   = a.id_acc
+        LEFT JOIN ROLES     r ON a.id_role   = r.id_role
+        WHERE 
+            bv.approval_status = 1
+            AND (r.role_name != N'Admin' OR r.role_name IS NULL)  -- Không phải Admin
+        ORDER BY bv.ngay_dang DESC";
+
+            try
+            {
+                using (var conn = GetConnection())
+                {
+                    if (conn.State == System.Data.ConnectionState.Closed) conn.Open();
+                    using (var cmd = new System.Data.SqlClient.SqlCommand(sql, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@currentUserId", currentUserId);
+                        using (var r = cmd.ExecuteReader())
+                        {
+                            while (r.Read()) list.Add(MapReaderToPost(r));
+                        }
+                    }
+                    LoadFilePaths(list, conn);
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("Lỗi GetStudentPosts: " + ex.Message);
+            }
+            return list;
+        }
+
+        // -------------------------------------------------------
+        // GetAnnouncementPosts: Bảng tin từ Admin
+        // -------------------------------------------------------
+        public List<Post> GetAnnouncementPosts()
+        {
+            long currentUserId = SessionManager.CurrentUser?.IdAcc ?? 0;
+            var list = new List<Post>();
+
+            const string sql = @"
+            SELECT 
+                bv.*,
+                u.ho_ten,
+                (SELECT COUNT(*) FROM YEU_THICH WHERE id_bai_viet = bv.id_bai_viet) AS TotalLikes,
+                (SELECT COUNT(*) FROM BINH_LUAN  WHERE id_bai_viet = bv.id_bai_viet) AS TotalComments,
+                (SELECT COUNT(*) FROM BAI_VIET   WHERE IdPostGoc   = bv.id_bai_viet) AS TotalShares,
+                CASE WHEN EXISTS (
+                    SELECT 1 FROM YEU_THICH
+                    WHERE id_bai_viet = bv.id_bai_viet AND id_acc = @currentUserId
+                ) THEN 1 ELSE 0 END AS IsLikedByMe
+            FROM BAI_VIET bv
+            LEFT JOIN [USER]    u ON bv.id_acc = u.id_acc
+            LEFT JOIN ACCOUNT   a ON bv.id_acc = a.id_acc
+            LEFT JOIN ROLES     r ON a.id_role = r.id_role
+            WHERE 
+                bv.approval_status = 1
+                AND r.role_name = N'Admin'          
+            ORDER BY bv.ngay_dang DESC";
+
+            try
+            {
+                using (var conn = GetConnection())
+                {
+                    if (conn.State == System.Data.ConnectionState.Closed) conn.Open();
+                    using (var cmd = new System.Data.SqlClient.SqlCommand(sql, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@currentUserId", currentUserId);
+                        using (var r = cmd.ExecuteReader())
+                        {
+                            while (r.Read()) list.Add(MapReaderToPost(r));
+                        }
+                    }
+                    LoadFilePaths(list, conn);
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("Lỗi GetAnnouncementPosts: " + ex.Message);
+            }
+            return list;
         }
     }
 }
