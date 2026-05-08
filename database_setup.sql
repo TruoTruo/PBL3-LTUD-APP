@@ -346,6 +346,20 @@ CREATE TABLE YEU_THICH
 );
 
 USE PBL3;
+
+-- Gán DEFAULT 0 cho so_luot_thich
+ALTER TABLE BAI_VIET 
+ADD CONSTRAINT DF_so_luot_thich DEFAULT 0 FOR so_luot_thich;
+
+-- Gán DEFAULT 'Active' cho status
+ALTER TABLE BAI_VIET 
+ADD CONSTRAINT DF_status DEFAULT 'Active' FOR status;
+
+-- Cập nhật các bài cũ nếu đang NULL
+UPDATE BAI_VIET SET so_luot_thich = 0 WHERE so_luot_thich IS NULL;
+UPDATE BAI_VIET SET status = 'Active' WHERE status IS NULL;
+
+USE PBL3;
 GO
 
 UPDATE BAI_VIET
