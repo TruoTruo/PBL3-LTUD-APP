@@ -377,109 +377,70 @@
                     </Grid.ColumnDefinitions>
 
                     <!-- Suggested courses -->
-                    <Border Grid.Column="0"
-                            Style="{StaticResource Card}">
-                        <StackPanel>
-                            <TextBlock Text="Môn học được gợi ý"
-                                       FontSize="15"
-                                       FontWeight="SemiBold"
-                                       Foreground="{StaticResource TextPrimaryBrush}"
-                                       Margin="0,0,0,12"/>
+                    <Grid Grid.Column="0">
+                        <Border x:Name="SuggestedPanel"
+                                Style="{StaticResource Card}">
+                            <StackPanel>
+                                <TextBlock Text="Môn học được gợi ý"
+                                           FontSize="15"
+                                           FontWeight="SemiBold"
+                                           Foreground="{StaticResource TextPrimaryBrush}"
+                                           Margin="0,0,0,12"/>
 
-                            <!-- QUICK FILTERS -->
-                            <Border Background="#F8FAFC"
-                                    BorderBrush="#E2E8F0"
-                                    BorderThickness="1"
-                                    CornerRadius="6"
-                                    Padding="12,8"
-                                    Margin="0,0,0,12">
-                                <StackPanel>
-                                    <TextBlock Text="⚙ Cài đặt ưu tiên nhanh:"
-                                               FontWeight="SemiBold"
-                                               FontSize="12"
-                                               Foreground="#475569"
-                                               Margin="0,0,0,8"/>
-                                    <StackPanel Orientation="Horizontal">
-                                        <RadioButton x:Name="RbPrioritySubject"
-                                                     Content="Ưu tiên Môn bắt buộc"
-                                                     GroupName="Priority"
-                                                     IsChecked="True"
-                                                     Foreground="#334155"
-                                                     Margin="0,0,16,0"
-                                                     Checked="QuickFilter_Changed"/>
-                                        <RadioButton x:Name="RbPriorityTeacher"
-                                                     Content="Ưu tiên Giảng viên"
-                                                     GroupName="Priority"
-                                                     Foreground="#334155"
-                                                     Checked="QuickFilter_Changed"/>
-                                    </StackPanel>
-                                    <ComboBox x:Name="CmbTeacherFilter"
-                                              Margin="0,8,0,0"
-                                              Height="28"
-                                              Visibility="Collapsed"
-                                              SelectionChanged="QuickFilter_Changed">
-                                        <ComboBoxItem Content="Tất cả giảng viên"
-                                                      IsSelected="True"/>
-                                        <ComboBoxItem Content="PGS.TS Phạm Thị Hoa"/>
-                                        <ComboBoxItem Content="TS. Nguyễn Văn A"/>
-                                        <ComboBoxItem Content="ThS. Trần Thị B"/>
-                                    </ComboBox>
-                                </StackPanel>
-                            </Border>
+                                <DataGrid x:Name="DgSuggested"
+                                          AutoGenerateColumns="False"
+                                          IsReadOnly="True"
+                                          GridLinesVisibility="Horizontal"
+                                          HeadersVisibility="Column"
+                                          RowBackground="White"
+                                          AlternatingRowBackground="#FAFAFA"
+                                          BorderThickness="0"
+                                          CanUserResizeRows="False"
+                                          RowHeight="44"
+                                          FontSize="12.5">
+                                    <DataGrid.Columns>
+                                        <DataGridTemplateColumn Header="Chọn"
+                                                                Width="60">
+                                            <DataGridTemplateColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <CheckBox IsChecked="{Binding IsSelected, UpdateSourceTrigger=PropertyChanged}"
+                                                              IsEnabled="{Binding IsEnabled}"
+                                                              HorizontalAlignment="Center"
+                                                              VerticalAlignment="Center"/>
+                                                </DataTemplate>
+                                            </DataGridTemplateColumn.CellTemplate>
+                                        </DataGridTemplateColumn>
+                                        <DataGridTextColumn Header="Mã MH"
+                                                            Binding="{Binding MaMonHoc}"
+                                                            Width="85"/>
+                                        <DataGridTextColumn Header="Tên môn học"
+                                                            Binding="{Binding TenMonHoc}"
+                                                            Width="*"/>
+                                        <DataGridTextColumn Header="TC"
+                                                            Binding="{Binding SoTinChi}"
+                                                            Width="45"/>
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                                <TextBlock x:Name="TxtNoSuggest"
+                                           Visibility="Collapsed"
+                                           Text="Không có môn học nào được gợi ý. Bạn có thể đã đăng ký đủ hoặc chưa có dữ liệu tích lũy."
+                                           Foreground="{StaticResource TextMutedBrush}"
+                                           FontSize="13"
+                                           TextWrapping="Wrap"
+                                           HorizontalAlignment="Center"
+                                           Margin="0,20"/>
+                                <Button x:Name="BtnContinuePhase2"
+                                        Content="Tiếp tục →"
+                                        Style="{StaticResource BtnPrimary}"
+                                        HorizontalAlignment="Right"
+                                        Margin="0,16,0,0"
+                                        Height="36"
+                                        Padding="20,0"
+                                        Click="BtnContinuePhase2_Click"/>
+                            </StackPanel>
+                        </Border>
 
-                            <DataGrid x:Name="DgSuggested"
-                                      AutoGenerateColumns="False"
-                                      IsReadOnly="True"
-                                      GridLinesVisibility="Horizontal"
-                                      HeadersVisibility="Column"
-                                      RowBackground="White"
-                                      AlternatingRowBackground="#FAFAFA"
-                                      BorderThickness="0"
-                                      CanUserResizeRows="False"
-                                      RowHeight="44"
-                                      FontSize="12.5">
-                                <DataGrid.Columns>
-                                    <DataGridTextColumn Header="Mã MH"
-                                                        Binding="{Binding MaMonHoc}"
-                                                        Width="85"/>
-                                    <DataGridTextColumn Header="Tên môn học"
-                                                        Binding="{Binding TenMonHoc}"
-                                                        Width="*"/>
-                                    <DataGridTextColumn Header="TC"
-                                                        Binding="{Binding SoTinChi}"
-                                                        Width="45"/>
-                                    <DataGridTextColumn Header="Giảng viên"
-                                                        Binding="{Binding TenGiangVien}"
-                                                        Width="140"/>
-                                    <DataGridTextColumn Header="Phòng"
-                                                        Binding="{Binding TenPhong}"
-                                                        Width="80"/>
-                                    <DataGridTemplateColumn Header="Thao tác"
-                                                            Width="95">
-                                        <DataGridTemplateColumn.CellTemplate>
-                                            <DataTemplate>
-                                                <Button Content="+ Đăng ký"
-                                                        Tag="{Binding}"
-                                                        Style="{StaticResource BtnPrimary}"
-                                                        Height="30"
-                                                        FontSize="11"
-                                                        Click="BtnQuickRegister_Click"
-                                                        Loaded="BtnQuickRegister_Loaded"/>
-                                            </DataTemplate>
-                                        </DataGridTemplateColumn.CellTemplate>
-                                    </DataGridTemplateColumn>
-                                </DataGrid.Columns>
-                            </DataGrid>
-                            <TextBlock x:Name="TxtNoSuggest"
-                                       Visibility="Collapsed"
-                                       Text="Không có môn học nào được gợi ý. Bạn có thể đã đăng ký đủ hoặc chưa có dữ liệu tích lũy."
-                                       Foreground="{StaticResource TextMutedBrush}"
-                                       FontSize="13"
-                                       TextWrapping="Wrap"
-                                       HorizontalAlignment="Center"
-                                       Margin="0,20"/>
-                        </StackPanel>
-                    </Border>
+                    </Grid>
 
                     <!-- Registered list -->
                     <Border Grid.Column="2"
