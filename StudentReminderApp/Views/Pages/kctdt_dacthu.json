@@ -12,9 +12,14 @@
       "courses": [
         { "id": "1022113", "name": "Nhập môn ngành Công nghệ thông tin", "credits": 2, "lecturer": "TS. Huỳnh Công Pháp", "weeks": "1-10", "session": "Sáng" },
         { "id": "1022063", "name": "Kỹ thuật lập trình", "credits": 3, "lecturer": "TS. Ninh Khánh Duy", "weeks": "1-15", "session": "Sáng" },
+        { "id": "1023060", "name": "TH:Kỹ thuật lập trình", "credits": 1, "lecturer": "TS. Ninh Khánh Duy", "weeks": "1-15", "session": "Sáng" },
         { "id": "1012513", "name": "Giải tích 1", "credits": 3, "lecturer": "ThS. Trần Liên Anh", "weeks": "1-15", "session": "Chiều" },
         { "id": "1012523", "name": "Đại số tuyến tính", "credits": 3, "lecturer": "TS. Nguyễn Công Bằng", "weeks": "1-15", "session": "Chiều" },
-        { "id": "1090013", "name": "Triết học Mác-Lênin", "credits": 3, "lecturer": "TS. Lê Thị C", "weeks": "1-15", "session": "Sáng" }
+        { "id": "1090013", "name": "Triết học Mác-Lênin", "credits": 3, "lecturer": "TS. Lê Thị C", "weeks": "1-15", "session": "Sáng" },
+        { "id": "4130311", "name": "Anh Văn A2.2", "credits": 4, "lecturer": "TS. Đỗ Thị Hoa", "weeks": "1-15", "session": "Sáng" },
+        { "id": "1022063", "name": "Nhập môn ngành", "credits": 2, "lecturer": "PGS.TS. Nguyễn Tấn Khôi", "weeks": "1-15", "session": "Sáng" },
+        { "id": "1023134", "name": "PBL 1: Dự án lập trình", "credits": 4, "lecturer": "Hội đồng bộ môn IT", "weeks": "1-15", "session": "Chiều" }
+
       ]
     },
     {
@@ -24,7 +29,8 @@
         { "id": "1022083", "name": "Lập trình hướng đối tượng", "credits": 3, "lecturer": "PGS.TS. Lê Văn Sơn", "weeks": "1-15", "session": "Sáng" },
         { "id": "1022073", "name": "Toán rời rạc", "credits": 3, "lecturer": "TS. Nguyễn Trần Quốc Vinh", "weeks": "1-15", "session": "Chiều" },
         { "id": "1012533", "name": "Giải tích 2", "credits": 3, "lecturer": "ThS. Nguyễn Hữu Hiệp", "weeks": "1-15", "session": "Sáng" },
-        { "id": "1090023", "name": "Kinh tế chính trị Mác-Lênin", "credits": 2, "lecturer": "TS. Nguyễn Văn D", "weeks": "1-10", "session": "Chiều" }
+        { "id": "1090023", "name": "Kinh tế chính trị Mác-Lênin", "credits": 2, "lecturer": "TS. Nguyễn Văn D", "weeks": "1-10", "session": "Chiều" },
+        { "id": "1023154", "name": "PBL 1: Dự án lập trình tính toán", "credits": 4, "lecturer": "ThS. Đỗ Thị Tuyết Hoa", "weeks": "1-15", "session": "Chiều" }
       ]
     },
     {
@@ -33,16 +39,24 @@
         { "id": "1022093", "name": "Kiến trúc máy tính và Hợp ngữ", "credits": 3, "lecturer": "TS. Trương Ngọc Châu", "weeks": "1-15", "session": "Sáng" },
         { "id": "1022103", "name": "Cơ sở dữ liệu", "credits": 3, "lecturer": "ThS. Đỗ Thị Tuyết Hoa", "weeks": "1-15", "session": "Chiều" },
         { "id": "1022123", "name": "Hệ điều hành", "credits": 3, "lecturer": "TS. Nguyễn Thanh Bình", "weeks": "1-15", "session": "Sáng" },
-        { "id": "1090033", "name": "Chủ nghĩa xã hội khoa học", "credits": 2, "lecturer": "TS. Lê Văn E", "weeks": "1-15", "session": "Chiều" }
+        { "id": "1090033", "name": "Chủ nghĩa xã hội khoa học", "credits": 2, "lecturer": "TS. Lê Văn E", "weeks": "1-15", "session": "Chiều" },
+        { "id": "1023164", "name": "PBL 3: Dự án cơ sở lập trình", "credits": 4, "lecturer": "PGS.TS. Lê Văn Sơn", "weeks": "1-15", "session": "Sáng" }
+
       ]
     },
     {
       "semester": 4,
       "courses": [
         { "id": "1022143", "name": "Mạng máy tính", "credits": 3, "lecturer": "TS. Nguyễn Thanh Bình", "weeks": "1-15", "session": "Sáng" },
+        { "id": "1023703", "name": "Lập trình .NET", "credits": 2.5, "lecturer": "TS. Trương Văn Sang", "weeks": "1-15", "session": "Sáng" },
+        { "id": "1023713", "name": "Lập trình Java", "credits": 2.5, "lecturer": "PGS.TS. Trần Đình Trọng", "weeks": "1-15", "session": "Sáng" },
         { "id": "1022153", "name": "Phân tích và thiết kế hệ thống", "credits": 3, "lecturer": "ThS. Phạm Thị Hoa", "weeks": "1-15", "session": "Chiều" },
         { "id": "1022163", "name": "Công nghệ phần mềm", "credits": 3, "lecturer": "TS. Huỳnh Công Pháp", "weeks": "1-15", "session": "Sáng" },
-        { "id": "1023134", "name": "PBL 1: Dự án lập trình", "credits": 4, "lecturer": "Hội đồng bộ môn IT", "weeks": "1-15", "session": "Chiều" }
+        { "id": "1022063", "name": "Đồ hoạ máy tính", "credits": 2, "lecturer": "TS. Phạm Đức Trí", "weeks": "1-15", "session": "Sáng" },
+        { "id": "1022063", "name": "Ngôn ngữ hình thức", "credits": 2, "lecturer": "TS. Ninh Đỗ Đạt", "weeks": "1-15", "session": "Sáng" },
+        { "id": "1022063", "name": "Giao tiếp người máy", "credits": 2, "lecturer": "TS. Bùi Xuân Thanh", "weeks": "1-15", "session": "Sáng" },
+        { "id": "1023174", "name": "PBL 3: Dự án công nghệ phần mềm", "credits": 4, "lecturer": "TS. Trương Ngọc Châu", "weeks": "1-15", "session": "Chiều" }
+
       ]
     },
     {
@@ -51,7 +65,8 @@
         { "id": "INT3002", "name": "Trí tuệ nhân tạo", "credits": 3, "lecturer": "TS. Đặng Hoài Phương", "weeks": "1-15", "session": "Sáng" },
         { "id": "1022183", "name": "Lập trình Web", "credits": 3, "lecturer": "TS. Đặng Trung Hiếu", "weeks": "1-15", "session": "Sáng" },
         { "id": "1022193", "name": "Lập trình thiết bị di động", "credits": 3, "lecturer": "ThS. Nguyễn Văn G", "weeks": "1-15", "session": "Chiều" },
-        { "id": "1023154", "name": "PBL 2: Dự án cơ sở dữ liệu", "credits": 4, "lecturer": "ThS. Đỗ Thị Tuyết Hoa", "weeks": "1-15", "session": "Chiều" }
+        { "id": "1023184", "name": "PBL 5: Dự án hệ thống thông minh", "credits": 4, "lecturer": "TS. Huỳnh Công Pháp", "weeks": "1-15", "session": "Sáng" }
+
       ]
     },
     {
@@ -59,23 +74,21 @@
       "courses": [
         { "id": "1022203", "name": "An toàn và bảo mật hệ thống", "credits": 3, "lecturer": "TS. Nguyễn Thanh Bình", "weeks": "1-15", "session": "Chiều" },
         { "id": "1022213", "name": "Quản trị dự án phần mềm", "credits": 3, "lecturer": "TS. Huỳnh Công Pháp", "weeks": "1-15", "session": "Sáng" },
-        { "id": "1023164", "name": "PBL 3: Dự án công nghệ phần mềm", "credits": 4, "lecturer": "PGS.TS. Lê Văn Sơn", "weeks": "1-15", "session": "Sáng" }
+        { "id": "1023194", "name": "PBL 6: Dự án chuyên sâu", "credits": 4, "lecturer": "Hội đồng bộ môn IT", "weeks": "1-15", "session": "Chiều" }
+
       ]
     },
     {
       "semester": 7,
       "courses": [
         { "id": "1022233", "name": "Điện toán đám mây", "credits": 3, "lecturer": "TS. Đặng Trung Hiếu", "weeks": "1-15", "session": "Sáng" },
-        { "id": "1022243", "name": "Kiểm thử phần mềm", "credits": 3, "lecturer": "ThS. Phạm Thị Hoa", "weeks": "1-15", "session": "Chiều" },
-        { "id": "1023174", "name": "PBL 4: Dự án mạng máy tính", "credits": 4, "lecturer": "TS. Trương Ngọc Châu", "weeks": "1-15", "session": "Chiều" }
+        { "id": "1022243", "name": "Kiểm thử phần mềm", "credits": 3, "lecturer": "ThS. Phạm Thị Hoa", "weeks": "1-15", "session": "Chiều" }
       ]
     },
     {
       "semester": 8,
       "courses": [
-        { "id": "1022263", "name": "Internet vạn vật (IoT)", "credits": 3, "lecturer": "TS. Đặng Hoài Phương", "weeks": "1-15", "session": "Sáng" },
-        { "id": "1023184", "name": "PBL 5: Dự án hệ thống thông minh", "credits": 4, "lecturer": "TS. Huỳnh Công Pháp", "weeks": "1-15", "session": "Sáng" },
-        { "id": "1023194", "name": "PBL 6: Dự án chuyên sâu", "credits": 4, "lecturer": "Hội đồng bộ môn IT", "weeks": "1-15", "session": "Chiều" }
+        { "id": "1022263", "name": "Internet vạn vật (IoT)", "credits": 3, "lecturer": "TS. Đặng Hoài Phương", "weeks": "1-15", "session": "Sáng" }
       ]
     },
     {

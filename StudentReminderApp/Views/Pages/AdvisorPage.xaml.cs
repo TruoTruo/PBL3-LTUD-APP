@@ -21,6 +21,37 @@ namespace StudentReminderApp.Views.Pages
         public string Buoi { get; set; } = string.Empty;
     }
 
+    public class SuggestedCourseViewModel : System.ComponentModel.INotifyPropertyChanged
+    {
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        public LopHocPhan Course { get; set; }
+        private bool _isSelected;
+        public bool IsSelected
+        {
+            get => _isSelected;
+            set { _isSelected = value; NotifyPropertyChanged(nameof(IsSelected)); }
+        }
+        public bool IsRegistered { get; set; }
+        public bool IsEnabled => !IsRegistered;
+        public string MaMonHoc => Course.MaMonHoc;
+        public string TenMonHoc => Course.TenMonHoc;
+        public int SoTinChi => Course.SoTinChi;
+        public void NotifyPropertyChanged(string prop) => PropertyChanged?.Invoke(this, new System.ComponentModel.PropertyChangedEventArgs(prop));
+    }
+
+    public class ResultClassViewModel
+    {
+        public LopHocPhan OriginalCourse { get; set; }
+        public string TenMonHoc { get; set; }
+        public string IdLopHp { get; set; }
+        public string TenGiangVien { get; set; }
+        public int SoTinChi { get; set; }
+        public string TenPhong { get; set; }
+        public string NgayThu { get; set; }
+        public string TuanHoc { get; set; }
+        public bool IsConflict { get; set; }
+    }
+
     public partial class AdvisorPage : Page
     {
         private int _currentWizardStep = 1;
@@ -29,6 +60,7 @@ namespace StudentReminderApp.Views.Pages
         private Dictionary<long, Button> _registerButtons = new Dictionary<long, Button>();
         private List<LopHocPhan> _currentLoadedCourses = new List<LopHocPhan>();
         private string _currentProgramId = "ai";
+        private List<SuggestedCourseViewModel> _suggestedViewModels = new List<SuggestedCourseViewModel>();
 
         private readonly AdvisorBLL _advisorBll = new AdvisorBLL();
 
@@ -39,9 +71,18 @@ namespace StudentReminderApp.Views.Pages
             Loaded += AdvisorPage_Loaded;
         }
 
+        private bool _isInitialLoad = true;
         private async void AdvisorPage_Loaded(object sender, RoutedEventArgs e)
         {
-            await AnalyzeDataAsync(saveManualInput: false); // Fix: Không lưu đè dữ liệu rác mặc định khi vừa mở trang
+            if (_isInitialLoad)
+            {
+                await AnalyzeDataAsync(saveManualInput: false);
+                _isInitialLoad = false;
+            }
+            else
+            {
+                UpdateProgressBar(_mockRegisteredCourses.Sum(c => c.SoTinChi));
+            }
         }
 
         private async void BtnAnalyze_Click(object sender, RoutedEventArgs e)
@@ -142,30 +183,6 @@ namespace StudentReminderApp.Views.Pages
             }
         }
 
-        private void QuickFilter_Changed(object? sender, RoutedEventArgs? e)
-        {
-            if (RbPriorityTeacher == null || CmbTeacherFilter == null || DgSuggested == null) return;
-
-            CmbTeacherFilter.Visibility = RbPriorityTeacher.IsChecked == true ? Visibility.Visible : Visibility.Collapsed;
-
-            var list = _currentLoadedCourses != null ? _currentLoadedCourses.ToList() : new List<LopHocPhan>();
-
-            if (RbPrioritySubject != null && RbPrioritySubject.IsChecked == true)
-            {
-                list = list.OrderByDescending(c => c.SoTinChi).ThenBy(c => c.TenMonHoc).ToList();
-            }
-            else if (RbPriorityTeacher != null && RbPriorityTeacher.IsChecked == true && CmbTeacherFilter.SelectedIndex > 0)
-            {
-                if (CmbTeacherFilter.SelectedItem is ComboBoxItem cbItem && cbItem.Content != null)
-                {
-                    string selectedTeacher = cbItem.Content.ToString();
-                    list = list.OrderByDescending(c => c.TenGiangVien == selectedTeacher).ThenBy(c => c.TenMonHoc).ToList();
-                }
-            }
-
-            DgSuggested.ItemsSource = list;
-        }
-
         private void UpdateProgressBar(int registeredCredits)
         {
             TxtRegCredit.Text = registeredCredits.ToString();
@@ -196,21 +213,11 @@ namespace StudentReminderApp.Views.Pages
                 if (TxtCreditFraction != null) TxtCreditFraction.Foreground = CreditProgressBar.Background;
             }
 
-            // Auto-Grayout: Tự động kiểm tra và làm xám các nút Đăng ký nếu vượt 25 TC
-            foreach (var kvp in _registerButtons)
+            foreach (var vm in _suggestedViewModels)
             {
-                var btn = kvp.Value;
-                if (btn != null && btn.Tag is LopHocPhan lhp)
-                {
-                    if (_mockRegisteredCourses.Contains(lhp))
-                    {
-                        btn.IsEnabled = false; // Môn đã đăng ký -> Xám (Khóa)
-                    }
-                    else
-                    {
-                        btn.IsEnabled = (registeredCredits + lhp.SoTinChi <= 25); // Nếu đăng ký thêm mà lố 25 TC -> Xám (Khóa)
-                    }
-                }
+                vm.IsRegistered = _mockRegisteredCourses.Any(c => c.TenMonHoc == vm.TenMonHoc);
+                vm.NotifyPropertyChanged("IsRegistered");
+                vm.NotifyPropertyChanged("IsEnabled");
             }
         }
 
@@ -263,60 +270,17 @@ namespace StudentReminderApp.Views.Pages
             }
         }
 
-        private async void BtnQuickRegister_Click(object sender, RoutedEventArgs e)
+        private void BtnContinuePhase2_Click(object sender, RoutedEventArgs e)
         {
-            if (sender is Button btn && btn.Tag is LopHocPhan lhp)
+            var selectedViewModels = _suggestedViewModels.Where(x => x.IsSelected).ToList();
+            if (selectedViewModels.Count == 0)
             {
-                int currentTc = 0;
-                int.TryParse(TxtRegCredit.Text, out currentTc);
-
-                // Kiểm tra giới hạn tín chỉ cứng (25 TC)
-                if (currentTc + lhp.SoTinChi > 25)
-                {
-                    MessageBox.Show("⚠️ Không thể đăng ký! Bạn đã đạt giới hạn tối đa 25 tín chỉ cho học kỳ này.",
-                                    "Lỗi vượt quá tín chỉ", MessageBoxButton.OK, MessageBoxImage.Error);
-                    btn.IsEnabled = false; // Vô hiệu hóa nút của môn này
-                    return;
-                }
-
-                btn.IsEnabled = false;
-
-                try
-                {
-                    // Nạp Object môn học vào mảng selectedCourses và cập nhật UI Realtime
-                    _mockRegisteredCourses.Add(lhp);
-                    currentTc += lhp.SoTinChi;
-                    UpdateProgressBar(currentTc);
-
-                    // Cập nhật lại thanh Progress thay vì báo Alert liên tục gây khó chịu UX
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Lỗi khi đăng ký: " + ex.Message, "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
-                    btn.IsEnabled = true;
-                }
+                MessageBox.Show("Vui lòng chọn ít nhất một môn học để tiếp tục.", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
             }
-        }
 
-        private void BtnQuickRegister_Loaded(object sender, RoutedEventArgs e)
-        {
-            if (sender is Button btn && btn.Tag is LopHocPhan lhp)
-            {
-                // Lưu cache tham chiếu các nút vào Dictionary lúc tải lên giao diện
-                _registerButtons[lhp.IdLopHp] = btn;
-
-                int currentTc = 0;
-                int.TryParse(TxtRegCredit.Text, out currentTc);
-
-                if (_mockRegisteredCourses.Contains(lhp))
-                {
-                    btn.IsEnabled = false;
-                }
-                else
-                {
-                    btn.IsEnabled = (currentTc + lhp.SoTinChi <= 25);
-                }
-            }
+            var registrationPage = new CourseRegistrationPage(selectedViewModels, _mockRegisteredCourses);
+            NavigationService.Navigate(registrationPage);
         }
 
         private T? FindParent<T>(DependencyObject child) where T : DependencyObject
@@ -352,11 +316,12 @@ namespace StudentReminderApp.Views.Pages
                     currentTc -= lhp.SoTinChi;
                     UpdateProgressBar(currentTc);
 
-                    // Phục hồi nút [+ Đăng ký] bên trái
-                    if (_registerButtons.ContainsKey(lhp.IdLopHp))
+                    var vm = _suggestedViewModels.FirstOrDefault(x => x.TenMonHoc == lhp.TenMonHoc);
+                    if (vm != null)
                     {
-                        var regBtn = _registerButtons[lhp.IdLopHp];
-                        if (regBtn != null) regBtn.IsEnabled = true;
+                        vm.IsRegistered = false;
+                        vm.NotifyPropertyChanged("IsRegistered");
+                        vm.NotifyPropertyChanged("IsEnabled");
                     }
                 }
             }
@@ -383,7 +348,7 @@ namespace StudentReminderApp.Views.Pages
 
             // Nạp dữ liệu từ JSON thông qua DataService
             var programData = DataService.GetProgramData(_currentProgramId);
-            var courses = DataService.GetCoursesBySemester(_currentProgramId, hk) ?? new List<CourseData>();
+            var courses = DataService.GetCoursesBySemester(_currentProgramId, hk)?.Take(10).ToList() ?? new List<CourseData>();
 
             // Tự động cộng dồn tín chỉ từ các kỳ trước dựa trên file JSON
             if (programData != null && programData.Semesters != null)
@@ -432,6 +397,7 @@ namespace StudentReminderApp.Views.Pages
 
             // 3. Cập nhật DataGrid (Bảng danh sách gợi ý lớn)
             _currentLoadedCourses.Clear();
+            _suggestedViewModels.Clear();
 
             foreach (var c in courses)
             {
@@ -445,10 +411,11 @@ namespace StudentReminderApp.Views.Pages
                     TenPhong = c.Session ?? "Chưa xếp phòng"
                 };
                 _currentLoadedCourses.Add(lhp);
+                bool isReg = _mockRegisteredCourses.Any(x => x.TenMonHoc == lhp.TenMonHoc);
+                _suggestedViewModels.Add(new SuggestedCourseViewModel { Course = lhp, IsSelected = false, IsRegistered = isReg });
             }
 
-            // Kích hoạt bộ lọc ban đầu
-            QuickFilter_Changed(null, null);
+            if (DgSuggested != null) DgSuggested.ItemsSource = _suggestedViewModels;
 
             TxtNoSuggest.Visibility = _currentLoadedCourses.Count == 0 ? Visibility.Visible : Visibility.Collapsed;
         }
@@ -472,10 +439,11 @@ namespace StudentReminderApp.Views.Pages
             _mockRegisteredCourses.Clear();
             UpdateProgressBar(0);
 
-            // Khôi phục toàn bộ trạng thái nút Đăng ký
-            foreach (var btn in _registerButtons.Values)
+            foreach (var vm in _suggestedViewModels)
             {
-                if (btn != null) btn.IsEnabled = true;
+                vm.IsRegistered = false;
+                vm.NotifyPropertyChanged("IsRegistered");
+                vm.NotifyPropertyChanged("IsEnabled");
             }
 
             _currentWizardStep = 1;

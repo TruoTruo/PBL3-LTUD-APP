@@ -1,62 +1,23 @@
-# Student Reminder & Advisor — WPF App
+# 🎓 Student Reminder & Advisor
 
-## Cấu trúc project
-```
-StudentReminderApp/
-├── database_setup.sql          ← Chạy cái này trước ở SQL Server
-└── StudentReminderApp/
-    ├── StudentReminderApp.csproj
-    ├── App.xaml / App.xaml.cs
-    ├── AppConfig.cs            ← SỬA CONNECTION STRING Ở ĐÂY
-    ├── Models/
-    ├── Helpers/
-    ├── Converters/
-    ├── DAL/
-    ├── BLL/
-    ├── Services/
-    ├── Resources/
-    └── Views/
-        ├── Auth/      (Login, Register)
-        ├── Main/      (MainWindow - Shell)
-        ├── Pages/     (Dashboard, Calendar, Course, Advisor, Profile)
-        └── Dialogs/   (EventDialog, NotificationPopup)
-```
+> Trợ lý học tập thông minh: Tự động hóa nhắc nhở lịch trình & tư vấn đăng ký học phần, giúp sinh viên tối ưu hóa lộ trình tích lũy tín chỉ.
 
-## Hướng dẫn chạy
+![Demo Application](ezgif-68be12c0173ea6a0.gif)
 
-### Bước 1 — Tạo Database
-1. Mở **SQL Server Management Studio**
-2. Mở file `database_setup.sql`
-3. Nhấn **F5** để chạy toàn bộ script
-4. Kiểm tra database **PBL3** đã được tạo
+<div align="left">
+  <img src="https://skillicons.dev/icons?i=cs,dotnet,windows" alt="Tech Stack" />
+  <img src="https://img.shields.io/badge/SQL%20Server-CC2927?style=for-the-badge&logo=microsoft-sql-server&logoColor=white" alt="SQL Server" height="48" style="vertical-align: top; margin-left: 8px;" />
+</div>
 
-### Bước 2 — Sửa Connection String
-Mở file `AppConfig.cs` và sửa:
-```csharp
-"Server=TÊN_MÁY_BẠN;Database=PBL3;Trusted_Connection=True;..."
-```
-Ví dụ: `Server=DESKTOP-ABC123\SQLEXPRESS` hoặc `Server=localhost`
+<br>
 
-### Bước 3 — Mở project trong Visual Studio
-1. **Visual Studio 2022** → Open terminal tại file gốc có chứa file ở B2
-2. `StudentReminderApp.csproj`
-3. Chờ NuGet restore tự động (BCrypt.Net-Next + System.Data.SqlClient)
+## ✨ Highlights
 
-### Bước 4 — Build & Run
-- Tại terminal nhập **dotnet run**
-- Màn hình Login sẽ hiện ra
-- Nhấn "Đăng ký ngay" để tạo tài khoản đầu tiên
+- **Smart Course Advisor:** AI tự động gợi ý & đăng ký học phần dựa trên mức tín chỉ giới hạn, điểm số GPA và khung thời gian ưu tiên.
 
-## Công nghệ sử dụng
-- **WPF** (.NET Framework 4.8 / .NET 6+)
-- **SQL Server** (Express hoặc Full)
-- **BCrypt.Net-Next** — mã hóa mật khẩu
-- **System.Data.SqlClient** — kết nối database
+  ![Course Advisor Demo](ezgif-209d61dc290fd249.gif)
 
-## Tài khoản test
-Đăng ký qua giao diện. Không có tài khoản mặc định vì mật khẩu được hash BCrypt.
-
-## Lưu ý
-- Thay `Server=localhost` thành tên SQL Server instance của bạn
-- Nếu dùng SQL Server Express: `Server=.\SQLEXPRESS`
-- Project yêu cầu Visual Studio 2019+ hoặc VS Code với C# extension
+- **Auto-Reminders:** Hệ thống hàng đợi (Queue) tự động nhắc nhở lịch thi, deadline & sự kiện cá nhân qua kênh Push/Email.
+- **Student Forum:** Tích hợp không gian thảo luận với tính năng share bài, comment, like (xử lý concurrency chặt chẽ qua Constraints & Stored Procedures).
+- **Security:** Xác thực & ủy quyền 2 lớp (Admin/Student), bảo mật dữ liệu với cơ chế mã hóa `BCrypt.Net`.
+- **High Performance:** Triển khai theo mô hình 3 lớp (3-Tier), tối ưu truy xuất SQL Server bằng ADO.NET trực tiếp thay vì các ORM cồng kềnh.

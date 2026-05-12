@@ -15,7 +15,9 @@
         { "id": "1023600", "name": "Nhập môn ngành (Nhật)", "credits": 2, "lecturer": "Sensei Nakano", "weeks": "1-15", "session": "Chiều" },
         { "id": "1022863", "name": "Kỹ thuật lập trình", "credits": 3, "lecturer": "TS. Huỳnh Công Pháp", "weeks": "1-15", "session": "Sáng" },
         { "id": "2090150", "name": "Triết học Mác - Lênin", "credits": 3, "lecturer": "TS. Lê Thị C", "weeks": "1-15", "session": "Chiều" },
-        { "id": "5070030", "name": "Tiếng Nhật 1 (CNTT)", "credits": 1, "lecturer": "Ms. Haruka", "weeks": "1-15", "session": "Tối" }
+        { "id": "5070030", "name": "Tiếng Nhật 1 (CNTT)", "credits": 1, "lecturer": "Ms. Haruka", "weeks": "1-15", "session": "Tối" },
+        { "id": "1023134", "name": "PBL 1: Dự án lập trình", "credits": 4, "lecturer": "Hội đồng bộ môn IT", "weeks": "1-15", "session": "Sáng" }
+
       ]
     },
     {
@@ -25,7 +27,8 @@
         { "id": "1020053", "name": "Cấu trúc dữ liệu và Giải thuật", "credits": 3, "lecturer": "TS. Ninh Khánh Duy", "weeks": "1-15", "session": "Chiều" },
         { "id": "1022083", "name": "Lập trình hướng đối tượng", "credits": 3, "lecturer": "PGS.TS. Lê Văn Sơn", "weeks": "1-15", "session": "Sáng" },
         { "id": "2090155", "name": "Kinh tế chính trị Mác - Lênin", "credits": 2, "lecturer": "TS. Nguyễn Văn D", "weeks": "1-10", "session": "Chiều" },
-        { "id": "5070040", "name": "Tiếng Nhật 2 (CNTT)", "credits": 1, "lecturer": "Sensei Suzuki", "weeks": "1-15", "session": "Tối" }
+        { "id": "5070040", "name": "Tiếng Nhật 2 (CNTT)", "credits": 1, "lecturer": "Sensei Suzuki", "weeks": "1-15", "session": "Tối" },
+        { "id": "1023154", "name": "PBL 2: Dự án cơ sở dữ liệu", "credits": 4, "lecturer": "TS. Nguyễn Công Bằng", "weeks": "1-15", "session": "Sáng" }
       ]
     },
     {
@@ -34,41 +37,41 @@
         { "id": "1022103", "name": "Cơ sở dữ liệu", "credits": 3, "lecturer": "ThS. Đỗ Thị Tuyết Hoa", "weeks": "1-15", "session": "Sáng" },
         { "id": "1022073", "name": "Toán rời rạc", "credits": 3, "lecturer": "TS. Nguyễn Trần Quốc Vinh", "weeks": "1-15", "session": "Chiều" },
         { "id": "3190201", "name": "Vật lý 1", "credits": 3, "lecturer": "TS. Nguyễn Thị E", "weeks": "1-15", "session": "Sáng" },
-        { "id": "5070050", "name": "Tiếng Nhật 3 (CNTT)", "credits": 1, "lecturer": "Sensei Tanaka", "weeks": "1-15", "session": "Tối" }
+        { "id": "5070050", "name": "Tiếng Nhật 3 (CNTT)", "credits": 1, "lecturer": "Sensei Tanaka", "weeks": "1-15", "session": "Tối" },
+        { "id": "1023164", "name": "PBL 3: Dự án công nghệ phần mềm", "credits": 4, "lecturer": "PGS.TS. Lê Văn Sơn", "weeks": "1-15", "session": "Sáng" }
       ]
     },
     {
       "semester": 4,
       "courses": [
         { "id": "1022143", "name": "Mạng máy tính", "credits": 3, "lecturer": "TS. Nguyễn Thanh Bình", "weeks": "1-15", "session": "Chiều" },
-        { "id": "1023134", "name": "PBL 1: Dự án lập trình", "credits": 4, "lecturer": "Hội đồng bộ môn IT", "weeks": "1-15", "session": "Sáng" },
         { "id": "1022123", "name": "Hệ điều hành", "credits": 3, "lecturer": "TS. Trương Ngọc Châu", "weeks": "1-15", "session": "Chiều" },
-        { "id": "5070060", "name": "Tiếng Nhật 4 (CNTT)", "credits": 1, "lecturer": "Ms. Yuki", "weeks": "1-15", "session": "Tối" }
+        { "id": "5070060", "name": "Tiếng Nhật 4 (CNTT)", "credits": 1, "lecturer": "Ms. Yuki", "weeks": "1-15", "session": "Tối" },
+        { "id": "1023174", "name": "PBL 4: Dự án mạng máy tính", "credits": 4, "lecturer": "TS. Trương Ngọc Châu", "weeks": "1-15", "session": "Sáng" }
       ]
     },
     {
       "semester": 5,
       "courses": [
         { "id": "1022183", "name": "Lập trình Web", "credits": 3, "lecturer": "TS. Đặng Trung Hiếu", "weeks": "1-15", "session": "Sáng" },
-        { "id": "1023154", "name": "PBL 2: Dự án cơ sở dữ liệu", "credits": 4, "lecturer": "TS. Nguyễn Công Bằng", "weeks": "1-15", "session": "Sáng" },
         { "id": "1022153", "name": "Phân tích và thiết kế hệ thống", "credits": 3, "lecturer": "ThS. Phạm Thị Hoa", "weeks": "1-15", "session": "Chiều" },
-        { "id": "5070070", "name": "Tiếng Nhật 5 (CNTT)", "credits": 1, "lecturer": "Sensei Nakamura", "weeks": "1-15", "session": "Tối" }
+        { "id": "5070070", "name": "Tiếng Nhật 5 (CNTT)", "credits": 1, "lecturer": "Sensei Nakamura", "weeks": "1-15", "session": "Tối" },
+        { "id": "1023184", "name": "PBL 5: Dự án hệ thống thông minh", "credits": 4, "lecturer": "TS. Huỳnh Công Pháp", "weeks": "1-15", "session": "Sáng" }
       ]
     },
     {
       "semester": 6,
       "courses": [
         { "id": "1022163", "name": "Công nghệ phần mềm", "credits": 3, "lecturer": "TS. Huỳnh Công Pháp", "weeks": "1-15", "session": "Chiều" },
-        { "id": "1023164", "name": "PBL 3: Dự án công nghệ phần mềm", "credits": 4, "lecturer": "PGS.TS. Lê Văn Sơn", "weeks": "1-15", "session": "Sáng" },
         { "id": "1020013", "name": "Trí tuệ nhân tạo", "credits": 3, "lecturer": "TS. Đặng Hoài Phương", "weeks": "1-15", "session": "Chiều" },
-        { "id": "5070080", "name": "Tiếng Nhật 6 (CNTT)", "credits": 1, "lecturer": "Ms. Haruka", "weeks": "1-15", "session": "Tối" }
+        { "id": "5070080", "name": "Tiếng Nhật 6 (CNTT)", "credits": 1, "lecturer": "Ms. Haruka", "weeks": "1-15", "session": "Tối" },
+        { "id": "1023194", "name": "PBL 6: Dự án chuyên sâu", "credits": 4, "lecturer": "Hội đồng bộ môn IT", "weeks": "1-15", "session": "Chiều" }
       ]
     },
     {
       "semester": 7,
       "courses": [
         { "id": "1022203", "name": "An toàn và bảo mật hệ thống", "credits": 3, "lecturer": "TS. Nguyễn Thanh Bình", "weeks": "1-15", "session": "Chiều" },
-        { "id": "1023174", "name": "PBL 4: Dự án mạng máy tính", "credits": 4, "lecturer": "TS. Trương Ngọc Châu", "weeks": "1-15", "session": "Sáng" },
         { "id": "5070090", "name": "Tiếng Nhật 7 (CNTT)", "credits": 1, "lecturer": "Sensei Nakano", "weeks": "1-15", "session": "Tối" }
       ]
     },
@@ -76,16 +79,14 @@
       "semester": 8,
       "courses": [
         { "id": "1022233", "name": "Điện toán đám mây", "credits": 3, "lecturer": "TS. Đặng Trung Hiếu", "weeks": "1-15", "session": "Chiều" },
-        { "id": "1023184", "name": "PBL 5: Dự án hệ thống thông minh", "credits": 4, "lecturer": "TS. Huỳnh Công Pháp", "weeks": "1-15", "session": "Sáng" },
         { "id": "5070100", "name": "Tiếng Nhật 8 (CNTT)", "credits": 1, "lecturer": "Sensei Tanaka", "weeks": "1-15", "session": "Tối" }
       ]
     },
     {
       "semester": 9,
       "courses": [
-        { "id": "1022285", "name": "Thực tập tốt nghiệp", "credits": 5, "lecturer": "Doanh nghiệp Nhật Bản", "weeks": "1-15", "session": "Cả ngày" },
-        { "id": "1023194", "name": "PBL 6: Dự án chuyên sâu", "credits": 4, "lecturer": "Hội đồng bộ môn IT", "weeks": "1-15", "session": "Chiều" }
-      ]
+        { "id": "1022285", "name": "Thực tập tốt nghiệp", "credits": 5, "lecturer": "Doanh nghiệp Nhật Bản", "weeks": "1-15", "session": "Cả ngày" }
+         ]
     },
     {
       "semester": 10,
