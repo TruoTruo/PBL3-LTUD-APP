@@ -1,0 +1,60 @@
+<Page x:Class="StudentReminderApp.Views.Pages.CalendarPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Background="{StaticResource BgBrush}">
+    <Grid Margin="32,28">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <DockPanel Grid.Row="0" Margin="0,0,0,20">
+            <StackPanel Orientation="Horizontal">
+                <Button Content="◀" Width="36" Height="36" Style="{StaticResource BtnSecondary}"
+                        Click="BtnPrevMonth_Click" Margin="0,0,8,0"/>
+                <TextBlock x:Name="TxtMonthYear" FontSize="20" FontWeight="Bold"
+                           Foreground="{StaticResource TextPrimaryBrush}"
+                           VerticalAlignment="Center" Margin="0,0,8,0"/>
+                <Button Content="▶" Width="36" Height="36" Style="{StaticResource BtnSecondary}"
+                        Click="BtnNextMonth_Click"/>
+            </StackPanel>
+            <Button Content="+ Thêm sự kiện" Style="{StaticResource BtnPrimary}"
+                    HorizontalAlignment="Right" Height="36" FontSize="12"
+                    Click="BtnAdd_Click"/>
+        </DockPanel>
+
+        <!-- Day of week headers -->
+        <Grid Grid.Row="1" Margin="0,0,0,8">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/><ColumnDefinition/><ColumnDefinition/>
+                <ColumnDefinition/><ColumnDefinition/><ColumnDefinition/><ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" Text="Thứ 2" HorizontalAlignment="Center"
+                       FontSize="12" FontWeight="SemiBold"
+                       Foreground="{StaticResource TextSecondaryBrush}"/>
+            <TextBlock Grid.Column="1" Text="Thứ 3" HorizontalAlignment="Center"
+                       FontSize="12" FontWeight="SemiBold"
+                       Foreground="{StaticResource TextSecondaryBrush}"/>
+            <TextBlock Grid.Column="2" Text="Thứ 4" HorizontalAlignment="Center"
+                       FontSize="12" FontWeight="SemiBold"
+                       Foreground="{StaticResource TextSecondaryBrush}"/>
+            <TextBlock Grid.Column="3" Text="Thứ 5" HorizontalAlignment="Center"
+                       FontSize="12" FontWeight="SemiBold"
+                       Foreground="{StaticResource TextSecondaryBrush}"/>
+            <TextBlock Grid.Column="4" Text="Thứ 6" HorizontalAlignment="Center"
+                       FontSize="12" FontWeight="SemiBold"
+                       Foreground="{StaticResource TextSecondaryBrush}"/>
+            <TextBlock Grid.Column="5" Text="Thứ 7" HorizontalAlignment="Center"
+                       FontSize="12" FontWeight="SemiBold"
+                       Foreground="{StaticResource DangerBrush}"/>
+            <TextBlock Grid.Column="6" Text="CN" HorizontalAlignment="Center"
+                       FontSize="12" FontWeight="SemiBold"
+                       Foreground="{StaticResource DangerBrush}"/>
+        </Grid>
+
+        <!-- Calendar grid 6x7 -->
+        <UniformGrid x:Name="CalendarGrid" Grid.Row="2" Rows="6" Columns="7"/>
+    </Grid>
+</Page>

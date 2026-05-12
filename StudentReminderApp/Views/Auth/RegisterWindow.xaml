@@ -1,0 +1,59 @@
+<Window x:Class="StudentReminderApp.Views.Auth.RegisterWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Đăng ký — Student Reminder"
+        Height="700" Width="520"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
+        Background="{StaticResource BgBrush}">
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="48,40">
+            <TextBlock Text="Tạo tài khoản mới"
+                       FontSize="24" FontWeight="Bold"
+                       Foreground="{StaticResource TextPrimaryBrush}" Margin="0,0,0,6"/>
+            <TextBlock Text="Điền đầy đủ thông tin để bắt đầu"
+                       FontSize="14" Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,28"/>
+
+            <TextBlock Text="HỌ VÀ TÊN *" Style="{StaticResource FieldLabel}"/>
+            <TextBox x:Name="TxtHoTen" Style="{StaticResource InputModern}" Margin="0,0,0,16"/>
+
+            <Grid Margin="0,0,0,16">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/><ColumnDefinition Width="16"/><ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0">
+                    <TextBlock Text="TÊN ĐĂNG NHẬP *" Style="{StaticResource FieldLabel}"/>
+                    <TextBox x:Name="TxtUsername" Style="{StaticResource InputModern}"/>
+                </StackPanel>
+                <StackPanel Grid.Column="2">
+                    <TextBlock Text="SỐ ĐIỆN THOẠI" Style="{StaticResource FieldLabel}"/>
+                    <TextBox x:Name="TxtSdt" Style="{StaticResource InputModern}"/>
+                </StackPanel>
+            </Grid>
+
+            <TextBlock Text="EMAIL" Style="{StaticResource FieldLabel}"/>
+            <TextBox x:Name="TxtEmail" Style="{StaticResource InputModern}" Margin="0,0,0,16"/>
+
+            <TextBlock Text="MẬT KHẨU *" Style="{StaticResource FieldLabel}"/>
+            <PasswordBox x:Name="TxtPwd" Style="{StaticResource PwdModern}" Margin="0,0,0,16"/>
+
+            <TextBlock Text="XÁC NHẬN MẬT KHẨU *" Style="{StaticResource FieldLabel}"/>
+            <PasswordBox x:Name="TxtConfirm" Style="{StaticResource PwdModern}" Margin="0,0,0,8"/>
+
+            <TextBlock x:Name="TxtError"
+                       Foreground="{StaticResource DangerBrush}"
+                       FontSize="12" Visibility="Collapsed" Margin="0,0,0,12"/>
+            <TextBlock x:Name="TxtSuccess"
+                       Foreground="{StaticResource SuccessBrush}"
+                       FontSize="12" Visibility="Collapsed" Margin="0,0,0,12"/>
+
+            <Button Content="Tạo tài khoản"
+                    Style="{StaticResource BtnPrimary}"
+                    Click="BtnRegister_Click" Margin="0,0,0,12"/>
+            <Button Content="← Quay lại đăng nhập"
+                    Style="{StaticResource BtnSecondary}"
+                    Click="BtnBack_Click"/>
+        </StackPanel>
+    </ScrollViewer>
+</Window>

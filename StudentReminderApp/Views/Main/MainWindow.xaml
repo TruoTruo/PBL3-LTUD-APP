@@ -1,0 +1,73 @@
+<Window x:Class="StudentReminderApp.Views.Main.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Student Reminder &amp; Advisor"
+        Height="720" Width="1200"
+        MinHeight="600" MinWidth="900"
+        WindowStartupLocation="CenterScreen"
+        Background="{StaticResource BgBrush}">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="220"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- SIDEBAR -->
+        <Border Grid.Column="0" Background="{StaticResource SidebarBrush}">
+            <DockPanel>
+                <!-- Logo -->
+                <StackPanel DockPanel.Dock="Top" Margin="20,24,20,32">
+                    <TextBlock Text="Student Reminder"
+                               Foreground="White" FontSize="15" FontWeight="Bold"/>
+                    <TextBlock x:Name="TxtUserName"
+                               Foreground="#94A3B8" FontSize="12" Margin="0,4,0,0"/>
+                </StackPanel>
+
+                <!-- Nav items -->
+                <StackPanel DockPanel.Dock="Top" Margin="12,0">
+                    <Button x:Name="BtnDashboard" Tag="Dashboard" Click="NavBtn_Click"
+                            Style="{StaticResource NavBtnActive}">
+                        <TextBlock Text="🏠  Tổng quan"/>
+                    </Button>
+                    <Button x:Name="BtnCalendar" Tag="Calendar" Click="NavBtn_Click"
+                            Style="{StaticResource NavBtn}">
+                        <TextBlock Text="📅  Lịch học"/>
+                    </Button>
+                    <Button x:Name="BtnCourse" Tag="Course" Click="NavBtn_Click"
+                            Style="{StaticResource NavBtn}">
+                        <TextBlock Text="📚  Học phần"/>
+                    </Button>
+                    <Button x:Name="BtnAdvisor" Tag="Advisor" Click="NavBtn_Click"
+                            Style="{StaticResource NavBtn}">
+                        <TextBlock Text="🎯  Tư vấn ĐKHP"/>
+                    </Button>
+                    <Button x:Name="BtnForum" Tag="Forum" Click="NavBtn_Click"
+                            Style="{StaticResource NavBtn}">
+                        <TextBlock Text="💬   Diễn đàn"/>
+                    </Button>
+                    <Button x:Name="BtnProfile" Tag="Profile" Click="NavBtn_Click"
+                            Style="{StaticResource NavBtn}">
+                        <TextBlock Text="👤  Hồ sơ"/>
+                    </Button>
+                </StackPanel>
+
+                <!-- Logout -->
+                <Button DockPanel.Dock="Bottom"
+                        Click="BtnLogout_Click"
+                        Margin="12,0,12,24"
+                        Style="{StaticResource NavBtnDanger}">
+                    <TextBlock Text="🚪  Đăng xuất"/>
+                </Button>
+
+                <StackPanel/>
+            </DockPanel>
+        </Border>
+
+        <!-- CONTENT FRAME -->
+        <Frame x:Name="ContentFrame"
+               Grid.Column="1"
+               NavigationUIVisibility="Hidden"
+               Background="{StaticResource BgBrush}"/>
+    </Grid>
+</Window>
