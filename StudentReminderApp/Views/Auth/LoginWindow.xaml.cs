@@ -12,8 +12,29 @@ namespace StudentReminderApp.Views.Auth
         private void BtnLogin_Click(object sender, RoutedEventArgs e)
         {
             TxtError.Visibility = Visibility.Collapsed;
-            var (ok, msg, acc, user) = _bll.Login(TxtUsername.Text, TxtPassword.Password);
-            if (!ok) { TxtError.Text = "⚠ " + msg; TxtError.Visibility = Visibility.Visible; return; }
+
+            string username = TxtUsername.Text.Trim();
+
+            if (string.IsNullOrWhiteSpace(username))
+            {
+                TxtError.Text       = "⚠ Vui lòng nhập MSSV hoặc tên đăng nhập.";
+                TxtError.Visibility = Visibility.Visible;
+                return;
+            }
+
+            // ── KHÔNG validate format MSSV ở đây ──────────────────
+            // Validate MSSV chỉ thực hiện lúc ĐĂNG KÝ (RegisterWindow).
+            // Màn hình đăng nhập chấp nhận mọi username (kể cả admin_test).
+
+            var (ok, msg, acc, user) = _bll.Login(username, TxtPassword.Password);
+
+            if (!ok)
+            {
+                TxtError.Text       = "⚠ " + msg;
+                TxtError.Visibility = Visibility.Visible;
+                return;
+            }
+
             SessionManager.SetSession(acc, user);
             new Main.MainWindow().Show();
             Close();
