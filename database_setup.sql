@@ -1192,3 +1192,30 @@ PRINT ' Đăng nhập admin:     Username = admin_test';
 PRINT '                      Mật khẩu = (giữ nguyên)';
 PRINT '============================================================';
 GO
+
+-- ================================================================
+-- MIGRATION: Thêm cột OTP vào bảng ACCOUNT
+-- Chạy một lần trước khi deploy tính năng Quên mật khẩu
+-- ================================================================
+USE PBL3;
+GO
+
+IF NOT EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.COLUMNS
+               WHERE TABLE_NAME = 'ACCOUNT' AND COLUMN_NAME = 'otp_code')
+BEGIN
+    ALTER TABLE ACCOUNT ADD otp_code NVARCHAR(6) NULL;
+    PRINT N'✔ Thêm cột otp_code vào ACCOUNT.';
+END
+ELSE
+    PRINT N'ℹ otp_code đã tồn tại, bỏ qua.';
+GO
+
+IF NOT EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.COLUMNS
+               WHERE TABLE_NAME = 'ACCOUNT' AND COLUMN_NAME = 'otp_expired_at')
+BEGIN
+    ALTER TABLE ACCOUNT ADD otp_expired_at DATETIME NULL;
+    PRINT N'✔ Thêm cột otp_expired_at vào ACCOUNT.';
+END
+ELSE
+    PRINT N'ℹ otp_expired_at đã tồn tại, bỏ qua.';
+GO
