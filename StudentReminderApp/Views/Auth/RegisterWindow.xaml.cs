@@ -1,3 +1,4 @@
+using System;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
@@ -7,7 +8,7 @@ namespace StudentReminderApp.Views.Auth
 {
     public partial class RegisterWindow : Window
     {
-        private readonly AuthBLL _bll = new AuthBLL();
+        private readonly AccountBLL _bll = new AccountBLL();
         public RegisterWindow() => InitializeComponent();
 
         private async void BtnRegister_Click(object sender, RoutedEventArgs e)
@@ -23,13 +24,20 @@ namespace StudentReminderApp.Views.Auth
                 return;
             }
 
-            var (ok, msg) = _bll.Register(
+            // ════════════════════════════════════════════════════════════
+            // ĐÃ FIX: Đổi từ rã ValueTuple (ok, msg) sang nhận class Tuple chuẩn
+            // ════════════════════════════════════════════════════════════
+            Tuple<bool, string> result = _bll.Register(
                 mssv,               // username = MSSV
                 TxtPwd.Password,
                 TxtConfirm.Password,
                 TxtHoTen.Text,
                 TxtEmail.Text,
                 TxtSdt.Text);
+
+            // Trích xuất giá trị từ class Tuple thông qua Item1 và Item2
+            bool ok = result.Item1;
+            string msg = result.Item2;
 
             if (!ok)
             {

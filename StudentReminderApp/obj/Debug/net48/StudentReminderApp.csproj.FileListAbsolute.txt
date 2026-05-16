@@ -55,3 +55,5 @@ D:\pbl3\PBL3-LTUD-APP\StudentReminderApp\obj\Debug\net48\StudentReminderApp.exe
 D:\pbl3\PBL3-LTUD-APP\StudentReminderApp\obj\Debug\net48\StudentReminderApp.pdb
 D:\pbl3\PBL3-LTUD-APP\StudentReminderApp\obj\Debug\net48\Views\Pages\StudentManagementPage.g.cs
 D:\pbl3\PBL3-LTUD-APP\StudentReminderApp\obj\Debug\net48\Views\Pages\StudentManagementPage.baml
+D:\pbl3\PBL3-LTUD-APP\StudentReminderApp\obj\Debug\net48\Views\Auth\Forgotpasswordwindow.baml
+D:\pbl3\PBL3-LTUD-APP\StudentReminderApp\obj\Debug\net48\Views\Auth\Forgotpasswordwindow.g.cs

@@ -497,7 +497,7 @@ namespace StudentReminderApp.DAL
                             tx.Commit();
                             return true;
                         }
-                        catch (Exception ex)
+                        catch (Exception)
                         {
                             tx.Rollback();
                             throw;

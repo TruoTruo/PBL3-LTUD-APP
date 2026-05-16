@@ -13,7 +13,6 @@
             <ColumnDefinition Width="420"/>
         </Grid.ColumnDefinitions>
 
-        <!-- LEFT: Branding -->
         <Border Grid.Column="0" Background="{StaticResource SidebarBrush}">
             <StackPanel VerticalAlignment="Center" Margin="56,0">
                 <Border Width="64" Height="64" CornerRadius="16"
@@ -28,7 +27,6 @@
             </StackPanel>
         </Border>
 
-        <!-- RIGHT: Login form -->
         <ScrollViewer Grid.Column="1" VerticalScrollBarVisibility="Auto">
             <Grid VerticalAlignment="Center" Margin="48,40">
                 <StackPanel>
@@ -40,17 +38,11 @@
                                FontSize="14" Foreground="{StaticResource TextSecondaryBrush}"
                                Margin="0,0,0,32"/>
 
-                    <!--
-                        Label chung: chấp nhận cả MSSV sinh viên lẫn
-                        tên đăng nhập đặc biệt (admin_test, v.v.)
-                    -->
                     <TextBlock Text="MSSV / TÊN ĐĂNG NHẬP" Style="{StaticResource FieldLabel}"/>
-                    <TextBox x:Name="TxtUsername" Style="{StaticResource InputModern}"
-                             Margin="0,0,0,18"/>
+                    <TextBox x:Name="TxtUsername" Style="{StaticResource InputModern}" Margin="0,0,0,18"/>
 
-                    <TextBlock Text="MẬT KHẨU" Style="{StaticResource FieldLabel}"/>
-                    <PasswordBox x:Name="TxtPassword" Style="{StaticResource PwdModern}"
-                                 Margin="0,0,0,16"/>
+                    <TextBlock Text="MẬT KHẨU" Style="{StaticResource FieldLabel}" Margin="0,0,0,8"/>
+                    <PasswordBox x:Name="TxtPassword" Style="{StaticResource PwdModern}" Margin="0,0,0,16"/>
 
                     <TextBlock x:Name="TxtError"
                                Foreground="{StaticResource DangerBrush}"
@@ -59,9 +51,15 @@
 
                     <Button Content="Đăng nhập"
                             Style="{StaticResource BtnPrimary}"
-                            Click="BtnLogin_Click" Margin="0,0,0,16"/>
+                            Click="BtnLogin_Click" Margin="0,0,0,20"/>
 
-                    <Separator Background="{StaticResource BorderBrush}" Margin="0,0,0,16"/>
+                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,16"
+                               Cursor="Hand" MouseLeftButtonUp="TxtForgotPwd_Click">
+                        <Run Text="Quên mật khẩu?" Foreground="#2563EB" FontSize="13"
+                             TextDecorations="Underline"/>
+                    </TextBlock>
+
+                    <Separator Background="{StaticResource BorderBrush}" Margin="0,0,0,20"/>
 
                     <Button Content="Chưa có tài khoản? Đăng ký ngay →"
                             Style="{StaticResource BtnSecondary}"
