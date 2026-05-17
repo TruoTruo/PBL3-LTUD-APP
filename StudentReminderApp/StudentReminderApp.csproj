@@ -38,5 +38,9 @@
     <Compile Update="Views\Dialogs\CreatePostDialog.xaml.cs">
       <DependentUpon>CreatePostDialog.xaml</DependentUpon>
     </Compile>
+
+    <Compile Update="Views\Pages\StudentManagementPage.xaml.cs">
+      <DependentUpon>StudentManagementPage.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
 </Project>

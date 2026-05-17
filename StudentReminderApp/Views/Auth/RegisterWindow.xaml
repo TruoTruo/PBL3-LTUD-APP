@@ -18,19 +18,15 @@
             <TextBlock Text="HỌ VÀ TÊN *" Style="{StaticResource FieldLabel}"/>
             <TextBox x:Name="TxtHoTen" Style="{StaticResource InputModern}" Margin="0,0,0,16"/>
 
-            <Grid Margin="0,0,0,16">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/><ColumnDefinition Width="16"/><ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-                <StackPanel Grid.Column="0">
-                    <TextBlock Text="TÊN ĐĂNG NHẬP *" Style="{StaticResource FieldLabel}"/>
-                    <TextBox x:Name="TxtUsername" Style="{StaticResource InputModern}"/>
-                </StackPanel>
-                <StackPanel Grid.Column="2">
-                    <TextBlock Text="SỐ ĐIỆN THOẠI" Style="{StaticResource FieldLabel}"/>
-                    <TextBox x:Name="TxtSdt" Style="{StaticResource InputModern}"/>
-                </StackPanel>
-            </Grid>
+            <!-- MSSV thay cho Tên đăng nhập -->
+            <TextBlock Text="MÃ SỐ SINH VIÊN (MSSV) *" Style="{StaticResource FieldLabel}"/>
+            <TextBox x:Name="TxtMssv" Style="{StaticResource InputModern}" Margin="0,0,0,4"
+                     MaxLength="9"/>
+            <TextBlock Text="MSSV gồm đúng 9 chữ số, bắt đầu bằng '102' (ví dụ: 102240001)"
+                       FontSize="11" Foreground="{StaticResource TextSecondaryBrush}" Margin="2,0,0,16"/>
+
+            <TextBlock Text="SỐ ĐIỆN THOẠI" Style="{StaticResource FieldLabel}"/>
+            <TextBox x:Name="TxtSdt" Style="{StaticResource InputModern}" Margin="0,0,0,16"/>
 
             <TextBlock Text="EMAIL" Style="{StaticResource FieldLabel}"/>
             <TextBox x:Name="TxtEmail" Style="{StaticResource InputModern}" Margin="0,0,0,16"/>

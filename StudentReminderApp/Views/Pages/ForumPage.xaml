@@ -745,5 +745,14 @@
             </Grid>
         </TabItem>
 
+        <!-- ══════════════════════════════════════════════════════
+             TAB 3: QUẢN LÝ SINH VIÊN — CHỈ HIỆN KHI IsAdmin = true
+             ══════════════════════════════════════════════════════ -->
+        <TabItem Header="👥 Quản lý sinh viên"
+                 Visibility="{Binding IsAdmin, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <Frame NavigationUIVisibility="Hidden"
+                   Source="/Views/Pages/StudentManagementPage.xaml"/>
+        </TabItem>
+
     </TabControl>
 </UserControl>

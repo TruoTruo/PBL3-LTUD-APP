@@ -346,6 +346,20 @@ CREATE TABLE YEU_THICH
 );
 
 USE PBL3;
+
+-- Gán DEFAULT 0 cho so_luot_thich
+ALTER TABLE BAI_VIET 
+ADD CONSTRAINT DF_so_luot_thich DEFAULT 0 FOR so_luot_thich;
+
+-- Gán DEFAULT 'Active' cho status
+ALTER TABLE BAI_VIET 
+ADD CONSTRAINT DF_status DEFAULT 'Active' FOR status;
+
+-- Cập nhật các bài cũ nếu đang NULL
+UPDATE BAI_VIET SET so_luot_thich = 0 WHERE so_luot_thich IS NULL;
+UPDATE BAI_VIET SET status = 'Active' WHERE status IS NULL;
+
+USE PBL3;
 GO
 
 UPDATE BAI_VIET
@@ -747,4 +761,461 @@ WHERE lhp.hoc_ky = 1 AND lhp.nam_hoc = '2024-2025';
 GO
 
 PRINT N'Setup hoàn tất! Bây giờ hãy đăng ký tài khoản qua giao diện ứng dụng.';
+GO
+
+-- ================================================================
+--  StudentReminderApp — FULL DATABASE SETUP SCRIPT
+--  Chạy file này MỘT LẦN DUY NHẤT để khởi tạo toàn bộ database.
+--
+--  Bao gồm:
+--    1. Tạo / cập nhật Schema (bảng, cột, FK)
+--    2. Chèn 20 lớp học
+--    3. Chèn 200 tài khoản sinh viên mẫu + phân lớp
+--    4. Fix password_hash sang BCrypt (mật khẩu: 123456)
+--    5. Stored Procedures
+--    6. Kiểm tra kết quả
+--
+--  Yêu cầu:
+--    • SQL Server 2016+ (hoặc Azure SQL)
+--    • Database PBL3 đã tồn tại (tạo thủ công hoặc bỏ comment dòng CREATE DATABASE bên dưới)
+--    • Các bảng ACCOUNT, [USER], ROLES đã có sẵn (tạo bởi migration khác)
+-- ================================================================
+
+USE PBL3;
+GO
+
+PRINT '============================================================';
+PRINT ' StudentReminderApp — FULL SETUP';
+PRINT '============================================================';
+GO
+
+
+-- ================================================================
+-- PHẦN 1: CẬP NHẬT SCHEMA
+-- ================================================================
+PRINT '';
+PRINT '--- PHẦN 1: Schema ---';
+GO
+
+-- 1.1 Bảng LOP_SINH_VIEN
+IF NOT EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'LOP_SINH_VIEN')
+BEGIN
+    CREATE TABLE LOP_SINH_VIEN (
+        id_lop    INT           IDENTITY(1,1) PRIMARY KEY,
+        ten_lop   NVARCHAR(50)  NOT NULL,
+        nien_khoa NVARCHAR(20)  NOT NULL
+    );
+    PRINT '✔ Tạo bảng LOP_SINH_VIEN.';
+END
+ELSE
+    PRINT 'ℹ LOP_SINH_VIEN đã tồn tại, bỏ qua.';
+GO
+
+-- 1.2 Cột id_lop trong [USER]
+IF NOT EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.COLUMNS
+               WHERE TABLE_NAME = 'USER' AND COLUMN_NAME = 'id_lop')
+BEGIN
+    ALTER TABLE [USER] ADD id_lop INT NULL;
+    PRINT '✔ Thêm cột id_lop vào [USER].';
+END
+ELSE
+    PRINT 'ℹ Cột id_lop đã tồn tại, bỏ qua.';
+GO
+
+-- 1.3 Foreign Key USER.id_lop → LOP_SINH_VIEN.id_lop
+IF NOT EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS
+               WHERE CONSTRAINT_NAME = 'FK_USER_LOP')
+BEGIN
+    ALTER TABLE [USER]
+        ADD CONSTRAINT FK_USER_LOP
+        FOREIGN KEY (id_lop) REFERENCES LOP_SINH_VIEN(id_lop)
+        ON DELETE SET NULL ON UPDATE CASCADE;
+    PRINT '✔ Thêm FK_USER_LOP.';
+END
+ELSE
+    PRINT 'ℹ FK_USER_LOP đã tồn tại, bỏ qua.';
+GO
+
+-- 1.4 Cột is_verified trong ACCOUNT
+IF NOT EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.COLUMNS
+               WHERE TABLE_NAME = 'ACCOUNT' AND COLUMN_NAME = 'is_verified')
+BEGIN
+    ALTER TABLE ACCOUNT ADD is_verified BIT NOT NULL DEFAULT 0;
+    PRINT '✔ Thêm cột is_verified vào ACCOUNT.';
+END
+ELSE
+    PRINT 'ℹ is_verified đã tồn tại, bỏ qua.';
+GO
+
+-- 1.5 Cột lock_until trong ACCOUNT
+IF NOT EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.COLUMNS
+               WHERE TABLE_NAME = 'ACCOUNT' AND COLUMN_NAME = 'lock_until')
+BEGIN
+    ALTER TABLE ACCOUNT ADD lock_until DATETIME NULL;
+    PRINT '✔ Thêm cột lock_until vào ACCOUNT.';
+END
+ELSE
+    PRINT 'ℹ lock_until đã tồn tại, bỏ qua.';
+GO
+
+
+-- ================================================================
+-- PHẦN 2: DỌN DẸP ROLES TRÙNG (giữ lại chỉ Admin=1, Student=2)
+-- ================================================================
+PRINT '';
+PRINT '--- PHẦN 2: Chuẩn hoá ROLES ---';
+GO
+
+-- Đảm bảo role Admin (id=1) và Student (id=2) tồn tại
+IF NOT EXISTS (SELECT 1 FROM ROLES WHERE id_role = 1)
+    INSERT INTO ROLES (id_role, role_name) VALUES (1, N'Admin');
+
+IF NOT EXISTS (SELECT 1 FROM ROLES WHERE id_role = 2)
+    INSERT INTO ROLES (id_role, role_name) VALUES (2, N'Student');
+
+-- Gán lại id_role=2 cho mọi tài khoản MSSV bị NULL hoặc role thừa
+UPDATE ACCOUNT
+SET    id_role = 2
+WHERE  username LIKE '102%'
+  AND  id_role NOT IN (SELECT id_role FROM ROLES WHERE role_name = N'Student');
+
+-- Xoá role thừa (chỉ xoá nếu không còn tài khoản nào tham chiếu)
+DELETE FROM ROLES
+WHERE id_role NOT IN (SELECT DISTINCT id_role FROM ACCOUNT)
+  AND id_role NOT IN (1, 2);
+
+PRINT '✔ ROLES đã chuẩn hoá.';
+GO
+
+
+-- ================================================================
+-- PHẦN 3: CHÈN 20 LỚP HỌC
+-- ================================================================
+PRINT '';
+PRINT '--- PHẦN 3: 20 Lớp học ---';
+GO
+
+-- Chỉ chèn nếu bảng đang rỗng (idempotent)
+IF NOT EXISTS (SELECT 1 FROM LOP_SINH_VIEN)
+BEGIN
+    -- Tắt IDENTITY_INSERT để dùng id cố định 1-20
+    SET IDENTITY_INSERT LOP_SINH_VIEN ON;
+
+    INSERT INTO LOP_SINH_VIEN (id_lop, ten_lop, nien_khoa) VALUES
+    -- Năm 2021 (id 1-5)
+    (1,  N'21_DT1',   N'2021-2025'),
+    (2,  N'21_DT2',   N'2021-2025'),
+    (3,  N'21_KHDL',  N'2021-2025'),
+    (4,  N'21_Nhat1', N'2021-2025'),
+    (5,  N'21_Nhat2', N'2021-2025'),
+    -- Năm 2022 (id 6-10)
+    (6,  N'22_DT1',   N'2022-2026'),
+    (7,  N'22_DT2',   N'2022-2026'),
+    (8,  N'22_KHDL',  N'2022-2026'),
+    (9,  N'22_Nhat1', N'2022-2026'),
+    (10, N'22_Nhat2', N'2022-2026'),
+    -- Năm 2023 (id 11-15)
+    (11, N'23_DT1',   N'2023-2027'),
+    (12, N'23_DT2',   N'2023-2027'),
+    (13, N'23_KHDL',  N'2023-2027'),
+    (14, N'23_Nhat1', N'2023-2027'),
+    (15, N'23_Nhat2', N'2023-2027'),
+    -- Năm 2024 (id 16-20)
+    (16, N'24_DT1',   N'2024-2028'),
+    (17, N'24_DT2',   N'2024-2028'),
+    (18, N'24_KHDL',  N'2024-2028'),
+    (19, N'24_Nhat1', N'2024-2028'),
+    (20, N'24_Nhat2', N'2024-2028');
+
+    SET IDENTITY_INSERT LOP_SINH_VIEN OFF;
+
+    -- Đồng bộ IDENTITY counter sau khi insert thủ công
+    DBCC CHECKIDENT ('LOP_SINH_VIEN', RESEED, 20);
+
+    PRINT '✔ Đã chèn 20 lớp học.';
+END
+ELSE
+    PRINT 'ℹ LOP_SINH_VIEN đã có dữ liệu, bỏ qua phần chèn lớp.';
+GO
+
+
+-- ================================================================
+-- PHẦN 4: CHÈN 200 TÀI KHOẢN SINH VIÊN MẪU
+--
+-- Phân bổ: 4 năm × 5 lớp × 10 sinh viên = 200
+-- MSSV:    102 + YY + NNNN  (VD: 102240001)
+-- STT/lớp: 01-10 → _DT1 | 11-20 → _DT2 | 21-30 → _KHDL
+--          31-40 → _Nhat1  | 41-50 → _Nhat2
+--
+-- Password mặc định: 123456
+-- (Sẽ được hash BCrypt ở Phần 5)
+-- ================================================================
+PRINT '';
+PRINT '--- PHẦN 4: 200 tài khoản sinh viên ---';
+GO
+
+DECLARE @studentRoleId BIGINT = 2;
+
+-- Bảng họ (15 họ phổ biến)
+DECLARE @hoList TABLE (idx INT, ho NVARCHAR(20));
+INSERT INTO @hoList VALUES
+(1,N'Nguyễn'),(2,N'Trần'),(3,N'Lê'),(4,N'Phạm'),(5,N'Hoàng'),
+(6,N'Huỳnh'),(7,N'Phan'),(8,N'Vũ'),(9,N'Đặng'),(10,N'Bùi'),
+(11,N'Đỗ'),(12,N'Hồ'),(13,N'Ngô'),(14,N'Dương'),(15,N'Lý');
+
+-- Bảng tên (50 tên)
+DECLARE @tenList TABLE (idx INT, ten NVARCHAR(40));
+INSERT INTO @tenList VALUES
+(1,N'Minh Tuấn'),(2,N'Thị Lan'),(3,N'Văn Hùng'),(4,N'Thị Hoa'),(5,N'Quốc Khánh'),
+(6,N'Thị Thu'),(7,N'Minh Khoa'),(8,N'Thị Ngọc'),(9,N'Hoàng Nam'),(10,N'Thị Mai'),
+(11,N'Văn Đức'),(12,N'Thị Linh'),(13,N'Minh Hiếu'),(14,N'Thị Yến'),(15,N'Quang Huy'),
+(16,N'Thị Phương'),(17,N'Văn Tùng'),(18,N'Thị Trang'),(19,N'Minh Long'),(20,N'Thị Hương'),
+(21,N'Thanh Bình'),(22,N'Thị Ngân'),(23,N'Văn Cường'),(24,N'Thị Vân'),(25,N'Minh Đức'),
+(26,N'Thị Thảo'),(27,N'Quốc Huy'),(28,N'Thị Loan'),(29,N'Văn Thắng'),(30,N'Thị Nhung'),
+(31,N'Minh Trí'),(32,N'Thị Diễm'),(33,N'Hoàng Anh'),(34,N'Thị Bích'),(35,N'Văn Phúc'),
+(36,N'Thị Cẩm'),(37,N'Minh Quân'),(38,N'Thị Duyên'),(39,N'Quang Minh'),(40,N'Thị Hạnh'),
+(41,N'Văn Bảo'),(42,N'Thị Ánh'),(43,N'Minh Nhật'),(44,N'Thị Kiều'),(45,N'Hoàng Phúc'),
+(46,N'Thị Lý'),(47,N'Văn Dũng'),(48,N'Thị Nhi'),(49,N'Minh Khải'),(50,N'Thị Châu');
+
+DECLARE @year         INT   = 21;
+DECLARE @stt          INT;
+DECLARE @username     NVARCHAR(20);
+DECLARE @hoTen        NVARCHAR(100);
+DECLARE @email        NVARCHAR(100);
+DECLARE @idLop        INT;
+DECLARE @lopBase      INT;   -- id_lop đầu tiên của năm (1, 6, 11, 16)
+DECLARE @newAccId     BIGINT;
+DECLARE @totalIns     INT   = 0;
+DECLARE @ho           NVARCHAR(20);
+DECLARE @ten          NVARCHAR(40);
+
+WHILE @year <= 24
+BEGIN
+    -- id_lop đầu tiên của năm: 21→1, 22→6, 23→11, 24→16
+    SET @lopBase = (@year - 21) * 5 + 1;
+
+    SET @stt = 1;
+    WHILE @stt <= 50
+    BEGIN
+        SET @username = '102'
+                      + RIGHT('0'   + CAST(@year AS VARCHAR(2)), 2)
+                      + RIGHT('000' + CAST(@stt  AS VARCHAR(4)), 4);
+
+        IF NOT EXISTS (SELECT 1 FROM ACCOUNT WHERE username = @username)
+        BEGIN
+            -- Chọn họ (xoay vòng 15)
+            DECLARE @hoIdx INT = ((@year * 7 + @stt * 3) % 15) + 1;
+            SELECT @ho  = ho  FROM @hoList WHERE idx = @hoIdx;
+            SELECT @ten = ten FROM @tenList WHERE idx = @stt;
+            SET @hoTen = @ho + N' ' + @ten;
+            SET @email = @username + N'@student.edu.vn';
+
+            -- id_lop: nhóm 10 SV/lớp → lopIndex = 0-4
+            SET @idLop = @lopBase + (@stt - 1) / 10;
+
+            INSERT INTO ACCOUNT (username, password_hash, id_role, status, is_verified, created_at)
+            VALUES (@username, N'PLACEHOLDER', @studentRoleId, N'Active', 0, GETDATE());
+
+            SET @newAccId = SCOPE_IDENTITY();
+
+            INSERT INTO [USER] (id_acc, ho_ten, email, sdt, id_lop)
+            VALUES (@newAccId, @hoTen, @email, N'', @idLop);
+
+            SET @totalIns = @totalIns + 1;
+        END
+
+        SET @stt = @stt + 1;
+    END
+
+    SET @year = @year + 1;
+END
+
+PRINT '✔ Đã chèn ' + CAST(@totalIns AS VARCHAR) + ' tài khoản sinh viên mới.';
+GO
+
+
+-- ================================================================
+-- PHẦN 5: FIX PASSWORD_HASH → BCRYPT
+--
+-- Thay thế mọi password dạng plain text bằng BCrypt hash
+-- của chuỗi "123456" (cost = 11).
+--
+-- Sau bước này, đăng nhập bằng mật khẩu: 123456
+-- ================================================================
+PRINT '';
+PRINT '--- PHẦN 5: Fix password_hash → BCrypt ---';
+GO
+
+UPDATE ACCOUNT
+SET    password_hash = N'$2a$11$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy'
+WHERE  password_hash IN (N'123456', N'PLACEHOLDER');
+
+PRINT '✔ Đã cập nhật password_hash BCrypt cho '
+      + CAST(@@ROWCOUNT AS VARCHAR) + ' tài khoản.';
+GO
+
+
+-- ================================================================
+-- PHẦN 6: STORED PROCEDURES
+-- ================================================================
+PRINT '';
+PRINT '--- PHẦN 6: Stored Procedures ---';
+GO
+
+-- sp_GetAllStudents
+CREATE OR ALTER PROCEDURE sp_GetAllStudents
+AS
+BEGIN
+    SET NOCOUNT ON;
+    SELECT
+        a.id_acc,
+        a.username                            AS mssv,
+        a.status,
+        ISNULL(a.is_verified, 0)              AS is_verified,
+        a.created_at,
+        a.lock_until,
+        ISNULL(u.ho_ten, N'Chưa có tên')      AS ho_ten,
+        ISNULL(u.email, '')                   AS email,
+        ISNULL(u.sdt,   '')                   AS sdt,
+        u.id_lop,
+        ISNULL(l.ten_lop,   N'Chưa xếp lớp') AS ten_lop,
+        ISNULL(l.nien_khoa, '')               AS nien_khoa
+    FROM ACCOUNT a
+    LEFT JOIN [USER]        u ON u.id_acc = a.id_acc
+    LEFT JOIN LOP_SINH_VIEN l ON l.id_lop = u.id_lop
+    INNER JOIN ROLES         r ON r.id_role = a.id_role
+    WHERE r.role_name = N'Student'
+    ORDER BY a.created_at DESC, a.username ASC;
+END
+GO
+PRINT '✔ sp_GetAllStudents';
+
+-- sp_BanStudent (khóa kèm thời hạn)
+CREATE OR ALTER PROCEDURE sp_BanStudent
+    @idAcc     BIGINT,
+    @lockUntil DATETIME = NULL   -- NULL = vĩnh viễn
+AS
+BEGIN
+    SET NOCOUNT ON;
+    UPDATE ACCOUNT
+    SET status     = N'Banned',
+        lock_until = @lockUntil
+    WHERE id_acc = @idAcc;
+    SELECT @@ROWCOUNT AS affected;
+END
+GO
+PRINT '✔ sp_BanStudent';
+
+-- sp_UnbanStudent
+CREATE OR ALTER PROCEDURE sp_UnbanStudent
+    @idAcc BIGINT
+AS
+BEGIN
+    SET NOCOUNT ON;
+    UPDATE ACCOUNT
+    SET status     = N'Active',
+        lock_until = NULL
+    WHERE id_acc = @idAcc;
+    SELECT @@ROWCOUNT AS affected;
+END
+GO
+PRINT '✔ sp_UnbanStudent';
+
+-- sp_VerifyStudent
+CREATE OR ALTER PROCEDURE sp_VerifyStudent
+    @idAcc BIGINT
+AS
+BEGIN
+    SET NOCOUNT ON;
+    UPDATE ACCOUNT SET is_verified = 1 WHERE id_acc = @idAcc;
+    SELECT @@ROWCOUNT AS affected;
+END
+GO
+PRINT '✔ sp_VerifyStudent';
+
+-- sp_UpdateStudentClass
+CREATE OR ALTER PROCEDURE sp_UpdateStudentClass
+    @idAcc BIGINT,
+    @idLop INT = NULL
+AS
+BEGIN
+    SET NOCOUNT ON;
+    UPDATE [USER] SET id_lop = @idLop WHERE id_acc = @idAcc;
+    SELECT @@ROWCOUNT AS affected;
+END
+GO
+PRINT '✔ sp_UpdateStudentClass';
+GO
+
+
+-- ================================================================
+-- PHẦN 7: KIỂM TRA KẾT QUẢ
+-- ================================================================
+PRINT '';
+PRINT '--- PHẦN 7: Kiểm tra kết quả ---';
+GO
+
+-- 7.1 Số sinh viên mỗi lớp (phải là 10/lớp)
+SELECT
+    l.id_lop,
+    l.ten_lop,
+    l.nien_khoa,
+    COUNT(u.id_acc) AS so_sinh_vien
+FROM LOP_SINH_VIEN l
+LEFT JOIN [USER] u ON u.id_lop = l.id_lop
+GROUP BY l.id_lop, l.ten_lop, l.nien_khoa
+ORDER BY l.id_lop;
+
+-- 7.2 Tổng tài khoản Student
+SELECT COUNT(*) AS tong_student
+FROM ACCOUNT a
+JOIN ROLES r ON a.id_role = r.id_role
+WHERE r.role_name = N'Student';
+
+-- 7.3 Kiểm tra password_hash đã fix chưa
+SELECT
+    SUM(CASE WHEN password_hash LIKE '$2a$%' THEN 1 ELSE 0 END) AS da_bcrypt,
+    SUM(CASE WHEN password_hash NOT LIKE '$2a$%' THEN 1 ELSE 0 END) AS chua_bcrypt
+FROM ACCOUNT
+WHERE username LIKE '102%';
+
+-- 7.4 Thử chạy stored procedure chính
+EXEC sp_GetAllStudents;
+GO
+
+PRINT '';
+PRINT '============================================================';
+PRINT ' SETUP HOÀN TẤT!';
+PRINT ' Đăng nhập sinh viên: MSSV = 102210001 … 102240050';
+PRINT '                      Mật khẩu = 123456';
+PRINT ' Đăng nhập admin:     Username = admin_test';
+PRINT '                      Mật khẩu = (giữ nguyên)';
+PRINT '============================================================';
+GO
+
+-- ================================================================
+-- MIGRATION: Thêm cột OTP vào bảng ACCOUNT
+-- Chạy một lần trước khi deploy tính năng Quên mật khẩu
+-- ================================================================
+USE PBL3;
+GO
+
+IF NOT EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.COLUMNS
+               WHERE TABLE_NAME = 'ACCOUNT' AND COLUMN_NAME = 'otp_code')
+BEGIN
+    ALTER TABLE ACCOUNT ADD otp_code NVARCHAR(6) NULL;
+    PRINT N'✔ Thêm cột otp_code vào ACCOUNT.';
+END
+ELSE
+    PRINT N'ℹ otp_code đã tồn tại, bỏ qua.';
+GO
+
+IF NOT EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.COLUMNS
+               WHERE TABLE_NAME = 'ACCOUNT' AND COLUMN_NAME = 'otp_expired_at')
+BEGIN
+    ALTER TABLE ACCOUNT ADD otp_expired_at DATETIME NULL;
+    PRINT N'✔ Thêm cột otp_expired_at vào ACCOUNT.';
+END
+ELSE
+    PRINT N'ℹ otp_expired_at đã tồn tại, bỏ qua.';
 GO

@@ -12,7 +12,9 @@
             <Border Style="{StaticResource Card}" Margin="0,0,0,20">
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/><ColumnDefinition/><ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
                     <Border Grid.Column="0" Width="72" Height="72" CornerRadius="36"
                             Background="{StaticResource PrimaryLightBrush}" Margin="0,0,20,0">
@@ -25,8 +27,17 @@
                                    Foreground="{StaticResource TextPrimaryBrush}"/>
                         <TextBlock x:Name="TxtUsernameDisplay" FontSize="13"
                                    Foreground="{StaticResource TextSecondaryBrush}" Margin="0,4,0,0"/>
+                        <!-- MSSV badge -->
+                        <Border Background="#EFF6FF" CornerRadius="8" Padding="8,3"
+                                HorizontalAlignment="Left" Margin="0,6,0,0">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="🎓 MSSV: " FontSize="11" FontWeight="SemiBold" Foreground="#1D4ED8"/>
+                                <TextBlock x:Name="TxtMssvDisplay" FontSize="11" FontWeight="Bold"
+                                           Foreground="#1D4ED8" FontFamily="Consolas"/>
+                            </StackPanel>
+                        </Border>
                         <Border Background="{StaticResource PrimaryLightBrush}" CornerRadius="12"
-                                Padding="10,4" HorizontalAlignment="Left" Margin="0,8,0,0">
+                                Padding="10,4" HorizontalAlignment="Left" Margin="0,6,0,0">
                             <TextBlock x:Name="TxtRole" FontSize="11" FontWeight="SemiBold"
                                        Foreground="{StaticResource PrimaryBrush}"/>
                         </Border>
@@ -38,55 +49,103 @@
                 </Grid>
             </Border>
 
-            <!-- Personal info -->
+            <!-- Thông tin cá nhân -->
             <Border Style="{StaticResource Card}" Margin="0,0,0,20">
                 <StackPanel>
                     <TextBlock Text="Thông tin cá nhân" FontSize="15" FontWeight="SemiBold"
                                Foreground="{StaticResource TextPrimaryBrush}" Margin="0,0,0,20"/>
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition/><ColumnDefinition Width="20"/><ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="20"/>
+                            <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
-                            <RowDefinition/><RowDefinition Height="16"/>
-                            <RowDefinition/><RowDefinition Height="20"/>
-                            <RowDefinition/>
+                            <RowDefinition/>          <!-- Row 0: Họ tên + Email -->
+                            <RowDefinition Height="16"/>
+                            <RowDefinition/>          <!-- Row 2: SĐT + Ngày sinh -->
+                            <RowDefinition Height="16"/>
+                            <RowDefinition/>          <!-- Row 4: MSSV (readonly) + Lớp (ComboBox) -->
+                            <RowDefinition Height="20"/>
+                            <RowDefinition/>          <!-- Row 6: Nút lưu -->
                         </Grid.RowDefinitions>
+
+                        <!-- Họ tên -->
                         <StackPanel Grid.Row="0" Grid.Column="0">
                             <TextBlock Text="HỌ VÀ TÊN" Style="{StaticResource FieldLabel}"/>
                             <TextBox x:Name="TxtEditName" Style="{StaticResource InputModern}"/>
                         </StackPanel>
+                        <!-- Email -->
                         <StackPanel Grid.Row="0" Grid.Column="2">
                             <TextBlock Text="EMAIL" Style="{StaticResource FieldLabel}"/>
                             <TextBox x:Name="TxtEditEmail" Style="{StaticResource InputModern}"/>
                         </StackPanel>
+
+                        <!-- SĐT -->
                         <StackPanel Grid.Row="2" Grid.Column="0">
                             <TextBlock Text="SỐ ĐIỆN THOẠI" Style="{StaticResource FieldLabel}"/>
                             <TextBox x:Name="TxtEditSdt" Style="{StaticResource InputModern}"/>
                         </StackPanel>
+                        <!-- Ngày sinh -->
                         <StackPanel Grid.Row="2" Grid.Column="2">
                             <TextBlock Text="NGÀY SINH" Style="{StaticResource FieldLabel}"/>
                             <DatePicker x:Name="DpNgaySinh" Height="42"/>
                         </StackPanel>
-                        <StackPanel Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3"
+
+                        <!-- MSSV (readonly) -->
+                        <StackPanel Grid.Row="4" Grid.Column="0">
+                            <TextBlock Text="MÃ SỐ SINH VIÊN (MSSV)" Style="{StaticResource FieldLabel}"/>
+                            <TextBox x:Name="TxtEditMssv"
+                                     Style="{StaticResource InputModern}"
+                                     IsReadOnly="True"
+                                     Background="#F3F4F6"
+                                     Foreground="#6B7280"
+                                     FontFamily="Consolas"
+                                     ToolTip="MSSV không thể thay đổi sau khi đăng ký."/>
+                        </StackPanel>
+
+                        <!--
+                            ══════════════════════════════════════════════
+                            LỚP (ComboBox) — THÊM MỚI
+                            ItemsSource bind vào ClassList trong code-behind
+                            SelectedItem bind vào CmbClass.Tag (chọn theo IdLop)
+                            ══════════════════════════════════════════════
+                        -->
+                        <StackPanel Grid.Row="4" Grid.Column="2">
+                            <TextBlock Text="LỚP HỌC" Style="{StaticResource FieldLabel}"/>
+                            <ComboBox x:Name="CmbClass"
+                                      Height="42"
+                                      DisplayMemberPath="TenLop"
+                                      SelectedValuePath="IdLop"
+                                      FontSize="13"
+                                      VerticalContentAlignment="Center"/>
+                        </StackPanel>
+
+                        <!-- Nút lưu -->
+                        <StackPanel Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="3"
                                     Orientation="Horizontal">
-                            <Button Content="Lưu thay đổi" Style="{StaticResource BtnPrimary}"
+                            <Button Content="Lưu thay đổi"
+                                    Style="{StaticResource BtnPrimary}"
                                     Width="160" Click="BtnSaveProfile_Click"/>
-                            <TextBlock x:Name="TxtProfileMsg" VerticalAlignment="Center"
-                                       FontSize="12" Margin="16,0,0,0" Visibility="Collapsed"/>
+                            <TextBlock x:Name="TxtProfileMsg"
+                                       VerticalAlignment="Center"
+                                       FontSize="12" Margin="16,0,0,0"
+                                       Visibility="Collapsed"/>
                         </StackPanel>
                     </Grid>
                 </StackPanel>
             </Border>
 
-            <!-- Change password -->
+            <!-- Đổi mật khẩu -->
             <Border Style="{StaticResource Card}" Margin="0,0,0,20">
                 <StackPanel>
                     <TextBlock Text="Đổi mật khẩu" FontSize="15" FontWeight="SemiBold"
                                Foreground="{StaticResource TextPrimaryBrush}" Margin="0,0,0,20"/>
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition/><ColumnDefinition Width="20"/><ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="20"/>
+                            <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
                         <StackPanel Grid.Column="0">
                             <TextBlock Text="MẬT KHẨU HIỆN TẠI" Style="{StaticResource FieldLabel}"/>
@@ -111,14 +170,16 @@
                 </StackPanel>
             </Border>
 
-            <!-- Reminder settings -->
+            <!-- Cài đặt nhắc nhở -->
             <Border Style="{StaticResource Card}">
                 <StackPanel>
                     <TextBlock Text="Cài đặt nhắc nhở" FontSize="15" FontWeight="SemiBold"
                                Foreground="{StaticResource TextPrimaryBrush}" Margin="0,0,0,20"/>
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition/><ColumnDefinition Width="20"/><ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="20"/>
+                            <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
                         <StackPanel Grid.Column="0">
                             <TextBlock Text="NHẮC TRƯỚC (PHÚT)" Style="{StaticResource FieldLabel}"/>
