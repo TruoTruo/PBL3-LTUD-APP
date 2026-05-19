@@ -78,6 +78,11 @@ namespace StudentReminderApp.ViewModels
             {
                 CommentText = string.Empty;
                 LoadComments();
+
+                if (CurrentPost != null)
+                {
+                    CurrentPost.CommentCount++;
+                }
             }
         }
 
@@ -105,6 +110,10 @@ namespace StudentReminderApp.ViewModels
                     if (success)
                     {
                         Comments.Remove(comment);
+                        if (CurrentPost != null && CurrentPost.CommentCount > 0)
+                        {
+                            CurrentPost.CommentCount--;
+                        }
                     }
                     else
                     {

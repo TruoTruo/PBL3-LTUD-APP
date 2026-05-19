@@ -14,6 +14,10 @@ namespace StudentReminderApp.Models
         public string   EventType      { get; set; }
         public string   RecurrenceRule { get; set; }
 
+        // Bổ sung cho giao diện Calendar
+        public bool     IsAllDay       { get; set; } // Xác định sự kiện cả ngày
+        public string   ColorCategory  { get; set; } // Lưu mã màu (VD: "#FF0000")
+
         public string EventTypeIcon => EventType switch
         {
             "DEADLINE" => "⏰",
