@@ -4,8 +4,6 @@ using System.Windows.Controls;
 using StudentReminderApp.Views.Dialogs;
 using StudentReminderApp.ViewModels;
 using StudentReminderApp.Models;
-using System.Diagnostics;
-using System.Windows.Documents;
 
 namespace StudentReminderApp.Views.Pages
 {
@@ -16,7 +14,9 @@ namespace StudentReminderApp.Views.Pages
             InitializeComponent();
         }
 
-        /// Mở cửa sổ tạo bài viết mới
+        // -------------------------------------------------------
+        // Mở dialog tạo bài mới
+        // -------------------------------------------------------
         private void OpenCreatePost_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -40,8 +40,9 @@ namespace StudentReminderApp.Views.Pages
             }
         }
 
-        /// Chức năng: Mở cửa sổ Bình luận
- 
+        // -------------------------------------------------------
+        // Mở dialog bình luận
+        // -------------------------------------------------------
         private void CommentButton_Click(object sender, RoutedEventArgs e)
         {
             if (sender is Button btn && btn.DataContext is Post post)
@@ -52,12 +53,13 @@ namespace StudentReminderApp.Views.Pages
             }
         }
 
-        /// Chức năng: Chia sẻ bài viết
-  
+        // -------------------------------------------------------
+        // Chia sẻ bài viết
+        // -------------------------------------------------------
         private async void ShareButton_Click(object sender, RoutedEventArgs e)
         {
             var button = sender as Button;
-            var post = button?.CommandParameter as Post;
+            var post   = button?.CommandParameter as Post;
 
             if (post != null)
             {
@@ -68,12 +70,9 @@ namespace StudentReminderApp.Views.Pages
 
                     bool? result = shareDialog.ShowDialog();
 
-                    if (result == true)
+                    if (result == true && this.DataContext is ForumViewModel vm)
                     {
-                        if (this.DataContext is ForumViewModel vm)
-                        {
-                            await vm.LoadDataAsync();
-                        }
+                        await vm.LoadDataAsync();
                     }
                 }
                 catch (Exception ex)
@@ -83,15 +82,27 @@ namespace StudentReminderApp.Views.Pages
             }
         }
 
-        /// Chức năng: Xử lý nút Option nếu có Context Menu
-
+        // -------------------------------------------------------
+        // Mở Context Menu (nút ...)
+        // -------------------------------------------------------
         private void OptionButton_Click(object sender, RoutedEventArgs e)
         {
             Button btn = sender as Button;
-            if (btn != null && btn.ContextMenu != null)
+            if (btn?.ContextMenu != null)
             {
                 btn.ContextMenu.PlacementTarget = btn;
                 btn.ContextMenu.IsOpen = true;
+            }
+        }
+
+        // -------------------------------------------------------
+        // Admin: Làm mới danh sách bài chờ duyệt
+        // -------------------------------------------------------
+        private async void RefreshPending_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.DataContext is ForumViewModel vm)
+            {
+                await vm.LoadPendingPostsAsync();
             }
         }
     }

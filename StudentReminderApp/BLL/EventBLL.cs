@@ -38,5 +38,26 @@ namespace StudentReminderApp.BLL
         }
 
         public void Delete(long idEvent) => _eventDal.Delete(idEvent);
+        public List<CalendarItem> GetCalendarItemsForMonth(long idAcc, int year, int month)
+        {
+            var items = new List<CalendarItem>();
+            var personalEvents = GetByMonth(idAcc, year, month);
+            
+            foreach (var e in personalEvents)
+            {
+                items.Add(new CalendarItem
+                {
+                    Id = e.IdEvent,
+                    Title = e.Title,
+                    Description = e.Description,
+                    Location = e.Location,
+                    StartTime = e.StartTime,
+                    EndTime = e.EndTime,
+                    EventType = e.EventType
+                });
+            }
+
+            return items;
+        }
     }
 }
