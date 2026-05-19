@@ -13,7 +13,6 @@
             <ColumnDefinition Width="420"/>
         </Grid.ColumnDefinitions>
 
-        <!-- LEFT: Branding -->
         <Border Grid.Column="0" Background="{StaticResource SidebarBrush}">
             <StackPanel VerticalAlignment="Center" Margin="56,0">
                 <Border Width="64" Height="64" CornerRadius="16"
@@ -25,27 +24,9 @@
                            Foreground="White" Margin="0,0,0,8"/>
                 <TextBlock Text="&amp; Advisor" FontSize="20" FontWeight="Light"
                            Foreground="#94A3B8" Margin="0,0,0,32"/>
-                    <!-- <TextBlock Text="Hệ thống quản lý lịch học và tư vấn đăng ký học phần thông minh."
-                            FontSize="14" Foreground="#94A3B8"
-                            TextWrapping="Wrap" LineHeight="22" Margin="0,0,0,36"/> -->
-                <!-- <StackPanel>
-                    <StackPanel Orientation="Horizontal" Margin="0,0,0,12">
-                        <Ellipse Width="8" Height="8" Fill="#2563EB" Margin="0,5,12,0" VerticalAlignment="Top"/>
-                        <TextBlock Text="Lịch học cá nhân theo tuần / tháng" Foreground="#CBD5E1" FontSize="13"/>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal" Margin="0,0,0,12">
-                        <Ellipse Width="8" Height="8" Fill="#2563EB" Margin="0,5,12,0" VerticalAlignment="Top"/>
-                        <TextBlock Text="Nhắc nhở tự động deadline &amp; lịch thi" Foreground="#CBD5E1" FontSize="13"/>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal">
-                        <Ellipse Width="8" Height="8" Fill="#2563EB" Margin="0,5,12,0" VerticalAlignment="Top"/>
-                        <TextBlock Text="Tư vấn đăng ký học phần theo tín chỉ" Foreground="#CBD5E1" FontSize="13"/>
-                    </StackPanel>
-                </StackPanel> -->
             </StackPanel>
         </Border>
 
-        <!-- RIGHT: Login form -->
         <ScrollViewer Grid.Column="1" VerticalScrollBarVisibility="Auto">
             <Grid VerticalAlignment="Center" Margin="48,40">
                 <StackPanel>
@@ -57,10 +38,10 @@
                                FontSize="14" Foreground="{StaticResource TextSecondaryBrush}"
                                Margin="0,0,0,32"/>
 
-                    <TextBlock Text="TÊN ĐĂNG NHẬP" Style="{StaticResource FieldLabel}"/>
+                    <TextBlock Text="MSSV / TÊN ĐĂNG NHẬP" Style="{StaticResource FieldLabel}"/>
                     <TextBox x:Name="TxtUsername" Style="{StaticResource InputModern}" Margin="0,0,0,18"/>
 
-                    <TextBlock Text="MẬT KHẨU" Style="{StaticResource FieldLabel}"/>
+                    <TextBlock Text="MẬT KHẨU" Style="{StaticResource FieldLabel}" Margin="0,0,0,8"/>
                     <PasswordBox x:Name="TxtPassword" Style="{StaticResource PwdModern}" Margin="0,0,0,16"/>
 
                     <TextBlock x:Name="TxtError"
@@ -70,9 +51,15 @@
 
                     <Button Content="Đăng nhập"
                             Style="{StaticResource BtnPrimary}"
-                            Click="BtnLogin_Click" Margin="0,0,0,16"/>
+                            Click="BtnLogin_Click" Margin="0,0,0,20"/>
 
-                    <Separator Background="{StaticResource BorderBrush}" Margin="0,0,0,16"/>
+                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,16"
+                               Cursor="Hand" MouseLeftButtonUp="TxtForgotPwd_Click">
+                        <Run Text="Quên mật khẩu?" Foreground="#2563EB" FontSize="13"
+                             TextDecorations="Underline"/>
+                    </TextBlock>
+
+                    <Separator Background="{StaticResource BorderBrush}" Margin="0,0,0,20"/>
 
                     <Button Content="Chưa có tài khoản? Đăng ký ngay →"
                             Style="{StaticResource BtnSecondary}"
