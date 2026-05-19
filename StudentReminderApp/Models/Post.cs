@@ -108,6 +108,20 @@ namespace StudentReminderApp.Models
         }
 
         // -------------------------------------------------------
+        // TRENDING SCORE — dùng cho Quick Sort trong GetHotPosts()
+        // Công thức: (Likes + CommentCount + ShareCount) / (tuổi_bài ^ 1.5)
+        // Mẫu số +2 để tránh chia cho 0 với bài vừa đăng xong
+        // -------------------------------------------------------
+        public double TrendingScore
+        {
+            get
+            {
+                double ageHours = (DateTime.Now - CreatedAt).TotalHours + 2.0;
+                return (Likes + CommentCount + ShareCount) / Math.Pow(ageHours, 1.5);
+            }
+        }
+
+        // -------------------------------------------------------
         // FILES / IMAGES
         // -------------------------------------------------------
         private List<string> _filePaths = new List<string>();

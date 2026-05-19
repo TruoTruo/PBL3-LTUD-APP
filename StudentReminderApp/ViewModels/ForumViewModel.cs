@@ -60,7 +60,7 @@ namespace StudentReminderApp.ViewModels
                 {
                     BitmapImage bitmap = new BitmapImage();
                     bitmap.BeginInit();
-                    bitmap.UriSource = new Uri(FilePath, UriKind.Absolute);
+                    bitmap.UriSource = new Uri(FilePath!, UriKind.Absolute);
                     bitmap.CacheOption = BitmapCacheOption.OnLoad;
                     bitmap.EndInit();
                     bitmap.Freeze();
@@ -97,18 +97,18 @@ namespace StudentReminderApp.ViewModels
             }
         }
 
-        public bool IsAllSelected => SelectedCategory == PostCategory.All;
-        public bool IsHotSelected => SelectedCategory == PostCategory.Hot;
-        public bool IsStudentSelected => SelectedCategory == PostCategory.Student;
+        public bool IsAllSelected          => SelectedCategory == PostCategory.All;
+        public bool IsHotSelected          => SelectedCategory == PostCategory.Hot;
+        public bool IsStudentSelected      => SelectedCategory == PostCategory.Student;
         public bool IsAnnouncementSelected => SelectedCategory == PostCategory.Announcement;
 
-        public ICommand SelectAllCommand { get; }
-        public ICommand SelectHotCommand { get; }
-        public ICommand SelectStudentCommand { get; }
+        public ICommand SelectAllCommand          { get; }
+        public ICommand SelectHotCommand          { get; }
+        public ICommand SelectStudentCommand      { get; }
         public ICommand SelectAnnouncementCommand { get; }
 
         // ── DANH SÁCH ───────────────────────────────────────────
-        public ObservableCollection<Post> Posts { get; set; } = new ObservableCollection<Post>();
+        public ObservableCollection<Post> Posts        { get; set; } = new ObservableCollection<Post>();
         public ObservableCollection<Post> PendingPosts { get; set; } = new ObservableCollection<Post>();
 
         // ── LOADING ─────────────────────────────────────────────
@@ -155,14 +155,14 @@ namespace StudentReminderApp.ViewModels
             = new ObservableCollection<FileAttachment>();
 
         // ── COMMANDS ────────────────────────────────────────────
-        public ICommand PostCommand { get; }
-        public ICommand DeletePostCommand { get; }
-        public ICommand LikeCommand { get; }
-        public ICommand OpenShareCommand { get; }
-        public ICommand ViewFileCommand { get; }
-        public ICommand RemoveFileCommand { get; }
+        public ICommand PostCommand        { get; }
+        public ICommand DeletePostCommand  { get; }
+        public ICommand LikeCommand        { get; }
+        public ICommand OpenShareCommand   { get; }
+        public ICommand ViewFileCommand    { get; }
+        public ICommand RemoveFileCommand  { get; }
         public ICommand ApprovePostCommand { get; }
-        public ICommand RejectPostCommand { get; }
+        public ICommand RejectPostCommand  { get; }
         public ICommand AdminDeleteCommand { get; }
 
         // ── CONSTRUCTOR ─────────────────────────────────────────
@@ -170,15 +170,20 @@ namespace StudentReminderApp.ViewModels
         {
             SelectedFiles.CollectionChanged += (s, e) => CommandManager.InvalidateRequerySuggested();
 
-            SelectAllCommand = new RelayCommand(_ => SelectedCategory = PostCategory.All);
-            SelectHotCommand = new RelayCommand(_ => SelectedCategory = PostCategory.Hot);
-            SelectStudentCommand = new RelayCommand(_ => SelectedCategory = PostCategory.Student);
+            SelectAllCommand          = new RelayCommand(_ => SelectedCategory = PostCategory.All);
+            SelectHotCommand          = new RelayCommand(_ => SelectedCategory = PostCategory.Hot);
+            SelectStudentCommand      = new RelayCommand(_ => SelectedCategory = PostCategory.Student);
             SelectAnnouncementCommand = new RelayCommand(_ => SelectedCategory = PostCategory.Announcement);
 
             ViewFileCommand = new RelayCommand(obj =>
             {
                 if (obj is FileAttachment file && !string.IsNullOrEmpty(file.FilePath))
-                    try { System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo(file.FilePath) { UseShellExecute = true }); }
+                    try
+                    {
+                        System.Diagnostics.Process.Start(
+                            new System.Diagnostics.ProcessStartInfo(file.FilePath)
+                            { UseShellExecute = true });
+                    }
                     catch (Exception ex) { MessageBox.Show("Không thể mở file: " + ex.Message); }
             });
 
@@ -192,6 +197,7 @@ namespace StudentReminderApp.ViewModels
                 obj => CanExecutePost());
 
             DeletePostCommand = new RelayCommand(ExecuteDeletePostWrapper);
+
             LikeCommand = new RelayCommand(async obj => await ExecuteLike(obj));
 
             OpenShareCommand = new RelayCommand(obj =>
@@ -221,33 +227,42 @@ namespace StudentReminderApp.ViewModels
             IsBusy = true;
             try
             {
+                // Hot → BLL đã Quick Sort theo TrendingScore; còn lại lấy từ DAL
                 List<Post>? data = SelectedCategory switch
                 {
-                    PostCategory.All => await Task.Run(() => _forumBLL.GetApprovedPosts()),
-                    PostCategory.Hot => await Task.Run(() => _forumBLL.GetHotPosts()),
-                    PostCategory.Student => await Task.Run(() => _forumBLL.GetStudentPosts()),
+                    PostCategory.All          => await Task.Run(() => _forumBLL.GetApprovedPosts()),
+                    PostCategory.Hot          => await Task.Run(() => _forumBLL.GetHotPosts()),
+                    PostCategory.Student      => await Task.Run(() => _forumBLL.GetStudentPosts()),
                     PostCategory.Announcement => await Task.Run(() => _forumBLL.GetAnnouncementPosts()),
-                    _ => await Task.Run(() => _forumBLL.GetApprovedPosts())
+                    _                         => await Task.Run(() => _forumBLL.GetApprovedPosts())
                 };
 
                 if (data == null) return;
 
+                // Liên kết bài gốc cho bài chia sẻ
                 var dict = data.ToDictionary(p => p.IdPost, p => p);
                 foreach (var item in data)
-                    if (item.IdOriginalPost.HasValue && dict.TryGetValue(item.IdOriginalPost.Value, out var origin))
+                    if (item.IdOriginalPost.HasValue &&
+                        dict.TryGetValue(item.IdOriginalPost.Value, out var origin))
                         item.OriginalPost = origin;
 
                 Application.Current.Dispatcher.Invoke(() =>
                 {
                     Posts.Clear();
-                    // HOT: DB đã sắp xếp theo điểm; còn lại sắp theo ngày
+
+                    // Hot: BLL đã Quick Sort → dùng trực tiếp, không sort lại
+                    // Các danh mục còn lại: sắp theo ngày mới nhất
                     var sorted = SelectedCategory == PostCategory.Hot
                         ? data
                         : data.OrderByDescending(x => x.CreatedAt).ToList();
+
                     foreach (var p in sorted) Posts.Add(p);
                 });
             }
-            catch (Exception ex) { System.Diagnostics.Debug.WriteLine("LoadByCategory lỗi: " + ex.Message); }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("LoadByCategory lỗi: " + ex.Message);
+            }
             finally { IsBusy = false; }
         }
 
@@ -277,7 +292,11 @@ namespace StudentReminderApp.ViewModels
         {
             if (!SelectedFiles.Any(f => f.FilePath == path))
             {
-                SelectedFiles.Add(new FileAttachment { FilePath = path, FileName = Path.GetFileName(path) });
+                SelectedFiles.Add(new FileAttachment
+                {
+                    FilePath = path,
+                    FileName = Path.GetFileName(path)
+                });
                 CommandManager.InvalidateRequerySuggested();
             }
         }
@@ -285,34 +304,73 @@ namespace StudentReminderApp.ViewModels
         private async Task ExecutePost(object? parameter)
         {
             if (SessionManager.CurrentAccount == null) return;
+
             IsBusy = true;
             try
             {
-                var filePaths = SelectedFiles.Where(f => !string.IsNullOrEmpty(f.FilePath))
-                                             .Select(f => f.FilePath!).ToList();
+                // ════════════════════════════════════════════════════
+                //  [KMP] KIỂM DUYỆT NỘI DUNG TRƯỚC KHI ĐĂNG BÀI
+                //  - Chạy trên Task.Run để không block UI thread
+                //  - IsContentToxic dùng thuật toán KMP O(N + M)
+                //    duyệt qua mảng bannedWords trong ForumBLL
+                // ════════════════════════════════════════════════════
+                string toxicWord = string.Empty;
+                bool isToxic = await Task.Run(() =>
+                    _forumBLL.IsContentToxic("Thảo luận", NewContent, out toxicWord));
+
+                if (isToxic)
+                {
+                    // Reset cờ trước khi return để UI không bị kẹt
+                    IsBusy = false;
+                    MessageBox.Show(
+                        $"⚠️ Bài viết vi phạm quy chuẩn cộng đồng!\n\n" +
+                        $"Phát hiện từ cấm: [{toxicWord.ToUpper()}]\n\n" +
+                        $"Vui lòng chỉnh sửa nội dung và đăng lại.",
+                        "Kiểm duyệt nội dung (KMP)",
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Warning);
+                    return; // Chặn không cho đăng — KMP đã bắt được
+                }
+                // ════════════════════════════════════════════════════
+
+                // Nội dung sạch → tiến hành tạo bài
+                var filePaths = SelectedFiles
+                    .Where(f => !string.IsNullOrEmpty(f.FilePath))
+                    .Select(f => f.FilePath!)
+                    .ToList();
 
                 bool success = await Task.Run(() =>
-                    _forumBLL.CreatePost(SessionManager.CurrentAccount.IdAcc, "Thảo luận",
-                                         NewContent, IsAnonymous, filePaths,
-                                         _sharingPost?.IdPost, SelectedColor));
+                    _forumBLL.CreatePost(
+                        SessionManager.CurrentAccount.IdAcc,
+                        "Thảo luận",
+                        NewContent,
+                        IsAnonymous,
+                        filePaths,
+                        _sharingPost?.IdPost,
+                        SelectedColor));
+
                 if (success)
                 {
                     Application.Current.Dispatcher.Invoke(() =>
                     {
-                        NewContent = string.Empty; IsAnonymous = false;
-                        SelectedColor = "Transparent"; SelectedFiles.Clear();
-                        _sharingPost = null; CloseAction?.Invoke();
+                        NewContent    = string.Empty;
+                        IsAnonymous   = false;
+                        SelectedColor = "Transparent";
+                        SelectedFiles.Clear();
+                        _sharingPost  = null;
+                        CloseAction?.Invoke();
                     });
 
                     await LoadByCategory();
+
                     if (IsAdmin)
                     {
-                        // Admin đăng → duyệt ngay → load lại feed bình thường
+                        // Admin đăng → duyệt ngay → cập nhật danh sách pending
                         await LoadPendingPostsAsync();
                     }
                     else
                     {
-                        // ✅ Student đăng → thông báo chờ duyệt, KHÔNG hiển thị lên feed
+                        // Student đăng → chờ Admin duyệt, không hiển thị ngay lên feed
                         MessageBox.Show(
                             "✅ Bài viết đã được gửi!\n\nBài của bạn đang chờ Admin duyệt và sẽ hiển thị sau.",
                             "Đăng bài thành công",
@@ -320,11 +378,18 @@ namespace StudentReminderApp.ViewModels
                             MessageBoxImage.Information);
                     }
                 }
-                else MessageBox.Show("Đăng bài không thành công. Vui lòng thử lại.");
+                else
+                {
+                    MessageBox.Show("Đăng bài không thành công. Vui lòng thử lại.");
+                }
             }
-            catch (Exception ex) { MessageBox.Show("Lỗi: " + ex.Message); }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi: " + ex.Message);
+            }
             finally { IsBusy = false; }
         }
+
         // ── LIKE ────────────────────────────────────────────────
         private async Task ExecuteLike(object? parameter)
         {
@@ -332,11 +397,12 @@ namespace StudentReminderApp.ViewModels
             {
                 bool success = await Task.Run(() =>
                     _forumBLL.ToggleLike(SessionManager.CurrentAccount.IdAcc, post.IdPost));
+
                 if (success)
                 {
                     // Trigger TRG_UpdateLikeCount xử lý DB; ta chỉ cập nhật UI
-                    post.IsLiked = !post.IsLiked;
-                    post.Likes += post.IsLiked ? 1 : -1;
+                    post.IsLiked  = !post.IsLiked;
+                    post.Likes   += post.IsLiked ? 1 : -1;
                 }
             }
         }
@@ -345,18 +411,24 @@ namespace StudentReminderApp.ViewModels
         private void ExecuteDeletePostWrapper(object? parameter)
         {
             if (parameter is not Post post) return;
+
             if (!post.IsMyPost && !IsAdmin)
             {
                 MessageBox.Show("Bạn không có quyền xóa bài này!", "Thông báo",
                                 MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
-            var r = MessageBox.Show("Bạn có chắc muốn xóa bài viết này?",
-                                    "Xác nhận", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+            var r = MessageBox.Show(
+                "Bạn có chắc muốn xóa bài viết này?",
+                "Xác nhận", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
             if (r == MessageBoxResult.Yes)
             {
-                if (_forumBLL.RemovePost(post.IdPost)) Posts.Remove(post);
-                else MessageBox.Show("Không thể xóa bài viết.");
+                if (_forumBLL.RemovePost(post.IdPost))
+                    Posts.Remove(post);
+                else
+                    MessageBox.Show("Không thể xóa bài viết.");
             }
         }
 
@@ -364,13 +436,15 @@ namespace StudentReminderApp.ViewModels
         private void ExecuteApprovePost(Post? post)
         {
             if (post == null || !IsAdmin) return;
+
             if (_forumBLL.UpdatePostStatus(post.IdPost, PostStatus.Approved))
             {
                 post.ApprovalStatus = PostStatus.Approved;
                 Application.Current.Dispatcher.Invoke(() =>
                 {
                     PendingPosts.Remove(post);
-                    if (SelectedCategory == PostCategory.All || SelectedCategory == PostCategory.Student)
+                    if (SelectedCategory == PostCategory.All ||
+                        SelectedCategory == PostCategory.Student)
                         Posts.Insert(0, post);
                 });
                 MessageBox.Show($"✅ Đã duyệt bài: \"{post.Title}\"");
@@ -381,8 +455,10 @@ namespace StudentReminderApp.ViewModels
         private void ExecuteRejectPost(Post? post)
         {
             if (post == null || !IsAdmin) return;
+
             string reason = ShowRejectReasonDialog(post.Title) ?? string.Empty;
             if (string.IsNullOrWhiteSpace(reason)) return;
+
             if (_forumBLL.UpdatePostStatus(post.IdPost, PostStatus.Rejected, reason))
             {
                 post.ApprovalStatus = PostStatus.Rejected;
@@ -401,10 +477,13 @@ namespace StudentReminderApp.ViewModels
         private void ExecuteAdminDelete(Post? post)
         {
             if (post == null || !IsAdmin) return;
+
             var confirm = MessageBox.Show(
                 $"⚠️ Xóa bài \"{post.Title}\"?\nKhông thể hoàn tác!",
                 "Xác nhận (Admin)", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+
             if (confirm != MessageBoxResult.Yes) return;
+
             if (_forumBLL.AdminDeletePost(post.IdPost))
                 Application.Current.Dispatcher.Invoke(() =>
                 {
