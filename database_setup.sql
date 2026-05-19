@@ -763,6 +763,9 @@ GO
 PRINT N'Setup hoàn tất! Bây giờ hãy đăng ký tài khoản qua giao diện ứng dụng.';
 GO
 
+
+
+//XEM XET LAI DOAN NAY
 -- ================================================================
 --  StudentReminderApp — FULL DATABASE SETUP SCRIPT
 --  Chạy file này MỘT LẦN DUY NHẤT để khởi tạo toàn bộ database.
@@ -1218,4 +1221,33 @@ BEGIN
 END
 ELSE
     PRINT N'ℹ otp_expired_at đã tồn tại, bỏ qua.';
+GO
+GO
+
+-- 1. Thêm cột ma_lop_hoc_phan (Unique để không bị trùng mã lớp)
+IF NOT EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'LOP_HOC_PHAN' AND COLUMN_NAME = 'ma_lop_hoc_phan')
+BEGIN
+    ALTER TABLE LOP_HOC_PHAN 
+    ADD ma_lop_hoc_phan VARCHAR(50) NULL;
+    
+    PRINT N'Đã thêm cột ma_lop_hoc_phan vào LOP_HOC_PHAN';
+END
+GO
+
+-- 2. Thêm cột is_all_day cho sự kiện cá nhân
+IF NOT EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'PERSONAL_EVENT' AND COLUMN_NAME = 'is_all_day')
+BEGIN
+    ALTER TABLE PERSONAL_EVENT 
+    ADD is_all_day BIT DEFAULT 0;
+
+    PRINT N'Đã thêm cột is_all_day vào PERSONAL_EVENT';
+END
+GO
+
+-- 3. (Tuỳ chọn) Đánh Index cho ma_lop_hoc_phan để tốc độ tìm kiếm lớp nhanh hơn
+IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE name = 'idx_ma_lop_hoc_phan' AND object_id = OBJECT_ID('LOP_HOC_PHAN'))
+BEGIN
+    CREATE INDEX idx_ma_lop_hoc_phan ON LOP_HOC_PHAN(ma_lop_hoc_phan);
+    PRINT N'Đã đánh Index cho cột ma_lop_hoc_phan';
+END
 GO
