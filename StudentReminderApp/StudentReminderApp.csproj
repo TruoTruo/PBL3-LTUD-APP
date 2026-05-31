@@ -24,6 +24,10 @@
     <Resource Include="Resources\Icons\smiling-face.png" />
     <Resource Include="Resources\Icons\rgb.png" />
     
+    <Content Include="Views\Pages\*.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+
     <Page Update="Views\Pages\ForumPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>

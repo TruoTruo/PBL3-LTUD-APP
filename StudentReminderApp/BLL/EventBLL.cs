@@ -53,7 +53,8 @@ namespace StudentReminderApp.BLL
                     Location = e.Location,
                     StartTime = e.StartTime,
                     EndTime = e.EndTime,
-                    EventType = e.EventType
+                    EventType = e.EventType,
+                    OriginalEvent = e
                 });
             }
 

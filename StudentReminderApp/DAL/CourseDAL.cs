@@ -89,5 +89,60 @@ namespace StudentReminderApp.DAL
             cmd.Parameters.AddWithValue("@lhp", idLopHp);
             await cmd.ExecuteNonQueryAsync();
         }
+
+        /// <summary>
+        /// Lưu trạng thái học của sinh viên cho một môn học cụ thể
+        /// </summary>
+        public async Task<bool> SaveCourseStatusAsync(long idSv, long idMonHoc, string trangThaiHoc, int hocKy, string namHoc)
+        {
+            try
+            {
+                string sql = @"
+                    MERGE INTO TICH_LUY_TIN_CHI AS target
+                    USING (SELECT @idSv as id_sv, @idMon as id_mon, @hk as hoc_ky, @nam as nam_hoc) AS source
+                    ON target.id_sv = source.id_sv AND target.id_mon_hoc = source.id_mon AND 
+                       target.hoc_ky = source.hoc_ky AND target.nam_hoc = source.nam_hoc
+                    WHEN MATCHED THEN
+                        UPDATE SET trang_thai_hoc = @trangThai
+                    WHEN NOT MATCHED THEN
+                        INSERT (id_sv, id_mon_hoc, hoc_ky, nam_hoc, trang_thai_hoc)
+                        VALUES (@idSv, @idMon, @hk, @nam, @trangThai);";
+
+                using (var conn = new SqlConnection(AppConfig.ConnectionString))
+                {
+                    await conn.OpenAsync();
+                    using (var cmd = new SqlCommand(sql, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@idSv", idSv);
+                        cmd.Parameters.AddWithValue("@idMon", idMonHoc);
+                        cmd.Parameters.AddWithValue("@hk", hocKy);
+                        cmd.Parameters.AddWithValue("@nam", namHoc);
+                        cmd.Parameters.AddWithValue("@trangThai", ConvertStatusToDbFormat(trangThaiHoc));
+                        
+                        await cmd.ExecuteNonQueryAsync();
+                        return true;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Lỗi lưu trạng thái: {ex.Message}");
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Chuyển đổi trạng thái từ UI sang format database
+        /// </summary>
+        private string ConvertStatusToDbFormat(string uiStatus)
+        {
+            return uiStatus switch
+            {
+                "Đã học" => "DaHoc",
+                "Đang học" => "DangHoc",
+                "Chưa học" => "ChuaHoc",
+                _ => "ChuaHoc"
+            };
+        }
     }
 }

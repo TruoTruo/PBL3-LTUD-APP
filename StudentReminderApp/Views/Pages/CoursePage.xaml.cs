@@ -4,6 +4,8 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Threading.Tasks;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using StudentReminderApp.BLL;
 using StudentReminderApp.Helpers;
 using StudentReminderApp.Models;
@@ -11,13 +13,72 @@ using StudentReminderApp.Services;
 
 namespace StudentReminderApp.Views.Pages
 {
-    public class CurriculumItem
+    public class CurriculumItem : INotifyPropertyChanged
     {
+        public int SerialNumber { get; set; }
         public int HocKy { get; set; }
+        public string Symbol { get; set; }
         public string MaHocPhan { get; set; }
         public string TenHocPhan { get; set; }
         public double SoTC { get; set; }
-        public string StatusText { get; set; }  // Đã học, Đang học, Chưa học
+        public string Optional { get; set; }
+        public string HtDa { get; set; }
+        public string TqDa { get; set; }
+        public string Relation { get; set; }
+        public string Prerequisite { get; set; }
+        public string Corequisite { get; set; }
+
+        public string PreStudyCourses => BuildPreStudyCourses();
+        public string CoStudyCourses => string.IsNullOrWhiteSpace(Corequisite) ? "-" : Corequisite;
+
+        private string BuildPreStudyCourses()
+        {
+            var parts = new List<string>();
+            if (!string.IsNullOrWhiteSpace(Relation)) parts.Add(Relation.Trim());
+            if (!string.IsNullOrWhiteSpace(Prerequisite)) parts.Add(Prerequisite.Trim());
+            return parts.Count == 0 ? "-" : string.Join("; ", parts);
+        }
+
+        public string Registration
+        {
+            get
+            {
+                if (StatusText == "Đã học" || StatusText == "Đang học")
+                    return "Đã đăng ký";
+
+                if (!string.IsNullOrWhiteSpace(Optional) && string.IsNullOrWhiteSpace(Relation) && string.IsNullOrWhiteSpace(Prerequisite) && string.IsNullOrWhiteSpace(Corequisite))
+                    return "Tự chọn";
+
+                if (!string.IsNullOrWhiteSpace(Relation) || !string.IsNullOrWhiteSpace(Prerequisite))
+                    return "Chưa đủ điều kiện";
+
+                if (!string.IsNullOrWhiteSpace(Corequisite))
+                    return "Cần đăng ký cùng";
+
+                return "Có thể đăng ký";
+            }
+        }
+        
+        private string _statusText;
+        public string StatusText 
+        { 
+            get => _statusText; 
+            set 
+            { 
+                if (_statusText != value)
+                {
+                    _statusText = value;
+                    UpdateColors();
+                    OnPropertyChanged();
+                    OnPropertyChanged(nameof(BgColor));
+                    OnPropertyChanged(nameof(FgColor));
+                    OnPropertyChanged(nameof(DiemChu));
+                    OnPropertyChanged(nameof(DiemSo));
+                    OnPropertyChanged(nameof(Registration));
+                }
+            }
+        }  // Đã học, Đang học, Chưa học
+        
         public string BgColor { get; set; }     // Flat Background Color
         public string FgColor { get; set; }     // Flat Foreground Text Color
         public string DiemChu { get; set; }
@@ -25,6 +86,42 @@ namespace StudentReminderApp.Views.Pages
         public string GiangVien { get; set; } = "N/A";
         public string ThoiKhoaBieu { get; set; } = "N/A";
         public string TuanHoc { get; set; } = "1-15";
+        
+        public long IdMonHoc { get; set; }  // Để lưu vào database
+        public long IdSv { get; set; }      // Để lưu vào database
+        
+        // Hàm cập nhật màu sắc dựa trên trạng thái
+        private void UpdateColors()
+        {
+            if (_statusText == "Đã học") 
+            { 
+                BgColor = "#DBEAFE"; 
+                FgColor = "#1E3A8A"; 
+                DiemChu = "B+"; 
+                DiemSo = 3.5;
+            }
+            else if (_statusText == "Đang học") 
+            { 
+                BgColor = "#FEF3C7"; 
+                FgColor = "#92400E"; 
+                DiemChu = "-"; 
+                DiemSo = 0;
+            }
+            else 
+            { 
+                BgColor = "#F1F5F9"; 
+                FgColor = "#475569"; 
+                DiemChu = "-"; 
+                DiemSo = 0;
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected void OnPropertyChanged([CallerMemberName] string name = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+        }
     }
 
     public partial class CoursePage : Page
@@ -51,6 +148,31 @@ namespace StudentReminderApp.Views.Pages
             if (IsLoaded) RenderRoadmap();
         }
 
+        // Event handler cho thay đổi trạng thái
+
+        private void SaveCourseStatus(CurriculumItem item)
+        {
+            try
+            {
+                // TODO: Gọi BLL/DAL để lưu trạng thái
+                // Tạm thời chỉ cập nhật ngoài bộ nhớ
+                System.Diagnostics.Debug.WriteLine($"Lưu trạng thái: {item.MaHocPhan} - {item.StatusText}");
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Lỗi lưu trạng thái: {ex.Message}");
+            }
+        }
+
+        private void RefreshDataGrids()
+        {
+            if (DgRoadmap.ItemsSource is List<CurriculumItem> courses)
+            {
+                DgCurrentCourses.ItemsSource = courses.Where(c => c.StatusText == "Đang học").ToList();
+                DgHistory.ItemsSource = courses.Where(c => c.StatusText != "Chưa học").ToList();
+            }
+        }
+
         private void RenderRoadmap()
         {
             // Nạp dữ liệu JSON thực tế theo thiết lập hệ
@@ -75,24 +197,29 @@ namespace StudentReminderApp.Views.Pages
                 if (sem.Courses == null) continue;
                 foreach (var c in sem.Courses)
                 {
-                    // Giả lập trạng thái theo kỳ học
-                    string status = sem.Semester < 4 ? "Đã học" : (sem.Semester == 4 ? "Đang học" : "Chưa học");
+                    string status = !string.IsNullOrWhiteSpace(c.Status)
+                        ? c.Status!
+                        : sem.Semester < 4 ? "Đã học" : (sem.Semester == 4 ? "Đang học" : "Chưa học");
 
                     var item = new CurriculumItem
                     {
+                        SerialNumber = filteredCourses.Count + 1,
                         HocKy = sem.Semester,
+                        Symbol = string.IsNullOrWhiteSpace(c.Symbol) ? "" : c.Symbol!,
                         MaHocPhan = c.Id ?? "N/A",
                         TenHocPhan = c.Name ?? "N/A",
                         SoTC = c.Credits,
+                        Optional = string.IsNullOrWhiteSpace(c.Optional) ? "" : c.Optional!,
+                        HtDa = string.IsNullOrWhiteSpace(c.HtDa) ? "" : c.HtDa!,
+                        TqDa = string.IsNullOrWhiteSpace(c.TqDa) ? "" : c.TqDa!,
+                        Relation = string.IsNullOrWhiteSpace(c.Relation) ? "" : c.Relation!,
+                        Prerequisite = string.IsNullOrWhiteSpace(c.Prerequisite) ? "" : c.Prerequisite!,
+                        Corequisite = string.IsNullOrWhiteSpace(c.Corequisite) ? "" : c.Corequisite!,
                         StatusText = status,
-                        GiangVien = c.Lecturer ?? "Chưa phân công",
-                        ThoiKhoaBieu = c.Session ?? "Chưa sắp xếp",
-                        TuanHoc = c.Weeks ?? "1-15"
+                        GiangVien = string.IsNullOrWhiteSpace(c.Lecturer) ? "Chưa phân công" : c.Lecturer!,
+                        ThoiKhoaBieu = string.IsNullOrWhiteSpace(c.Session) ? "Chưa sắp xếp" : c.Session!,
+                        TuanHoc = string.IsNullOrWhiteSpace(c.Weeks) ? "1-15" : c.Weeks!
                     };
-
-                    if (status == "Đã học") { item.BgColor = "#DBEAFE"; item.FgColor = "#1E3A8A"; item.DiemChu = "B+"; item.DiemSo = 3.5; }
-                    else if (status == "Đang học") { item.BgColor = "#FEF3C7"; item.FgColor = "#92400E"; item.DiemChu = "-"; item.DiemSo = 0; }
-                    else { item.BgColor = "#F1F5F9"; item.FgColor = "#475569"; item.DiemChu = "-"; item.DiemSo = 0; }
 
                     filteredCourses.Add(item);
                 }
@@ -101,11 +228,18 @@ namespace StudentReminderApp.Views.Pages
             // 2. Đổ dữ liệu vào DataGrid Khung chương trình
             DgRoadmap.ItemsSource = filteredCourses;
 
-            // 3. Đổ dữ liệu môn Đang học hiện tại (Phần 1)
+            // 3. Đổ dữ liệu môn Đang học hiện tại
             DgCurrentCourses.ItemsSource = filteredCourses.Where(c => c.StatusText == "Đang học").ToList();
 
             // 4. Đổ dữ liệu History (chỉ những môn Đã học / Đang học)
             DgHistory.ItemsSource = filteredCourses.Where(c => c.StatusText != "Chưa học").ToList();
+
+            if (TxtCourseStatus != null)
+            {
+                TxtCourseStatus.Text = filteredCourses.Count == 0
+                    ? $"Không có môn học cho chương trình '{programData?.ProgramInfo?.Name ?? programId}'. Kiểm tra lại file JSON và đường dẫn."
+                    : $"Đã nạp {filteredCourses.Count} môn học cho chương trình '{programData?.ProgramInfo?.Name ?? programId}'.";
+            }
         }
     }
 }

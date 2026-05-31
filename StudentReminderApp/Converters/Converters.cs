@@ -89,4 +89,33 @@ namespace StudentReminderApp.Converters
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
             => throw new NotImplementedException();
     }
+
+    /// <summary>
+    /// Chuyển ActualWidth -> Visibility dựa trên Threshold.
+    /// Có thể dùng Invert để hiển thị khi nhỏ hơn ngưỡng.
+    /// </summary>
+    [ValueConversion(typeof(double), typeof(Visibility))]
+    public class WidthToVisibilityConverter : IValueConverter
+    {
+        public double Threshold { get; set; } = 1000;
+        public bool Invert { get; set; }
+
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value is double width)
+            {
+                bool isVisible = width >= Threshold;
+                if (Invert)
+                {
+                    isVisible = !isVisible;
+                }
+                return isVisible ? Visibility.Visible : Visibility.Collapsed;
+            }
+
+            return Visibility.Visible;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+            => throw new NotImplementedException();
+    }
 }

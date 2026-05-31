@@ -373,7 +373,7 @@ namespace StudentReminderApp.Views.Pages
 
         private void ApplyMockData(int hk)
         {
-            int accCredit = 0;
+            double accCredit = 0;
             double gpa = 0.0;
 
             // [Task 2: Hard Reset] Làm rỗng mảng selectedCourses
@@ -391,14 +391,14 @@ namespace StudentReminderApp.Views.Pages
                 // Fix: Ngăn chặn Crash NullReferenceException nếu có Học kỳ bị rỗng môn học
                 accCredit = programData.Semesters.Where(s => s != null && s.Semester < hk && s.Courses != null)
                                                  .SelectMany(s => s.Courses!)
-                                                 .Sum(c => (int)c.Credits);
+                                                 .Sum(c => c.Credits);
             }
             gpa = hk > 1 ? 3.2 : 0.0;
 
             // Cập nhật text tổng tín chỉ chương trình (Ví dụ: / 180 TC)
-            int totalProgramCredits = programData?.ProgramInfo?.TotalCredits ?? 180;
+            double totalProgramCredits = programData?.ProgramInfo?.TotalCredits ?? 180;
             if (TxtTotalCreditProgram != null)
-                TxtTotalCreditProgram.Text = $"/ {totalProgramCredits} TC chương trình";
+                TxtTotalCreditProgram.Text = $"/ {totalProgramCredits:0.#} TC chương trình";
 
             // 2. Cập nhật các chỉ số (Stats) trên giao diện chính
             TxtAccCredit.Text = accCredit.ToString();
