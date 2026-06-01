@@ -61,3 +61,5 @@ D:\IT\HỌC\PBL3\PBL3-LTUD-APP\StudentReminderApp\bin\Debug\net48\Views\Pages\kc
 D:\IT\HỌC\PBL3\PBL3-LTUD-APP\StudentReminderApp\bin\Debug\net48\Views\Pages\kctdt_nhat.json
 D:\IT\HỌC\PBL3\PBL3-LTUD-APP\StudentReminderApp\bin\Debug\net48\Views\Pages\kctdt_trituenhantao.json
 D:\IT\HỌC\PBL3\PBL3-LTUD-APP\StudentReminderApp\obj\Debug\net48\StudentReminderApp_Content.g.cs
+D:\IT\HỌC\PBL3\PBL3-LTUD-APP\StudentReminderApp\obj\Debug\net48\Views\Main\SplashWindow.baml
+D:\IT\HỌC\PBL3\PBL3-LTUD-APP\StudentReminderApp\obj\Debug\net48\Views\Main\SplashWindow.g.cs

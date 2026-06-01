@@ -60,6 +60,13 @@ namespace StudentReminderApp.Views.Main
         {
             _reminder.Stop();
             SessionManager.Clear();
+            
+            // Xoá hoàn toàn dữ liệu ghi nhớ đăng nhập khi người dùng đăng xuất
+            StudentReminderApp.Properties.Settings.Default.Username = string.Empty;
+            StudentReminderApp.Properties.Settings.Default.Password = string.Empty;
+            StudentReminderApp.Properties.Settings.Default.RememberMe = false;
+            StudentReminderApp.Properties.Settings.Default.Save();
+
             new Auth.LoginWindow().Show();
             Close();
         }

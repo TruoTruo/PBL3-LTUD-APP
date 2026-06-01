@@ -44,6 +44,10 @@
                     <TextBlock Text="MẬT KHẨU" Style="{StaticResource FieldLabel}" Margin="0,0,0,8"/>
                     <PasswordBox x:Name="TxtPassword" Style="{StaticResource PwdModern}" Margin="0,0,0,16"/>
 
+                    <!-- Thêm duy nhất ô CheckBox này -->
+                    <CheckBox x:Name="ChkRememberMe" Content="Ghi nhớ đăng nhập" 
+                              Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,16" Cursor="Hand"/>
+
                     <TextBlock x:Name="TxtError"
                                Foreground="{StaticResource DangerBrush}"
                                FontSize="12" Margin="0,0,0,16"

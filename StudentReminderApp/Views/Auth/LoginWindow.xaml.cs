@@ -11,7 +11,16 @@ namespace StudentReminderApp.Views.Auth
     {
         private readonly AccountBLL _bll = new AccountBLL();
 
-        public LoginWindow() => InitializeComponent();
+        public LoginWindow()
+        {
+            InitializeComponent();
+            if (StudentReminderApp.Properties.Settings.Default.RememberMe)
+            {
+                TxtUsername.Text = StudentReminderApp.Properties.Settings.Default.Username;
+                TxtPassword.Password = StudentReminderApp.Properties.Settings.Default.Password;
+                ChkRememberMe.IsChecked = true;
+            }
+        }
 
         private void BtnLogin_Click(object sender, RoutedEventArgs e)
         {
@@ -40,6 +49,21 @@ namespace StudentReminderApp.Views.Auth
                 TxtError.Visibility = Visibility.Visible;
                 return;
             }
+
+            // Lưu thông tin khi đăng nhập thành công
+            if (ChkRememberMe.IsChecked == true)
+            {
+                StudentReminderApp.Properties.Settings.Default.Username = username;
+                StudentReminderApp.Properties.Settings.Default.Password = TxtPassword.Password;
+                StudentReminderApp.Properties.Settings.Default.RememberMe = true;
+            }
+            else
+            {
+                StudentReminderApp.Properties.Settings.Default.Username = string.Empty;
+                StudentReminderApp.Properties.Settings.Default.Password = string.Empty;
+                StudentReminderApp.Properties.Settings.Default.RememberMe = false;
+            }
+            StudentReminderApp.Properties.Settings.Default.Save();
 
             // user đã chứa TenLop (GetUserWithClass được gọi trong AccountBLL.Login)
             SessionManager.SetSession(acc, user);
