@@ -11,6 +11,25 @@ namespace StudentReminderApp.Views.Auth
         private readonly AccountBLL _bll = new AccountBLL();
         public RegisterWindow() => InitializeComponent();
 
+        // Cho phép dùng chuột kéo cửa sổ
+        private void Window_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == System.Windows.Input.MouseButton.Left)
+                this.DragMove();
+        }
+
+        // Đóng cửa sổ khi bấm nút X
+        private void BtnClose_Click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
+        }
+
+        // Thu nhỏ cửa sổ khi bấm nút -
+        private void BtnMinimize_Click(object sender, RoutedEventArgs e)
+        {
+            this.WindowState = WindowState.Minimized;
+        }
+
         private async void BtnRegister_Click(object sender, RoutedEventArgs e)
         {
             TxtError.Visibility = TxtSuccess.Visibility = Visibility.Collapsed;
@@ -32,8 +51,8 @@ namespace StudentReminderApp.Views.Auth
                 TxtPwd.Password,
                 TxtConfirm.Password,
                 TxtHoTen.Text,
-                TxtEmail.Text,
-                TxtSdt.Text);
+                "",  // Đã xóa trường Email trên UI nên truyền rỗng
+                ""); // Đã xóa trường SĐT trên UI nên truyền rỗng
 
             // Trích xuất giá trị từ class Tuple thông qua Item1 và Item2
             bool ok = result.Item1;

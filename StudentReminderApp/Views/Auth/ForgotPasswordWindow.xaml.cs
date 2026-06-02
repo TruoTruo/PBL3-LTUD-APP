@@ -15,6 +15,32 @@ namespace StudentReminderApp.Views.Auth
 
         public ForgotPasswordWindow() => InitializeComponent();
 
+        // Cho phép dùng chuột kéo cửa sổ
+        private void Window_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+                this.DragMove();
+        }
+
+        // Đóng cửa sổ khi bấm nút X
+        private void BtnClose_Click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
+        }
+
+        // Thu nhỏ cửa sổ khi bấm nút -
+        private void BtnMinimize_Click(object sender, RoutedEventArgs e)
+        {
+            this.WindowState = WindowState.Minimized;
+        }
+
+        // Nút quay lại đăng nhập
+        private void BtnBackToLogin_Click(object sender, RoutedEventArgs e)
+        {
+            new LoginWindow().Show();
+            this.Close(); 
+        }
+
         // ════════════════════════════════════════════════════════════
         // BƯỚC 1 — Nhập Email → Gửi OTP
         // ════════════════════════════════════════════════════════════
@@ -137,7 +163,7 @@ namespace StudentReminderApp.Views.Auth
                 System.Windows.Threading.DispatcherTimer timer =
                     new System.Windows.Threading.DispatcherTimer();
                 timer.Interval = TimeSpan.FromSeconds(1.5);
-                timer.Tick += (s, args) => { timer.Stop(); Close(); };
+                timer.Tick += (s, args) => { timer.Stop(); new LoginWindow().Show(); Close(); };
                 timer.Start();
             }
             else
