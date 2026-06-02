@@ -67,7 +67,7 @@ namespace StudentReminderApp.Views.Main
             StudentReminderApp.Properties.Settings.Default.RememberMe = false;
             StudentReminderApp.Properties.Settings.Default.Save();
 
-            new Auth.LoginWindow().Show();
+            new Auth.AuthWindow().Show();
             Close();
         }
 
