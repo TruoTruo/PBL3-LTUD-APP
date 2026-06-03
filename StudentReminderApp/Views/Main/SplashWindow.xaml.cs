@@ -46,11 +46,11 @@ namespace StudentReminderApp.Views.Main
                 }
 
                 // Sau khi mờ hẳn thì mới khởi tạo và hiển thị cửa sổ Đăng nhập
-                LoginWindow loginWindow = new LoginWindow();
+                AuthWindow authWindow = new AuthWindow();
                 
                 // Cực kỳ quan trọng: Set màn hình đăng nhập làm màn hình chính của App
-                Application.Current.MainWindow = loginWindow;
-                loginWindow.Show();
+                Application.Current.MainWindow = authWindow;
+                authWindow.Show();
 
                 // Đóng Splash Screen lại
                 this.Close();

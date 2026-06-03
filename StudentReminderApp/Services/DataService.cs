@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using Newtonsoft.Json;
 
 #pragma warning disable CS8618 // Ẩn cảnh báo Nullable để output Build sạch sẽ nhất
 
@@ -34,26 +33,22 @@ namespace StudentReminderApp.Services
             {
                 searchPaths.Add(root);
                 searchPaths.Add(Path.Combine(root, "data"));
-                searchPaths.Add(Path.Combine(root, "Views", "Pages"));
-                searchPaths.Add(Path.Combine(root, "..", "Views", "Pages"));
-                searchPaths.Add(Path.Combine(root, "..", "..", "Views", "Pages"));
-                searchPaths.Add(Path.Combine(root, "..", "..", "..", "Views", "Pages"));
-                searchPaths.Add(Path.Combine(root, "..", "..", "..", "..", "Views", "Pages"));
 
                 string current = root;
                 for (int i = 0; i < 6; i++)
                 {
                     current = Path.GetFullPath(Path.Combine(current, ".."));
-                    searchPaths.Add(Path.Combine(current, "Views", "Pages"));
+                    searchPaths.Add(current);
                     searchPaths.Add(Path.Combine(current, "data"));
                 }
             }
 
+            // Danh sách các file CSV theo từng chuyên ngành
             var files = new Dictionary<string, string>
             {
-                { "dacthu", "kctdt_dacthu.json" },
-                { "nhat", "kctdt_nhat.json" },
-                { "ai", "kctdt_trituenhantao.json" }
+                { "nhat", "CNTTNHATCN.csv" },
+                { "dacthu", "CNTTDACTHUCN.csv" },
+                { "ai", "CNTTAICN.csv" }
             };
 
             foreach (var kvp in files)
@@ -65,14 +60,16 @@ namespace StudentReminderApp.Services
                     {
                         try
                         {
-                            string json = File.ReadAllText(fullPath);
-                            var data = JsonConvert.DeserializeObject<ProgramData>(json);
-                            if (data != null) _programs[kvp.Key] = data;
-                            break;
+                            var data = ParseCsv(fullPath, kvp.Key);
+                            if (data != null) 
+                            {
+                                _programs[kvp.Key] = data;
+                                break;
+                            }
                         }
                         catch (Exception ex)
                         {
-                            System.Diagnostics.Debug.WriteLine($"[DataService] Lỗi parse JSON file {kvp.Value}: {ex.Message}");
+                            System.Diagnostics.Debug.WriteLine($"[DataService] Lỗi parse CSV file {kvp.Value}: {ex.Message}");
                         }
                     }
                 }
@@ -80,18 +77,87 @@ namespace StudentReminderApp.Services
 
             if (_programs.Count == 0)
             {
-                System.Diagnostics.Debug.WriteLine("[DataService] Không tìm thấy file JSON nào trong các đường dẫn:");
+                System.Diagnostics.Debug.WriteLine("[DataService] Không tìm thấy file CSV nào trong các đường dẫn:");
                 foreach (var path in searchPaths.Distinct())
                 {
                     System.Diagnostics.Debug.WriteLine($"  {Path.GetFullPath(path)}");
                 }
             }
-
-            // Chỉ đánh dấu là đã load nếu thực sự lấy được dữ liệu
-            if (_programs.Count > 0)
+            else
             {
                 _isLoaded = true;
             }
+        }
+
+        private static ProgramData? ParseCsv(string filePath, string programId)
+        {
+            var lines = File.ReadAllLines(filePath);
+            if (lines.Length <= 2) return null;
+
+            var programData = new ProgramData
+            {
+                ProgramInfo = new ProgramInfo { Id = programId, Name = Path.GetFileNameWithoutExtension(filePath) },
+                Semesters = new List<SemesterData>()
+            };
+
+            CourseData? currentCourse = null;
+
+            // Dòng 0 và 1 là header, bắt đầu đọc từ dòng 2
+            for (int i = 2; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (string.IsNullOrWhiteSpace(line)) continue;
+
+                var parts = line.Split(',');
+
+                // Nếu cột TT (parts[0]) có dữ liệu -> Bắt đầu môn học mới
+                if (!string.IsNullOrWhiteSpace(parts[0]))
+                {
+                    if (int.TryParse(parts[1], out int semesterNum))
+                    {
+                        var semester = programData.Semesters.FirstOrDefault(s => s.Semester == semesterNum);
+                        if (semester == null)
+                        {
+                            semester = new SemesterData { Semester = semesterNum, Courses = new List<CourseData>() };
+                            programData.Semesters.Add(semester);
+                        }
+
+                        currentCourse = new CourseData
+                        {
+                            Id = parts.Length > 4 ? parts[4].Trim() : "",
+                            Name = parts.Length > 2 ? parts[2].Trim() : "",
+                            Symbol = parts.Length > 3 ? parts[3].Trim() : "",
+                            Credits = parts.Length > 5 && double.TryParse(parts[5], out double c) ? c : 0,
+                            Optional = parts.Length > 6 ? parts[6].Trim() : "",
+                            HtDa = parts.Length > 7 ? parts[7].Trim() : "",
+                            TqDa = parts.Length > 8 ? parts[8].Trim() : "",
+                            Relation = parts.Length > 9 ? parts[9].Trim() : "",
+                            Corequisite = parts.Length > 10 ? parts[10].Trim() : "",
+                            Prerequisite = parts.Length > 11 ? parts[11].Trim() : "",
+                        };
+                        semester.Courses!.Add(currentCourse);
+                    }
+                }
+                // Nếu cột TT trống -> Dòng tiếp nối các môn tiên quyết/song hành của môn học hiện tại
+                else if (currentCourse != null)
+                {
+                    if (parts.Length > 7 && !string.IsNullOrWhiteSpace(parts[7]) && (currentCourse.HtDa == null || !currentCourse.HtDa.Contains(parts[7].Trim())))
+                        currentCourse.HtDa += (string.IsNullOrEmpty(currentCourse.HtDa) ? "" : " ") + parts[7].Trim();
+                    if (parts.Length > 8 && !string.IsNullOrWhiteSpace(parts[8]) && (currentCourse.TqDa == null || !currentCourse.TqDa.Contains(parts[8].Trim())))
+                        currentCourse.TqDa += (string.IsNullOrEmpty(currentCourse.TqDa) ? "" : " ") + parts[8].Trim();
+                    
+                    if (parts.Length > 9 && !string.IsNullOrWhiteSpace(parts[9]))
+                        currentCourse.Relation += (string.IsNullOrEmpty(currentCourse.Relation) ? "" : "\n") + parts[9].Trim();
+                    
+                    if (parts.Length > 10 && !string.IsNullOrWhiteSpace(parts[10]))
+                        currentCourse.Corequisite += (string.IsNullOrEmpty(currentCourse.Corequisite) ? "" : "\n") + parts[10].Trim();
+                    
+                    if (parts.Length > 11 && !string.IsNullOrWhiteSpace(parts[11]))
+                        currentCourse.Prerequisite += (string.IsNullOrEmpty(currentCourse.Prerequisite) ? "" : "\n") + parts[11].Trim();
+                }
+            }
+
+            return programData;
         }
 
         public static ProgramData? GetProgramData(string programId)
@@ -110,67 +176,42 @@ namespace StudentReminderApp.Services
 
     public class ProgramData
     {
-        [JsonProperty("program_info")]
         public ProgramInfo? ProgramInfo { get; set; }
-        [JsonProperty("semesters")]
         public List<SemesterData>? Semesters { get; set; }
     }
 
     public class ProgramInfo
     {
-        [JsonProperty("id")]
         public string? Id { get; set; }
-        [JsonProperty("name")]
         public string? Name { get; set; }
-        [JsonProperty("major")]
         public string? Major { get; set; }
-        [JsonProperty("total_credits")]
         public double TotalCredits { get; set; }
-        [JsonProperty("required_credits")]
         public double RequiredCredits { get; set; }
-        [JsonProperty("elective_credits")]
         public double ElectiveCredits { get; set; }
-        [JsonProperty("duration")]
         public string? Duration { get; set; }
     }
 
     public class SemesterData
     {
-        [JsonProperty("semester")]
         public int Semester { get; set; }
-        [JsonProperty("courses")]
         public List<CourseData>? Courses { get; set; }
     }
 
     public class CourseData
     {
-        [JsonProperty("id")]
         public string? Id { get; set; }
-        [JsonProperty("name")]
         public string? Name { get; set; }
-        [JsonProperty("symbol")]
         public string? Symbol { get; set; }
-        [JsonProperty("credits")]
         public double Credits { get; set; }
-        [JsonProperty("optional")]
         public string? Optional { get; set; }
-        [JsonProperty("ht_da")]
         public string? HtDa { get; set; }
-        [JsonProperty("tq_da")]
         public string? TqDa { get; set; }
-        [JsonProperty("relation")]
         public string? Relation { get; set; }
-        [JsonProperty("prerequisite")]
         public string? Prerequisite { get; set; }
-        [JsonProperty("corequisite")]
         public string? Corequisite { get; set; }
-        [JsonProperty("lecturer")]
         public string? Lecturer { get; set; }
-        [JsonProperty("weeks")]
         public string? Weeks { get; set; }
-        [JsonProperty("session")]
         public string? Session { get; set; }
-        [JsonProperty("status")]
         public string? Status { get; set; }
     }
 }

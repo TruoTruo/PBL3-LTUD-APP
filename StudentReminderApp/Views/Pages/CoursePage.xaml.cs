@@ -28,16 +28,10 @@ namespace StudentReminderApp.Views.Pages
         public string Prerequisite { get; set; }
         public string Corequisite { get; set; }
 
-        public string PreStudyCourses => BuildPreStudyCourses();
-        public string CoStudyCourses => string.IsNullOrWhiteSpace(Corequisite) ? "-" : Corequisite;
-
-        private string BuildPreStudyCourses()
-        {
-            var parts = new List<string>();
-            if (!string.IsNullOrWhiteSpace(Relation)) parts.Add(Relation.Trim());
-            if (!string.IsNullOrWhiteSpace(Prerequisite)) parts.Add(Prerequisite.Trim());
-            return parts.Count == 0 ? "-" : string.Join("; ", parts);
-        }
+        // Format hiển thị tách biệt 3 cột trên bảng
+        public string HocTruocStr => string.IsNullOrWhiteSpace(Relation) ? "-" : Relation.Replace("\n", "; ");
+        public string SongHanhStr => string.IsNullOrWhiteSpace(Corequisite) ? "-" : Corequisite.Replace("\n", "; ");
+        public string TienQuyetStr => string.IsNullOrWhiteSpace(Prerequisite) ? "-" : Prerequisite.Replace("\n", "; ");
 
         public string Registration
         {
@@ -59,6 +53,18 @@ namespace StudentReminderApp.Views.Pages
             }
         }
         
+        public string RegistrationColor
+        {
+            get
+            {
+                string reg = Registration;
+                if (reg == "Chưa đủ điều kiện") return "#DC2626"; // Đỏ
+                if (reg == "Cần đăng ký cùng") return "#D97706"; // Vàng cam
+                if (reg == "Tự chọn") return "#2563EB"; // Xanh dương
+                return "#059669"; // Xanh lá
+            }
+        }
+
         private string _statusText;
         public string StatusText 
         { 
@@ -75,6 +81,7 @@ namespace StudentReminderApp.Views.Pages
                     OnPropertyChanged(nameof(DiemChu));
                     OnPropertyChanged(nameof(DiemSo));
                     OnPropertyChanged(nameof(Registration));
+                    OnPropertyChanged(nameof(RegistrationColor));
                 }
             }
         }  // Đã học, Đang học, Chưa học
@@ -95,8 +102,8 @@ namespace StudentReminderApp.Views.Pages
         {
             if (_statusText == "Đã học") 
             { 
-                BgColor = "#DBEAFE"; 
-                FgColor = "#1E3A8A"; 
+                BgColor = "#D1FAE5"; // Màu xanh lá nhạt
+                FgColor = "#065F46"; // Màu xanh lá đậm
                 DiemChu = "B+"; 
                 DiemSo = 3.5;
             }
@@ -164,11 +171,22 @@ namespace StudentReminderApp.Views.Pages
             }
         }
 
+        private void Item_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(CurriculumItem.StatusText) && sender is CurriculumItem item)
+            {
+                SaveCourseStatus(item);
+                RefreshDataGrids();
+            }
+        }
+
         private void RefreshDataGrids()
         {
             if (DgRoadmap.ItemsSource is List<CurriculumItem> courses)
             {
+                DgCurrentCourses.ItemsSource = null;
                 DgCurrentCourses.ItemsSource = courses.Where(c => c.StatusText == "Đang học").ToList();
+                DgHistory.ItemsSource = null;
                 DgHistory.ItemsSource = courses.Where(c => c.StatusText != "Chưa học").ToList();
             }
         }
@@ -187,6 +205,12 @@ namespace StudentReminderApp.Views.Pages
                 if (DgCurrentCourses != null) DgCurrentCourses.ItemsSource = new List<CurriculumItem>();
                 if (DgHistory != null) DgHistory.ItemsSource = new List<CurriculumItem>();
                 return;
+            }
+
+            // Hủy đăng ký event cho danh sách cũ để tránh memory leak khi chuyển đổi giữa các chuyên ngành
+            if (DgRoadmap.ItemsSource is List<CurriculumItem> oldCourses)
+            {
+                foreach (var c in oldCourses) c.PropertyChanged -= Item_PropertyChanged;
             }
 
             int maxSemester = (CmbHeDaoTao != null && CmbHeDaoTao.SelectedIndex == 0) ? 8 : 10;
@@ -221,6 +245,7 @@ namespace StudentReminderApp.Views.Pages
                         TuanHoc = string.IsNullOrWhiteSpace(c.Weeks) ? "1-15" : c.Weeks!
                     };
 
+                    item.PropertyChanged += Item_PropertyChanged;
                     filteredCourses.Add(item);
                 }
             }
@@ -237,8 +262,8 @@ namespace StudentReminderApp.Views.Pages
             if (TxtCourseStatus != null)
             {
                 TxtCourseStatus.Text = filteredCourses.Count == 0
-                    ? $"Không có môn học cho chương trình '{programData?.ProgramInfo?.Name ?? programId}'. Kiểm tra lại file JSON và đường dẫn."
-                    : $"Đã nạp {filteredCourses.Count} môn học cho chương trình '{programData?.ProgramInfo?.Name ?? programId}'.";
+                    ? $"Không có môn học cho chương trình '{programData?.ProgramInfo?.Name ?? programId}'. Kiểm tra lại file CSV và đường dẫn."
+                    : $"Đã nạp {filteredCourses.Count} môn học từ file {programData?.ProgramInfo?.Name ?? programId}.csv.";
             }
         }
     }
