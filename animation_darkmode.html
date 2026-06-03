@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Theme Toggle</title>
+
+<style>
+
+body{
+    margin:0;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:#e8edf7;
+    transition:0.5s;
+    font-family:sans-serif;
+}
+
+.toggle{
+    position:relative;
+    width:180px;
+    height:90px;
+    cursor:pointer;
+}
+
+.toggle input{
+    display:none;
+}
+
+.slider{
+    position:absolute;
+    inset:0;
+    border-radius:50px;
+    overflow:hidden;
+    background:linear-gradient(
+        180deg,
+        #4da0ff,
+        #84c9ff
+    );
+    transition:.5s;
+}
+
+/* Stars */
+
+.star{
+    position:absolute;
+    background:white;
+    border-radius:50%;
+    opacity:0;
+    transition:.5s;
+}
+
+.star:nth-child(1){
+    width:4px;
+    height:4px;
+    top:20px;
+    left:40px;
+}
+
+.star:nth-child(2){
+    width:6px;
+    height:6px;
+    top:35px;
+    left:70px;
+}
+
+.star:nth-child(3){
+    width:4px;
+    height:4px;
+    top:15px;
+    left:110px;
+}
+
+/* Thumb */
+
+.thumb{
+    position:absolute;
+    width:74px;
+    height:74px;
+    border-radius:50%;
+    top:8px;
+    left:8px;
+    background:#ffd95c;
+    box-shadow:
+        0 0 20px rgba(255,220,0,.7);
+    transition:.5s cubic-bezier(.4,0,.2,1);
+}
+
+/* Moon craters */
+
+.thumb::before,
+.thumb::after{
+    content:"";
+    position:absolute;
+    border-radius:50%;
+    background:#c8c8c8;
+    opacity:0;
+    transition:.5s;
+}
+
+.thumb::before{
+    width:14px;
+    height:14px;
+    top:18px;
+    left:18px;
+}
+
+.thumb::after{
+    width:10px;
+    height:10px;
+    top:42px;
+    left:45px;
+}
+
+/* DARK MODE */
+
+input:checked + .slider{
+    background:linear-gradient(
+        180deg,
+        #23395d,
+        #4a5d79
+    );
+}
+
+input:checked + .slider .thumb{
+    left:98px;
+    background:#f2f2f2;
+    box-shadow:none;
+}
+
+input:checked + .slider .thumb::before,
+input:checked + .slider .thumb::after{
+    opacity:1;
+}
+
+input:checked + .slider .star{
+    opacity:1;
+}
+
+body.dark{
+    background:#1d2430;
+}
+
+</style>
+</head>
+
+<body>
+
+<label class="toggle">
+
+    <input id="themeToggle" type="checkbox">
+
+    <div class="slider">
+
+        <span class="star"></span>
+        <span class="star"></span>
+        <span class="star"></span>
+
+        <div class="thumb"></div>
+
+    </div>
+
+</label>
+
+<script>
+
+const toggle = document.getElementById("themeToggle");
+
+toggle.addEventListener("change", () => {
+    document.body.classList.toggle("dark");
+});
+
+</script>
+
+</body>
+</html>

@@ -329,7 +329,7 @@
                         <Border Width="12"
                                 Height="12"
                                 CornerRadius="6"
-                                Background="#DBEAFE"
+                                Background="#FF3ACC5F"
                                 Margin="0,0,8,0"/>
                         <TextBlock Text="Đã học (Qua môn)"/>
                     </StackPanel>

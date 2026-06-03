@@ -7,92 +7,98 @@
             <TextBlock x:Name="TxtGreeting" FontSize="22" FontWeight="Bold"
                        Foreground="{StaticResource TextPrimaryBrush}" Margin="0,0,0,4"/>
             <TextBlock x:Name="TxtDate" FontSize="13"
-                       Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,28"/>
-
-            <!-- Stat cards -->
-            <Grid Margin="0,0,0,24">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/><ColumnDefinition Width="14"/>
-                    <ColumnDefinition/><ColumnDefinition Width="14"/>
-                    <ColumnDefinition/><ColumnDefinition Width="14"/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-                <Border Grid.Column="0" Style="{StaticResource Card}">
-                    <StackPanel>
-                        <TextBlock Text="📅 Sự kiện hôm nay" FontSize="12"
-                                   Foreground="{StaticResource TextSecondaryBrush}"/>
-                        <TextBlock x:Name="StatEvents" Text="0" FontSize="30" FontWeight="Bold"
-                                   Foreground="{StaticResource PrimaryBrush}" Margin="0,6,0,0"/>
-                    </StackPanel>
-                </Border>
-                <Border Grid.Column="2" Style="{StaticResource Card}">
-                    <StackPanel>
-                        <TextBlock Text="📚 Học phần đang học" FontSize="12"
-                                   Foreground="{StaticResource TextSecondaryBrush}"/>
-                        <TextBlock x:Name="StatCourses" Text="0" FontSize="30" FontWeight="Bold"
-                                   Foreground="{StaticResource SuccessBrush}" Margin="0,6,0,0"/>
-                    </StackPanel>
-                </Border>
-                <Border Grid.Column="4" Style="{StaticResource Card}">
-                    <StackPanel>
-                        <TextBlock Text="⚠ Deadline sắp tới" FontSize="12"
-                                   Foreground="{StaticResource TextSecondaryBrush}"/>
-                        <TextBlock x:Name="StatDeadlines" Text="0" FontSize="30" FontWeight="Bold"
-                                   Foreground="{StaticResource WarningBrush}" Margin="0,6,0,0"/>
-                    </StackPanel>
-                </Border>
-                <Border Grid.Column="6" Style="{StaticResource Card}">
-                    <StackPanel>
-                        <TextBlock Text="🔔 Thông báo mới" FontSize="12"
-                                   Foreground="{StaticResource TextSecondaryBrush}"/>
-                        <TextBlock x:Name="StatNotifs" Text="0" FontSize="30" FontWeight="Bold"
-                                   Foreground="{StaticResource InfoBrush}" Margin="0,6,0,0"/>
-                    </StackPanel>
-                </Border>
-            </Grid>
+                       Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,24"/>
 
             <!-- Two column -->
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="16"/>
-                    <ColumnDefinition Width="340"/>
+                    <ColumnDefinition Width="20"/>
+                    <ColumnDefinition Width="360"/>
                 </Grid.ColumnDefinitions>
 
-                <Border Grid.Column="0" Style="{StaticResource Card}">
-                    <StackPanel>
+                <!-- Cột trái: Thống kê + Sự kiện sắp tới -->
+                <StackPanel Grid.Column="0">
+                    <!-- Khối Stat cards bố trí dạng 2x2 giống ảnh mẫu -->
+                    <Grid Margin="0,0,0,20">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/><ColumnDefinition Width="16"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/><RowDefinition Height="16"/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        
+                        <Border Grid.Row="0" Grid.Column="0" Style="{StaticResource Card}" CornerRadius="16" Padding="20">
+                            <StackPanel>
+                                <TextBlock Text="📅 Sự kiện hôm nay" FontSize="13" FontWeight="SemiBold"
+                                           Foreground="{StaticResource TextSecondaryBrush}"/>
+                                <TextBlock x:Name="StatEvents" Text="0" FontSize="36" FontWeight="Bold"
+                                           Foreground="{StaticResource PrimaryBrush}" Margin="0,10,0,0"/>
+                            </StackPanel>
+                        </Border>
+                        <Border Grid.Row="0" Grid.Column="2" Style="{StaticResource Card}" CornerRadius="16" Padding="20">
+                            <StackPanel>
+                                <TextBlock Text="📚 Học phần đang học" FontSize="13" FontWeight="SemiBold"
+                                           Foreground="{StaticResource TextSecondaryBrush}"/>
+                                <TextBlock x:Name="StatCourses" Text="0" FontSize="36" FontWeight="Bold"
+                                           Foreground="{StaticResource SuccessBrush}" Margin="0,10,0,0"/>
+                            </StackPanel>
+                        </Border>
+                        <Border Grid.Row="2" Grid.Column="0" Style="{StaticResource Card}" CornerRadius="16" Padding="20">
+                            <StackPanel>
+                                <TextBlock Text="⚠ Deadline sắp tới" FontSize="13" FontWeight="SemiBold"
+                                           Foreground="{StaticResource TextSecondaryBrush}"/>
+                                <TextBlock x:Name="StatDeadlines" Text="0" FontSize="36" FontWeight="Bold"
+                                           Foreground="{StaticResource WarningBrush}" Margin="0,10,0,0"/>
+                            </StackPanel>
+                        </Border>
+                        <Border Grid.Row="2" Grid.Column="2" Style="{StaticResource Card}" CornerRadius="16" Padding="20">
+                            <StackPanel>
+                                <TextBlock Text="🔔 Thông báo mới" FontSize="13" FontWeight="SemiBold"
+                                           Foreground="{StaticResource TextSecondaryBrush}"/>
+                                <TextBlock x:Name="StatNotifs" Text="0" FontSize="36" FontWeight="Bold"
+                                           Foreground="{StaticResource InfoBrush}" Margin="0,10,0,0"/>
+                            </StackPanel>
+                        </Border>
+                    </Grid>
+
+                    <Border Style="{StaticResource Card}" CornerRadius="20" Padding="24">
+                        <StackPanel>
                         <DockPanel Margin="0,0,0,16">
-                            <TextBlock Text="Sự kiện sắp tới (7 ngày)" FontSize="15" FontWeight="SemiBold"
-                                       Foreground="{StaticResource TextPrimaryBrush}"/>
+                                <TextBlock Text="Sự kiện sắp tới (7 ngày)" FontSize="16" FontWeight="Bold"
+                                           Foreground="{StaticResource TextPrimaryBrush}" VerticalAlignment="Center"/>
                             <Button Content="+ Thêm sự kiện" Style="{StaticResource BtnSecondary}"
-                                    HorizontalAlignment="Right" Height="32" FontSize="12"
+                                        HorizontalAlignment="Right" Height="36" Padding="12,0" FontSize="13"
                                     Click="BtnAddEvent_Click"/>
                         </DockPanel>
                         <ItemsControl x:Name="EventList">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
-                                    <Border BorderBrush="{StaticResource BorderBrush}"
-                                            BorderThickness="0,0,0,1" Padding="0,10">
+                                        <Border Background="#F8FAFC" CornerRadius="12" Padding="16,12" Margin="0,0,0,10">
                                         <Grid>
                                             <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="36"/>
+                                                    <ColumnDefinition Width="48"/>
                                                 <ColumnDefinition/>
-                                                <ColumnDefinition Width="90"/>
+                                                    <ColumnDefinition Width="Auto"/>
                                             </Grid.ColumnDefinitions>
-                                            <TextBlock Text="{Binding EventTypeIcon}" FontSize="18"
-                                                       VerticalAlignment="Center"/>
-                                            <StackPanel Grid.Column="1" Margin="8,0">
-                                                <TextBlock Text="{Binding Title}" FontWeight="SemiBold"
-                                                           FontSize="13"
+                                                <Border Width="40" Height="40" CornerRadius="20" Background="White" HorizontalAlignment="Left">
+                                                    <TextBlock Text="{Binding EventTypeIcon}" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                </Border>
+                                                <StackPanel Grid.Column="1" Margin="4,0" VerticalAlignment="Center">
+                                                    <TextBlock Text="{Binding Title}" FontWeight="Bold"
+                                                               FontSize="14"
                                                            Foreground="{StaticResource TextPrimaryBrush}"/>
-                                                <TextBlock Text="{Binding Location}" FontSize="11"
+                                                    <TextBlock Text="{Binding Location}" FontSize="12"
                                                            Foreground="{StaticResource TextMutedBrush}"/>
                                             </StackPanel>
-                                            <TextBlock Grid.Column="2"
-                                                       Text="{Binding StartTime, StringFormat='dd/MM HH:mm'}"
-                                                       FontSize="11"
-                                                       Foreground="{StaticResource TextSecondaryBrush}"
-                                                       VerticalAlignment="Center" TextAlignment="Right"/>
+                                                <Border Grid.Column="2" Background="{StaticResource PrimaryLightBrush}" CornerRadius="8" Padding="10,6" VerticalAlignment="Center">
+                                                    <TextBlock Text="{Binding StartTime, StringFormat='dd/MM HH:mm'}"
+                                                               FontSize="12" FontWeight="SemiBold"
+                                                               Foreground="{StaticResource PrimaryBrush}"
+                                                               TextAlignment="Center"/>
+                                                </Border>
                                         </Grid>
                                     </Border>
                                 </DataTemplate>
@@ -105,23 +111,26 @@
                                    Margin="0,20" Visibility="Collapsed"/>
                     </StackPanel>
                 </Border>
+                </StackPanel>
 
-                <Border Grid.Column="2" Style="{StaticResource Card}">
+                <!-- Cột phải: Đổ nền xanh biển giống ảnh tham khảo -->
+                <Border Grid.Column="2" Background="{StaticResource PrimaryBrush}" CornerRadius="24" Padding="24" VerticalAlignment="Top">
                     <StackPanel>
-                        <TextBlock Text="Lịch hôm nay" FontSize="15" FontWeight="SemiBold"
-                                   Foreground="{StaticResource TextPrimaryBrush}" Margin="0,0,0,14"/>
+                        <TextBlock Text="Lịch hôm nay" FontSize="18" FontWeight="Bold"
+                                   Foreground="White" Margin="0,0,0,20"/>
                         <ItemsControl x:Name="TodaySchedule">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
-                                    <Border Background="{StaticResource PrimaryLightBrush}"
-                                            CornerRadius="8" Padding="12,10" Margin="0,0,0,8">
+                                    <!-- Làm mờ trong suốt thẻ lịch để nổi trên nền xanh -->
+                                    <Border Background="#1AFFFFFF"
+                                            CornerRadius="12" Padding="16,14" Margin="0,0,0,12">
                                         <StackPanel>
                                             <TextBlock Text="{Binding TenMonHoc}" FontWeight="SemiBold"
-                                                       FontSize="13"
-                                                       Foreground="{StaticResource PrimaryBrush}"/>
-                                            <TextBlock FontSize="11"
-                                                       Foreground="{StaticResource TextSecondaryBrush}"
-                                                       Margin="0,4,0,0">
+                                                       FontSize="14"
+                                                       Foreground="White"/>
+                                            <TextBlock FontSize="12"
+                                                       Foreground="#E2E8F0"
+                                                       Margin="0,6,0,0">
                                                 <Run Text="Tiết "/><Run Text="{Binding StartTime}"/>
                                                 <Run Text=" — "/><Run Text="{Binding TenPhong}"/>
                                             </TextBlock>
@@ -131,8 +140,8 @@
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
                         <TextBlock x:Name="TxtNoSchedule" Text="Hôm nay không có lịch học."
-                                   Foreground="{StaticResource TextMutedBrush}"
-                                   FontSize="13" HorizontalAlignment="Center"
+                                   Foreground="#CBD5E1"
+                                   FontSize="14" HorizontalAlignment="Center"
                                    Margin="0,20" Visibility="Collapsed"/>
                     </StackPanel>
                 </Border>
