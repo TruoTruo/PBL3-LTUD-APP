@@ -1,12 +1,32 @@
 <Window x:Class="StudentReminderApp.Views.Dialogs.EventDialog"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Sự kiện" Height="520" Width="480"
+        Title="Sự kiện" Height="680" Width="600"
         WindowStartupLocation="CenterOwner"
         ResizeMode="NoResize"
         Background="White" 
         WindowStyle="None" AllowsTransparency="True">
     
+    <Window.Resources>
+        <Style x:Key="ColorRadioStyle" TargetType="RadioButton">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="RadioButton">
+                        <Grid Width="24" Height="24" Margin="0,0,12,0" Cursor="Hand">
+                            <Ellipse Fill="{TemplateBinding Background}" StrokeThickness="0"/>
+                            <Ellipse x:Name="checkMark" Fill="White" Width="10" Height="10" Visibility="Collapsed"/>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter TargetName="checkMark" Property="Visibility" Value="Visible"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
     <Border BorderThickness="1" BorderBrush="#DDDDDD" CornerRadius="8" Background="White">
         <Border.Effect>
             <DropShadowEffect BlurRadius="15" Direction="-90" RenderingBias="Quality" ShadowDepth="2" Opacity="0.2"/>
@@ -23,15 +43,8 @@
                                Foreground="#3C4043" Margin="0,0,0,24"/>
 
                     <TextBlock Text="TIÊU ĐỀ *" Style="{StaticResource FieldLabel}"/>
-                    <TextBox x:Name="TxtEventTitle" Style="{StaticResource InputModern}" Margin="0,0,0,16" 
-                             Tag="Thêm tiêu đề"/>
-
-                    <TextBlock Text="LOẠI SỰ KIỆN" Style="{StaticResource FieldLabel}"/>
-                    <ComboBox x:Name="CmbType" Height="40" Margin="0,0,0,16" BorderThickness="1">
-                        <ComboBoxItem Content="📌  Cá nhân"   Tag="PERSONAL"  IsSelected="True"/>
-                        <ComboBoxItem Content="📚  Học thuật"  Tag="ACADEMIC"/>
-                        <ComboBoxItem Content="⏰  Deadline"   Tag="DEADLINE"/>
-                    </ComboBox>
+                    <TextBox x:Name="TxtEventTitle" BorderThickness="0,0,0,1" BorderBrush="#E0E0E0" Background="Transparent" Padding="0,4,0,8" FontSize="18" FontWeight="Medium" Margin="0,0,0,16" 
+                             Tag="Thêm tiêu đề" Foreground="#3C4043"/>
 
                     <Grid Margin="0,0,0,16">
                         <Grid.ColumnDefinitions>
@@ -41,15 +54,60 @@
                         </Grid.ColumnDefinitions>
                         
                         <StackPanel Grid.Column="0">
-                            <TextBlock Text="BẮT ĐẦU *" Style="{StaticResource FieldLabel}"/>
+                            <TextBlock Text="LOẠI SỰ KIỆN" Style="{StaticResource FieldLabel}"/>
+                            <ComboBox x:Name="CmbType" Height="36" Margin="0,4,0,0" BorderThickness="0,0,0,1" BorderBrush="#E0E0E0" Background="Transparent" VerticalContentAlignment="Center">
+                                <ComboBoxItem Content="📌  Cá nhân"   Tag="PERSONAL"  IsSelected="True"/>
+                                <ComboBoxItem Content="📚  Học thuật"  Tag="ACADEMIC"/>
+                                <ComboBoxItem Content="⏰  Deadline"   Tag="DEADLINE"/>
+                            </ComboBox>
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="2">
+                            <TextBlock Text="LẶP LẠI" Style="{StaticResource FieldLabel}"/>
+                            <ComboBox x:Name="CmbRecurrence" Height="36" Margin="0,4,0,0" BorderThickness="0,0,0,1" BorderBrush="#E0E0E0" Background="Transparent" VerticalContentAlignment="Center">
+                                <ComboBoxItem Content="Không lặp lại" Tag="NONE" IsSelected="True"/>
+                                <ComboBoxItem Content="Hàng ngày" Tag="DAILY"/>
+                                <ComboBoxItem Content="Hàng tuần" Tag="WEEKLY"/>
+                                <ComboBoxItem Content="Hàng tháng" Tag="MONTHLY"/>
+                            </ComboBox>
+                        </StackPanel>
+                    </Grid>
+
+                    <TextBlock Text="KHÁCH MỜI (Nhập MSSV hoặc Tên)" Style="{StaticResource FieldLabel}"/>
+                    <Grid Margin="0,0,0,16">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="80"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBox x:Name="TxtGuestSearch" BorderThickness="0,0,0,1" BorderBrush="#E0E0E0" Background="Transparent" Padding="0,4,0,8"/>
+                        <Button x:Name="BtnAddGuest" Content="Thêm" Grid.Column="1" Margin="8,0,0,0" Style="{StaticResource BtnSecondary}" Click="BtnAddGuest_Click"/>
+                    </Grid>
+                    <StackPanel x:Name="GuestListPanel" Margin="0,0,0,16"/>
+
+                    <TextBlock Text="NHẮC NHỞ" Style="{StaticResource FieldLabel}"/>
+                    <StackPanel x:Name="ReminderPanel" Margin="0,0,0,8"/>
+                    <Button x:Name="BtnAddReminder" Content="+ Thêm thông báo nhắc nhở" Background="Transparent" Foreground="#1A73E8" FontWeight="SemiBold" BorderThickness="0" HorizontalAlignment="Left" Click="BtnAddReminder_Click" Margin="0,0,0,16" Cursor="Hand"/>
+
+                    <Grid Margin="0,0,0,16">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="20"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        
+                        <StackPanel Grid.Column="0">
+                            <Grid Margin="0,0,0,4">
+                                <TextBlock Text="BẮT ĐẦU *" Style="{StaticResource FieldLabel}" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0"/>
+                                <CheckBox x:Name="ChkAllDay" Content="Cả ngày" HorizontalAlignment="Right" VerticalAlignment="Center" Foreground="#5F6368" Checked="ChkAllDay_Checked" Unchecked="ChkAllDay_Unchecked"/>
+                            </Grid>
                             <Grid Margin="0,4,0,0">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="65"/>
+                                    <ColumnDefinition Width="80"/>
                                 </Grid.ColumnDefinitions>
-                                <DatePicker x:Name="DpStart" Height="38" Grid.Column="0" Margin="0,0,8,0"/>
-                                <TextBox x:Name="TxtStartTime" Height="38" Grid.Column="1" 
-                                         Style="{StaticResource InputModern}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                <DatePicker x:Name="DpStart" Height="36" Grid.Column="0" Margin="0,0,8,0" BorderThickness="0,0,0,1" BorderBrush="#E0E0E0" Background="Transparent"/>
+                                <TextBox x:Name="TxtStartTime" Height="36" Grid.Column="1" 
+                                         BorderThickness="0,0,0,1" BorderBrush="#E0E0E0" Background="Transparent" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="14"/>
                             </Grid>
                         </StackPanel>
                         
@@ -58,21 +116,31 @@
                             <Grid Margin="0,4,0,0">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="65"/>
+                                    <ColumnDefinition Width="80"/>
                                 </Grid.ColumnDefinitions>
-                                <DatePicker x:Name="DpEnd" Height="38" Grid.Column="0" Margin="0,0,8,0"/>
-                                <TextBox x:Name="TxtEndTime" Height="38" Grid.Column="1" 
-                                         Style="{StaticResource InputModern}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                <DatePicker x:Name="DpEnd" Height="36" Grid.Column="0" Margin="0,0,8,0" BorderThickness="0,0,0,1" BorderBrush="#E0E0E0" Background="Transparent"/>
+                                <TextBox x:Name="TxtEndTime" Height="36" Grid.Column="1" 
+                                         BorderThickness="0,0,0,1" BorderBrush="#E0E0E0" Background="Transparent" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="14"/>
                             </Grid>
                         </StackPanel>
                     </Grid>
 
+                    <TextBlock Text="MÀU SẮC" Style="{StaticResource FieldLabel}"/>
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,16">
+                        <RadioButton x:Name="RbColorBlue" Background="#1A73E8" GroupName="EventColor" IsChecked="True" Style="{StaticResource ColorRadioStyle}"/>
+                        <RadioButton x:Name="RbColorRed" Background="#D93025" GroupName="EventColor" Style="{StaticResource ColorRadioStyle}"/>
+                        <RadioButton x:Name="RbColorGreen" Background="#1E8E3E" GroupName="EventColor" Style="{StaticResource ColorRadioStyle}"/>
+                        <RadioButton x:Name="RbColorYellow" Background="#F9AB00" GroupName="EventColor" Style="{StaticResource ColorRadioStyle}"/>
+                        <RadioButton x:Name="RbColorPurple" Background="#9334E6" GroupName="EventColor" Style="{StaticResource ColorRadioStyle}"/>
+                        <RadioButton x:Name="RbColorTeal" Background="#009688" GroupName="EventColor" Style="{StaticResource ColorRadioStyle}"/>
+                    </StackPanel>
+
                     <TextBlock Text="ĐỊA ĐIỂM" Style="{StaticResource FieldLabel}"/>
-                    <TextBox x:Name="TxtLocation" Style="{StaticResource InputModern}" Margin="0,0,0,16"/>
+                    <TextBox x:Name="TxtLocation" BorderThickness="0,0,0,1" BorderBrush="#E0E0E0" Background="Transparent" Padding="0,4,0,8" Margin="0,0,0,16"/>
 
                     <TextBlock Text="MÔ TẢ" Style="{StaticResource FieldLabel}"/>
                     <TextBox x:Name="TxtDesc" Height="80" AcceptsReturn="True" TextWrapping="Wrap"
-                             Background="#F1F3F4" BorderThickness="0" Padding="12" FontSize="13"
+                             Background="#F8F9FA" BorderThickness="1" BorderBrush="#E0E0E0" Padding="12" FontSize="13"
                              VerticalScrollBarVisibility="Auto" Margin="0,0,0,10"/>
                     
                     <TextBlock x:Name="TxtErr" Foreground="#D93025" FontSize="12" Visibility="Collapsed"/>

@@ -1,4 +1,4 @@
-﻿﻿-- =============================================
+﻿﻿﻿﻿-- =============================================
 -- StudentReminderApp - Full Database Setup
 -- Chạy script này trong SQL Server Management Studio
 -- Database: PBL3
@@ -196,7 +196,7 @@ CREATE TABLE NOTIFICATION_QUEUE
     status NVARCHAR(20) DEFAULT 'PENDING' CHECK (status IN ('PENDING','SENT','FAILED')),
     CONSTRAINT FK_Notif_User    FOREIGN KEY (id_acc)      REFERENCES [USER](id_acc),
     CONSTRAINT FK_Notif_BuoiHoc FOREIGN KEY (id_buoi_hoc) REFERENCES BUOI_PHAT_SINH(id_buoi_hoc),
-    CONSTRAINT FK_Notif_Event   FOREIGN KEY (id_event)    REFERENCES PERSONAL_EVENT(id_event)
+    CONSTRAINT FK_Notif_Event   FOREIGN KEY (id_event)    REFERENCES PERSONAL_EVENT(id_event) ON DELETE CASCADE
 );
 
 -- REMINDER_CONFIG
@@ -765,7 +765,7 @@ GO
 
 
 
-//XEM XET LAI DOAN NAY
+-- XEM XET LAI DOAN NAY
 -- ================================================================
 --  StudentReminderApp — FULL DATABASE SETUP SCRIPT
 --  Chạy file này MỘT LẦN DUY NHẤT để khởi tạo toàn bộ database.
@@ -1250,4 +1250,62 @@ BEGIN
     CREATE INDEX idx_ma_lop_hoc_phan ON LOP_HOC_PHAN(ma_lop_hoc_phan);
     PRINT N'Đã đánh Index cho cột ma_lop_hoc_phan';
 END
+GO
+
+-- 4. Thêm cột color_category (Màu sắc) cho sự kiện cá nhân
+IF NOT EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'PERSONAL_EVENT' AND COLUMN_NAME = 'color_category')
+BEGIN
+    ALTER TABLE PERSONAL_EVENT 
+    ADD color_category NVARCHAR(20) DEFAULT '#1A73E8';
+    PRINT N'Đã thêm cột color_category vào PERSONAL_EVENT';
+END
+GO
+
+-- ================================================================
+-- BẢNG NHẮC NHỞ ĐA MỐC THỜI GIAN (MULTI-REMINDERS)
+-- ================================================================
+IF NOT EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'EVENT_REMINDER')
+BEGIN
+    CREATE TABLE EVENT_REMINDER
+    (
+        id_reminder BIGINT PRIMARY KEY IDENTITY(1,1),
+        id_event BIGINT NOT NULL,
+        minutes_before INT NOT NULL,
+        CONSTRAINT FK_Reminder_Event FOREIGN KEY (id_event) REFERENCES PERSONAL_EVENT(id_event) ON DELETE CASCADE
+    );
+    CREATE INDEX idx_reminder_event ON EVENT_REMINDER(id_event);
+    PRINT N'Đã tạo bảng EVENT_REMINDER cho Module Nhắc nhở đa mốc.';
+END
+GO
+
+-- ================================================================
+-- BẢNG KHÁCH MỜI SỰ KIỆN (EVENT ATTENDEES)
+-- ================================================================
+IF NOT EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'EVENT_ATTENDEE')
+BEGIN
+    CREATE TABLE EVENT_ATTENDEE
+    (
+        id_event BIGINT NOT NULL,
+        id_acc BIGINT NOT NULL,
+        response_status NVARCHAR(20) DEFAULT 'PENDING' CHECK (response_status IN ('PENDING','ACCEPTED','DECLINED')),
+        PRIMARY KEY (id_event, id_acc),
+        CONSTRAINT FK_Attendee_Event FOREIGN KEY (id_event) REFERENCES PERSONAL_EVENT(id_event) ON DELETE CASCADE,
+        CONSTRAINT FK_Attendee_User FOREIGN KEY (id_acc) REFERENCES [USER](id_acc)
+    );
+    PRINT N'Đã tạo bảng EVENT_ATTENDEE cho Module Khách mời.';
+END
+GO
+
+-- ================================================================
+-- CẬP NHẬT RÀNG BUỘC KHÓA NGOẠI (CHO PHÉP XÓA SỰ KIỆN CÁ NHÂN)
+-- ================================================================
+IF EXISTS (SELECT 1 FROM sys.foreign_keys WHERE name = 'FK_Notif_Event')
+BEGIN
+    ALTER TABLE NOTIFICATION_QUEUE DROP CONSTRAINT FK_Notif_Event;
+END
+GO
+
+ALTER TABLE NOTIFICATION_QUEUE
+ADD CONSTRAINT FK_Notif_Event FOREIGN KEY (id_event) REFERENCES PERSONAL_EVENT(id_event) ON DELETE CASCADE;
+PRINT N'Đã cập nhật FK_Notif_Event thêm ON DELETE CASCADE.';
 GO

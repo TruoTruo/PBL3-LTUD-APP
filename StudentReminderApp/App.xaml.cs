@@ -11,6 +11,7 @@ namespace StudentReminderApp
         {
             base.OnStartup(e);
             Current.DispatcherUnhandledException += App_DispatcherUnhandledException;
+            StudentReminderApp.Services.NotificationService.Start();
         }
 
         private void App_DispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
