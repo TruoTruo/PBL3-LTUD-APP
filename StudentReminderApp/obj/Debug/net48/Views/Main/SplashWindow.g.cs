@@ -59,7 +59,7 @@ namespace StudentReminderApp.Views.Main {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/StudentReminderApp;component/views/main/splashwindow.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/StudentReminderApp;V1.0.0.0;component/views/main/splashwindow.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\..\Views\Main\SplashWindow.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

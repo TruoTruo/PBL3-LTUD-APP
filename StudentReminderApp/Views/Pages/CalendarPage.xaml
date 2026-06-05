@@ -468,10 +468,41 @@
                 <Calendar x:Name="MiniCalendar" SelectedDatesChanged="MiniCalendar_SelectedDatesChanged" 
                           Style="{StaticResource GoogleCalendarStyle}" HorizontalAlignment="Center" Margin="0,0,0,15" FontFamily="Segoe UI"/>
                 
-                <TextBlock Text="Lịch của tôi" FontSize="14" FontWeight="SemiBold" Foreground="#3C4043" Margin="15,10,0,10" FontFamily="Segoe UI"/>
-                
-                <CheckBox x:Name="ChkPersonal" Content="Lịch cá nhân" IsChecked="True" Margin="15,8" Foreground="#70757A" FontSize="14" FontFamily="Segoe UI" Checked="Filter_Changed" Unchecked="Filter_Changed"/>
-                <CheckBox x:Name="ChkAcademic" Content="Lịch học &amp; Thi" IsChecked="True" Margin="15,8" Foreground="#70757A" FontSize="14" FontFamily="Segoe UI" Checked="Filter_Changed" Unchecked="Filter_Changed"/>
+                <Grid Margin="5,10,15,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Button x:Name="BtnTogglePersonal" Grid.Column="0" Content="&#xE70D;" FontFamily="Segoe MDL2 Assets" Background="Transparent" BorderThickness="0" Foreground="#5F6368" Cursor="Hand" Click="BtnTogglePersonal_Click" Width="20" FontSize="10" FocusVisualStyle="{x:Null}"/>
+                    <CheckBox x:Name="ChkPersonal" Grid.Column="1" Content="Lịch cá nhân" IsChecked="True" Foreground="#3C4043" FontSize="14" FontWeight="SemiBold" FontFamily="Segoe UI" Checked="Filter_Changed" Unchecked="Filter_Changed" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                    <Button Grid.Column="2" Content="+" Background="Transparent" BorderThickness="0" Foreground="#5F6368" FontSize="18" FontWeight="Medium" Cursor="Hand" Padding="4,0" ToolTip="Tạo tag nhỏ" Click="BtnAddPersonalTag_Click" FocusVisualStyle="{x:Null}"/>
+                </Grid>
+                <StackPanel x:Name="PersonalTagsPanel" Margin="35,5,15,10"/>
+
+                <Grid Margin="5,10,15,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Button x:Name="BtnToggleAcademic" Grid.Column="0" Content="&#xE70D;" FontFamily="Segoe MDL2 Assets" Background="Transparent" BorderThickness="0" Foreground="#5F6368" Cursor="Hand" Click="BtnToggleAcademic_Click" Width="20" FontSize="10" FocusVisualStyle="{x:Null}"/>
+                    <CheckBox x:Name="ChkAcademic" Grid.Column="1" Content="Lịch học &amp; Thi" IsChecked="True" Foreground="#3C4043" FontSize="14" FontWeight="SemiBold" FontFamily="Segoe UI" Checked="Filter_Changed" Unchecked="Filter_Changed" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                    <Button Grid.Column="2" Content="+" Background="Transparent" BorderThickness="0" Foreground="#5F6368" FontSize="18" FontWeight="Medium" Cursor="Hand" Padding="4,0" ToolTip="Tạo tag nhỏ" Click="BtnAddAcademicTag_Click" FocusVisualStyle="{x:Null}"/>
+                </Grid>
+                <StackPanel x:Name="AcademicTagsPanel" Margin="35,5,15,10"/>
+
+                <Grid Margin="5,10,15,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Button x:Name="BtnToggleReminder" Grid.Column="0" Content="&#xE70D;" FontFamily="Segoe MDL2 Assets" Background="Transparent" BorderThickness="0" Foreground="#5F6368" Cursor="Hand" Click="BtnToggleReminder_Click" Width="20" FontSize="10" FocusVisualStyle="{x:Null}"/>
+                    <CheckBox x:Name="ChkReminder" Grid.Column="1" Content="Nhắc nhở" IsChecked="True" Foreground="#3C4043" FontSize="14" FontWeight="SemiBold" FontFamily="Segoe UI" Checked="Filter_Changed" Unchecked="Filter_Changed" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                    <Button Grid.Column="2" Content="+" Background="Transparent" BorderThickness="0" Foreground="#5F6368" FontSize="18" FontWeight="Medium" Cursor="Hand" Padding="4,0" ToolTip="Tạo tag nhỏ" Click="BtnAddReminderTag_Click" FocusVisualStyle="{x:Null}"/>
+                </Grid>
+                <StackPanel x:Name="ReminderTagsPanel" Margin="35,5,15,10"/>
             </StackPanel>
         </Border>
 
@@ -753,6 +784,13 @@
                         <Button x:Name="BtnAccept" Content="✓ Tham gia" Background="#E8F0FE" Foreground="#1A73E8" Margin="0,0,10,0" Padding="10,5" BorderThickness="0" Cursor="Hand" Click="BtnAccept_Click"/>
                         <Button x:Name="BtnDecline" Content="✕ Từ chối" Background="#FCE8E6" Foreground="#D93025" Padding="10,5" BorderThickness="0" Cursor="Hand" Click="BtnDecline_Click"/>
                     </StackPanel>
+                    
+                    <CheckBox x:Name="ChkQuickCompleted" 
+                              Content="Đánh dấu đã hoàn thành" 
+                              FontWeight="SemiBold" 
+                              Foreground="#3F51B5"
+                              Margin="0,10,0,0" 
+                              Visibility="Collapsed"/>
                 </StackPanel>
             </Border>
         </Popup>
@@ -779,11 +817,47 @@
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
                             <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE133;" Foreground="#5F6368" VerticalAlignment="Center" FontSize="18"/>
-                            <ComboBox x:Name="QuickEventType" Height="36" BorderThickness="0,0,0,1" BorderBrush="#E0E0E0" Background="Transparent" FontSize="14" VerticalContentAlignment="Center" Grid.Column="1">
+                            <ComboBox x:Name="QuickEventType" Height="36" BorderThickness="0,0,0,1" BorderBrush="#E0E0E0" Background="Transparent" FontSize="14" VerticalContentAlignment="Center" Grid.Column="1" SelectionChanged="QuickEventType_SelectionChanged">
                                 <ComboBoxItem Content="📌  Cá nhân" Tag="PERSONAL" IsSelected="True"/>
-                                <ComboBoxItem Content="📚  Học thuật" Tag="ACADEMIC"/>
-                                <ComboBoxItem Content="⏰  Deadline" Tag="DEADLINE"/>
+                                <ComboBoxItem Content="📚  Học &amp; Thi" Tag="ACADEMIC"/>
+                                <ComboBoxItem Content="⏰  Nhắc nhở" Tag="REMINDER"/>
                             </ComboBox>
+                        </Grid>
+                        
+                        <Grid Margin="0,0,0,24" x:Name="QuickTagsContainer" Visibility="Collapsed">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="35"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE302;" Foreground="#5F6368" VerticalAlignment="Center" FontSize="18"/>
+                            <Grid Grid.Column="1">
+                                <ToggleButton x:Name="QuickTagsDropdownToggle" Tag="Chọn Tag..." Height="36" BorderThickness="0,0,0,1" BorderBrush="#E0E0E0" Background="Transparent" Cursor="Hand">
+                                    <ToggleButton.Template>
+                                        <ControlTemplate TargetType="ToggleButton">
+                                            <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}">
+                                                <Grid>
+                                                    <TextBlock Text="{TemplateBinding Tag}" VerticalAlignment="Center" Margin="5,0,30,0" Foreground="#3C4043" FontSize="14"/>
+                                                    <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE70D;" Foreground="#5F6368" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,5,0" FontSize="10"/>
+                                                </Grid>
+                                            </Border>
+                                        </ControlTemplate>
+                                    </ToggleButton.Template>
+                                </ToggleButton>
+                                <Popup PlacementTarget="{Binding ElementName=QuickTagsDropdownToggle}" IsOpen="{Binding IsChecked, ElementName=QuickTagsDropdownToggle}" StaysOpen="False" AllowsTransparency="True">
+                                    <Border Background="White" BorderThickness="1" BorderBrush="#E0E0E0" CornerRadius="4" MinWidth="{Binding ActualWidth, ElementName=QuickTagsDropdownToggle}" MaxHeight="200">
+                                        <Border.Effect><DropShadowEffect BlurRadius="10" Opacity="0.1" ShadowDepth="2"/></Border.Effect>
+                                        <ScrollViewer>
+                                            <ItemsControl x:Name="QuickTagsListControl">
+                                                <ItemsControl.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <CheckBox Content="{Binding TagName}" IsChecked="{Binding IsSelected, Mode=TwoWay}" Margin="10,8" Foreground="#3C4043" FontWeight="Medium" Checked="QuickTagCheckBox_Changed" Unchecked="QuickTagCheckBox_Changed"/>
+                                                    </DataTemplate>
+                                                </ItemsControl.ItemTemplate>
+                                            </ItemsControl>
+                                        </ScrollViewer>
+                                    </Border>
+                                </Popup>
+                            </Grid>
                         </Grid>
                         
                         <Grid Margin="0,0,0,24">

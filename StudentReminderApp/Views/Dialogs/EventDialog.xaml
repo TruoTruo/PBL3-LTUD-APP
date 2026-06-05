@@ -57,8 +57,8 @@
                             <TextBlock Text="LOẠI SỰ KIỆN" Style="{StaticResource FieldLabel}"/>
                             <ComboBox x:Name="CmbType" Height="36" Margin="0,4,0,0" BorderThickness="0,0,0,1" BorderBrush="#E0E0E0" Background="Transparent" VerticalContentAlignment="Center">
                                 <ComboBoxItem Content="📌  Cá nhân"   Tag="PERSONAL"  IsSelected="True"/>
-                                <ComboBoxItem Content="📚  Học thuật"  Tag="ACADEMIC"/>
-                                <ComboBoxItem Content="⏰  Deadline"   Tag="DEADLINE"/>
+                                <ComboBoxItem Content="📚  Học &amp; Thi"  Tag="ACADEMIC"/>
+                                <ComboBoxItem Content="⏰  Nhắc nhở"   Tag="REMINDER"/>
                             </ComboBox>
                         </StackPanel>
 
@@ -71,6 +71,36 @@
                                 <ComboBoxItem Content="Hàng tháng" Tag="MONTHLY"/>
                             </ComboBox>
                         </StackPanel>
+                    </Grid>
+
+                    <TextBlock Text="TAGS SỰ KIỆN" Style="{StaticResource FieldLabel}"/>
+                    <Grid Margin="0,0,0,16">
+                        <ToggleButton x:Name="TagsDropdownToggle" Tag="Chọn Tag..." Height="36" BorderThickness="0,0,0,1" BorderBrush="#E0E0E0" Background="Transparent" Cursor="Hand">
+                            <ToggleButton.Template>
+                                <ControlTemplate TargetType="ToggleButton">
+                                    <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}">
+                                        <Grid>
+                                            <TextBlock Text="{TemplateBinding Tag}" VerticalAlignment="Center" Margin="5,0,30,0" Foreground="#3C4043" FontSize="14"/>
+                                            <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE70D;" Foreground="#5F6368" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,5,0" FontSize="10"/>
+                                        </Grid>
+                                    </Border>
+                                </ControlTemplate>
+                            </ToggleButton.Template>
+                        </ToggleButton>
+                        <Popup PlacementTarget="{Binding ElementName=TagsDropdownToggle}" IsOpen="{Binding IsChecked, ElementName=TagsDropdownToggle}" StaysOpen="False" AllowsTransparency="True">
+                            <Border Background="White" BorderThickness="1" BorderBrush="#E0E0E0" CornerRadius="4" MinWidth="{Binding ActualWidth, ElementName=TagsDropdownToggle}" MaxHeight="200">
+                                <Border.Effect><DropShadowEffect BlurRadius="10" Opacity="0.1" ShadowDepth="2"/></Border.Effect>
+                                <ScrollViewer>
+                                    <ItemsControl x:Name="TagsListControl">
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <CheckBox Content="{Binding TagName}" IsChecked="{Binding IsSelected, Mode=TwoWay}" Margin="10,8" Foreground="#3C4043" FontWeight="Medium" Checked="TagCheckBox_Changed" Unchecked="TagCheckBox_Changed"/>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </ScrollViewer>
+                            </Border>
+                        </Popup>
                     </Grid>
 
                     <TextBlock Text="KHÁCH MỜI (Nhập MSSV hoặc Tên)" Style="{StaticResource FieldLabel}"/>

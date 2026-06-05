@@ -8,6 +8,7 @@ using System.Windows.Input;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Windows.Media;
+using System.Linq;
 
 namespace StudentReminderApp.Views.Dialogs
 {
@@ -19,10 +20,22 @@ namespace StudentReminderApp.Views.Dialogs
         // Danh sách khách mời tạm thời
         private class GuestItem { public long IdAcc { get; set; } public string Info { get; set; } public string Status { get; set; } }
         private List<GuestItem> _guestList = new List<GuestItem>();
+        private CheckBox _chkCompletedDynamic;
 
-        public EventDialog(PersonalEvent ev = null)
+        public class TagSelectionItem
+        {
+            public long IdTag { get; set; }
+            public string TagName { get; set; }
+            public bool IsSelected { get; set; }
+        }
+        private List<TagSelectionItem> _availableTags = new List<TagSelectionItem>();
+
+        public List<long> PreSelectedTagIds { get; set; } = new List<long>();
+
+        public EventDialog(PersonalEvent ev = null, List<long> preSelectedTags = null)
         {
             InitializeComponent();
+            PreSelectedTagIds = preSelectedTags ?? new List<long>();
             
             // Nếu ev != null thì là chế độ SỬA, ngược lại là THÊM MỚI
             if (ev != null)
@@ -69,6 +82,7 @@ namespace StudentReminderApp.Views.Dialogs
                 ChkAllDay.IsChecked = true;
             }
 
+            CmbType.SelectionChanged -= CmbType_SelectionChanged;
             // Chọn loại sự kiện trong ComboBox
             foreach (ComboBoxItem item in CmbType.Items)
             {
@@ -78,6 +92,7 @@ namespace StudentReminderApp.Views.Dialogs
                     break;
                 }
             }
+            CmbType.SelectionChanged += CmbType_SelectionChanged;
             
             foreach (ComboBoxItem item in CmbRecurrence.Items)
             {
@@ -89,19 +104,86 @@ namespace StudentReminderApp.Views.Dialogs
             }
             LoadReminders();
             LoadGuests();
+            LoadTags();
             
             string color = _event.ColorCategory ?? "#1A73E8";
             if (color == "#D93025") RbColorRed.IsChecked = true;
             else if (color == "#1E8E3E") RbColorGreen.IsChecked = true;
             else if (color == "#F9AB00") RbColorYellow.IsChecked = true;
-            else if (color == "#9334E6") RbColorPurple.IsChecked = true;
+            else if (color == "#9334E6" || color == "#3F51B5") RbColorPurple.IsChecked = true;
             else if (color == "#009688") RbColorTeal.IsChecked = true;
             else RbColorBlue.IsChecked = true;
+        }
+
+        private void CmbType_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            LoadReminders();
+            LoadTags();
+        }
+
+        private void TagCheckBox_Changed(object sender, RoutedEventArgs e)
+        {
+            UpdateTagsComboBoxText();
+        }
+
+        private void UpdateTagsComboBoxText()
+        {
+            if (TagsDropdownToggle == null) return;
+            var selected = _availableTags.Where(t => t.IsSelected).Select(t => t.TagName).ToList();
+            if (selected.Count == 0) TagsDropdownToggle.Tag = "Chọn Tag...";
+            else if (selected.Count == 1) TagsDropdownToggle.Tag = selected[0];
+            else TagsDropdownToggle.Tag = $"{selected[0]} (+{selected.Count - 1})";
+        }
+
+        private void LoadTags()
+        {
+            string eventType = ((ComboBoxItem)CmbType.SelectedItem)?.Tag?.ToString() ?? "PERSONAL";
+            var dal = new StudentReminderApp.DAL.EventDAL();
+            var allTags = dal.GetTags(SessionManager.CurrentAccount.IdAcc)
+                             .Where(t => t.TagType == eventType).ToList();
+            
+            var selectedTagIds = new List<long>();
+            if (_event.IdEvent > 0)
+            {
+                selectedTagIds = dal.GetTagIdsForEvent(_event.IdEvent);
+            }
+            else if (PreSelectedTagIds != null && PreSelectedTagIds.Count > 0)
+            {
+                selectedTagIds = PreSelectedTagIds;
+            }
+
+            _availableTags.Clear();
+            foreach (var t in allTags)
+            {
+                _availableTags.Add(new TagSelectionItem { IdTag = t.IdTag, TagName = t.TagName, IsSelected = selectedTagIds.Contains(t.IdTag) });
+            }
+            
+            TagsListControl.ItemsSource = null;
+            TagsListControl.ItemsSource = _availableTags;
+            UpdateTagsComboBoxText();
         }
 
         private void LoadReminders()
         {
             ReminderPanel.Children.Clear();
+            
+            // THÊM CHECKBOX HOÀN THÀNH (ĐỘNG) CHO NHẮC NHỞ
+            if (((ComboBoxItem)CmbType.SelectedItem)?.Tag?.ToString() == "REMINDER")
+            {
+                _chkCompletedDynamic = new CheckBox {
+                    Content = "Đánh dấu đã hoàn thành",
+                    IsChecked = _event.IsCompleted,
+                    FontWeight = FontWeights.SemiBold,
+                    Foreground = new SolidColorBrush(Color.FromRgb(63, 81, 181)), // #3F51B5
+                    Margin = new Thickness(0, 0, 0, 15)
+                };
+                ReminderPanel.Children.Add(_chkCompletedDynamic);
+            }
+            else
+            {
+                _chkCompletedDynamic = null;
+            }
+
             if (_event.IdEvent > 0)
             {
                 try {
@@ -278,10 +360,12 @@ namespace StudentReminderApp.Views.Dialogs
             _event.EndTime     = end.ToUniversalTime();
             _event.EventType   = ((ComboBoxItem)CmbType.SelectedItem)?.Tag?.ToString() ?? "PERSONAL";
             
+            if (_chkCompletedDynamic != null) _event.IsCompleted = _chkCompletedDynamic.IsChecked == true;
+
             if (RbColorRed.IsChecked == true) _event.ColorCategory = "#D93025";
             else if (RbColorGreen.IsChecked == true) _event.ColorCategory = "#1E8E3E";
             else if (RbColorYellow.IsChecked == true) _event.ColorCategory = "#F9AB00";
-            else if (RbColorPurple.IsChecked == true) _event.ColorCategory = "#9334E6";
+            else if (RbColorPurple.IsChecked == true) _event.ColorCategory = _event.EventType == "REMINDER" ? "#3F51B5" : "#9334E6";
             else if (RbColorTeal.IsChecked == true) _event.ColorCategory = "#009688";
             else _event.ColorCategory = "#1A73E8";
 
@@ -353,6 +437,14 @@ namespace StudentReminderApp.Views.Dialogs
                         }
                     }
                 }
+                
+                // Lưu Tags
+                var dal = new StudentReminderApp.DAL.EventDAL();
+                var selectedTagIds = new List<long>();
+                foreach(var t in _availableTags) {
+                    if (t.IsSelected) selectedTagIds.Add(t.IdTag);
+                }
+                dal.SaveTagIdsForEvent(eventId, selectedTagIds);
             }
             catch (Exception ex)
             {
