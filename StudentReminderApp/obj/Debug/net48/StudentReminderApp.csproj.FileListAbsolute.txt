@@ -9,9 +9,6 @@ D:\IT\HỌC\PBL3\PBL3-LTUD-APP\StudentReminderApp\bin\Debug\net48\System.Memory.
 D:\IT\HỌC\PBL3\PBL3-LTUD-APP\StudentReminderApp\bin\Debug\net48\System.Numerics.Vectors.dll
 D:\IT\HỌC\PBL3\PBL3-LTUD-APP\StudentReminderApp\bin\Debug\net48\System.Runtime.CompilerServices.Unsafe.dll
 D:\IT\HỌC\PBL3\PBL3-LTUD-APP\StudentReminderApp\obj\Debug\net48\StudentReminderApp.csproj.AssemblyReference.cache
-D:\IT\HỌC\PBL3\PBL3-LTUD-APP\StudentReminderApp\obj\Debug\net48\Views\Auth\Forgotpasswordwindow.baml
-D:\IT\HỌC\PBL3\PBL3-LTUD-APP\StudentReminderApp\obj\Debug\net48\Views\Auth\LoginWindow.baml
-D:\IT\HỌC\PBL3\PBL3-LTUD-APP\StudentReminderApp\obj\Debug\net48\Views\Auth\RegisterWindow.baml
 D:\IT\HỌC\PBL3\PBL3-LTUD-APP\StudentReminderApp\obj\Debug\net48\Views\Dialogs\CommentDialog.baml
 D:\IT\HỌC\PBL3\PBL3-LTUD-APP\StudentReminderApp\obj\Debug\net48\Views\Dialogs\CreatePostDialog.baml
 D:\IT\HỌC\PBL3\PBL3-LTUD-APP\StudentReminderApp\obj\Debug\net48\Views\Dialogs\EventDialog.baml
@@ -24,9 +21,6 @@ D:\IT\HỌC\PBL3\PBL3-LTUD-APP\StudentReminderApp\obj\Debug\net48\Views\Pages\Co
 D:\IT\HỌC\PBL3\PBL3-LTUD-APP\StudentReminderApp\obj\Debug\net48\Views\Pages\DashboardPage.baml
 D:\IT\HỌC\PBL3\PBL3-LTUD-APP\StudentReminderApp\obj\Debug\net48\Views\Pages\PreferencePage.baml
 D:\IT\HỌC\PBL3\PBL3-LTUD-APP\StudentReminderApp\obj\Debug\net48\Views\Pages\ProfilePage.baml
-D:\IT\HỌC\PBL3\PBL3-LTUD-APP\StudentReminderApp\obj\Debug\net48\Views\Auth\Forgotpasswordwindow.g.cs
-D:\IT\HỌC\PBL3\PBL3-LTUD-APP\StudentReminderApp\obj\Debug\net48\Views\Auth\LoginWindow.g.cs
-D:\IT\HỌC\PBL3\PBL3-LTUD-APP\StudentReminderApp\obj\Debug\net48\Views\Auth\RegisterWindow.g.cs
 D:\IT\HỌC\PBL3\PBL3-LTUD-APP\StudentReminderApp\obj\Debug\net48\Views\Dialogs\CommentDialog.g.cs
 D:\IT\HỌC\PBL3\PBL3-LTUD-APP\StudentReminderApp\obj\Debug\net48\Views\Dialogs\CreatePostDialog.g.cs
 D:\IT\HỌC\PBL3\PBL3-LTUD-APP\StudentReminderApp\obj\Debug\net48\Views\Dialogs\EventDialog.g.cs
@@ -61,3 +55,13 @@ D:\IT\HỌC\PBL3\PBL3-LTUD-APP\StudentReminderApp\bin\Debug\net48\Views\Pages\kc
 D:\IT\HỌC\PBL3\PBL3-LTUD-APP\StudentReminderApp\bin\Debug\net48\Views\Pages\kctdt_nhat.json
 D:\IT\HỌC\PBL3\PBL3-LTUD-APP\StudentReminderApp\bin\Debug\net48\Views\Pages\kctdt_trituenhantao.json
 D:\IT\HỌC\PBL3\PBL3-LTUD-APP\StudentReminderApp\obj\Debug\net48\StudentReminderApp_Content.g.cs
+D:\IT\HỌC\PBL3\PBL3-LTUD-APP\StudentReminderApp\obj\Debug\net48\Views\Main\SplashWindow.baml
+D:\IT\HỌC\PBL3\PBL3-LTUD-APP\StudentReminderApp\obj\Debug\net48\Views\Main\SplashWindow.g.cs
+D:\IT\HỌC\PBL3\PBL3-LTUD-APP\StudentReminderApp\obj\Debug\net48\Views\Auth\AuthWindow.baml
+D:\IT\HỌC\PBL3\PBL3-LTUD-APP\StudentReminderApp\obj\Debug\net48\Views\Auth\LoginView.baml
+D:\IT\HỌC\PBL3\PBL3-LTUD-APP\StudentReminderApp\obj\Debug\net48\Views\Auth\AuthWindow.g.cs
+D:\IT\HỌC\PBL3\PBL3-LTUD-APP\StudentReminderApp\obj\Debug\net48\Views\Auth\LoginView.g.cs
+D:\IT\HỌC\PBL3\PBL3-LTUD-APP\StudentReminderApp\obj\Debug\net48\Views\Auth\ForgotPasswordView.baml
+D:\IT\HỌC\PBL3\PBL3-LTUD-APP\StudentReminderApp\obj\Debug\net48\Views\Auth\RegisterView.baml
+D:\IT\HỌC\PBL3\PBL3-LTUD-APP\StudentReminderApp\obj\Debug\net48\Views\Auth\ForgotPasswordView.g.cs
+D:\IT\HỌC\PBL3\PBL3-LTUD-APP\StudentReminderApp\obj\Debug\net48\Views\Auth\RegisterView.g.cs
