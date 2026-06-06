@@ -10,5 +10,7 @@
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("views/pages/kctdt_dacthu.json")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("views/pages/kctdt_nhat.json")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("views/pages/kctdt_trituenhantao.json")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("assets/login_animation.html")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("webview2loader.dll")]
 
 

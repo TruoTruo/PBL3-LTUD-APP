@@ -8,6 +8,7 @@ using System.Windows.Input;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Windows.Media;
+using System.Linq;
 
 namespace StudentReminderApp.Views.Dialogs
 {
@@ -19,10 +20,22 @@ namespace StudentReminderApp.Views.Dialogs
         // Danh sách khách mời tạm thời
         private class GuestItem { public long IdAcc { get; set; } public string Info { get; set; } public string Status { get; set; } }
         private List<GuestItem> _guestList = new List<GuestItem>();
+        private CheckBox _chkCompletedDynamic;
 
-        public EventDialog(PersonalEvent ev = null)
+        public class TagSelectionItem
+        {
+            public long IdTag { get; set; }
+            public string TagName { get; set; }
+            public bool IsSelected { get; set; }
+        }
+        private List<TagSelectionItem> _availableTags = new List<TagSelectionItem>();
+
+        public List<long> PreSelectedTagIds { get; set; } = new List<long>();
+
+        public EventDialog(PersonalEvent ev = null, List<long> preSelectedTags = null)
         {
             InitializeComponent();
+            PreSelectedTagIds = preSelectedTags ?? new List<long>();
             
             // Nếu ev != null thì là chế độ SỬA, ngược lại là THÊM MỚI
             if (ev != null)
@@ -58,17 +71,13 @@ namespace StudentReminderApp.Views.Dialogs
             DateTime localStart = _event.StartTime.Kind == DateTimeKind.Utc ? _event.StartTime.ToLocalTime() : _event.StartTime;
             DateTime localEnd = _event.EndTime.Kind == DateTimeKind.Utc ? _event.EndTime.ToLocalTime() : _event.EndTime;
 
-            DpStart.SelectedDate = localStart.Date;
-            DpEnd.SelectedDate   = localEnd.Date;
-            TxtStartTime.Text    = localStart.ToString("HH:mm");
-            TxtEndTime.Text      = localEnd.ToString("HH:mm");
-
             // Kiểm tra nếu là sự kiện cả ngày (dựa trên khoảng thời gian)
-            if ((localEnd - localStart).TotalHours >= 23 || (localStart.TimeOfDay == TimeSpan.Zero && localEnd.TimeOfDay == TimeSpan.Zero && localEnd > localStart))
-            {
-                ChkAllDay.IsChecked = true;
-            }
+            bool isAllDay = (localEnd - localStart).TotalHours >= 23 || (localStart.TimeOfDay == TimeSpan.Zero && localEnd.TimeOfDay == TimeSpan.Zero && localEnd > localStart);
 
+            SchedulePanel.Children.Clear();
+            AddScheduleRow(localStart.Date, localStart.TimeOfDay, localEnd.Date, localEnd.TimeOfDay, isAllDay);
+
+            CmbType.SelectionChanged -= CmbType_SelectionChanged;
             // Chọn loại sự kiện trong ComboBox
             foreach (ComboBoxItem item in CmbType.Items)
             {
@@ -78,6 +87,7 @@ namespace StudentReminderApp.Views.Dialogs
                     break;
                 }
             }
+            CmbType.SelectionChanged += CmbType_SelectionChanged;
             
             foreach (ComboBoxItem item in CmbRecurrence.Items)
             {
@@ -89,19 +99,176 @@ namespace StudentReminderApp.Views.Dialogs
             }
             LoadReminders();
             LoadGuests();
+            LoadTags();
             
             string color = _event.ColorCategory ?? "#1A73E8";
             if (color == "#D93025") RbColorRed.IsChecked = true;
             else if (color == "#1E8E3E") RbColorGreen.IsChecked = true;
             else if (color == "#F9AB00") RbColorYellow.IsChecked = true;
-            else if (color == "#9334E6") RbColorPurple.IsChecked = true;
+            else if (color == "#9334E6" || color == "#3F51B5") RbColorPurple.IsChecked = true;
             else if (color == "#009688") RbColorTeal.IsChecked = true;
             else RbColorBlue.IsChecked = true;
+
+            // Update Label GuestOrCourse
+            UpdateGuestOrCourseLabel();
+        }
+
+        private void AddScheduleRow(DateTime start, TimeSpan startTime, DateTime end, TimeSpan endTime, bool isAllDay)
+        {
+            var grid = new Grid { Margin = new Thickness(0, 0, 0, 16) };
+            grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+            grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(20) });
+            grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+            grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
+
+            var stCol1 = new StackPanel { };
+            Grid.SetColumn(stCol1, 0);
+            
+            var grid1 = new Grid { Margin = new Thickness(0, 0, 0, 4) };
+            grid1.Children.Add(new TextBlock { Text = "BẮT ĐẦU *", Style = (Style)FindResource("FieldLabel"), HorizontalAlignment = HorizontalAlignment.Left, VerticalAlignment = VerticalAlignment.Center, Margin = new Thickness(0) });
+            var chkAllDay = new CheckBox { Content = "Cả ngày", HorizontalAlignment = HorizontalAlignment.Right, VerticalAlignment = VerticalAlignment.Center, Foreground = new SolidColorBrush(Color.FromRgb(95, 99, 104)), IsChecked = isAllDay };
+            grid1.Children.Add(chkAllDay);
+            stCol1.Children.Add(grid1);
+
+            var grid2 = new Grid { Margin = new Thickness(0, 4, 0, 0) };
+            grid2.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+            grid2.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(80) });
+            var dpStart = new DatePicker { Height = 36, Margin = new Thickness(0, 0, 8, 0), BorderThickness = new Thickness(0, 0, 0, 1), BorderBrush = new SolidColorBrush(Color.FromRgb(224, 224, 224)), Background = Brushes.Transparent, SelectedDate = start };
+            var txtStart = new TextBox { Height = 36, BorderThickness = new Thickness(0, 0, 0, 1), BorderBrush = new SolidColorBrush(Color.FromRgb(224, 224, 224)), Background = Brushes.Transparent, HorizontalContentAlignment = HorizontalAlignment.Center, VerticalContentAlignment = VerticalAlignment.Center, FontSize = 14, Text = startTime.ToString(@"hh\:mm") };
+            Grid.SetColumn(dpStart, 0); Grid.SetColumn(txtStart, 1);
+            grid2.Children.Add(dpStart); grid2.Children.Add(txtStart);
+            stCol1.Children.Add(grid2);
+
+            var stCol2 = new StackPanel { };
+            Grid.SetColumn(stCol2, 2);
+            stCol2.Children.Add(new TextBlock { Text = "KẾT THÚC *", Style = (Style)FindResource("FieldLabel") });
+            
+            var grid3 = new Grid { Margin = new Thickness(0, 4, 0, 0) };
+            grid3.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+            grid3.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(80) });
+            var dpEnd = new DatePicker { Height = 36, Margin = new Thickness(0, 0, 8, 0), BorderThickness = new Thickness(0, 0, 0, 1), BorderBrush = new SolidColorBrush(Color.FromRgb(224, 224, 224)), Background = Brushes.Transparent, SelectedDate = end };
+            var txtEnd = new TextBox { Height = 36, BorderThickness = new Thickness(0, 0, 0, 1), BorderBrush = new SolidColorBrush(Color.FromRgb(224, 224, 224)), Background = Brushes.Transparent, HorizontalContentAlignment = HorizontalAlignment.Center, VerticalContentAlignment = VerticalAlignment.Center, FontSize = 14, Text = endTime.ToString(@"hh\:mm") };
+            Grid.SetColumn(dpEnd, 0); Grid.SetColumn(txtEnd, 1);
+            grid3.Children.Add(dpEnd); grid3.Children.Add(txtEnd);
+            stCol2.Children.Add(grid3);
+
+            var btnDel = new Button { Content = "✕", Width = 38, Height = 38, Background = Brushes.Transparent, BorderThickness = new Thickness(0), Cursor = Cursors.Hand, Margin = new Thickness(8, 20, 0, 0) };
+            Grid.SetColumn(btnDel, 3);
+            btnDel.Click += (s, ev) => SchedulePanel.Children.Remove(grid);
+            if (SchedulePanel.Children.Count == 0) btnDel.Visibility = Visibility.Collapsed;
+            
+            chkAllDay.Checked += (s, ev) => { txtStart.Visibility = Visibility.Collapsed; txtEnd.Visibility = Visibility.Collapsed; };
+            chkAllDay.Unchecked += (s, ev) => { txtStart.Visibility = Visibility.Visible; txtEnd.Visibility = Visibility.Visible; };
+            if (isAllDay) { txtStart.Visibility = Visibility.Collapsed; txtEnd.Visibility = Visibility.Collapsed; }
+
+            dpStart.SelectedDateChanged += (s, ev) => {
+                if (ev.AddedItems.Count > 0 && ev.RemovedItems.Count > 0) {
+                    DateTime newStart = (DateTime)ev.AddedItems[0];
+                    DateTime oldStart = (DateTime)ev.RemovedItems[0];
+                    TimeSpan diff = newStart - oldStart;
+                    if (dpEnd.SelectedDate.HasValue) dpEnd.SelectedDate = dpEnd.SelectedDate.Value.AddDays(diff.Days);
+                } else if (dpStart.SelectedDate.HasValue && !dpEnd.SelectedDate.HasValue) {
+                    dpEnd.SelectedDate = dpStart.SelectedDate;
+                }
+            };
+
+            grid.Children.Add(stCol1);
+            grid.Children.Add(stCol2);
+            grid.Children.Add(btnDel);
+
+            SchedulePanel.Children.Add(grid);
+        }
+
+        private void BtnAddSchedule_Click(object sender, RoutedEventArgs e)
+        {
+            AddScheduleRow(DateTime.Today, new TimeSpan(8, 0, 0), DateTime.Today, new TimeSpan(9, 0, 0), false);
+        }
+
+        private void UpdateGuestOrCourseLabel()
+        {
+            if (LblGuestOrCourse != null)
+            {
+                if (((ComboBoxItem)CmbType.SelectedItem)?.Tag?.ToString() == "ACADEMIC")
+                {
+                    LblGuestOrCourse.Text = "MÃ HP (Nhập mã học phần để tự động điền)";
+                }
+                else
+                {
+                    LblGuestOrCourse.Text = "KHÁCH MỜI (Nhập MSSV hoặc Tên)";
+                }
+            }
+        }
+
+        private void CmbType_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            LoadReminders();
+            LoadTags();
+            UpdateGuestOrCourseLabel();
+        }
+
+        private void TagCheckBox_Changed(object sender, RoutedEventArgs e)
+        {
+            UpdateTagsComboBoxText();
+        }
+
+        private void UpdateTagsComboBoxText()
+        {
+            if (TagsDropdownToggle == null) return;
+            var selected = _availableTags.Where(t => t.IsSelected).Select(t => t.TagName).ToList();
+            if (selected.Count == 0) TagsDropdownToggle.Tag = "Chọn Tag...";
+            else if (selected.Count == 1) TagsDropdownToggle.Tag = selected[0];
+            else TagsDropdownToggle.Tag = $"{selected[0]} (+{selected.Count - 1})";
+        }
+
+        private void LoadTags()
+        {
+            string eventType = ((ComboBoxItem)CmbType.SelectedItem)?.Tag?.ToString() ?? "PERSONAL";
+            var dal = new StudentReminderApp.DAL.EventDAL();
+            var allTags = dal.GetTags(SessionManager.CurrentAccount.IdAcc)
+                             .Where(t => t.TagType == eventType).ToList();
+            
+            var selectedTagIds = new List<long>();
+            if (_event.IdEvent > 0)
+            {
+                selectedTagIds = dal.GetTagIdsForEvent(_event.IdEvent);
+            }
+            else if (PreSelectedTagIds != null && PreSelectedTagIds.Count > 0)
+            {
+                selectedTagIds = PreSelectedTagIds;
+            }
+
+            _availableTags.Clear();
+            foreach (var t in allTags)
+            {
+                _availableTags.Add(new TagSelectionItem { IdTag = t.IdTag, TagName = t.TagName, IsSelected = selectedTagIds.Contains(t.IdTag) });
+            }
+            
+            TagsListControl.ItemsSource = null;
+            TagsListControl.ItemsSource = _availableTags;
+            UpdateTagsComboBoxText();
         }
 
         private void LoadReminders()
         {
             ReminderPanel.Children.Clear();
+            
+            // THÊM CHECKBOX HOÀN THÀNH (ĐỘNG) CHO NHẮC NHỞ
+            if (((ComboBoxItem)CmbType.SelectedItem)?.Tag?.ToString() == "REMINDER")
+            {
+                _chkCompletedDynamic = new CheckBox {
+                    Content = "Đánh dấu đã hoàn thành",
+                    IsChecked = _event.IsCompleted,
+                    FontWeight = FontWeights.SemiBold,
+                    Foreground = new SolidColorBrush(Color.FromRgb(63, 81, 181)), // #3F51B5
+                    Margin = new Thickness(0, 0, 0, 15)
+                };
+                ReminderPanel.Children.Add(_chkCompletedDynamic);
+            }
+            else
+            {
+                _chkCompletedDynamic = null;
+            }
+
             if (_event.IdEvent > 0)
             {
                 try {
@@ -178,14 +345,168 @@ namespace StudentReminderApp.Views.Dialogs
             RenderGuestList();
         }
 
+
+
         private void BtnAddGuest_Click(object sender, RoutedEventArgs e)
         {
             string search = TxtGuestSearch.Text.Trim();
             if (string.IsNullOrEmpty(search)) return;
 
+            if (((ComboBoxItem)CmbType.SelectedItem)?.Tag?.ToString() == "ACADEMIC")
+            {
+                // Auto fill from JSON
+                try
+                {
+                    string jsonPath = @"D:\IT\HỌC\PBL3\PBL3-LTUD-APP\RENDER\HK2_2025.json";
+                    if (System.IO.File.Exists(jsonPath))
+                    {
+                        string jsonContent = System.IO.File.ReadAllText(jsonPath);
+                        var root = Newtonsoft.Json.Linq.JObject.Parse(jsonContent);
+                        var classes = root["classes"] as Newtonsoft.Json.Linq.JArray;
+                        bool found = false;
+                        if (classes != null)
+                        {
+                            foreach (var cls in classes)
+                            {
+                                var courses = cls["courses"] as Newtonsoft.Json.Linq.JArray;
+                                if (courses != null)
+                                {
+                                    foreach (var c in courses)
+                                    {
+                                        if (c["id"]?.ToString() == search)
+                                        {
+                                            TxtEventTitle.Text = c["name"]?.ToString();
+                                            TxtDesc.Text = "GV: " + c["lecturer_name"]?.ToString() + "\nNhóm: " + c["group"]?.ToString();
+                                            
+                                            // Tìm địa điểm và thời gian từ các cột thứ
+                                            string[] days = {"thu2", "thu3", "thu4", "thu5", "thu6", "thu7", "cn"};
+                                            
+                                            SchedulePanel.Children.Clear();
+                                            bool hasAnySchedule = false;
+
+                                            string weeksStr = c["weeks"]?.ToString();
+                                            var weekRanges = new List<(int start, int end)>();
+                                            if (!string.IsNullOrEmpty(weeksStr)) {
+                                                foreach (var range in weeksStr.Split(';')) {
+                                                    var match = System.Text.RegularExpressions.Regex.Match(range, @"(\d+)-?(\d*)");
+                                                    if (match.Success) {
+                                                        int startW = int.Parse(match.Groups[1].Value);
+                                                        int endW = match.Groups[2].Success && !string.IsNullOrEmpty(match.Groups[2].Value) ? int.Parse(match.Groups[2].Value) : startW;
+                                                        weekRanges.Add((startW, endW));
+                                                    }
+                                                }
+                                            }
+                                            if (weekRanges.Count == 0) weekRanges.Add((22, 22)); // fallback
+
+                                            DateTime firstWeekStart = DateTime.Today;
+                                            try {
+                                                string twPath = @"D:\IT\HỌC\PBL3\PBL3-LTUD-APP\RENDER\TimeWeekStart.json";
+                                                if (System.IO.File.Exists(twPath)) {
+                                                    var twRoot = Newtonsoft.Json.Linq.JObject.Parse(System.IO.File.ReadAllText(twPath));
+                                                    string startDateStr = twRoot["firstWeekStartDate"]?.ToString();
+                                                    if (DateTime.TryParse(startDateStr, out DateTime parsedFirst)) {
+                                                        firstWeekStart = parsedFirst;
+                                                    }
+                                                }
+                                            } catch { }
+
+                                            for (int i = 0; i < days.Length; i++) {
+                                                string val = c[days[i]]?.ToString();
+                                                if (!string.IsNullOrEmpty(val)) {
+                                                    var parts = val.Split(',');
+                                                    string periodStr = parts[0].Trim();
+                                                    if (parts.Length > 1 && string.IsNullOrEmpty(TxtLocation.Text)) {
+                                                        TxtLocation.Text = parts[1].Trim();
+                                                    }
+                                                    int dayOfWeekOffset = i;
+
+                                                    int startP = 0, endP = 0;
+                                                    var pParts = periodStr.Split('-');
+                                                    if (pParts.Length == 2 && int.TryParse(pParts[0], out startP) && int.TryParse(pParts[1], out endP)) { }
+                                                    else if (pParts.Length == 1 && int.TryParse(pParts[0], out startP)) { endP = startP; }
+                                                    
+                                                    TimeSpan tStart = new TimeSpan(7,0,0);
+                                                    TimeSpan tEnd = new TimeSpan(9,0,0);
+                                                    if (startP > 0) {
+                                                        try {
+                                                            string timeJsonPath = @"D:\IT\HỌC\PBL3\PBL3-LTUD-APP\RENDER\TimePeriod.json";
+                                                            if (System.IO.File.Exists(timeJsonPath)) {
+                                                                var tRoot = Newtonsoft.Json.Linq.JObject.Parse(System.IO.File.ReadAllText(timeJsonPath));
+                                                                var periods = tRoot["periods"] as Newtonsoft.Json.Linq.JArray;
+                                                                if (periods != null) {
+                                                                    foreach(var p in periods) {
+                                                                        int pNum = (int?)p["period"] ?? 0;
+                                                                        if (pNum == startP) TimeSpan.TryParse(p["startTime"]?.ToString(), out tStart);
+                                                                        if (pNum == endP) TimeSpan.TryParse(p["endTime"]?.ToString(), out tEnd);
+                                                                    }
+                                                                }
+                                                            }
+                                                        } catch { }
+                                                    }
+
+                                                    foreach (var range in weekRanges) {
+                                                        DateTime targetStart = firstWeekStart.AddDays((range.start - 1) * 7 + dayOfWeekOffset);
+                                                        DateTime targetEnd = firstWeekStart.AddDays((range.end - 1) * 7 + dayOfWeekOffset);
+                                                        AddScheduleRow(targetStart, tStart, targetEnd, tEnd, false);
+                                                        hasAnySchedule = true;
+                                                    }
+                                                }
+                                            }
+                                            
+                                            if (!hasAnySchedule) {
+                                                AddScheduleRow(DateTime.Today, new TimeSpan(7,0,0), DateTime.Today, new TimeSpan(9,0,0), false);
+                                            }
+                                            
+                                            // Tự động set Lặp lại thành Hàng tuần
+                                            foreach (ComboBoxItem item in CmbRecurrence.Items) {
+                                                if (item.Tag?.ToString() == "WEEKLY") {
+                                                    CmbRecurrence.SelectedItem = item;
+                                                    break;
+                                                }
+                                            }
+                                            TxtGuestSearch.Text = "";
+                                            found = true;
+                                            break;
+                                        }
+                                    }
+                                }
+                                if (found) break;
+                            }
+                        }
+                        if (!found) ShowError("Không tìm thấy mã học phần này trong dữ liệu.");
+                    }
+                    else
+                    {
+                        ShowError("Không tìm thấy file HK2_2025.json.");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    ShowError("Lỗi đọc dữ liệu HP: " + ex.Message);
+                }
+                return;
+            }
+
             // Tính mốc UTC để check conflict
-            DateTime startUtc = ((DpStart.SelectedDate ?? DateTime.Today).Date.Add(TimeSpan.Parse(TxtStartTime.Text))).ToUniversalTime();
-            DateTime endUtc = ((DpEnd.SelectedDate ?? DateTime.Today).Date.Add(TimeSpan.Parse(TxtEndTime.Text))).ToUniversalTime();
+            DateTime startUtc = DateTime.UtcNow;
+            DateTime endUtc = DateTime.UtcNow.AddHours(1);
+            if (SchedulePanel.Children.Count > 0 && SchedulePanel.Children[0] is Grid rowFirst)
+            {
+                var stCol1 = rowFirst.Children[0] as StackPanel;
+                var stCol2 = rowFirst.Children[1] as StackPanel;
+                var grid1 = stCol1.Children[0] as Grid;
+                var chkAllDay = grid1.Children[1] as CheckBox;
+                var grid2 = stCol1.Children[1] as Grid;
+                var dpStart = grid2.Children[0] as DatePicker;
+                var txtStart = grid2.Children[1] as TextBox;
+                var grid3 = stCol2.Children[1] as Grid;
+                var dpEnd = grid3.Children[0] as DatePicker;
+                var txtEnd = grid3.Children[1] as TextBox;
+                TimeSpan stTime = TimeSpan.Zero, enTime = new TimeSpan(23, 59, 59);
+                if (chkAllDay.IsChecked != true) { TimeSpan.TryParse(txtStart.Text, out stTime); TimeSpan.TryParse(txtEnd.Text, out enTime); }
+                startUtc = ((dpStart.SelectedDate ?? DateTime.Today).Date.Add(stTime)).ToUniversalTime();
+                endUtc = ((dpEnd.SelectedDate ?? DateTime.Today).Date.Add(enTime)).ToUniversalTime();
+            }
 
             using (var conn = new SqlConnection(AppConfig.ConnectionString)) {
                 conn.Open();
@@ -235,6 +556,7 @@ namespace StudentReminderApp.Views.Dialogs
             }
         }
 
+
         private void BtnSave_Click(object sender, RoutedEventArgs e)
         {
             TxtErr.Visibility = Visibility.Collapsed;
@@ -246,66 +568,107 @@ namespace StudentReminderApp.Views.Dialogs
                 return;
             }
             
-            // 2. Kiểm tra định dạng giờ
-            TimeSpan startTime = TimeSpan.Zero;
-            TimeSpan endTime = new TimeSpan(23, 59, 59);
-
-            if (ChkAllDay.IsChecked != true)
+            if (SchedulePanel.Children.Count == 0)
             {
-                if (!TimeSpan.TryParse(TxtStartTime.Text, out startTime) || 
-                    !TimeSpan.TryParse(TxtEndTime.Text, out endTime))
-                {
-                    ShowError("Giờ sai định dạng HH:mm (VD: 08:30)");
-                    return;
-                }
-            }
-
-            // 3. Gộp ngày và giờ
-            DateTime start = (DpStart.SelectedDate ?? DateTime.Today).Date.Add(startTime);
-            DateTime end   = (DpEnd.SelectedDate ?? start.Date).Date.Add(endTime);
-
-            if (end <= start)
-            {
-                ShowError("Giờ kết thúc phải sau giờ bắt đầu");
+                ShowError("Phải có ít nhất một khung thời gian");
                 return;
             }
 
-            // 4. Chuyển sang chuẩn UTC trước khi lưu xuống DB
-            _event.Title       = TxtEventTitle.Text;
-            _event.Location    = TxtLocation.Text;
-            _event.Description = TxtDesc.Text;
-            _event.StartTime   = start.ToUniversalTime();
-            _event.EndTime     = end.ToUniversalTime();
-            _event.EventType   = ((ComboBoxItem)CmbType.SelectedItem)?.Tag?.ToString() ?? "PERSONAL";
-            
-            if (RbColorRed.IsChecked == true) _event.ColorCategory = "#D93025";
-            else if (RbColorGreen.IsChecked == true) _event.ColorCategory = "#1E8E3E";
-            else if (RbColorYellow.IsChecked == true) _event.ColorCategory = "#F9AB00";
-            else if (RbColorPurple.IsChecked == true) _event.ColorCategory = "#9334E6";
-            else if (RbColorTeal.IsChecked == true) _event.ColorCategory = "#009688";
-            else _event.ColorCategory = "#1A73E8";
+            var schedulesToSave = new List<(DateTime start, DateTime end, bool isAllDay)>();
 
-            // 5. Lưu (BLL sẽ tự check: nếu Id > 0 thì UPDATE, Id = 0 thì INSERT)
-            var (ok, msg) = _bll.Save(_event);
-            if (!ok) 
-            { 
-                ShowError(msg); 
-                return; 
+            foreach (Grid row in SchedulePanel.Children)
+            {
+                var stCol1 = row.Children[0] as StackPanel;
+                var stCol2 = row.Children[1] as StackPanel;
+                
+                var grid1 = stCol1.Children[0] as Grid;
+                var chkAllDay = grid1.Children[1] as CheckBox;
+                var grid2 = stCol1.Children[1] as Grid;
+                var dpStart = grid2.Children[0] as DatePicker;
+                var txtStart = grid2.Children[1] as TextBox;
+
+                var grid3 = stCol2.Children[1] as Grid;
+                var dpEnd = grid3.Children[0] as DatePicker;
+                var txtEnd = grid3.Children[1] as TextBox;
+
+                TimeSpan startTime = TimeSpan.Zero;
+                TimeSpan endTime = new TimeSpan(23, 59, 59);
+
+                if (chkAllDay.IsChecked != true)
+                {
+                    if (!TimeSpan.TryParse(txtStart.Text, out startTime) || 
+                        !TimeSpan.TryParse(txtEnd.Text, out endTime))
+                    {
+                        ShowError("Giờ sai định dạng HH:mm (VD: 08:30)");
+                        return;
+                    }
+                }
+
+                DateTime start = (dpStart.SelectedDate ?? DateTime.Today).Date.Add(startTime);
+                DateTime end   = (dpEnd.SelectedDate ?? start.Date).Date.Add(endTime);
+
+                if (end <= start)
+                {
+                    ShowError("Giờ kết thúc phải sau giờ bắt đầu");
+                    return;
+                }
+
+                schedulesToSave.Add((start.ToUniversalTime(), end.ToUniversalTime(), chkAllDay.IsChecked == true));
             }
 
-            SaveRemindersAndRecurrence();
+            string eventType = ((ComboBoxItem)CmbType.SelectedItem)?.Tag?.ToString() ?? "PERSONAL";
+            bool isCompleted = _chkCompletedDynamic != null && _chkCompletedDynamic.IsChecked == true;
+            string colorCategory = "#1A73E8";
+            if (RbColorRed.IsChecked == true) colorCategory = "#D93025";
+            else if (RbColorGreen.IsChecked == true) colorCategory = "#1E8E3E";
+            else if (RbColorYellow.IsChecked == true) colorCategory = "#F9AB00";
+            else if (RbColorPurple.IsChecked == true) colorCategory = eventType == "REMINDER" ? "#3F51B5" : "#9334E6";
+            else if (RbColorTeal.IsChecked == true) colorCategory = "#009688";
+
+            string groupId = string.IsNullOrEmpty(_event.GroupId) ? Guid.NewGuid().ToString() : _event.GroupId;
+
+            for (int i = 0; i < schedulesToSave.Count; i++)
+            {
+                PersonalEvent eventToSave = (i == 0) ? _event : new PersonalEvent { IdAcc = _event.IdAcc };
+                
+                eventToSave.Title       = TxtEventTitle.Text;
+                eventToSave.Location    = TxtLocation.Text;
+                eventToSave.Description = TxtDesc.Text;
+                eventToSave.StartTime   = schedulesToSave[i].start;
+                eventToSave.EndTime     = schedulesToSave[i].end;
+                eventToSave.EventType   = eventType;
+                eventToSave.IsCompleted = isCompleted;
+                eventToSave.ColorCategory = colorCategory;
+                eventToSave.IsAllDay    = schedulesToSave[i].isAllDay;
+                eventToSave.GroupId     = groupId;
+
+                if (i > 0)
+                {
+                    eventToSave.RecurrenceRule = ((ComboBoxItem)CmbRecurrence.SelectedItem)?.Tag?.ToString() ?? "NONE";
+                }
+
+                var (ok, msg) = _bll.Save(eventToSave);
+                if (!ok) 
+                { 
+                    ShowError(msg); 
+                    return; 
+                }
+
+                SaveRemindersAndRecurrence(eventToSave);
+            }
+
             this.DialogResult = true; 
         }
 
-        private void SaveRemindersAndRecurrence()
+        private void SaveRemindersAndRecurrence(PersonalEvent eToSave)
         {
-            long eventId = _event.IdEvent;
+            long eventId = eToSave.IdEvent;
             if (eventId == 0) // Lấy ID mới nhất nếu vừa Insert
             {
                 using (var conn = new System.Data.SqlClient.SqlConnection(AppConfig.ConnectionString)) {
                     conn.Open();
                     using (var cmd = new System.Data.SqlClient.SqlCommand("SELECT TOP 1 id_event FROM PERSONAL_EVENT WHERE id_acc = @uid ORDER BY id_event DESC", conn)) {
-                        cmd.Parameters.AddWithValue("@uid", _event.IdAcc);
+                        cmd.Parameters.AddWithValue("@uid", eToSave.IdAcc);
                         var obj = cmd.ExecuteScalar();
                         if (obj != null) eventId = Convert.ToInt64(obj);
                     }
@@ -341,11 +704,11 @@ namespace StudentReminderApp.Views.Dialogs
                     }
                     
                     // Lưu Khách mời
-                    using (var cmdDel = new SqlCommand("DELETE FROM EVENT_ATTENDEE WHERE id_event = @id", conn)) {
+                    using (var cmdDel = new System.Data.SqlClient.SqlCommand("DELETE FROM EVENT_ATTENDEE WHERE id_event = @id", conn)) {
                         cmdDel.Parameters.AddWithValue("@id", eventId); cmdDel.ExecuteNonQuery();
                     }
                     foreach (var g in _guestList) {
-                        using (var cmdIns = new SqlCommand("INSERT INTO EVENT_ATTENDEE (id_event, id_acc, response_status) VALUES (@id, @uid, @st)", conn)) {
+                        using (var cmdIns = new System.Data.SqlClient.SqlCommand("INSERT INTO EVENT_ATTENDEE (id_event, id_acc, response_status) VALUES (@id, @uid, @st)", conn)) {
                             cmdIns.Parameters.AddWithValue("@id", eventId);
                             cmdIns.Parameters.AddWithValue("@uid", g.IdAcc);
                             cmdIns.Parameters.AddWithValue("@st", g.Status);
@@ -353,6 +716,14 @@ namespace StudentReminderApp.Views.Dialogs
                         }
                     }
                 }
+                
+                // Lưu Tags
+                var dal = new StudentReminderApp.DAL.EventDAL();
+                var selectedTagIds = new List<long>();
+                foreach(var t in _availableTags) {
+                    if (t.IsSelected) selectedTagIds.Add(t.IdTag);
+                }
+                dal.SaveTagIdsForEvent(eventId, selectedTagIds);
             }
             catch (Exception ex)
             {
@@ -362,6 +733,33 @@ namespace StudentReminderApp.Views.Dialogs
 
         private void BtnDelete_Click(object sender, RoutedEventArgs e)
         {
+            if (!string.IsNullOrEmpty(_event.GroupId))
+            {
+                var resAc = MessageBox.Show($"Sự kiện này thuộc một nhóm các sự kiện liên kết.\n\nBạn có muốn xóa TOÀN BỘ các sự kiện trong nhóm này không?\n\n- Chọn 'Yes' để xóa toàn bộ.\n- Chọn 'No' để chỉ xóa sự kiện hiện tại.\n- Chọn 'Cancel' để hủy.", "Xác nhận xóa", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
+                
+                if (resAc == MessageBoxResult.Cancel) return;
+                
+                if (resAc == MessageBoxResult.Yes)
+                {
+                    _bll.DeleteEventGroup(_event.IdAcc, _event.GroupId);
+                    this.DialogResult = true; // Đóng và báo cho CalendarPage Render lại
+                    return;
+                }
+            }
+            else if (_event.EventType == "ACADEMIC")
+            {
+                var resAc = MessageBox.Show($"Sự kiện này là lịch học của môn '{_event.Title}'.\n\nBạn có muốn xóa TOÀN BỘ các lịch học của môn này không?\n\n- Chọn 'Yes' để xóa toàn bộ.\n- Chọn 'No' để chỉ xóa khung giờ này.\n- Chọn 'Cancel' để hủy.", "Xác nhận xóa", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
+                
+                if (resAc == MessageBoxResult.Cancel) return;
+                
+                if (resAc == MessageBoxResult.Yes)
+                {
+                    _bll.DeleteRelatedEvents(_event.IdAcc, _event.Title, _event.EventType);
+                    this.DialogResult = true; // Đóng và báo cho CalendarPage Render lại
+                    return;
+                }
+            }
+
             var res = MessageBox.Show("Xóa sự kiện này?", "Xác nhận", MessageBoxButton.YesNo, MessageBoxImage.Warning);
             if (res == MessageBoxResult.Yes)
             {
@@ -377,17 +775,5 @@ namespace StudentReminderApp.Views.Dialogs
         }
 
         private void BtnCancel_Click(object sender, RoutedEventArgs e) => this.DialogResult = false;
-
-        private void ChkAllDay_Checked(object sender, RoutedEventArgs e)
-        {
-            if (TxtStartTime != null) TxtStartTime.Visibility = Visibility.Collapsed;
-            if (TxtEndTime != null) TxtEndTime.Visibility = Visibility.Collapsed;
-        }
-
-        private void ChkAllDay_Unchecked(object sender, RoutedEventArgs e)
-        {
-            if (TxtStartTime != null) TxtStartTime.Visibility = Visibility.Visible;
-            if (TxtEndTime != null) TxtEndTime.Visibility = Visibility.Visible;
-        }
     }
 }

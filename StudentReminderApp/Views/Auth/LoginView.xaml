@@ -7,8 +7,10 @@
              d:DesignHeight="550" d:DesignWidth="400">
     <Grid VerticalAlignment="Center" Margin="40">
         <StackPanel>
-            <Border Width="80" Height="80" CornerRadius="20" Background="#FFD15858" HorizontalAlignment="Center" Margin="0,0,0,10">
-                <TextBlock Text="S" FontSize="40" FontWeight="Black" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <Border Width="80" Height="80" CornerRadius="20" HorizontalAlignment="Center" Margin="0,0,0,10">
+                <Border.Background>
+                    <ImageBrush ImageSource="/Resources/Images/logo.jpg" Stretch="UniformToFill"/>
+                </Border.Background>
             </Border>
 
             <TextBlock Text="Welcome back!"
@@ -65,7 +67,7 @@
                         </Style>
                     </TextBox.Style>
                 </TextBox>
-                <TextBlock x:Name="BtnTogglePassword" Text="👁️" HorizontalAlignment="Right" VerticalAlignment="Center" FontSize="14" Margin="0,0,5,0" Cursor="Hand" MouseLeftButtonDown="BtnTogglePassword_Click"/>
+                <TextBlock x:Name="BtnTogglePassword" Text="🙈" HorizontalAlignment="Right" VerticalAlignment="Center" FontSize="14" Margin="0,0,5,0" Cursor="Hand" MouseLeftButtonDown="BtnTogglePassword_Click"/>
             </Grid>
 
             <Grid Margin="0,0,0,20">

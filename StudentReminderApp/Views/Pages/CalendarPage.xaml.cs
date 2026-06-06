@@ -30,6 +30,14 @@ namespace StudentReminderApp.Views.Pages
         private long? _highlightEventId = null;
         
         private Dictionary<long, string> _guestStatuses = new Dictionary<long, string>();
+        
+        public class TagSelectionItem
+        {
+            public long IdTag { get; set; }
+            public string TagName { get; set; }
+            public bool IsSelected { get; set; }
+        }
+        private List<TagSelectionItem> _quickAvailableTags = new List<TagSelectionItem>();
 
         public CalendarPage()
         {
@@ -42,7 +50,11 @@ namespace StudentReminderApp.Views.Pages
             if (WeekHourLinesControl != null) WeekHourLinesControl.ItemsSource = hours;
 
             // Render lần đầu khi Page được load
-            Loaded += (s, e) => Render();
+            Loaded += (s, e) => 
+            {
+                LoadTags();
+                Render();
+            };
         }
 
         private void Filter_Changed(object sender, RoutedEventArgs e)
@@ -161,6 +173,46 @@ namespace StudentReminderApp.Views.Pages
             DateTime scanStart = monthStart.AddDays(-7);
             DateTime scanEnd = monthEnd.AddDays(7);
 
+            // 0.1 Lấy danh sách mapping Tag của các sự kiện trong tháng
+            var eventTagsMapping = new Dictionary<long, List<long>>();
+            try {
+                using (var conn = new System.Data.SqlClient.SqlConnection(AppConfig.ConnectionString)) {
+                    conn.Open();
+                    string sqlTags = @"
+                        SELECT m.id_event, m.id_tag 
+                        FROM EVENT_TAG_MAPPING m
+                        JOIN PERSONAL_EVENT e ON m.id_event = e.id_event
+                        WHERE e.id_acc = @uid";
+                    using (var cmd = new System.Data.SqlClient.SqlCommand(sqlTags, conn)) {
+                        cmd.Parameters.AddWithValue("@uid", SessionManager.CurrentAccount.IdAcc);
+                        using (var r = cmd.ExecuteReader()) {
+                            while(r.Read()) {
+                                long eId = (long)r["id_event"];
+                                long tId = (long)r["id_tag"];
+                                if (!eventTagsMapping.ContainsKey(eId)) eventTagsMapping[eId] = new List<long>();
+                                eventTagsMapping[eId].Add(tId);
+                            }
+                        }
+                    }
+                }
+            } catch { }
+
+            var checkedTagIds = new HashSet<long>();
+            Action<StackPanel> collectTags = (panel) => {
+                if (panel == null) return;
+                foreach(var child in panel.Children) {
+                    if (child is Grid g) {
+                        var chk = g.Children.OfType<CheckBox>().FirstOrDefault();
+                        if (chk != null && chk.IsChecked == true && chk.Tag is long tid) {
+                            checkedTagIds.Add(tid);
+                        }
+                    }
+                }
+            };
+            collectTags(PersonalTagsPanel);
+            collectTags(AcademicTagsPanel);
+            collectTags(ReminderTagsPanel);
+
             // 0. Chuẩn hóa Múi giờ (Chuyển UTC -> Local)
             foreach (var e in rawEvents) {
                 if (e.OriginalEvent is PersonalEvent p) {
@@ -256,8 +308,21 @@ namespace StudentReminderApp.Views.Pages
 
             return result.Where(e => {
                 bool isAcademic = e.EventType == "ACADEMIC" || !(e.OriginalEvent is PersonalEvent);
-                bool matchFilter = isAcademic ? (ChkAcademic?.IsChecked == true) : (ChkPersonal?.IsChecked == true);
+                bool isReminder = e.EventType == "REMINDER";
+                
+                bool matchFilter = false;
+                if (isAcademic) matchFilter = ChkAcademic?.IsChecked == true;
+                else if (isReminder) matchFilter = ChkReminder?.IsChecked == true;
+                else matchFilter = ChkPersonal?.IsChecked == true;
+
                 if (!matchFilter) return false;
+
+                if (e.OriginalEvent is PersonalEvent pe && eventTagsMapping.ContainsKey(pe.IdEvent)) {
+                    var tagsForEvent = eventTagsMapping[pe.IdEvent];
+                    if (tagsForEvent.Count > 0 && !tagsForEvent.Any(t => checkedTagIds.Contains(t))) {
+                        return false;
+                    }
+                }
 
                 if (!string.IsNullOrEmpty(searchText))
                 {
@@ -515,7 +580,13 @@ namespace StudentReminderApp.Views.Pages
                         }
 
                         var stp = new StackPanel { IsHitTestVisible = false };
-                        stp.Children.Add(new TextBlock { Text = ev.Title, Foreground = Brushes.White, FontWeight = FontWeights.Bold, FontSize = 12, TextTrimming = TextTrimming.CharacterEllipsis });
+                        
+                        bool isReminder = ev.EventType == "REMINDER";
+                        bool isCompleted = (ev.OriginalEvent is PersonalEvent pEvent && pEvent.IsCompleted);
+                        var txtTitle = new TextBlock { Text = (isReminder ? (isCompleted ? "☑ " : "☐ ") : "") + ev.Title, Foreground = Brushes.White, FontWeight = FontWeights.Bold, FontSize = 12, TextTrimming = TextTrimming.CharacterEllipsis };
+                        if (isCompleted) { txtTitle.TextDecorations = TextDecorations.Strikethrough; chip.Opacity = 0.6; }
+
+                        stp.Children.Add(txtTitle);
                         stp.Children.Add(new TextBlock { Text = ev.StartTime.ToString("HH:mm"), Foreground = Brushes.White, FontSize = 10, Opacity = 0.8 });
                         
                         bool isRecurrent = !(ev.OriginalEvent is PersonalEvent) || (ev.OriginalEvent is PersonalEvent pEv && !string.IsNullOrEmpty(pEv.RecurrenceRule) && pEv.RecurrenceRule != "NONE");
@@ -668,7 +739,7 @@ namespace StudentReminderApp.Views.Pages
             var normalEvents = events.Except(allDayEvents).ToList();
 
             AllDayWeekContainer.Visibility = Visibility.Visible;
-            AllDayWeekContainer.Children.Clear();
+            AllDayWeekEventsGrid.Children.Clear();
             foreach (var ev in allDayEvents)
             {
                 int startIdx = Math.Max(0, (ev.StartTime.Date - startOfWeek).Days);
@@ -679,7 +750,7 @@ namespace StudentReminderApp.Views.Pages
                 Grid.SetColumn(chip, startIdx);
                 Grid.SetColumnSpan(chip, endIdx - startIdx + 1); // Spanning ngang qua lưới Grid!
                 
-                AllDayWeekContainer.Children.Add(chip);
+                AllDayWeekEventsGrid.Children.Add(chip);
             }
 
             for (int dayIdx = 0; dayIdx < 7; dayIdx++)
@@ -744,7 +815,13 @@ namespace StudentReminderApp.Views.Pages
                             };
 
                             var stp = new StackPanel { IsHitTestVisible = false };
-                            stp.Children.Add(new TextBlock { Text = ev.Title, Foreground = Brushes.White, FontWeight = FontWeights.Bold, FontSize = 11, TextTrimming = TextTrimming.CharacterEllipsis });
+                            
+                            bool isReminder = ev.EventType == "REMINDER";
+                            bool isCompleted = (ev.OriginalEvent is PersonalEvent pEvent2 && pEvent2.IsCompleted);
+                            var txtTitle = new TextBlock { Text = (isReminder ? (isCompleted ? "☑ " : "☐ ") : "") + ev.Title, Foreground = Brushes.White, FontWeight = FontWeights.Bold, FontSize = 11, TextTrimming = TextTrimming.CharacterEllipsis };
+                            if (isCompleted) { txtTitle.TextDecorations = TextDecorations.Strikethrough; chip.Opacity = 0.6; }
+
+                            stp.Children.Add(txtTitle);
                             stp.Children.Add(new TextBlock { Text = ev.StartTime.ToString("HH:mm"), Foreground = Brushes.White, FontSize = 9, Opacity = 0.8 });
                             
                             bool isRecurrent = !(ev.OriginalEvent is PersonalEvent) || (ev.OriginalEvent is PersonalEvent pEv2 && !string.IsNullOrEmpty(pEv2.RecurrenceRule) && pEv2.RecurrenceRule != "NONE");
@@ -1118,8 +1195,15 @@ namespace StudentReminderApp.Views.Pages
                 Tag = ev, 
                 Cursor = Cursors.Hand 
             };
-            var text = new TextBlock { Text = ev.Title, FontSize = 11, FontWeight = FontWeights.SemiBold, Foreground = Brushes.White, TextTrimming = TextTrimming.CharacterEllipsis };
             
+            bool isReminder = ev.EventType == "REMINDER";
+            bool isCompleted = (ev.OriginalEvent is PersonalEvent peReminder && peReminder.IsCompleted);
+            string titlePrefix = isReminder ? (isCompleted ? "☑ " : "☐ ") : "";
+
+            var text = new TextBlock { Text = titlePrefix + ev.Title, FontSize = 11, FontWeight = FontWeights.SemiBold, Foreground = Brushes.White, TextTrimming = TextTrimming.CharacterEllipsis };
+            
+            if (isCompleted) { text.TextDecorations = TextDecorations.Strikethrough; chip.Opacity = 0.6; }
+
             if (ev.OriginalEvent is PersonalEvent pe && _guestStatuses.ContainsKey(pe.IdEvent) && _guestStatuses[pe.IdEvent] == "PENDING")
             {
                 chip.Background = Brushes.White;
@@ -1172,11 +1256,36 @@ namespace StudentReminderApp.Views.Pages
             } else {
                 RsvpPanel.Visibility = Visibility.Collapsed;
             }
+            
+            if (item.EventType == "REMINDER" && item.OriginalEvent is PersonalEvent peRem)
+            {
+                ChkQuickCompleted.Visibility = Visibility.Visible;
+                ChkQuickCompleted.Checked -= ChkQuickCompleted_CheckedChanged;
+                ChkQuickCompleted.Unchecked -= ChkQuickCompleted_CheckedChanged;
+                ChkQuickCompleted.IsChecked = peRem.IsCompleted;
+                ChkQuickCompleted.Tag = peRem;
+                ChkQuickCompleted.Checked += ChkQuickCompleted_CheckedChanged;
+                ChkQuickCompleted.Unchecked += ChkQuickCompleted_CheckedChanged;
+            }
+            else
+            {
+                ChkQuickCompleted.Visibility = Visibility.Collapsed;
+            }
 
             QuickEventPopup.PlacementTarget = targetElement;
             QuickEventPopup.Placement = System.Windows.Controls.Primitives.PlacementMode.Bottom;
             PopupOverlay.Visibility = Visibility.Visible;
             QuickEventPopup.IsOpen = true;
+        }
+        
+        private void ChkQuickCompleted_CheckedChanged(object sender, RoutedEventArgs e)
+        {
+            if (sender is CheckBox chk && chk.Tag is PersonalEvent pe)
+            {
+                pe.IsCompleted = chk.IsChecked == true;
+                _bll.Save(pe);
+                Render();
+            }
         }
 
         private void BtnQuickAddAtSameTime_Click(object sender, RoutedEventArgs e)
@@ -1199,6 +1308,29 @@ namespace StudentReminderApp.Views.Pages
             QuickEventPopup.IsOpen = false;
             if (_selectedPopupItem?.OriginalEvent is PersonalEvent p)
             {
+                if (!string.IsNullOrEmpty(p.GroupId))
+                {
+                    var resAc = MessageBox.Show($"Sự kiện này thuộc một nhóm các sự kiện liên kết.\n\nBạn có muốn xóa TOÀN BỘ các sự kiện trong nhóm này không?\n\n- Chọn 'Yes' để xóa toàn bộ.\n- Chọn 'No' để chỉ xóa sự kiện hiện tại.\n- Chọn 'Cancel' để hủy.", "Xác nhận xóa", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
+                    if (resAc == MessageBoxResult.Cancel) return;
+                    if (resAc == MessageBoxResult.Yes)
+                    {
+                        _bll.DeleteEventGroup(p.IdAcc, p.GroupId);
+                        Render();
+                        return;
+                    }
+                }
+                else if (p.EventType == "ACADEMIC")
+                {
+                    var resAc = MessageBox.Show($"Sự kiện này là lịch học của môn '{p.Title}'.\n\nBạn có muốn xóa TOÀN BỘ các lịch học của môn này không?\n\n- Chọn 'Yes' để xóa toàn bộ.\n- Chọn 'No' để chỉ xóa khung giờ này.\n- Chọn 'Cancel' để hủy.", "Xác nhận xóa", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
+                    if (resAc == MessageBoxResult.Cancel) return;
+                    if (resAc == MessageBoxResult.Yes)
+                    {
+                        _bll.DeleteRelatedEvents(p.IdAcc, p.Title, p.EventType);
+                        Render();
+                        return;
+                    }
+                }
+
                 var res = MessageBox.Show("Bạn có chắc muốn xóa sự kiện này?", "Xác nhận", MessageBoxButton.YesNo, MessageBoxImage.Warning);
                 if (res == MessageBoxResult.Yes) {
                     _bll.Delete(p.IdEvent);
@@ -1258,6 +1390,97 @@ namespace StudentReminderApp.Views.Pages
         }
 
         private void BtnToday_Click(object sender, RoutedEventArgs e) { _current = DateTime.Today; Render(); }
+
+        private void BtnImportTKB_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var openFileDialog = new Microsoft.Win32.OpenFileDialog();
+                openFileDialog.Filter = "JSON files (*.json)|*.json|All files (*.*)|*.*";
+                if (openFileDialog.ShowDialog() == true)
+                {
+                    string jsonString = System.IO.File.ReadAllText(openFileDialog.FileName);
+                    var doc = Newtonsoft.Json.Linq.JArray.Parse(jsonString);
+                    
+                    DateTime startOfWeek = DateTime.Today;
+                    while (startOfWeek.DayOfWeek != DayOfWeek.Monday) startOfWeek = startOfWeek.AddDays(-1);
+
+                    string[] starts = { "07:00", "08:00", "09:00", "10:00", "11:00", "13:00", "14:00", "15:00", "16:00", "17:00" };
+                    string[] ends = { "07:50", "08:50", "09:50", "10:50", "11:50", "13:50", "14:50", "15:50", "16:50", "17:50" };
+
+                    int count = 0;
+                    foreach (var element in doc)
+                    {
+                        string courseName = element["CourseName"]?.ToString();
+                        string classCode = element["ClassCode"]?.ToString();
+                        string group = element["Group"]?.ToString();
+                        string lecturer = element["LecturerName"]?.ToString();
+                        string scheduleStr = element["ScheduleStr"]?.ToString();
+                        string roomStr = element["RoomStr"]?.ToString();
+
+                        if (string.IsNullOrWhiteSpace(scheduleStr)) continue;
+
+                        var roomDict = new Dictionary<int, string>();
+                        if (!string.IsNullOrWhiteSpace(roomStr))
+                        {
+                            var rParts = roomStr.Split(new string[] { ", " }, StringSplitOptions.RemoveEmptyEntries);
+                            foreach (var rp in rParts)
+                            {
+                                var m = System.Text.RegularExpressions.Regex.Match(rp, @"Thứ (\d):\s*(.+)");
+                                if (m.Success) roomDict[int.Parse(m.Groups[1].Value)] = m.Groups[2].Value.Trim();
+                            }
+                        }
+
+                        var sParts = scheduleStr.Split(new string[] { ", " }, StringSplitOptions.RemoveEmptyEntries);
+                        foreach (var sp in sParts)
+                        {
+                            var m = System.Text.RegularExpressions.Regex.Match(sp, @"Thứ (\d):\s*(\d+)-(\d+)");
+                            if (m.Success)
+                            {
+                                int day = int.Parse(m.Groups[1].Value);
+                                int startPeriod = int.Parse(m.Groups[2].Value);
+                                int endPeriod = int.Parse(m.Groups[3].Value);
+
+                                if (startPeriod >= 1 && startPeriod <= 10 && endPeriod >= 1 && endPeriod <= 10)
+                                {
+                                    string startTimeStr = starts[startPeriod - 1];
+                                    string endTimeStr = ends[endPeriod - 1];
+
+                                    DateTime eventDate = startOfWeek.AddDays(day - 2);
+                                    DateTime eventStart = eventDate.Add(TimeSpan.Parse(startTimeStr));
+                                    DateTime eventEnd = eventDate.Add(TimeSpan.Parse(endTimeStr));
+                                    string room = roomDict.ContainsKey(day) ? roomDict[day] : "";
+
+                                    var ev = new PersonalEvent
+                                    {
+                                        IdAcc = SessionManager.CurrentAccount.IdAcc,
+                                        Title = courseName,
+                                        Description = $"Mã lớp: {classCode}\nNhóm: {group}\nGiảng viên: {lecturer}",
+                                        Location = room,
+                                        StartTime = eventStart,
+                                        EndTime = eventEnd,
+                                        EventType = "ACADEMIC",
+                                        ColorCategory = "#EA4335",
+                                        RecurrenceRule = "FREQ=WEEKLY;INTERVAL=1;COUNT=15",
+                                        IsAllDay = false
+                                    };
+
+                                    _bll.Save(ev, 15); // Add event with 15 mins reminder
+                                    count++;
+                                }
+                            }
+                        }
+                    }
+
+                    MessageBox.Show($"Nhập thành công {count} lịch học vào Thời khóa biểu!\nLịch đã được lên tự động lặp lại cho 15 tuần tiếp theo.", "Thành công", MessageBoxButton.OK, MessageBoxImage.Information);
+                    Render();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Có lỗi khi nhập file JSON: " + ex.Message, "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
 
         private void BtnMonthSelector_Click(object sender, RoutedEventArgs e)
         {
@@ -1319,6 +1542,10 @@ namespace StudentReminderApp.Views.Pages
             QuickStartTime.Text = _pendingCreateEvent.StartTime.ToString("HH:mm");
             QuickEndTime.Text = _pendingCreateEvent.EndTime.ToString("HH:mm");
             
+            // Đặt mặc định là loại Cá nhân
+            QuickEventType.SelectedIndex = 0;
+            LoadQuickTags();
+
             if (target != null) {
                 QuickCreatePopup.PlacementTarget = target;
                 QuickCreatePopup.Placement = System.Windows.Controls.Primitives.PlacementMode.Bottom;
@@ -1335,12 +1562,51 @@ namespace StudentReminderApp.Views.Pages
             }), System.Windows.Threading.DispatcherPriority.Input);
         }
 
+        private void QuickEventType_SelectionChanged(object sender, SelectionChangedEventArgs e) { LoadQuickTags(); }
+
+        private void QuickTagCheckBox_Changed(object sender, RoutedEventArgs e)
+        {
+            UpdateQuickTagsComboBoxText();
+        }
+
+        private void UpdateQuickTagsComboBoxText()
+        {
+            if (QuickTagsDropdownToggle == null) return;
+            var selected = _quickAvailableTags.Where(t => t.IsSelected).Select(t => t.TagName).ToList();
+            if (selected.Count == 0) QuickTagsDropdownToggle.Tag = "Chọn Tag...";
+            else if (selected.Count == 1) QuickTagsDropdownToggle.Tag = selected[0];
+            else QuickTagsDropdownToggle.Tag = $"{selected[0]} (+{selected.Count - 1})";
+        }
+
+        private void LoadQuickTags()
+        {
+            if (QuickTagsListControl == null || SessionManager.CurrentAccount == null) return;
+            string eventType = ((ComboBoxItem)QuickEventType.SelectedItem)?.Tag?.ToString() ?? "PERSONAL";
+            var dal = new StudentReminderApp.DAL.EventDAL();
+            var allTags = dal.GetTags(SessionManager.CurrentAccount.IdAcc).Where(t => t.TagType == eventType).ToList();
+            
+            _quickAvailableTags.Clear();
+            foreach (var t in allTags) _quickAvailableTags.Add(new TagSelectionItem { IdTag = t.IdTag, TagName = t.TagName, IsSelected = false });
+            
+            QuickTagsListControl.ItemsSource = null;
+            QuickTagsListControl.ItemsSource = _quickAvailableTags;
+            UpdateQuickTagsComboBoxText();
+            QuickTagsContainer.Visibility = _quickAvailableTags.Count > 0 ? Visibility.Visible : Visibility.Collapsed;
+        }
+
         private void SaveQuickEvent_Click(object sender, RoutedEventArgs e)
         {
             if (_pendingCreateEvent != null)
             {
                 _pendingCreateEvent.Title = string.IsNullOrWhiteSpace(QuickTitle.Text) ? "(Không có tiêu đề)" : QuickTitle.Text;
-                _pendingCreateEvent.ColorCategory = "#1A73E8"; 
+                
+                if (QuickEventType.SelectedItem is ComboBoxItem selectedType)
+                {
+                    _pendingCreateEvent.EventType = selectedType.Tag.ToString();
+                    if (_pendingCreateEvent.EventType == "REMINDER") _pendingCreateEvent.ColorCategory = "#3F51B5";
+                    else if (_pendingCreateEvent.EventType == "ACADEMIC") _pendingCreateEvent.ColorCategory = "#D93025";
+                    else _pendingCreateEvent.ColorCategory = "#1A73E8";
+                }
                 
                 if (TimeSpan.TryParse(QuickStartTime.Text, out TimeSpan st))
                     _pendingCreateEvent.StartTime = _pendingCreateEvent.StartTime.Date.Add(st);
@@ -1354,6 +1620,24 @@ namespace StudentReminderApp.Views.Pages
                 _pendingCreateEvent.EndTime = _pendingCreateEvent.EndTime.ToUniversalTime();
 
                 _bll.Save(_pendingCreateEvent);
+                
+                // Lưu Tags
+                long eventId = _pendingCreateEvent.IdEvent;
+                if (eventId == 0) // Lấy ID mới nhất nếu vừa Insert
+                {
+                    using (var conn = new System.Data.SqlClient.SqlConnection(AppConfig.ConnectionString)) {
+                        conn.Open();
+                        using (var cmd = new System.Data.SqlClient.SqlCommand("SELECT TOP 1 id_event FROM PERSONAL_EVENT WHERE id_acc = @uid ORDER BY id_event DESC", conn)) {
+                            cmd.Parameters.AddWithValue("@uid", _pendingCreateEvent.IdAcc);
+                            var obj = cmd.ExecuteScalar();
+                            if (obj != null) eventId = Convert.ToInt64(obj);
+                        }
+                    }
+                }
+                var dal = new StudentReminderApp.DAL.EventDAL();
+                var selectedTagIds = _quickAvailableTags.Where(t => t.IsSelected).Select(t => t.IdTag).ToList();
+                dal.SaveTagIdsForEvent(eventId, selectedTagIds);
+
                 QuickCreatePopup.IsOpen = false;
                 _current = localStart.Date; // Tự động nhảy lịch
                 Render();
@@ -1367,12 +1651,21 @@ namespace StudentReminderApp.Views.Pages
             {
                 _pendingCreateEvent.Title = QuickTitle.Text;
                 
+                if (QuickEventType.SelectedItem is ComboBoxItem selectedType)
+                {
+                    _pendingCreateEvent.EventType = selectedType.Tag.ToString();
+                    if (_pendingCreateEvent.EventType == "REMINDER") _pendingCreateEvent.ColorCategory = "#3F51B5";
+                    else if (_pendingCreateEvent.EventType == "ACADEMIC") _pendingCreateEvent.ColorCategory = "#D93025";
+                    else _pendingCreateEvent.ColorCategory = "#1A73E8";
+                }
+
                 if (TimeSpan.TryParse(QuickStartTime.Text, out TimeSpan st))
                     _pendingCreateEvent.StartTime = _pendingCreateEvent.StartTime.Date.Add(st);
                 if (TimeSpan.TryParse(QuickEndTime.Text, out TimeSpan et))
                     _pendingCreateEvent.EndTime = _pendingCreateEvent.EndTime.Date.Add(et);
 
-                var dlg = new EventDialog(_pendingCreateEvent) { Owner = Window.GetWindow(this) };
+                var selectedTags = _quickAvailableTags.Where(t => t.IsSelected).Select(t => t.IdTag).ToList();
+                var dlg = new EventDialog(_pendingCreateEvent, selectedTags) { Owner = Window.GetWindow(this) };
                 if (dlg.ShowDialog() == true) 
                 {
                     _current = _pendingCreateEvent.StartTime.Kind == DateTimeKind.Utc ? _pendingCreateEvent.StartTime.ToLocalTime().Date : _pendingCreateEvent.StartTime.Date;
@@ -1420,6 +1713,121 @@ namespace StudentReminderApp.Views.Pages
         }
 
         private void BtnEventDetail_Click(object sender, RoutedEventArgs e) { if ((sender as Button)?.Tag is CalendarItem ci) OpenEventDialog(ci); }
+
+        private void LoadTags()
+        {
+            if (SessionManager.CurrentAccount == null) return;
+            
+            PersonalTagsPanel.Children.Clear();
+            AcademicTagsPanel.Children.Clear();
+            ReminderTagsPanel.Children.Clear();
+            
+            var dal = new StudentReminderApp.DAL.EventDAL();
+            var tags = dal.GetTags(SessionManager.CurrentAccount.IdAcc);
+            
+            foreach (var t in tags)
+            {
+                if (t.TagType == "PERSONAL") CreateNewTag(PersonalTagsPanel, "PERSONAL", t.TagName, t.IdTag);
+                else if (t.TagType == "ACADEMIC") CreateNewTag(AcademicTagsPanel, "ACADEMIC", t.TagName, t.IdTag);
+                else if (t.TagType == "REMINDER") CreateNewTag(ReminderTagsPanel, "REMINDER", t.TagName, t.IdTag);
+            }
+        }
+
+        private void BtnTogglePersonal_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button btn) {
+                bool isCol = PersonalTagsPanel.Visibility == Visibility.Visible;
+                PersonalTagsPanel.Visibility = isCol ? Visibility.Collapsed : Visibility.Visible;
+                btn.Content = isCol ? "\xE76C" : "\xE70D";
+            }
+        }
+
+        private void BtnToggleAcademic_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button btn) {
+                bool isCol = AcademicTagsPanel.Visibility == Visibility.Visible;
+                AcademicTagsPanel.Visibility = isCol ? Visibility.Collapsed : Visibility.Visible;
+                btn.Content = isCol ? "\xE76C" : "\xE70D";
+            }
+        }
+
+        private void BtnToggleReminder_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button btn) {
+                bool isCol = ReminderTagsPanel.Visibility == Visibility.Visible;
+                ReminderTagsPanel.Visibility = isCol ? Visibility.Collapsed : Visibility.Visible;
+                btn.Content = isCol ? "\xE76C" : "\xE70D";
+            }
+        }
+
+        private void BtnAddPersonalTag_Click(object sender, RoutedEventArgs e) => CreateNewTag(PersonalTagsPanel, "PERSONAL");
+        private void BtnAddAcademicTag_Click(object sender, RoutedEventArgs e) => CreateNewTag(AcademicTagsPanel, "ACADEMIC");
+        private void BtnAddReminderTag_Click(object sender, RoutedEventArgs e) => CreateNewTag(ReminderTagsPanel, "REMINDER");
+
+        private void CreateNewTag(StackPanel parentPanel, string tagType, string tagName = "Tag mới", long tagId = 0)
+        {
+            var dal = new StudentReminderApp.DAL.EventDAL();
+            if (tagId == 0)
+            {
+                tagId = dal.InsertTag(new EventTag { IdAcc = SessionManager.CurrentAccount.IdAcc, TagType = tagType, TagName = tagName });
+            }
+
+            var grid = new Grid { Margin = new Thickness(0, 4, 0, 4), Background = Brushes.Transparent };
+            grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+            grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
+            grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
+
+            var contentText = new TextBlock { Text = tagName, TextTrimming = TextTrimming.CharacterEllipsis, MaxWidth = 140 };
+            var chk = new CheckBox { Content = contentText, IsChecked = true, Foreground = new SolidColorBrush(Color.FromRgb(60, 64, 67)), FontSize = 13, VerticalAlignment = VerticalAlignment.Center };
+            chk.Tag = tagId;
+            chk.Checked += Filter_Changed;
+            chk.Unchecked += Filter_Changed;
+            
+            var btnEdit = new Button { Content = "\xE70F", FontFamily = new FontFamily("Segoe MDL2 Assets"), Background = Brushes.Transparent, BorderThickness = new Thickness(0), Foreground = Brushes.Gray, Cursor = Cursors.Hand, Visibility = Visibility.Collapsed, Width = 22, ToolTip = "Sửa", FocusVisualStyle = null };
+            var btnDel = new Button { Content = "\xE74D", FontFamily = new FontFamily("Segoe MDL2 Assets"), Background = Brushes.Transparent, BorderThickness = new Thickness(0), Foreground = Brushes.Gray, Cursor = Cursors.Hand, Visibility = Visibility.Collapsed, Width = 22, ToolTip = "Xóa", FocusVisualStyle = null };
+
+            // Chỉ hiện nút Sửa và Xóa khi hover
+            grid.MouseEnter += (s, e) => { btnEdit.Visibility = Visibility.Visible; btnDel.Visibility = Visibility.Visible; };
+            grid.MouseLeave += (s, e) => { btnEdit.Visibility = Visibility.Collapsed; btnDel.Visibility = Visibility.Collapsed; };
+
+            // Logic Xóa
+            btnDel.Click += (s, e) => {
+                dal.DeleteTag(tagId);
+                parentPanel.Children.Remove(grid); 
+                Filter_Changed(null, null);
+            };
+            
+            // Logic Sửa (Inline Edit)
+            btnEdit.Click += (s, e) => {
+                var editBox = new TextBox { Text = ((TextBlock)chk.Content).Text, VerticalAlignment = VerticalAlignment.Center, FontSize = 13, Padding = new Thickness(2,0,2,0) };
+                Grid.SetColumn(editBox, 0);
+                grid.Children.Remove(chk);
+                grid.Children.Add(editBox);
+                editBox.Focus();
+                editBox.SelectAll();
+                
+                editBox.LostFocus += (s2, e2) => {
+                    string newName = string.IsNullOrWhiteSpace(editBox.Text) ? "Tag mới" : editBox.Text;
+                    ((TextBlock)chk.Content).Text = newName;
+                    dal.UpdateTag(tagId, newName);
+                    grid.Children.Remove(editBox);
+                    grid.Children.Add(chk);
+                };
+                editBox.KeyDown += (s2, e2) => {
+                    if (e2.Key == Key.Enter) editBox.RaiseEvent(new RoutedEventArgs(UIElement.LostFocusEvent));
+                };
+            };
+
+            Grid.SetColumn(chk, 0);
+            Grid.SetColumn(btnEdit, 1);
+            Grid.SetColumn(btnDel, 2);
+
+            grid.Children.Add(chk);
+            grid.Children.Add(btnEdit);
+            grid.Children.Add(btnDel);
+
+            parentPanel.Children.Add(grid);
+        }
 
         #endregion
     }

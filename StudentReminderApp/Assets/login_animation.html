@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<style>
+  :root {
+    --red: #f34d6a;
+    --red-dark: #6e2434;
+    --teal: #6ad1d8;
+    --teal-dark: #2a686f;
+    --blue: #3290f5;
+    --blue-dark: #0f2c4d;
+    --pink: #ffb7c9;
+    --pink-dark: #8e5868;
+    --bg-light: transparent; /* WPF auth window background is #E2E8F0 */
+  }
+
+  body {
+    margin: 0;
+    padding: 0;
+    background-color: transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  .illustration {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end; 
+    padding-bottom: 20px; 
+    transform: scale(0.9); /* Thu nhỏ tí cho vừa vặn */
+  }
+
+  .monster-cluster {
+    position: relative;
+    width: 520px; 
+    height: 480px;
+    overflow: hidden; 
+  }
+
+  .monster-wrapper {
+    position: absolute;
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .head { position: relative; z-index: 10; transition: transform 0.1s; }
+  .eye { background: white; border-radius: 50%; position: absolute; display: flex; justify-content: center; align-items: center; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+  .pupil { background: #222; border-radius: 50%; position: absolute; transition: transform 0.05s linear; }
+  
+  .leg { 
+    position: absolute; 
+    background: inherit; 
+    border-radius: 20px; 
+    transform-origin: top center; 
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  /* =========================================
+     1. BÉ ĐỎ (Z-index 1)
+     ========================================= */
+  .wrapper-red { top: 60px; left: 60px; z-index: 1; }
+  .monster-red { position: relative; }
+  .monster-red .body-pill { width: 220px; height: 65px; background: var(--red); border-radius: 32px; position: relative; z-index: 10; }
+  .monster-red .eye-left { width: 40px; height: 40px; top: -22px; left: 65px; }
+  .monster-red .eye-right { width: 40px; height: 40px; top: -22px; left: 108px; }
+  .monster-red .pupil { width: 16px; height: 16px; }
+  .monster-red .mouth { 
+    width: 34px; height: 26px; background: var(--red-dark); border-radius: 17px; 
+    position: absolute; top: 18px; left: 88px; transition: all 0.2s; 
+  }
+  .monster-red .mouth::before { content: ''; position: absolute; top: 0; left: 20px; right: 20px; height: 100%; border-left: 3px solid var(--red); border-right: 3px solid var(--red); display: none;}
+  .monster-red .mouth::after { content: ''; position: absolute; top: 0; left: 70px; width: 0; height: 100%; border-left: 3px solid var(--red); display: none;}
+  
+  .monster-red .legs { position: absolute; top: 25px; left: 85px; z-index: 1; }
+  .monster-red .leg { background: var(--red); width: 18px; height: 450px; transform: rotate(-16deg); }
+  .monster-red .leg-left { left: 0; }
+  .monster-red .leg-right { left: 26px; }
+
+  /* =========================================
+     2. BÉ HỒNG (Z-index 2)
+     ========================================= */
+  .wrapper-pink { bottom: 0; right: 75px; z-index: 2; }
+  .monster-pink { width: 230px; height: 380px; background: var(--pink); border-radius: 115px 115px 0 0; position: relative; }
+  .monster-pink .eye { width: 60px; height: 60px; top: 75px; left: 55px; } 
+  .monster-pink .pupil { width: 26px; height: 26px; }
+  
+  .monster-pink .cheek {
+    position: absolute;
+    width: 70px; height: 70px;
+    background: var(--pink);
+    border-radius: 50%;
+    right: 0px; top: 130px;
+    opacity: 0;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    z-index: -1; 
+  }
+
+  .monster-pink .mouth { width: 28px; height: 24px; background: var(--pink-dark); border-radius: 14px 14px 28px 28px; position: absolute; top: 150px; left: 115px; transition: all 0.2s;}
+  .monster-pink .mouth::before { content:''; position:absolute; top:0; left:4px; width:8px; height:8px; background:white; border-radius:0 0 3px 3px; }
+  .monster-pink .mouth::after { content:''; position:absolute; top:0; right:4px; width:8px; height:8px; background:white; border-radius:0 0 3px 3px; }
+
+  /* =========================================
+     3. BÉ XANH DƯƠNG (Z-index 3)
+     ========================================= */
+  .wrapper-blue { top: 300px; left: 170px; z-index: 3; } 
+  .monster-blue { position: relative; }
+  .monster-blue .body-circle { width: 145px; height: 145px; background: var(--blue); border-radius: 50%; position: relative; z-index: 10; }
+  .monster-blue .eye-left { width: 36px; height: 36px; top: 28px; left: 32px; }
+  .monster-blue .eye-right { width: 36px; height: 36px; top: 28px; left: 72px; }
+  .monster-blue .pupil { width: 14px; height: 14px; }
+  .monster-blue .mouth { width: 28px; height: 24px; background: var(--blue-dark); border-radius: 14px 14px 28px 28px; position: absolute; top: 82px; left: 58px; transition: all 0.2s; }
+  .monster-blue .mouth::before { content:''; position:absolute; top:0; left:4px; width:8px; height:8px; background:white; border-radius:0 0 2px 2px; }
+  .monster-blue .mouth::after { content:''; position:absolute; top:0; right:4px; width:8px; height:8px; background:white; border-radius:0 0 2px 2px; }
+  
+  .monster-blue .legs { position: absolute; top: 80px; left: 42px; z-index: 1; }
+  .monster-blue .leg { background: var(--blue); width: 20px; height: 200px; }
+  .monster-blue .leg-left { left: 0; }
+  .monster-blue .leg-right { left: 40px; }
+
+  /* =========================================
+     4. BÉ XANH NGỌC (Z-index 4)
+     ========================================= */
+  .wrapper-teal { top: 200px; left: 70px; z-index: 4; }
+  .monster-teal { position: relative; }
+  .monster-teal .fluff { 
+    width: 145px; height: 145px; background: var(--teal); border-radius: 50%; position: relative; z-index: 10;
+    box-shadow: 
+      -22px -22px 0 -10px var(--teal), 22px -22px 0 -10px var(--teal), 
+      -30px 6px 0 -10px var(--teal), 30px 6px 0 -10px var(--teal), 
+      -22px 30px 0 -10px var(--teal), 22px 30px 0 -10px var(--teal),
+      0px -30px 0 -10px var(--teal), 0px 30px 0 -10px var(--teal); 
+  }
+  .monster-teal .eye-left { width: 40px; height: 40px; top: 38px; left: 28px; }
+  .monster-teal .eye-right { width: 40px; height: 40px; top: 38px; left: 74px; }
+  .monster-teal .pupil { width: 14px; height: 14px; }
+  .monster-teal .mouth { width: 32px; height: 16px; background: var(--teal-dark); border-radius: 16px; position: absolute; top: 95px; left: 57px; transition: all 0.2s; }
+  
+  .monster-teal .legs { position: absolute; top: 80px; left: 40px; z-index: 1; }
+  .monster-teal .leg { background: var(--teal); width: 20px; height: 300px; }
+  .monster-teal .leg-left { left: 0; }
+  .monster-teal .leg-right { left: 48px; }
+
+
+  /* --- TRẠNG THÁI TẬP TRUNG (FOCUS EMAIL) --- */
+  .state-email .wrapper-pink .monster-pink .mouth { height: 35px; border-radius: 14px 14px 28px 28px; }
+  .state-email .wrapper-red .monster-red .mouth { height: 32px; width: 38px; border-radius: 19px; top: 15px; left: 86px;}
+  .state-email .wrapper-teal .monster-teal .mouth { height: 28px; width: 28px; border-radius: 50%; top: 90px; left: 59px;}
+  .state-email .wrapper-blue .monster-blue .mouth { height: 34px; }
+
+
+  /* --- TRẠNG THÁI HIỂN THỊ MẬT KHẨU (PEEKING -> CHỒM SANG PHẢI, HÓNG HỚT) --- */
+  .state-peeking .wrapper-red { transform: translate(30px, -5px) rotate(8deg); }
+  .state-peeking .wrapper-teal { transform: translate(45px, -15px) rotate(12deg); }
+  .state-peeking .wrapper-blue { transform: translate(50px, -25px) scale(1.08) rotate(10deg); }
+  .state-peeking .wrapper-pink { transform: translate(25px, -15px) rotate(6deg); }
+
+  /* Banh chân làm trụ */
+  .state-peeking .monster-teal .leg-left { transform: rotate(25deg); }
+  .state-peeking .monster-blue .leg-left { transform: rotate(30deg); }
+  .state-peeking .monster-red .leg { transform: rotate(-25deg); }
+
+  /* MÁ PHÚNG PHÍNH BÉ HỒNG (Nổi cục thịt bên phải và di dời mồm lên đó) */
+  .state-peeking .monster-pink .cheek { opacity: 1; transform: translateX(35px); }
+  .state-peeking .monster-pink .mouth { 
+    top: 148px; left: 220px; 
+    width: 32px; height: 32px; border-radius: 50%; 
+  }
+
+  /* MỒM BÉ XANH DƯƠNG (Thu nhỏ thành chữ O và đẩy sang phải) */
+  .state-peeking .monster-blue .mouth { 
+    height: 24px; width: 24px; border-radius: 50%; 
+    top: 86px; left: 105px; 
+  }
+  
+  /* Há hốc mồm Đỏ và Xanh Ngọc */
+  .state-peeking .monster-red .mouth { height: 28px; width: 32px; border-radius: 16px; top: 15px; left: 86px;}
+  .state-peeking .monster-teal .mouth { height: 28px; width: 28px; border-radius: 50%; top: 90px; left: 59px;}
+
+
+  /* --- TRẠNG THÁI ẨN MẬT KHẨU (IGNORING -> LẢNG TRÁNH, VẸO MỒM) --- */
+  .state-ignoring .wrapper-red { transform: translate(-20px, 5px) rotate(-4deg); }
+  .state-ignoring .wrapper-teal { transform: translate(-30px, 10px) rotate(-6deg); }
+  .state-ignoring .wrapper-blue { transform: translate(-25px, 10px) rotate(-3deg); }
+  .state-ignoring .wrapper-pink { transform: translate(-10px, 5px) rotate(-2deg); }
+
+  /* Khóa hiển thị răng mặc định */
+  .state-ignoring .mouth { border-radius: 50% !important; border: none !important; }
+  .state-ignoring .mouth::before, .state-ignoring .mouth::after { display: none !important; }
+  
+  /* Bé Đỏ nhe răng cười trừ */
+  .state-ignoring .monster-red .mouth { 
+    width: 140px !important; height: 30px !important; top: 15px !important; left: 15px !important; 
+    background: white !important; border: 4px solid var(--red) !important; border-radius: 15px !important;
+  }
+  .state-ignoring .monster-red .mouth::before { display: block !important; border-left: 3px solid var(--red); border-right: 3px solid var(--red); }
+  .state-ignoring .monster-red .mouth::after { display: block !important; border-left: 3px solid var(--red); }
+  
+  /* CẢ 3 BÉ CÒN LẠI: Vẹo miệng đồng loạt sang TRÁI và nhép môi liên tục */
+  .state-ignoring .monster-teal .mouth { width: 18px; height: 12px !important; top: 95px; left: 35px; background: var(--teal-dark); border-radius: 10px !important;}
+  .state-ignoring .monster-blue .mouth { width: 16px; height: 16px; top: 88px; left: 28px; background: var(--blue-dark);} 
+  .state-ignoring .monster-pink .mouth { width: 16px; height: 16px; top: 155px; left: 65px; background: var(--pink-dark);} 
+  
+  @keyframes mumble { 0%, 100% { transform: scaleY(1); } 50% { transform: scaleY(0.4); } }
+  .state-ignoring .monster-teal .mouth, .state-ignoring .monster-blue .mouth, .state-ignoring .monster-pink .mouth { animation: mumble 0.3s infinite alternate !important; }
+
+  /* TẤT CẢ ĐỀU LIẾC MẮT LÊN GÓC TRÁI (Lảng tránh form) */
+  @keyframes ignoringEyesTopLeft { 
+    0%, 100% { transform: translate(-10px, -6px); } 
+    50% { transform: translate(-15px, -2px); } 
+  }
+  .state-ignoring .pupil { animation: ignoringEyesTopLeft 2.5s infinite alternate ease-in-out !important; }
+  
+  /* Lắc lư cơ thể */
+  @keyframes bodyBob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
+  .state-ignoring .monster-red, .state-ignoring .monster-pink, 
+  .state-ignoring .monster-teal, .state-ignoring .monster-blue { animation: bodyBob 2.5s infinite ease-in-out !important; }
+
+</style>
+</head>
+<body>
+
+  <div class="illustration" id="illustration">
+    <div class="monster-cluster">
+      
+      <div class="monster-wrapper wrapper-red">
+        <div class="monster-red">
+          <div class="legs">
+            <div class="leg leg-left"></div>
+            <div class="leg leg-right"></div>
+          </div>
+          <div class="body-pill">
+            <div class="head">
+              <div class="eye eye-left"><div class="pupil"></div></div>
+              <div class="eye eye-right"><div class="pupil"></div></div>
+              <div class="mouth"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="monster-wrapper wrapper-pink">
+        <div class="monster-pink">
+          <div class="head">
+            <div class="eye"><div class="pupil"></div></div>
+            <div class="cheek"></div>
+            <div class="mouth"></div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="monster-wrapper wrapper-blue">
+        <div class="monster-blue">
+          <div class="legs">
+            <div class="leg leg-left"></div>
+            <div class="leg leg-right"></div>
+          </div>
+          <div class="body-circle">
+            <div class="head">
+              <div class="eye eye-left"><div class="pupil"></div></div>
+              <div class="eye eye-right"><div class="pupil"></div></div>
+              <div class="mouth"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="monster-wrapper wrapper-teal">
+        <div class="monster-teal">
+          <div class="legs">
+            <div class="leg leg-left"></div>
+            <div class="leg leg-right"></div>
+          </div>
+          <div class="fluff">
+            <div class="head">
+              <div class="eye eye-left"><div class="pupil"></div></div>
+              <div class="eye eye-right"><div class="pupil"></div></div>
+              <div class="mouth"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+
+<script>
+  let targetX = 0;
+  let targetY = 0;
+  
+  const illustration = document.getElementById('illustration');
+  const heads = document.querySelectorAll('.head');
+  const eyes = document.querySelectorAll('.eye');
+  const pupils = document.querySelectorAll('.pupil');
+
+  function updateLookPosition() {
+    if (illustration.classList.contains('state-ignoring')) {
+      pupils.forEach(p => p.style.transform = '');
+      heads.forEach(h => h.style.transform = '');
+      return;
+    }
+
+    eyes.forEach(eye => {
+      const rect = eye.getBoundingClientRect();
+      const eyeCenterX = rect.left + rect.width / 2;
+      const eyeCenterY = rect.top + rect.height / 2;
+      const angle = Math.atan2(targetY - eyeCenterY, targetX - eyeCenterX);
+      const distance = Math.min(rect.width / 3.2, Math.hypot(targetX - eyeCenterX, targetY - eyeCenterY) / 10);
+      
+      const pupil = eye.querySelector('.pupil');
+      pupil.style.transform = `translate(${Math.cos(angle) * distance}px, ${Math.sin(angle) * distance}px)`;
+    });
+
+    heads.forEach(head => {
+      const rect = head.getBoundingClientRect();
+      const headCenterX = rect.left + rect.width / 2;
+      const headCenterY = rect.top + rect.height / 2;
+      const angle = Math.atan2(targetY - headCenterY, targetX - headCenterX);
+      const distance = Math.min(12, Math.hypot(targetX - headCenterX, targetY - headCenterY) / 25);
+      
+      head.style.transform = `translate(${Math.cos(angle) * distance}px, ${Math.sin(angle) * distance}px)`;
+    });
+  }
+
+  // --- API GIAO TIẾP VỚI WPF --- //
+  
+  // 1. Cập nhật tọa độ khi WPF gửi sang
+  // x, y phải được tính theo tỷ lệ phần trăm màn hình hoặc mapping tương đương
+  function setMousePosition(x, y) {
+      targetX = x;
+      targetY = y;
+      updateLookPosition();
+  }
+
+  // Lắng nghe chuột di chuyển ngay bên trong HTML (khi chuột nằm trên vùng của nhân vật)
+  document.addEventListener('mousemove', (e) => {
+      targetX = e.clientX;
+      targetY = e.clientY;
+      updateLookPosition();
+  });
+
+  function resetLookPosition() {
+      pupils.forEach(p => p.style.transform = '');
+      heads.forEach(h => h.style.transform = '');
+  }
+
+  // 2. Chuyển trạng thái hoạt hình (mặc định, state-email, state-ignoring, state-peeking)
+  function setAnimationState(stateClass) {
+    illustration.classList.remove('state-email', 'state-peeking', 'state-ignoring');
+    if (stateClass && stateClass.trim() !== "") {
+      illustration.classList.add(stateClass);
+    }
+    
+    // Nếu ignore thì dẹp mắt liếc
+    if (stateClass === 'state-ignoring') {
+      targetX = -1000;
+      targetY = -1000;
+      pupils.forEach(p => p.style.transform = '');
+      heads.forEach(h => h.style.transform = '');
+    }
+  }
+</script>
+</body>
+</html>

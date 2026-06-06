@@ -18,8 +18,10 @@
             <DockPanel>
                 <!-- Logo -->
                 <StackPanel DockPanel.Dock="Top" Margin="0,24,0,32" HorizontalAlignment="Center">
-                    <Border Width="46" Height="46" CornerRadius="16" Background="#FFD15858">
-                        <TextBlock Text="S" Foreground="White" FontSize="26" FontWeight="Black" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <Border Width="46" Height="46" CornerRadius="16">
+                        <Border.Background>
+                            <ImageBrush ImageSource="/Resources/Images/logo.jpg" Stretch="UniformToFill"/>
+                        </Border.Background>
                     </Border>
                     <!-- Ẩn text nhưng vẫn giữ x:Name để không lỗi code-behind -->
                     <TextBlock x:Name="TxtUserName" Visibility="Collapsed"/>
@@ -50,6 +52,10 @@
                     <Button x:Name="BtnProfile" Tag="Profile" Click="NavBtn_Click"
                             Style="{StaticResource NavBtn}" ToolTip="Hồ sơ cá nhân" Height="50" Margin="0,0,0,10">
                         <TextBlock Text="👤" FontSize="22" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Button>
+                    <Button x:Name="BtnManagement" Tag="Management" Click="NavBtn_Click"
+                            Style="{StaticResource NavBtn}" ToolTip="Quản lý người dùng" Height="50" Margin="0,0,0,10" Visibility="Collapsed">
+                        <TextBlock Text="⚙️" FontSize="22" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Button>
                 </StackPanel>
 

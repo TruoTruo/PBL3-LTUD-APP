@@ -1,0 +1,58 @@
+Bước 1: Xây dựng Model và Hàm bóc tách mã lớp
+Mở một file mới (ví dụ CourseClass.cs hoặc CourseClass.java) và đưa đoạn này cho Copilot:
+
+Plaintext
+Tạo một class `CourseClass` với các thuộc tính: `classCode` (string), `courseId` (string), `group` (string), `year` (string), `semester` (string), và `isOverriding` (boolean). 
+Viết một hàm `ParseClassCode(string fullCode)` để cắt chuỗi từ phải sang trái như sau: 
+- Lấy 2 ký tự cuối (hoặc 3 nếu có chứa chữ cái như A, B, C) gán vào `group`.
+- Lấy 2 ký tự liền trước đó gán vào `year`.
+- Lấy 4 ký tự liền trước đó nữa gán vào `semester`.
+- Phần chuỗi còn lại ở đầu gán vào `courseId`.
+Quy tắc bắt buộc: Tuyệt đối không sử dụng ghi chú. Xóa bỏ mọi // và comment trong code.
+Bước 2: Chuyển đổi Lịch học sang số nguyên 64-bit (Bitmask)
+Mở file xử lý logic cốt lõi (ví dụ ScheduleBitmaskHelper) và đưa đoạn này vào:
+
+Plaintext
+Tạo một class `Session` với `dayOfWeek` (số nguyên từ 2 đến 7) và `lessons` (List các số nguyên từ 1 đến 10). 
+Viết một hàm `long ConvertScheduleToBitmask(List<Session> sessions)` biểu diễn lịch học cả tuần thành một số nguyên 64-bit. 
+Vị trí bit được tính bằng công thức: `(dayOfWeek - 2) * 10 + (lesson - 1)`. Sử dụng phép toán bitwise OR để bật các bit.
+Viết một hàm `bool IsConflict(long maskA, long maskB)` trả về true nếu `(maskA & maskB) != 0`.
+Viết một hàm `long MergeSchedules(long maskA, long maskB)` trả về `maskA | maskB`.
+Quy tắc bắt buộc: Tuyệt đối không sử dụng ghi chú. Xóa bỏ mọi // và comment trong code.
+Bước 3: Thuật toán Backtracking tìm toàn bộ TKB hợp lệ
+Mở file chứa các service thuật toán (ví dụ ScheduleOptimizerService) và yêu cầu Copilot:
+
+Plaintext
+Viết thuật toán đệ quy quay lui (backtracking) để tìm tất cả các cách xếp thời khóa biểu hợp lệ.
+Đầu vào: `List<List<CourseClass>> courseBuckets` (mỗi list con chứa các lớp học có thể đăng ký của một môn cụ thể).
+Sử dụng một hàm đệ quy nhận vào các tham số: chỉ số bucket hiện tại, tổ hợp `List<CourseClass>` hiện tại, và bitmask tổng hợp hiện tại (`long`).
+Điều kiện dừng: Nếu chỉ số bucket bằng với số lượng courseBuckets, thêm tổ hợp hiện tại vào danh sách kết quả.
+Bước đệ quy: Lặp qua từng lớp trong bucket hiện tại. Chuyển lịch học của lớp đó thành bitmask. Dùng hàm `IsConflict` để kiểm tra với bitmask tổng hợp. Nếu không trùng lịch, gộp bitmask lại và gọi đệ quy cho bucket tiếp theo. Nếu trùng lịch thì bỏ qua nhánh đó ngay lập tức (pruning).
+Quy tắc bắt buộc: Tuyệt đối không sử dụng ghi chú. Xóa bỏ mọi // và comment trong code.
+Bước 4: Hàm Heuristic chấm điểm TKB
+Cũng trong file service đó, đưa prompt này để Copilot viết hàm chấm điểm:
+
+Plaintext
+Viết hàm `double CalculateFitness(List<CourseClass> schedule)` để chấm điểm một thời khóa biểu hợp lệ.
+Chuyển đổi toàn bộ schedule thành một biến 64-bit nguyên duy nhất là `fullMask`.
+Tính `daysOff`: Kiểm tra từng khối ngày (10 bit mỗi ngày). Nếu khối đó hoàn toàn bằng 0, tăng `daysOff` thêm 1.
+Tính `gaps`: Với mỗi khối ngày, đếm số lượng bit 0 nằm kẹp giữa bit 1 đầu tiên và bit 1 cuối cùng của ngày đó.
+Tính `non99Groups`: Đếm số lượng lớp trong schedule có thuộc tính `group` KHÔNG bắt đầu bằng chuỗi "99".
+Tính điểm theo công thức: `(daysOff * 10.0) - (gaps * 2.0) - (non99Groups * 5.0)`.
+Trả về số điểm fitness đã tính.
+Quy tắc bắt buộc: Tuyệt đối không sử dụng ghi chú. Xóa bỏ mọi // và comment trong code.
+Bước 5: Hàm Giao tiếp (Controller/Service Layer API)
+Cuối cùng, gói gọn lại để chuẩn bị đẩy dữ liệu qua API cho Next.js hiển thị:
+
+Plaintext
+Viết hàm `GetOptimizedScheduleOptions(List<List<CourseClass>> courseBuckets)` để điều phối quá trình xếp lịch.
+1. Gọi hàm backtracking để lấy danh sách tất cả các tổ hợp `List<List<CourseClass>>` hợp lệ.
+2. Nếu danh sách kết quả rỗng, trả về một danh sách rỗng.
+3. Tính điểm fitness cho từng tổ hợp hợp lệ bằng hàm `CalculateFitness`.
+4. Sắp xếp danh sách các tổ hợp giảm dần theo điểm fitness.
+5. Trả về 3 tổ hợp đứng đầu danh sách.
+Quy tắc bắt buộc: Tuyệt đối không sử dụng ghi chú. Xóa bỏ mọi // và comment trong code.
+
+
+FILE KHUNG CHƯƠNG TRÌNH VÀ EXCEL LỊCH HỌC KỲ 4 sẽ ở đây
+D:\IT\HỌC\PBL3\PBL3-LTUD-APP\RENDER

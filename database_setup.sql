@@ -1,4 +1,4 @@
-﻿﻿﻿﻿-- =============================================
+﻿﻿﻿-- =============================================
 -- StudentReminderApp - Full Database Setup
 -- Chạy script này trong SQL Server Management Studio
 -- Database: PBL3
@@ -1261,6 +1261,26 @@ BEGIN
 END
 GO
 
+-- 5. Thêm cột is_completed (nếu chưa có)
+IF NOT EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'PERSONAL_EVENT' AND COLUMN_NAME = 'is_completed')
+BEGIN
+    ALTER TABLE PERSONAL_EVENT ADD is_completed BIT DEFAULT 0;
+    PRINT N'Đã thêm cột is_completed vào PERSONAL_EVENT';
+END
+GO
+
+-- 6. Sửa constraint để cho phép lưu sự kiện loại REMINDER
+DECLARE @ConstraintName nvarchar(200)
+SELECT @ConstraintName = Name FROM sys.check_constraints WHERE parent_object_id = Object_ID('PERSONAL_EVENT') AND definition LIKE '%event_type%'
+IF @ConstraintName IS NOT NULL
+BEGIN
+    EXEC('ALTER TABLE PERSONAL_EVENT DROP CONSTRAINT ' + @ConstraintName)
+END
+
+ALTER TABLE PERSONAL_EVENT ADD CONSTRAINT CK_PERSONAL_EVENT_type CHECK (event_type IN ('ACADEMIC','PERSONAL','DEADLINE','REMINDER'));
+PRINT N'Đã sửa Check Constraint của PERSONAL_EVENT cho phép REMINDER';
+GO
+
 -- ================================================================
 -- BẢNG NHẮC NHỞ ĐA MỐC THỜI GIAN (MULTI-REMINDERS)
 -- ================================================================
@@ -1305,6 +1325,39 @@ BEGIN
 END
 GO
 
+-- ================================================================
+-- BẢNG QUẢN LÝ TAG SỰ KIỆN (TAG NHỎ)
+-- ================================================================
+IF NOT EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'EVENT_TAG')
+BEGIN
+    CREATE TABLE EVENT_TAG
+    (
+        id_tag BIGINT PRIMARY KEY IDENTITY(1,1),
+        id_acc BIGINT NOT NULL,
+        tag_type NVARCHAR(50) NOT NULL, -- 'PERSONAL', 'ACADEMIC', 'REMINDER'
+        tag_name NVARCHAR(100) NOT NULL,
+        CONSTRAINT FK_Tag_User FOREIGN KEY (id_acc) REFERENCES [USER](id_acc)
+    );
+    PRINT N'Đã tạo bảng EVENT_TAG cho Module Quản lý Tag.';
+END
+GO
+
+-- ================================================================
+-- BẢNG MAPPING SỰ KIỆN VÀ TAG
+-- ================================================================
+IF NOT EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'EVENT_TAG_MAPPING')
+BEGIN
+    CREATE TABLE EVENT_TAG_MAPPING
+    (
+        id_event BIGINT NOT NULL,
+        id_tag BIGINT NOT NULL,
+        PRIMARY KEY (id_event, id_tag),
+        CONSTRAINT FK_Mapping_Event FOREIGN KEY (id_event) REFERENCES PERSONAL_EVENT(id_event) ON DELETE CASCADE,
+        CONSTRAINT FK_Mapping_Tag FOREIGN KEY (id_tag) REFERENCES EVENT_TAG(id_tag) ON DELETE CASCADE
+    );
+    PRINT N'Đã tạo bảng EVENT_TAG_MAPPING để gán tag cho sự kiện.';
+END
+GO
 ALTER TABLE NOTIFICATION_QUEUE
 ADD CONSTRAINT FK_Notif_Event FOREIGN KEY (id_event) REFERENCES PERSONAL_EVENT(id_event) ON DELETE CASCADE;
 PRINT N'Đã cập nhật FK_Notif_Event thêm ON DELETE CASCADE.';

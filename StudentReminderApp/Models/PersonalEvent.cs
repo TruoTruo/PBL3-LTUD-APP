@@ -4,25 +4,20 @@ namespace StudentReminderApp.Models
 {
     public class PersonalEvent
     {
-        public long     IdEvent        { get; set; }
-        public long     IdAcc          { get; set; }
-        public string   Title          { get; set; }
-        public string   Description    { get; set; }
-        public string   Location       { get; set; }
-        public DateTime StartTime      { get; set; }
-        public DateTime EndTime        { get; set; }
-        public string   EventType      { get; set; }
-        public string   RecurrenceRule { get; set; }
+        public long IdEvent { get; set; }
+        public long IdAcc { get; set; }
+        public string Title { get; set; } = string.Empty;
+        public string? Description { get; set; }
+        public string? Location { get; set; }
+        public DateTime StartTime { get; set; }
+        public DateTime EndTime { get; set; }
+        public string EventType { get; set; } = string.Empty;
+        public string? RecurrenceRule { get; set; }
+        public string ColorCategory { get; set; } = string.Empty;
+        public bool IsAllDay { get; set; }
 
-        // Bổ sung cho giao diện Calendar
-        public bool     IsAllDay       { get; set; } // Xác định sự kiện cả ngày
-        public string   ColorCategory  { get; set; } // Lưu mã màu (VD: "#FF0000")
-
-        public string EventTypeIcon => EventType switch
-        {
-            "DEADLINE" => "⏰",
-            "ACADEMIC" => "📚",
-            _          => "📌"
-        };
+        // Thuộc tính quan trọng nhất để sửa lỗi build:
+        public bool IsCompleted { get; set; }
+        public string? GroupId { get; set; }
     }
 }
