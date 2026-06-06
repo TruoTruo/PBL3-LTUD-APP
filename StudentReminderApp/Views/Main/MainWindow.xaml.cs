@@ -20,6 +20,11 @@ namespace StudentReminderApp.Views.Main
             _reminder.Start();
             SetActiveNav(BtnDashboard);
             ContentFrame.Navigate(new DashboardPage());
+
+            if (SessionManager.CurrentAccount?.IdRole == 1)
+            {
+                BtnManagement.Visibility = Visibility.Visible;
+            }
         }
 
         private void NavBtn_Click(object sender, RoutedEventArgs e)
@@ -34,6 +39,7 @@ namespace StudentReminderApp.Views.Main
                 "Advisor"   => new AdvisorPage(),
                 "Forum"     => new ForumPage(),
                 "Profile"   => new ProfilePage(),
+                "Management"=> new ManagementPage(),
                 _           => new DashboardPage()
             });
         }

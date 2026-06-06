@@ -19,8 +19,10 @@
     <Grid>
         <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
             <!-- Logo dạng Text hiện đại -->
-            <Border Width="80" Height="80" CornerRadius="20" Background="#FFD15858" HorizontalAlignment="Center" Margin="0,0,0,20">
-                <TextBlock Text="S" FontSize="40" FontWeight="Black" Foreground="{DynamicResource ThemePrimaryColor}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <Border Width="80" Height="80" CornerRadius="20" HorizontalAlignment="Center" Margin="0,0,0,20">
+                <Border.Background>
+                    <ImageBrush ImageSource="/Resources/Images/logo.jpg" Stretch="UniformToFill"/>
+                </Border.Background>
             </Border>
             <TextBlock Text="STUDENT REMINDER" FontSize="36" FontWeight="Black" Foreground="#FF000000" HorizontalAlignment="Center"/>
             <TextBlock Text="Đang khởi động hệ thống..." FontSize="15" Foreground="#FF000000" Opacity="0.8" HorizontalAlignment="Center" Margin="0,10,0,40"/>

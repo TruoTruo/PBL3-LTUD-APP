@@ -103,7 +103,7 @@
                         </Popup>
                     </Grid>
 
-                    <TextBlock Text="KHÁCH MỜI (Nhập MSSV hoặc Tên)" Style="{StaticResource FieldLabel}"/>
+                    <TextBlock x:Name="LblGuestOrCourse" Text="KHÁCH MỜI (Nhập MSSV hoặc Tên)" Style="{StaticResource FieldLabel}"/>
                     <Grid Margin="0,0,0,16">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
@@ -118,42 +118,9 @@
                     <StackPanel x:Name="ReminderPanel" Margin="0,0,0,8"/>
                     <Button x:Name="BtnAddReminder" Content="+ Thêm thông báo nhắc nhở" Background="Transparent" Foreground="#1A73E8" FontWeight="SemiBold" BorderThickness="0" HorizontalAlignment="Left" Click="BtnAddReminder_Click" Margin="0,0,0,16" Cursor="Hand"/>
 
-                    <Grid Margin="0,0,0,16">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="20"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        
-                        <StackPanel Grid.Column="0">
-                            <Grid Margin="0,0,0,4">
-                                <TextBlock Text="BẮT ĐẦU *" Style="{StaticResource FieldLabel}" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0"/>
-                                <CheckBox x:Name="ChkAllDay" Content="Cả ngày" HorizontalAlignment="Right" VerticalAlignment="Center" Foreground="#5F6368" Checked="ChkAllDay_Checked" Unchecked="ChkAllDay_Unchecked"/>
-                            </Grid>
-                            <Grid Margin="0,4,0,0">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="80"/>
-                                </Grid.ColumnDefinitions>
-                                <DatePicker x:Name="DpStart" Height="36" Grid.Column="0" Margin="0,0,8,0" BorderThickness="0,0,0,1" BorderBrush="#E0E0E0" Background="Transparent"/>
-                                <TextBox x:Name="TxtStartTime" Height="36" Grid.Column="1" 
-                                         BorderThickness="0,0,0,1" BorderBrush="#E0E0E0" Background="Transparent" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="14"/>
-                            </Grid>
-                        </StackPanel>
-                        
-                        <StackPanel Grid.Column="2">
-                            <TextBlock Text="KẾT THÚC *" Style="{StaticResource FieldLabel}"/>
-                            <Grid Margin="0,4,0,0">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="80"/>
-                                </Grid.ColumnDefinitions>
-                                <DatePicker x:Name="DpEnd" Height="36" Grid.Column="0" Margin="0,0,8,0" BorderThickness="0,0,0,1" BorderBrush="#E0E0E0" Background="Transparent"/>
-                                <TextBox x:Name="TxtEndTime" Height="36" Grid.Column="1" 
-                                         BorderThickness="0,0,0,1" BorderBrush="#E0E0E0" Background="Transparent" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="14"/>
-                            </Grid>
-                        </StackPanel>
-                    </Grid>
+                    <TextBlock Text="THỜI GIAN" Style="{StaticResource FieldLabel}"/>
+                    <StackPanel x:Name="SchedulePanel" Margin="0,0,0,8"/>
+                    <Button x:Name="BtnAddSchedule" Content="+ Thêm khung thời gian" Background="Transparent" Foreground="#1A73E8" FontWeight="SemiBold" BorderThickness="0" HorizontalAlignment="Left" Click="BtnAddSchedule_Click" Margin="0,0,0,16" Cursor="Hand"/>
 
                     <TextBlock Text="MÀU SẮC" Style="{StaticResource FieldLabel}"/>
                     <StackPanel Orientation="Horizontal" Margin="0,0,0,16">

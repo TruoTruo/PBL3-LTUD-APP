@@ -1,6 +1,8 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media.Animation;
+using Microsoft.Web.WebView2.Core;
 using StudentReminderApp.Views.Auth.Components;
 
 namespace StudentReminderApp.Views.Auth
@@ -10,8 +12,39 @@ namespace StudentReminderApp.Views.Auth
         public AuthWindow()
         {
             InitializeComponent();
-            // Tải LoginView làm màn hình mặc định khi mở lên
-            FormContainer.Content = new LoginView();
+            FormContainer.Content = new LoginView(this);
+            InitializeAsync();
+        }
+
+        async void InitializeAsync()
+        {
+            await AnimationWebView.EnsureCoreWebView2Async(null);
+            string htmlPath = System.IO.Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "Assets", "login_animation.html");
+            AnimationWebView.Source = new System.Uri(htmlPath);
+        }
+
+        public void UpdateAnimationState(string state)
+        {
+            if (AnimationWebView != null && AnimationWebView.CoreWebView2 != null)
+            {
+                AnimationWebView.ExecuteScriptAsync($"setAnimationState('{state}');");
+            }
+        }
+
+        private System.DateTime _lastMouseMoveTime = System.DateTime.MinValue;
+
+        private void Window_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (AnimationWebView != null && AnimationWebView.CoreWebView2 != null)
+            {
+                var now = System.DateTime.Now;
+                if ((now - _lastMouseMoveTime).TotalMilliseconds > 20) // Throttle to ~50 FPS
+                {
+                    _lastMouseMoveTime = now;
+                    var pos = e.GetPosition(this); // Get position relative to the window so the math is still correct
+                    AnimationWebView.ExecuteScriptAsync($"setMousePosition({pos.X}, {pos.Y});");
+                }
+            }
         }
 
         // Cho phép dùng chuột kéo cửa sổ

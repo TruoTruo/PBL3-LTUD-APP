@@ -1,13 +1,19 @@
+using System.Collections.Generic;
+using StudentReminderApp.Helpers;
+
 namespace StudentReminderApp.Models
 {
     public class CourseClass
     {
         public string classCode { get; set; }
         public string courseId { get; set; }
+        public string CourseName { get; set; }
+        public string LecturerName { get; set; }
         public string group { get; set; }
         public string year { get; set; }
         public string semester { get; set; }
         public bool isOverriding { get; set; }
+        public List<Session> sessions { get; set; } = new List<Session>();
 
         public void ParseClassCode(string fullCode)
         {

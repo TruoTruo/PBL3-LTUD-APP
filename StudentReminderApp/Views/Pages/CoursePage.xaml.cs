@@ -32,10 +32,18 @@ namespace StudentReminderApp.Views.Pages
         public Func<string, bool> IsCourseLearningOrPassed { get; set; }
         public Func<string, int> GetOptionalGroupPassedCount { get; set; }
 
-        // Format hiển thị tách biệt 3 cột trên bảng
-        public string HocTruocStr => string.IsNullOrWhiteSpace(Relation) ? "-" : Relation.Replace("\n", "; ");
-        public string SongHanhStr => string.IsNullOrWhiteSpace(Corequisite) ? "-" : Corequisite.Replace("\n", "; ");
-        public string TienQuyetStr => string.IsNullOrWhiteSpace(Prerequisite) ? "-" : Prerequisite.Replace("\n", "; ");
+        private string FormatCoursesString(string input)
+        {
+            if (string.IsNullOrWhiteSpace(input)) return "-";
+            var parts = input.Split(new[] { ';', '\n' }, StringSplitOptions.RemoveEmptyEntries)
+                             .Select(p => p.Trim())
+                             .Where(p => !string.IsNullOrEmpty(p));
+            return string.Join("\n", parts);
+        }
+
+        public string HocTruocStr => FormatCoursesString(Relation);
+        public string SongHanhStr => FormatCoursesString(Corequisite);
+        public string TienQuyetStr => FormatCoursesString(Prerequisite);
 
         public string Registration
         {
@@ -209,7 +217,7 @@ namespace StudentReminderApp.Views.Pages
         {
             if (SessionManager.CurrentUser != null)
             {
-                TxtStudentInfo.Text = $"SV: {SessionManager.CurrentUser.HoTen} - ID: {SessionManager.CurrentUser.IdAcc}";
+                TxtStudentInfo.Text = $"SV: {SessionManager.CurrentUser.HoTen} - ID: {SessionManager.CurrentAccount?.Username ?? ""}";
             }
         }
 
@@ -426,12 +434,46 @@ namespace StudentReminderApp.Views.Pages
     private void UpdateDashboard()
     {
         if (TxtCourseStatus == null) return;
-        double totalCredits = _allCourses.Sum(x => x.SoTC);
+        
+        double totalCredits = 0;
+        var optionalGroups = new Dictionary<string, int>();
+        var optionalGroupCredits = new Dictionary<string, double>();
+
+        foreach (var c in _allCourses)
+        {
+            if (string.IsNullOrWhiteSpace(c.Optional))
+            {
+                totalCredits += c.SoTC;
+            }
+            else
+            {
+                string groupKey = $"{c.HocKy}_{c.Optional}";
+                if (!optionalGroups.ContainsKey(groupKey))
+                {
+                    if (c.Optional.Contains("Chọn") && c.Optional.Contains("trong"))
+                    {
+                        var parts = c.Optional.Split(' ');
+                        if (parts.Length >= 2 && int.TryParse(parts[1], out int required))
+                        {
+                            optionalGroups[groupKey] = required;
+                            optionalGroupCredits[groupKey] = c.SoTC;
+                        }
+                    }
+                }
+            }
+        }
+
+        foreach (var kv in optionalGroups)
+        {
+            totalCredits += kv.Value * optionalGroupCredits[kv.Key];
+        }
+
         double passedCredits = _allCourses.Where(x => x.StatusText == "Đã học").Sum(x => x.SoTC);
         double learningCredits = _allCourses.Where(x => x.StatusText == "Đang học").Sum(x => x.SoTC);
         double progress = totalCredits > 0 ? (passedCredits / totalCredits) * 100 : 0;
+        if (progress > 100) progress = 100;
 
-        TxtCourseStatus.Text = $"📈 TIẾN ĐỘ HỌC TẬP: Đã tích lũy {passedCredits}/{totalCredits} Tín chỉ ({progress:0.1}%) | Đang học: {learningCredits} Tín chỉ";
+        TxtCourseStatus.Text = $"📈 TIẾN ĐỘ HỌC TẬP: Đã tích lũy {passedCredits}/{totalCredits} Tín chỉ ({progress:F1}%) | Đang học: {learningCredits} Tín chỉ";
     }
     }
 }

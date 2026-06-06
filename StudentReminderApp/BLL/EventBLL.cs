@@ -16,8 +16,8 @@ namespace StudentReminderApp.BLL
         public List<PersonalEvent> GetUpcoming(long idAcc, int days = 7)
         {
             var all  = _eventDal.GetByAccount(idAcc);
-            var from = DateTime.Now;
-            var to   = DateTime.Now.AddDays(days);
+            var from = DateTime.Today;
+            var to   = DateTime.Today.AddDays(days).AddTicks(-1);
             return all.FindAll(e => e.StartTime >= from && e.StartTime <= to);
         }
 
@@ -38,6 +38,8 @@ namespace StudentReminderApp.BLL
         }
 
         public void Delete(long idEvent) => _eventDal.Delete(idEvent);
+        public void DeleteRelatedEvents(long idAcc, string title, string eventType) => _eventDal.DeleteRelatedEvents(idAcc, title, eventType);
+        public void DeleteEventGroup(long idAcc, string groupId) => _eventDal.DeleteEventGroup(idAcc, groupId);
         public List<CalendarItem> GetCalendarItemsForMonth(long idAcc, int year, int month)
         {
             var items = new List<CalendarItem>();

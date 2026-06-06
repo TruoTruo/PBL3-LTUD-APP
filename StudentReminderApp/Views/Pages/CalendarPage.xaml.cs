@@ -739,7 +739,7 @@ namespace StudentReminderApp.Views.Pages
             var normalEvents = events.Except(allDayEvents).ToList();
 
             AllDayWeekContainer.Visibility = Visibility.Visible;
-            AllDayWeekContainer.Children.Clear();
+            AllDayWeekEventsGrid.Children.Clear();
             foreach (var ev in allDayEvents)
             {
                 int startIdx = Math.Max(0, (ev.StartTime.Date - startOfWeek).Days);
@@ -750,7 +750,7 @@ namespace StudentReminderApp.Views.Pages
                 Grid.SetColumn(chip, startIdx);
                 Grid.SetColumnSpan(chip, endIdx - startIdx + 1); // Spanning ngang qua lưới Grid!
                 
-                AllDayWeekContainer.Children.Add(chip);
+                AllDayWeekEventsGrid.Children.Add(chip);
             }
 
             for (int dayIdx = 0; dayIdx < 7; dayIdx++)
@@ -1308,6 +1308,29 @@ namespace StudentReminderApp.Views.Pages
             QuickEventPopup.IsOpen = false;
             if (_selectedPopupItem?.OriginalEvent is PersonalEvent p)
             {
+                if (!string.IsNullOrEmpty(p.GroupId))
+                {
+                    var resAc = MessageBox.Show($"Sự kiện này thuộc một nhóm các sự kiện liên kết.\n\nBạn có muốn xóa TOÀN BỘ các sự kiện trong nhóm này không?\n\n- Chọn 'Yes' để xóa toàn bộ.\n- Chọn 'No' để chỉ xóa sự kiện hiện tại.\n- Chọn 'Cancel' để hủy.", "Xác nhận xóa", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
+                    if (resAc == MessageBoxResult.Cancel) return;
+                    if (resAc == MessageBoxResult.Yes)
+                    {
+                        _bll.DeleteEventGroup(p.IdAcc, p.GroupId);
+                        Render();
+                        return;
+                    }
+                }
+                else if (p.EventType == "ACADEMIC")
+                {
+                    var resAc = MessageBox.Show($"Sự kiện này là lịch học của môn '{p.Title}'.\n\nBạn có muốn xóa TOÀN BỘ các lịch học của môn này không?\n\n- Chọn 'Yes' để xóa toàn bộ.\n- Chọn 'No' để chỉ xóa khung giờ này.\n- Chọn 'Cancel' để hủy.", "Xác nhận xóa", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
+                    if (resAc == MessageBoxResult.Cancel) return;
+                    if (resAc == MessageBoxResult.Yes)
+                    {
+                        _bll.DeleteRelatedEvents(p.IdAcc, p.Title, p.EventType);
+                        Render();
+                        return;
+                    }
+                }
+
                 var res = MessageBox.Show("Bạn có chắc muốn xóa sự kiện này?", "Xác nhận", MessageBoxButton.YesNo, MessageBoxImage.Warning);
                 if (res == MessageBoxResult.Yes) {
                     _bll.Delete(p.IdEvent);
@@ -1367,6 +1390,97 @@ namespace StudentReminderApp.Views.Pages
         }
 
         private void BtnToday_Click(object sender, RoutedEventArgs e) { _current = DateTime.Today; Render(); }
+
+        private void BtnImportTKB_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var openFileDialog = new Microsoft.Win32.OpenFileDialog();
+                openFileDialog.Filter = "JSON files (*.json)|*.json|All files (*.*)|*.*";
+                if (openFileDialog.ShowDialog() == true)
+                {
+                    string jsonString = System.IO.File.ReadAllText(openFileDialog.FileName);
+                    var doc = Newtonsoft.Json.Linq.JArray.Parse(jsonString);
+                    
+                    DateTime startOfWeek = DateTime.Today;
+                    while (startOfWeek.DayOfWeek != DayOfWeek.Monday) startOfWeek = startOfWeek.AddDays(-1);
+
+                    string[] starts = { "07:00", "08:00", "09:00", "10:00", "11:00", "13:00", "14:00", "15:00", "16:00", "17:00" };
+                    string[] ends = { "07:50", "08:50", "09:50", "10:50", "11:50", "13:50", "14:50", "15:50", "16:50", "17:50" };
+
+                    int count = 0;
+                    foreach (var element in doc)
+                    {
+                        string courseName = element["CourseName"]?.ToString();
+                        string classCode = element["ClassCode"]?.ToString();
+                        string group = element["Group"]?.ToString();
+                        string lecturer = element["LecturerName"]?.ToString();
+                        string scheduleStr = element["ScheduleStr"]?.ToString();
+                        string roomStr = element["RoomStr"]?.ToString();
+
+                        if (string.IsNullOrWhiteSpace(scheduleStr)) continue;
+
+                        var roomDict = new Dictionary<int, string>();
+                        if (!string.IsNullOrWhiteSpace(roomStr))
+                        {
+                            var rParts = roomStr.Split(new string[] { ", " }, StringSplitOptions.RemoveEmptyEntries);
+                            foreach (var rp in rParts)
+                            {
+                                var m = System.Text.RegularExpressions.Regex.Match(rp, @"Thứ (\d):\s*(.+)");
+                                if (m.Success) roomDict[int.Parse(m.Groups[1].Value)] = m.Groups[2].Value.Trim();
+                            }
+                        }
+
+                        var sParts = scheduleStr.Split(new string[] { ", " }, StringSplitOptions.RemoveEmptyEntries);
+                        foreach (var sp in sParts)
+                        {
+                            var m = System.Text.RegularExpressions.Regex.Match(sp, @"Thứ (\d):\s*(\d+)-(\d+)");
+                            if (m.Success)
+                            {
+                                int day = int.Parse(m.Groups[1].Value);
+                                int startPeriod = int.Parse(m.Groups[2].Value);
+                                int endPeriod = int.Parse(m.Groups[3].Value);
+
+                                if (startPeriod >= 1 && startPeriod <= 10 && endPeriod >= 1 && endPeriod <= 10)
+                                {
+                                    string startTimeStr = starts[startPeriod - 1];
+                                    string endTimeStr = ends[endPeriod - 1];
+
+                                    DateTime eventDate = startOfWeek.AddDays(day - 2);
+                                    DateTime eventStart = eventDate.Add(TimeSpan.Parse(startTimeStr));
+                                    DateTime eventEnd = eventDate.Add(TimeSpan.Parse(endTimeStr));
+                                    string room = roomDict.ContainsKey(day) ? roomDict[day] : "";
+
+                                    var ev = new PersonalEvent
+                                    {
+                                        IdAcc = SessionManager.CurrentAccount.IdAcc,
+                                        Title = courseName,
+                                        Description = $"Mã lớp: {classCode}\nNhóm: {group}\nGiảng viên: {lecturer}",
+                                        Location = room,
+                                        StartTime = eventStart,
+                                        EndTime = eventEnd,
+                                        EventType = "ACADEMIC",
+                                        ColorCategory = "#EA4335",
+                                        RecurrenceRule = "FREQ=WEEKLY;INTERVAL=1;COUNT=15",
+                                        IsAllDay = false
+                                    };
+
+                                    _bll.Save(ev, 15); // Add event with 15 mins reminder
+                                    count++;
+                                }
+                            }
+                        }
+                    }
+
+                    MessageBox.Show($"Nhập thành công {count} lịch học vào Thời khóa biểu!\nLịch đã được lên tự động lặp lại cho 15 tuần tiếp theo.", "Thành công", MessageBoxButton.OK, MessageBoxImage.Information);
+                    Render();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Có lỗi khi nhập file JSON: " + ex.Message, "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
 
         private void BtnMonthSelector_Click(object sender, RoutedEventArgs e)
         {

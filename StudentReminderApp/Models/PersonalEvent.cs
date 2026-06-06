@@ -18,5 +18,6 @@ namespace StudentReminderApp.Models
 
         // Thuộc tính quan trọng nhất để sửa lỗi build:
         public bool IsCompleted { get; set; }
+        public string? GroupId { get; set; }
     }
 }

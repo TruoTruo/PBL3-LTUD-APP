@@ -12,7 +12,7 @@ namespace StudentReminderApp.DAL
             const string sql = @"
                 SELECT id_event,id_acc,title,description,location,
                        start_time,end_time,event_type,recurrence_rule,
-                       color_category, is_completed, is_all_day
+                       color_category, is_completed, is_all_day, GroupId
                 FROM   PERSONAL_EVENT WHERE id_acc=@id ORDER BY start_time";
             var list = new List<PersonalEvent>();
             using var conn = GetConnection();
@@ -28,7 +28,7 @@ namespace StudentReminderApp.DAL
             const string sql = @"
                 SELECT id_event,id_acc,title,description,location,
                        start_time,end_time,event_type,recurrence_rule,
-                       color_category, is_completed, is_all_day
+                       color_category, is_completed, is_all_day, GroupId
                 FROM   PERSONAL_EVENT
                 WHERE  id_acc=@id AND YEAR(start_time)=@y AND MONTH(start_time)=@m
                 ORDER BY start_time";
@@ -47,9 +47,9 @@ namespace StudentReminderApp.DAL
         {
             const string sql = @"
                 INSERT INTO PERSONAL_EVENT
-                    (id_acc,title,description,location,start_time,end_time,event_type,recurrence_rule,color_category,is_completed,is_all_day)
+                    (id_acc,title,description,location,start_time,end_time,event_type,recurrence_rule,color_category,is_completed,is_all_day,GroupId)
                 OUTPUT INSERTED.id_event
-                VALUES(@acc,@ti,@de,@lo,@st,@en,@et,@rr,@col,@comp,@all)";
+                VALUES(@acc,@ti,@de,@lo,@st,@en,@et,@rr,@col,@comp,@all,@gid)";
             using var conn = GetConnection();
             using var cmd  = new SqlCommand(sql, conn);
             cmd.Parameters.AddWithValue("@acc", e.IdAcc);
@@ -63,6 +63,7 @@ namespace StudentReminderApp.DAL
             cmd.Parameters.AddWithValue("@col", (object)e.ColorCategory ?? DBNull.Value);
             cmd.Parameters.AddWithValue("@comp", e.IsCompleted);
             cmd.Parameters.AddWithValue("@all", e.IsAllDay);
+            cmd.Parameters.AddWithValue("@gid", (object)e.GroupId ?? DBNull.Value);
             return (long)cmd.ExecuteScalar();
         }
 
@@ -72,7 +73,7 @@ namespace StudentReminderApp.DAL
                 UPDATE PERSONAL_EVENT
                 SET title=@ti,description=@de,location=@lo,
                     start_time=@st,end_time=@en,event_type=@et,recurrence_rule=@rr,
-                    color_category=@col,is_completed=@comp,is_all_day=@all
+                    color_category=@col,is_completed=@comp,is_all_day=@all,GroupId=@gid
                 WHERE id_event=@id";
             using var conn = GetConnection();
             using var cmd  = new SqlCommand(sql, conn);
@@ -86,6 +87,7 @@ namespace StudentReminderApp.DAL
             cmd.Parameters.AddWithValue("@col", (object)e.ColorCategory ?? DBNull.Value);
             cmd.Parameters.AddWithValue("@comp", e.IsCompleted);
             cmd.Parameters.AddWithValue("@all", e.IsAllDay);
+            cmd.Parameters.AddWithValue("@gid", (object)e.GroupId ?? DBNull.Value);
             cmd.Parameters.AddWithValue("@id", e.IdEvent);
             cmd.ExecuteNonQuery();
         }
@@ -96,6 +98,28 @@ namespace StudentReminderApp.DAL
             using var conn = GetConnection();
             using var cmd  = new SqlCommand(sql, conn);
             cmd.Parameters.AddWithValue("@id", idEvent);
+            cmd.ExecuteNonQuery();
+        }
+
+        public void DeleteRelatedEvents(long idAcc, string title, string eventType)
+        {
+            const string sql = "DELETE FROM PERSONAL_EVENT WHERE id_acc=@acc AND title=@ti AND event_type=@et";
+            using var conn = GetConnection();
+            using var cmd  = new SqlCommand(sql, conn);
+            cmd.Parameters.AddWithValue("@acc", idAcc);
+            cmd.Parameters.AddWithValue("@ti", title);
+            cmd.Parameters.AddWithValue("@et", eventType);
+            cmd.ExecuteNonQuery();
+        }
+
+        public void DeleteEventGroup(long idAcc, string groupId)
+        {
+            if (string.IsNullOrEmpty(groupId)) return;
+            const string sql = "DELETE FROM PERSONAL_EVENT WHERE id_acc=@acc AND GroupId=@gid";
+            using var conn = GetConnection();
+            using var cmd  = new SqlCommand(sql, conn);
+            cmd.Parameters.AddWithValue("@acc", idAcc);
+            cmd.Parameters.AddWithValue("@gid", groupId);
             cmd.ExecuteNonQuery();
         }
 
@@ -112,7 +136,8 @@ namespace StudentReminderApp.DAL
             RecurrenceRule = r["recurrence_rule"]?.ToString(),
             ColorCategory  = r["color_category"]?.ToString() ?? "",
             IsCompleted    = r["is_completed"] != DBNull.Value && Convert.ToBoolean(r["is_completed"]),
-            IsAllDay       = r["is_all_day"] != DBNull.Value && Convert.ToBoolean(r["is_all_day"])
+            IsAllDay       = r["is_all_day"] != DBNull.Value && Convert.ToBoolean(r["is_all_day"]),
+            GroupId        = r["GroupId"]?.ToString()
         };
 
         public List<EventTag> GetTags(long idAcc)

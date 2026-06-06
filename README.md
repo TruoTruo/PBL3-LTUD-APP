@@ -40,7 +40,7 @@ Ví dụ: `Server=DESKTOP-ABC123\SQLEXPRESS` hoặc `Server=localhost`
 ### Bước 3 — Mở project trong Visual Studio
 1. **Visual Studio 2022** → Open terminal tại file gốc có chứa file ở B2
 2. `StudentReminderApp.csproj`
-3. Chờ NuGet restore tự động (BCrypt.Net-Next + System.Data.SqlClient)
+3. Chờ NuGet restore tự động (BCrypt.Net-Next, System.Data.SqlClient, FontAwesome.WPF)
 
 ### Bước 4 — Build & Run
 - Tại terminal nhập **dotnet run**
@@ -52,6 +52,7 @@ Ví dụ: `Server=DESKTOP-ABC123\SQLEXPRESS` hoặc `Server=localhost`
 - **SQL Server** (Express hoặc Full)
 - **BCrypt.Net-Next** — mã hóa mật khẩu
 - **System.Data.SqlClient** — kết nối database
+- **FontAwesome.WPF** — bộ icon chuyên nghiệp cho giao diện
 
 ## Tài khoản test
 Đăng ký qua giao diện. Không có tài khoản mặc định vì mật khẩu được hash BCrypt.

@@ -52,3 +52,7 @@ Viết hàm `GetOptimizedScheduleOptions(List<List<CourseClass>> courseBuckets)`
 4. Sắp xếp danh sách các tổ hợp giảm dần theo điểm fitness.
 5. Trả về 3 tổ hợp đứng đầu danh sách.
 Quy tắc bắt buộc: Tuyệt đối không sử dụng ghi chú. Xóa bỏ mọi // và comment trong code.
+
+
+FILE KHUNG CHƯƠNG TRÌNH VÀ EXCEL LỊCH HỌC KỲ 4 sẽ ở đây
+D:\IT\HỌC\PBL3\PBL3-LTUD-APP\RENDER
