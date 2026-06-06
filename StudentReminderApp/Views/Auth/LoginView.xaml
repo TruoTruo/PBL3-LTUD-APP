@@ -21,8 +21,8 @@
                        FontSize="14" Foreground="#777777" HorizontalAlignment="Center"
                        Margin="0,0,0,25"/>
 
-            <TextBlock Text="Username" FontSize="13" FontWeight="SemiBold" FontFamily="Segoe UI" Foreground="#777777" Margin="0,0,0,4"/>
-            <TextBox x:Name="TxtUsername" Height="36" Background="Transparent" FontSize="16" Padding="0,8,0,8" Margin="0,0,0,20" TextChanged="TxtUsername_TextChanged" KeyDown="TxtUsername_KeyDown">
+            <TextBlock Text="Email" FontSize="13" FontWeight="SemiBold" FontFamily="Segoe UI" Foreground="#777777" Margin="0,0,0,4"/>
+            <TextBox x:Name="TxtEmail" Height="36" Background="Transparent" FontSize="16" Padding="0,8,0,8" Margin="0,0,0,20" TextChanged="TxtEmail_TextChanged" KeyDown="TxtEmail_KeyDown">
                 <TextBox.Style>
                     <Style TargetType="TextBox">
                         <Setter Property="BorderBrush" Value="#D1D1D1"/>
