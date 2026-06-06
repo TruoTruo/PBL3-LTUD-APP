@@ -19,11 +19,11 @@ namespace StudentReminderApp.Views.Auth.Components
             InitializeComponent();
             _parent = parent;
             
-            // Tự động focus vào ô Username khi mở
-            Loaded += (s, e) => TxtUsername.Focus();
+            // Tự động focus vào ô Email khi mở
+            Loaded += (s, e) => TxtEmail.Focus();
 
-            TxtUsername.GotFocus += (s, e) => _parent?.UpdateAnimationState("state-email");
-            TxtUsername.LostFocus += (s, e) => _parent?.UpdateAnimationState("");
+            TxtEmail.GotFocus += (s, e) => _parent?.UpdateAnimationState("state-email");
+            TxtEmail.LostFocus += (s, e) => _parent?.UpdateAnimationState("");
 
             TxtPassword.GotFocus += (s, e) => _parent?.UpdateAnimationState(_isPasswordVisible ? "state-ignoring" : "state-peeking");
             TxtPassword.LostFocus += (s, e) => _parent?.UpdateAnimationState("");
@@ -33,7 +33,7 @@ namespace StudentReminderApp.Views.Auth.Components
 
             if (StudentReminderApp.Properties.Settings.Default.RememberMe)
             {
-                TxtUsername.Text = StudentReminderApp.Properties.Settings.Default.Username;
+                TxtEmail.Text = StudentReminderApp.Properties.Settings.Default.Username;
                 TxtPassword.Password = StudentReminderApp.Properties.Settings.Default.Password;
                 ChkRememberMe.IsChecked = true;
             }
@@ -87,7 +87,7 @@ namespace StudentReminderApp.Views.Auth.Components
                 ClearErrorState();
         }
 
-        private void TxtUsername_TextChanged(object sender, TextChangedEventArgs e)
+        private void TxtEmail_TextChanged(object sender, TextChangedEventArgs e)
         {
             ClearErrorState();
         }
@@ -100,7 +100,7 @@ namespace StudentReminderApp.Views.Auth.Components
             TxtError.Visibility = Visibility.Hidden;
         }
 
-        private void TxtUsername_KeyDown(object sender, KeyEventArgs e)
+        private void TxtEmail_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
             {
@@ -120,16 +120,16 @@ namespace StudentReminderApp.Views.Auth.Components
         {
             ClearErrorState();
 
-            string username = TxtUsername.Text.Trim();
-            if (string.IsNullOrWhiteSpace(username))
+            string email = TxtEmail.Text.Trim();
+            if (string.IsNullOrWhiteSpace(email))
             {
-                TxtError.Text = "Please enter your username.";
+                TxtError.Text = "Please enter your email.";
                 TxtError.Visibility = Visibility.Visible;
                 return;
             }
 
             var result =
-                _bll.Login(username, TxtPassword.Password);
+                _bll.Login(email, TxtPassword.Password);
 
             bool ok = result.Item1;
             Account? acc = result.Item3;
@@ -149,7 +149,7 @@ namespace StudentReminderApp.Views.Auth.Components
 
             if (ChkRememberMe.IsChecked == true)
             {
-                StudentReminderApp.Properties.Settings.Default.Username = username;
+                StudentReminderApp.Properties.Settings.Default.Username = email;
                 StudentReminderApp.Properties.Settings.Default.Password = TxtPassword.Password;
                 StudentReminderApp.Properties.Settings.Default.RememberMe = true;
             }

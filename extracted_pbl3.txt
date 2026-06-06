@@ -1,0 +1,172 @@
+TRƯỜNG ĐẠI HỌC BÁCH KHOA
+KHOA CÔNG NGHỆ THÔNG TIN
+DỰ ÁN LẬP TRÌNH ỨNG DỤNG 
+TÊN ĐỀ TÀI
+XÂY DỰNG ỨNG DỤNG QUẢN LÝ VÀ NHẮC NHỞ LỊCH HỌC
+Người hướng dẫn: ThS. NGUYỄN THẾ XUÂN LY
+Sinh viên thực hiện:
+Nguyễn Văn Trường LỚP: 24T_Nhat2   NHÓM: 99C
+Nguyễn Quang Hiền LỚP: 24T_Nhat2   NHÓM: 99C
+Võ Thị Ánh DungLỚP: 24T_Nhat2   NHÓM: 99C
+Đà Nẵng, 05/2026
+LỜI MỞ ĐẦU
+Trong kỷ nguyên số hóa và chuyển đổi số giáo dục hiện nay, việc ứng dụng công nghệ thông tin vào quản lý và tối ưu hóa quy trình học tập đã trở thành một nhu cầu tất yếu, đặc biệt đối với sinh viên ngành Công nghệ Thông tin tại các trường đại học kỹ thuật. Sinh viên không chỉ đối mặt với khối lượng kiến thức chuyên ngành lớn, các kỳ đồ án luận án dày đặc mà còn phải tự chủ trong việc phân bổ thời gian tự học, tham gia các hoạt động ngoại khóa và mở rộng kỹ năng mềm. Thực tế cho thấy, việc thiếu một công cụ quản lý thời gian khoa học, thông minh thường dẫn đến tình trạng quá tải, bỏ lỡ các mốc thời gian quan trọng (deadline) và làm giảm hiệu suất học tập một cách đáng kể.
+Xuất phát từ nhu cầu thực tiễn đó, nhóm chúng em đã tiến hành nghiên cứu và phát triển đề tài: "Hệ thống quản lý và nhắc nhở lịch học thông minh dành cho sinh viên" Ứng dụng được xây dựng trên nền tảng ngôn ngữ C# kết hợp công nghệ WPF (Windows Presentation Foundation) theo mô hình kiến trúc nhiều tầng (Multi-tier Architecture) nhằm đảm bảo tính mở rộng, dễ bảo trì và tối ưu hóa hiệu năng hệ thống.
+Hệ thống được phát triển trên nền tảng công nghệ Windows Presentation Foundation (WPF) kết hợp ngôn ngữ C#, sử dụng hệ quản trị cơ sở dữ liệu SQL Server và triển khai theo mô hình kiến trúc nhiều tầng (Multi-tier Architecture) chặt chẽ. Cấu trúc này giúp tách biệt rõ ràng giữa giao diện người dùng, logic nghiệp vụ xử lý dữ liệu và tầng tương tác cơ sở dữ liệu, đảm bảo tính bảo mật, dễ dàng bảo trì và khả năng mở rộng tối ưu trong tương lai.
+Thông qua đề tài này, nhóm mong muốn vận dụng toàn diện các kiến thức đã được đào tạo về phát triển phần mềm, quản lý cơ sở dữ liệu, phân tích thiết kế hệ thống và kiến trúc hệ thống vào một sản phẩm thực tế. Đây là cơ hội quý báu để nhóm rèn luyện kỹ năng lập trình hướng đối tượng nâng cao, tư duy giải quyết vấn đề cấu trúc, cũng như năng lực giao tiếp, phối hợp và làm việc nhóm hiệu quả giữa các thành viên.
+Nhóm xin gửi lời cảm ơn chân thành đến quý thầy cô bộ môn đã tận tình giảng dạy, trang bị kiến thức và tạo điều kiện thuận lợi cho nhóm trong suốt quá trình thực hiện đồ án. Đặc biệt, nhóm xin tri ân thầy/cô phụ trách hướng dẫn đã luôn đồng hành, định hướng, góp ý sâu sắc và động viên để nhóm có thể hoàn thiện sản phẩm một cách tốt nhất. Nhóm cũng xin cảm ơn bạn bè, các thành viên trong tập thể lớp đã hỗ trợ, chia sẻ kinh nghiệm trong suốt quá trình nghiên cứu. Chúng em hy vọng ứng dụng này sẽ là một công cụ hữu ích, góp phần nâng cao tính tự chủ, tối ưu hóa thời gian và thúc đẩy phong trào học tập, thảo luận nhóm hiệu quả của sinh viên.
+Xin trân trọng cảm ơn!
+MỤC LỤC
+MỤC LỤC1
+DANH MỤC HÌNH VẼ3
+MỞ ĐẦU{font: TimeNew Roman, bold, size: 14, căn lề: center}1
+1.TỔNG QUAN ĐỀ TÀI1
+2.CƠ SỞ LÝ THUYẾT1
+2.1.Ý tưởng1
+2.2.Thuật toán1
+2.3.Công cụ sử dụng1
+3.PHÂN TÍCH VÀ THIẾT KẾ HỆ THỐNG1
+3.1.Phát biểu yêu cầu1
+3.2.Các biểu đồ thiết kế1
+3.3.Biểu đồ cơ sở dữ liệu quan hệ  hoặc cơ sở dữ liệu phẳng1
+3.4.Kiến trúc hệ thống1
+4.CHƯƠNG TRÌNH VÀ KẾT QUẢ1
+4.1.Giao diện chính1
+4.2.Kết quả thực thi1
+4.3.……1
+4.4.Nhận xét đánh giá1
+5.KẾT LUẬN VÀ HƯỚNG PHÁT TRIỂN1
+5.1.Kết luận1
+5.2.Hướng phát triển1
+TÀI LIỆU THAM KHẢO2
+PHỤ LỤC3
+DANH MỤC HÌNH VẼ
+No table of figures entries found.
+GIỚI THIỆU ĐỀ TÀI
+1.1. TÊN ĐỀ TÀI
+XÂY DỰNG ỨNG DỤNG QUẢN LÝ VÀ NHẮC NHỞ LỊCH HỌC
+1.2. TỔNG QUAN ĐỀ TÀI
+Trong bối cảnh hiện nay, khi khối lượng kiến thức học tập ngày càng gia tăng và nhu cầu phối hợp, trao đổi học thuật giữa các sinh viên, nhóm tự học trở nên phức tạp hơn, việc tổ chức và quản lý thời gian một cách hiệu quả là điều vô cùng cần thiết. Trước thực trạng đó, nhóm chúng tôi lựa chọn thực hiện đề tài “Xây dựng hệ thống quản lý và nhắc nhở lịch học thông minh cho sinh viên” (Smart study schedule management and reminder system) với mục tiêu phát triển một ứng dụng quản lý lịch biểu thân thiện, dễ sử dụng, hỗ trợ giao diện tiếng Việt tối ưu và phù hợp với nhu cầu học tập thực tế của các cá nhân, nhóm sinh viên trong môi trường đại học.
+Hệ thống được xây dựng trên nền tảng công nghệ hiện đại bao gồm Windows Presentation Foundation (WPF) kết hợp ngôn ngữ C# và hệ quản trị cơ sở dữ liệu SQL Server, đồng thời triển khai theo mô hình kiến trúc nhiều tầng (Multi-tier Architecture) nhằm đảm bảo tính mở rộng, bảo mật và hiệu quả vận hành tối ưu. Ứng dụng hướng tới việc hỗ trợ sinh viên quản lý thời gian, theo dõi deadline và tương tác thảo luận học thuật trên diễn đàn một cách trực quan và khoa học, góp phần nâng cao năng suất tự học cũng như khả năng phối hợp giữa các thành viên trong nhóm.
+1.3. MỤC TIÊU ĐỀ TÀI
+Mục tiêu của đề tài là xây dựng một hệ thống quản lý và nhắc nhở lịch học thông minh cho sinh viên với giao diện thân thiện, dễ sử dụng, hỗ trợ đầy đủ các tính năng cơ bản để người dùng có thể:
+Tạo và quản lý lịch học, lịch cá nhân: Thiết lập thời khóa biểu cá nhân, thời gian biểu tự học, quản lý các mốc thời gian làm đồ án, bài tập lớn, lịch thi học kỳ cũng như các hoạt động cá nhân khác một cách khoa học.
+Tự động nhắc nhở lịch biểu: Gửi thông báo, cảnh báo nhắc nhở thông minh trước các buổi học hoặc hạn chót (deadline) bài tập để tránh tình trạng bỏ lỡ công việc.
+Tư vấn đăng ký học phần theo nhu cầu cá nhân: Hỗ trợ định hướng và đưa ra các gợi ý lớp học phần tối ưu, phù hợp nhất với nguyện vọng của từng sinh viên như lựa chọn danh sách giảng viên yêu thích hoặc chủ động lựa chọn khung thời gian học tập phù hợp với lịch trình cá nhân.
+Tương tác trên diễn đàn (Forum): Đăng tải bài viết, bình luận, chia sẻ tài liệu học tập và kết nối, thảo luận nhóm trực tuyến giữa các sinh viên.
+Quản lý tài khoản hệ thống: Hỗ trợ đăng ký, đăng nhập và phân quyền người dùng (sinh viên, ban quản trị) rõ ràng để bảo mật thông tin.
+Ngoài ra, hệ thống hướng đến khả năng mở rộng cấu trúc, dễ tích hợp, và
+có thể nâng cấp trong tương lai thành một nền tảng quản trị và hỗ trợ học tập toàn diện, phục vụ cho quy mô toàn trường hoặc liên kết nhiều khoa ngành.
+1.4. PHẠM VI VÀ ĐỐI TƯỢNG NGHIÊN CỨU
+1.4.1. Phạm vi
+Đề tài tập trung vào việc nghiên cứu và xây dựng một hệ thống ứng dụng desktop quản lý lịch biểu và nhắc nhở thông minh với các chức năng cơ bản như: thiết lập thời khóa biểu, lên lịch cá nhân, tự động cảnh báo deadline, tư vấn gợi ý học phần tối ưu theo nhu cầu và cung cấp diễn đàn trao đổi học thuật. Hệ thống được thiết kế phù hợp với mô hình quản lý thời gian và học tập của các cá nhân sinh viên, nhóm tự học, hoặc các câu lạc bộ, đội nhóm sinh viên trong môi trường đại học.
+1.4.2. Đối tượng nghiên cứu
+Cá nhân sinh viên: Người có nhu cầu quản lý thời khóa biểu, lên kế hoạch cá nhân, nhận thông báo nhắc nhở tự động và tìm kiếm gợi ý đăng ký môn học phù hợp.
+Nhóm học tập / Cộng đồng sinh viên: Các nhóm sinh viên muốn kết nối, trao đổi tài liệu, thảo luận kiến thức chuyên ngành và tương tác thông qua không gian diễn đàn chung.
+CƠ SỞ LÝ THUYẾT
+2.1. Ý TƯỞNG
+Hệ thống được xây dựng với mục tiêu tạo ra một nền tảng hỗ trợ và quản lý học tập thông minh trực tuyến, giúp mỗi sinh viên và các nhóm học tập dễ dàng tổ chức thời gian, theo dõi tiến độ và phối hợp thảo luận một cách hiệu quả. Ứng dụng lấy cảm hứng từ nhu cầu tối ưu hóa lộ trình học đường, cho phép người dùng thiết lập thời khóa biểu, cá nhân hóa lịch trình tự học, nhận thông báo nhắc nhở tự động, đồng thời hỗ trợ các công cụ lọc tìm kiếm giảng viên hay khung giờ yêu thích và tương tác trực quan thông qua một không gian diễn đàn thảo luận tích hợp.
+2.2. THUẬT TOÁN
+2.2.1. Thuật toán mã hóa mật khẩu BCrypt
+Vị trí triển khai: AccountBLL.cs, ProfilePage.xaml.cs Thư viện sử dụng: BCrypt.Net-Next Mục đích: Bảo vệ mật khẩu người dùng bằng cách lưu trữ dạng hash một chiều, không lưu mật khẩu gốc (plain text).
+Cách hoạt động:
+Khi đăng ký hoặc đổi mật khẩu: sử dụng hàm BCrypt.HashPassword(password) để tạo chuỗi hash, sau đó lưu vào cột password_hash trong bảng ACCOUNT.
+Khi đăng nhập: sử dụng hàm BCrypt.Verify(password, acc.PasswordHash) để so sánh mật khẩu người dùng nhập với hash đã lưu trong cơ sở dữ liệu.
+Độ phức tạp: O(1) cho mỗi lần hash hoặc verify (BCrypt có hệ số cost cố định).
+2.2.2. Thuật toán sinh mã OTP ngẫu nhiên
+Vị trí triển khai: OtpService.cs, AccountBLL.cs, AccountDAL.cs Mục đích: Xác thực danh tính người dùng khi quên mật khẩu.
+Cách hoạt động:
+Sinh mã OTP gồm 6 chữ số ngẫu nhiên trong khoảng từ 100000 đến 999999 bằng hàm Random.Next().
+Lưu mã OTP vào cơ sở dữ liệu kèm thời gian hết hạn sau 5 phút (DATEADD(MINUTE, 5, GETDATE())).
+Khi xác minh: kiểm tra otp_code khớp với mã người dùng nhập VÀ otp_expired_at >= thời gian hiện tại.
+Độ phức tạp: O(1) cho việc sinh OTP; O(1) cho việc xác minh qua truy vấn SQL.
+2.2.3. Thuật toán mở rộng sự kiện lặp lại (Recurrence Expansion)
+Vị trí triển khai: CalendarPage.xaml.cs — hàm GetFilteredEvents() Loại thuật toán: Virtual Object Interpolation (nội suy đối tượng ảo)
+Mục đích: Sinh ra các phiên bản ảo của sự kiện lặp lại để hiển thị trên lịch.
+Ba quy tắc lặp được hỗ trợ:
+DAILY: lặp lại mỗi ngày
+WEEKLY: lặp lại cùng thứ trong tuần
+MONTHLY: lặp lại cùng ngày trong tháng
+Cách hoạt động:
+Bắt đầu từ ngày bắt đầu của sự kiện gốc (currDate = startDate).
+Duyệt từng ngày trong khoảng quét (scanStart đến scanEnd).
+Với mỗi ngày, kiểm tra có khớp quy tắc lặp không; nếu khớp thì tạo một CalendarItem ảo với thời gian tương ứng.
+Tăng currDate thêm 1 ngày và lặp lại.
+Độ phức tạp: O(d), trong đó d là số ngày trong khoảng quét.
+2.2.4. Thuật toán xếp chồng sự kiện (Event Overlap Layout)
+Vị trí triển khai: CalendarPage.xaml.cs (dòng 449–538) Loại thuật toán: Interval Scheduling / Greedy Column Assignment (lập lịch khoảng thời gian / gán cột tham lam)
+Mục đích: Hiển thị nhiều sự kiện trùng thời gian trên cùng một dòng lịch mà không bị che khuất.
+Gồm 3 bước:
+Bước 1 — Nhóm sự kiện chồng nhau:
+Sắp xếp tất cả sự kiện theo StartTime tăng dần.
+Gom các sự kiện vào cùng một nhóm nếu sự kiện mới bắt đầu trước khi nhóm hiện tại kết thúc.
+Bước 2 — Gán cột (Greedy):
+Với mỗi sự kiện trong nhóm, tìm cột mà sự kiện cuối cùng trong cột đó đã kết thúc.
+Nếu tìm được cột phù hợp thì đặt sự kiện vào cột đó.
+Nếu không tìm được thì tạo cột mới.
+Bước 3 — Vẽ giao diện:
+Tính chiều rộng mỗi sự kiện: widthPerEvent = canvasWidth / số_cột.
+Đặt vị trí theo cột (trục ngang) và theo thời gian tính bằng phút trong ngày (trục dọc).
+Độ phức tạp: O(n²) trong trường hợp xấu nhất, với n là số sự kiện trong ngày.
+2.2.5. Thuật toán nhắc nhở sự kiện (Reminder Polling)
+Vị trí triển khai: NotificationService.cs Loại thuật toán: Polling + Time Window + Deduplication
+Mục đích: Gửi thông báo nhắc nhở trước khi sự kiện diễn ra.
+Cách hoạt động:
+Sử dụng DispatcherTimer với chu kỳ 30 giây để quét cơ sở dữ liệu.
+Lấy các sự kiện trong vòng 2 ngày tới có cài đặt nhắc nhở.
+Với mỗi sự kiện, tính thời điểm nhắc = startTime - minutes_before.
+Chỉ gửi thông báo nếu thời gian hiện tại nằm trong cửa sổ 5 phút sau thời điểm nhắc.
+Sử dụng HashSet để lưu các cặp (id_event, minutes_before) đã nhắc, tránh gửi trùng lặp.
+Hỗ trợ Snooze: người dùng có thể hoãn nhắc thêm 5 phút.
+Độ phức tạp: O(r) mỗi chu kỳ, với r là số reminder trong cửa sổ 2 ngày.
+2.2.6. Thuật toán tìm kiếm sự kiện
+Vị trí triển khai: CalendarPage.xaml.cs
+Cách hoạt động:
+Tìm kiếm trên cơ sở dữ liệu: sử dụng điều kiện LIKE '%keyword%' trên các trường title và location.
+Lọc trong bộ nhớ: kiểm tra Contains() trên title và location (không phân biệt hoa thường).
+Loại trùng lặp: GroupBy(Title, StartTime) rồi lấy phần tử đầu tiên của mỗi nhóm.
+2.2.7. Thuật toán tính điểm bài viết Hot (Hot Score)
+Vị trí triển khai: ForumDAL.cs — hàm GetHotPosts() Loại thuật toán: Weighted Engagement Score + Time Decay (điểm tương tác có trọng số + suy giảm theo thời gian)
+Công thức tính điểm:
+HotScore = (Số_lượt_thích × 1) + (Số_bình_luận × 2) + (Số_chia_sẻ × 3) - (Số_ngày_từ_ngày_đăng × 10)
+Ý nghĩa:
+Bình luận được tính trọng số gấp đôi lượt thích.
+Chia sẻ được tính trọng số gấp ba lượt thích.
+Bài viết càng cũ thì bị trừ điểm càng nhiều (mỗi ngày trừ 10 điểm).
+Điều kiện lọc:
+Chỉ xét bài viết trong 7 ngày gần nhất.
+Chỉ lấy bài có HotScore >= 50.
+Sắp xếp theo HotScore giảm dần, sau đó theo ngày đăng giảm dần.
+Lấy tối đa 50 bài
+2.3. CÔNG CỤ SỬ DỤNG
+2.3.1. C# & .NET Framework 4.8
+C# là ngôn ngữ lập trình hướng đối tượng do Microsoft phát triển, được sử dụng làm ngôn ngữ chính trong dự án PBL3. Kết hợp với nền tảng .NET Framework 4.8, C# cung cấp hệ sinh thái ổn định, hỗ trợ mạnh mẽ cho việc xây dựng ứng dụng desktop trên hệ điều hành Windows. Trong dự án, C# được dùng để triển khai toàn bộ logic nghiệp vụ, xử lý dữ liệu, quản lý phiên đăng nhập và điều phối các chức năng như lịch học, nhắc nhở, tư vấn học tập, diễn đàn và quản lý sinh viên.
+2.3.2. WPF (Windows Presentation Foundation)
+WPF là công nghệ giao diện người dùng của Microsoft, cho phép xây dựng ứng dụng desktop với giao diện hiện đại, linh hoạt và dễ tùy biến thông qua XAML. Trong dự án PBL3, WPF được sử dụng để thiết kế các màn hình như đăng nhập, đăng ký, bảng điều khiển (Dashboard), lịch biểu (Calendar), môn học (Course), tư vấn (Advisor), hồ sơ cá nhân (Profile), diễn đàn (Forum) và quản lý sinh viên. WPF hỗ trợ tách biệt giao diện và logic xử lý, giúp ứng dụng dễ bảo trì và mở rộng trong tương lai.
+2.3.3. Kiến trúc 3 lớp (Presentation – Business Logic – Data Access)
+Dự án được tổ chức theo mô hình kiến trúc 3 lớp nhằm tách biệt trách nhiệm giữa các thành phần trong hệ thống. Lớp Presentation (Views, ViewModels) chịu trách nhiệm hiển thị giao diện và tương tác với người dùng. Lớp Business Logic Layer (BLL) xử lý các quy tắc nghiệp vụ như xác thực tài khoản, quản lý sự kiện, tư vấn học tập và diễn đàn. Lớp Data Access Layer (DAL) thực hiện các thao tác truy vấn và cập nhật dữ liệu trên cơ sở dữ liệu. Kiến trúc này giúp mã nguồn rõ ràng, dễ kiểm thử, dễ bảo trì và thuận tiện khi phát triển thêm tính năng mới.
+2.3.4. Cơ sở dữ liệu quan hệ (Microsoft SQL Server)
+Microsoft SQL Server được sử dụng làm hệ quản trị cơ sở dữ liệu quan hệ cho dự án, lưu trữ toàn bộ dữ liệu hệ thống trong database PBL3. Cơ sở dữ liệu quản lý thông tin tài khoản người dùng, vai trò (roles), thông tin sinh viên, môn học, lớp học phần, lịch học, sự kiện cá nhân, thông báo, bài viết diễn đàn, bình luận và nhật ký hoạt động. Việc sử dụng cơ sở dữ liệu quan hệ đảm bảo tính toàn vẹn dữ liệu thông qua các ràng buộc khóa ngoại (foreign key), hỗ trợ truy vấn linh hoạt và khả năng mở rộng khi số lượng người dùng và dữ liệu tăng lên.
+2.3.5. Mô hình MVVM & các thư viện hỗ trợ
+Dự án áp dụng mô hình MVVM (Model – View – ViewModel) để tách biệt giao diện (View) khỏi logic hiển thị (ViewModel), giúp code-behind gọn gàng và dễ kiểm soát dữ liệu binding trên giao diện WPF. Ngoài ra, dự án sử dụng một số thư viện bổ trợ quan trọng:
+System.Data.SqlClient: thư viện kết nối và thực thi truy vấn SQL Server từ ứng dụng.
+BCrypt.Net-Next: thư viện mã hóa mật khẩu một chiều, đảm bảo an toàn thông tin đăng nhập của người dùng.
+Newtonsoft.Json: thư viện xử lý dữ liệu JSON, được sử dụng để đọc và quản lý dữ liệu khung chương trình đào tạo (KCTĐT).
+PHÂN TÍCH VÀ THIẾT KẾ HỆ THỐNG
+CÁC CHỨC NĂNG HỆ THỐNG
+Sơ đồ chức năng của user
+3.2. Biểu đồ ca sử dụng và đặc tả
+3.2.1. Use case tổng quát
+Kiến trúc hệ thống
+Trình bày bức tranh tổng thể từ cơ sở dữ liệu đến giao diện người dùng
+CHƯƠNG TRÌNH VÀ KẾT QUẢ
+Giao diện chính
+Kết quả thực thi 
+……
+Nhận xét đánh giá
+KẾT LUẬN VÀ HƯỚNG PHÁT TRIỂN
+Kết luận
+Hướng phát triển
+TÀI LIỆU THAM KHẢO
+PHỤ LỤC
+Sinh viên bỏ Code từng phần vào đây.{Font: Time New Roman; thường; cỡ chữ: 12; dãn dòng: 1,3; căn lề: justified}

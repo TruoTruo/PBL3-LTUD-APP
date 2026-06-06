@@ -177,6 +177,53 @@ namespace StudentReminderApp.DAL
         }
 
         // ════════════════════════════════════════════════════════════
+        // LẤY ACCOUNT THEO EMAIL (DÙNG CHO ĐĂNG NHẬP)
+        // ════════════════════════════════════════════════════════════
+        public Account GetAccountByEmailForLogin(string email)
+        {
+            const string sql = @"
+                SELECT a.id_acc, a.username, a.password_hash,
+                       a.id_role, a.status,
+                       ISNULL(a.is_verified, 0) AS is_verified,
+                       ISNULL(r.role_name, '')  AS role_name
+                FROM   ACCOUNT a
+                LEFT JOIN ROLES r ON r.id_role = a.id_role
+                INNER JOIN [USER] u ON a.id_acc = u.id_acc
+                WHERE  u.email = @email";
+            try
+            {
+                using (SqlConnection conn = GetConnection())
+                {
+                    if (conn.State == ConnectionState.Closed) conn.Open();
+                    using (SqlCommand cmd = new SqlCommand(sql, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@email", email.Trim());
+                        using (SqlDataReader r = cmd.ExecuteReader())
+                        {
+                            if (r.Read())
+                            {
+                                Account acc = new Account();
+                                acc.IdAcc        = Convert.ToInt64(r["id_acc"]);
+                                acc.Username     = r["username"].ToString() ?? string.Empty;
+                                acc.PasswordHash = r["password_hash"].ToString() ?? string.Empty;
+                                acc.IdRole       = Convert.ToInt64(r["id_role"]);
+                                acc.Status       = r["status"].ToString() ?? "Active";
+                                acc.IsVerified   = Convert.ToBoolean(r["is_verified"]);
+                                acc.RoleName     = r["role_name"].ToString() ?? string.Empty;
+                                return acc;
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("AccountDAL.GetAccountByEmailForLogin: " + ex.Message);
+            }
+            return null;
+        }
+
+        // ════════════════════════════════════════════════════════════
         // LẤY USER CƠ BẢN THEO ID (không kèm TenLop)
         // ════════════════════════════════════════════════════════════
         public User GetUserByIdAcc(long idAcc)

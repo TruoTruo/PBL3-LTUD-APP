@@ -14,12 +14,12 @@ namespace StudentReminderApp.BLL
         // ĐĂNG NHẬP (ĐÃ FIX ÉP KIỂU CHỐNG LỖI NULLABILITY CS8619)
         // ════════════════════════════════════════════════════════════
         // Thêm dấu ? vào Account? và User? ở kiểu trả về để chấp nhận giá trị null khi login lỗi
-        public Tuple<bool, string, Account?, User?> Login(string username, string password)
+        public Tuple<bool, string, Account?, User?> Login(string email, string password)
         {
-            if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password))
-                return Tuple.Create<bool, string, Account?, User?>(false, "Vui lòng nhập đầy đủ tài khoản và mật khẩu.", null, null);
+            if (string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(password))
+                return Tuple.Create<bool, string, Account?, User?>(false, "Vui lòng nhập đầy đủ Email và mật khẩu.", null, null);
 
-            Account acc = _dal.GetAccountByUsername(username.Trim());
+            Account acc = _dal.GetAccountByEmailForLogin(email.Trim());
             if (acc == null)
                 return Tuple.Create<bool, string, Account?, User?>(false, "Tài khoản hoặc mật khẩu không chính xác.", null, null);
 
@@ -111,20 +111,16 @@ namespace StudentReminderApp.BLL
                 return Tuple.Create(false, "Lỗi hệ thống khi lưu OTP. Thử lại sau.",
                                     0L, string.Empty);
 
-            // Hiển thị cửa sổ thông báo mô phỏng giao diện Hòm thư Gmail đến của Sinh viên
-            System.Windows.MessageBox.Show(
-                $"Chào bạn,\n" +
-                $"Hệ thống nhận được yêu cầu cấp lại mật khẩu của bạn.\n\n" +
-                $"Mã xác thực OTP của bạn là:  {otp}\n\n" +
-                $"(Vui lòng ghi nhớ 6 số này để nhập vào bước tiếp theo trên phần mềm).", 
-                "Ứng dụng vừa gửi 1 Email đến Gmail của bạn!", 
-                System.Windows.MessageBoxButton.OK, 
-                System.Windows.MessageBoxImage.Information
-            );
+            // Gửi OTP qua Gmail thật
+            var sendResult = OtpService.SendOtp(email, otp);
+            if (!sendResult.Item1)
+            {
+                // Nếu gửi thất bại
+                return Tuple.Create(false, "Lỗi gửi email: " + sendResult.Item2, 0L, string.Empty);
+            }
 
-            // Đmax FIX LỖI CS0161: Bổ sung lệnh return kết quả thành công sau khi hiện bảng thông báo
             string masked = MaskEmail(email);
-            return Tuple.Create(true, "Mã OTP đã được gửi mô phỏng thành công.", idAcc, masked);
+            return Tuple.Create(true, "Mã OTP đã được gửi thành công đến email " + masked + ".", idAcc, masked);
         }
 
         // ════════════════════════════════════════════════════════════

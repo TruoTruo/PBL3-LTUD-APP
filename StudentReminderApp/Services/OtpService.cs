@@ -14,8 +14,8 @@ namespace StudentReminderApp.Services
     /// </summary>
     public static class OtpService
     {
-        private const string SenderEmail       = "your_app@gmail.com";   // ← đổi thành email của bạn
-        private const string SenderAppPassword = "xxxx xxxx xxxx xxxx";  // ← App Password 16 ký tự
+        private static string SenderEmail       => AppConfig.SenderEmail;
+        private static string SenderAppPassword => AppConfig.SenderAppPassword;
         private const string SenderName        = "Student Reminder App";
         private const string SmtpHost          = "smtp.gmail.com";
         private const int    SmtpPort          = 587;
