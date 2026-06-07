@@ -370,7 +370,7 @@ namespace StudentReminderApp.Views.Pages
             
             try
             {
-                string path = @"D:\IT\HỌC\PBL3\PBL3-LTUD-APP\RENDER\HK2_2025.json";
+                string path = AppConfig.TkbHK2JsonPath;
                 if (System.IO.File.Exists(path))
                 {
                     string json = System.IO.File.ReadAllText(path);

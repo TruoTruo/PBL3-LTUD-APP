@@ -1419,6 +1419,11 @@ namespace StudentReminderApp.Views.Pages
             {
                 var openFileDialog = new Microsoft.Win32.OpenFileDialog();
                 openFileDialog.Filter = "JSON files (*.json)|*.json|All files (*.*)|*.*";
+                
+                if (System.IO.Directory.Exists(AppConfig.RenderFolderPath))
+                {
+                    openFileDialog.InitialDirectory = AppConfig.RenderFolderPath;
+                }
                 if (openFileDialog.ShowDialog() == true)
                 {
                     string jsonString = System.IO.File.ReadAllText(openFileDialog.FileName);
@@ -1426,7 +1431,7 @@ namespace StudentReminderApp.Views.Pages
                     
                     DateTime startOfWeek = DateTime.Today;
                     try {
-                        string timeJson = System.IO.File.ReadAllText(@"D:\IT\HỌC\PBL3\PBL3-LTUD-APP\RENDER\TimeWeekStart.json");
+                        string timeJson = System.IO.File.ReadAllText(AppConfig.TimeWeekStartJsonPath);
                         var timeObj = Newtonsoft.Json.Linq.JObject.Parse(timeJson);
                         if (DateTime.TryParse(timeObj["firstWeekStartDate"]?.ToString(), out DateTime parsed)) {
                             startOfWeek = parsed;

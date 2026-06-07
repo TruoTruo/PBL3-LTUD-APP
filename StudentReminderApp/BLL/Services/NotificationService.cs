@@ -26,7 +26,7 @@ namespace StudentReminderApp.Services
 
         public static void Start()
         {
-            _timer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(10) };
+            _timer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(15) };
             _timer.Tick += CheckReminders;
             _timer.Start();
         }
@@ -84,18 +84,20 @@ namespace StudentReminderApp.Services
                                     string key = $"{id}_{mins}";
                                     if (!_notifiedKeys.Contains(key)) {
                                         _notifiedKeys.Add(key);
-                                        string msgBody = $"Sắp diễn ra lúc {startLocal:HH:mm} ({mins} phút nữa)\nTại: {reader["location"]}";
+                                        
+                                        string title = reader["title"].ToString();
+                                        string location = reader["location"]?.ToString();
+                                        if (string.IsNullOrWhiteSpace(location)) location = "Không có địa điểm";
+                                        string description = reader["description"]?.ToString();
+                                        if (string.IsNullOrWhiteSpace(description)) description = "Không có";
+                                        
+                                        string msgBody = $"Sự kiện sẽ diễn ra sau {mins} phút nữa.\n\nThời gian: {startLocal:HH:mm} - {endLocal:HH:mm}\nĐịa điểm: {location}\nMô tả: {description}";
                                         
                                         bool sendEmail = (channel == "EMAIL" || channel == "BOTH") && !string.IsNullOrWhiteSpace(email);
                                         bool showPush = channel == "PUSH" || channel == "BOTH" || (channel == "EMAIL" && string.IsNullOrWhiteSpace(email));
 
                                         if (sendEmail) {
-                                            string title = reader["title"].ToString();
-                                            string location = reader["location"]?.ToString();
-                                            if (string.IsNullOrWhiteSpace(location)) location = "Không có địa điểm";
-                                            string description = reader["description"]?.ToString();
-                                            if (string.IsNullOrWhiteSpace(description)) description = "Không có";
-                                            else description = description.Replace("\n", "<br/>");
+                                            string htmlDescription = description.Replace("\n", "<br/>");
                                             string htmlBody = $@"
 <div style='font-family:Segoe UI,Arial,sans-serif;max-width:480px;margin:auto;border:1px solid #E5E7EB;border-radius:12px;overflow:hidden'>
   <div style='background:#4F46E5;padding:24px 32px'>
@@ -107,7 +109,7 @@ namespace StudentReminderApp.Services
     <div style='background:#F3F4F6;border-radius:8px;padding:16px;margin:24px 0'>
       <p style='margin:0 0 12px 0;color:#374151'><strong>Thời gian:</strong> {startLocal:HH:mm} - {endLocal:HH:mm} ({startLocal:dd/MM/yyyy})</p>
       <p style='margin:0 0 12px 0;color:#374151'><strong>Địa điểm:</strong> {location}</p>
-      <p style='margin:0;color:#374151'><strong>Mô tả:</strong> {description}</p>
+      <p style='margin:0;color:#374151'><strong>Mô tả:</strong> {htmlDescription}</p>
     </div>
     <p style='font-size:13px;color:#9CA3AF;margin-bottom:0'>Email gửi tự động từ Student Reminder App.</p>
   </div>
@@ -116,7 +118,7 @@ namespace StudentReminderApp.Services
                                         }
                                         
                                         if (showPush) {
-                                            ShowToast(reader["title"].ToString(), msgBody, snoozeMins);
+                                            ShowToast(title, msgBody, snoozeMins);
                                         }
                                     }
                                 }
@@ -131,8 +133,18 @@ namespace StudentReminderApp.Services
         {
             App.Current.Dispatcher.Invoke(() => {
                 var toast = new NotificationPopup(title, body);
+                
+                // Ép kích thước Popup to ra và tự động kéo dài chiều cao theo nội dung
+                toast.Width = 380;
+                toast.SizeToContent = SizeToContent.Height;
+                
                 if (toast.Content is Border border && border.Child is Panel panel) {
-                var btnSnooze = new Button { Content = $"⏰ Nhắc lại sau {snoozeMins} phút", Margin = new Thickness(0, 15, 0, 0), Background = new SolidColorBrush(Color.FromRgb(241, 245, 249)), Foreground = new SolidColorBrush(Color.FromRgb(37, 99, 235)), Padding = new Thickness(10, 8, 10, 8), FontWeight = FontWeights.SemiBold, BorderThickness = new Thickness(0), Cursor = System.Windows.Input.Cursors.Hand, HorizontalAlignment = HorizontalAlignment.Stretch };
+                    // Bật tính năng tự động xuống dòng (Wrap) cho các TextBlock bên trong
+                    foreach (var child in panel.Children) {
+                        if (child is TextBlock tb) tb.TextWrapping = TextWrapping.Wrap;
+                    }
+
+                    var btnSnooze = new Button { Content = $"⏰ Nhắc lại sau {snoozeMins} phút", Margin = new Thickness(0, 15, 0, 0), Background = new SolidColorBrush(Color.FromRgb(241, 245, 249)), Foreground = new SolidColorBrush(Color.FromRgb(37, 99, 235)), Padding = new Thickness(10, 8, 10, 8), FontWeight = FontWeights.SemiBold, BorderThickness = new Thickness(0), Cursor = System.Windows.Input.Cursors.Hand, HorizontalAlignment = HorizontalAlignment.Stretch };
                     btnSnooze.Click += (s, ev) => { 
                         _snoozed.Add(new SnoozedItem { Title = title, Body = body, AlertTime = DateTime.Now.AddMinutes(snoozeMins), SnoozeMins = snoozeMins });
                         toast.Close(); 

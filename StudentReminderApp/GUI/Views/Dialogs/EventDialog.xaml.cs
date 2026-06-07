@@ -401,7 +401,7 @@ namespace StudentReminderApp.Views.Dialogs
                 // Auto fill from JSON
                 try
                 {
-                    string jsonPath = @"D:\IT\HỌC\PBL3\PBL3-LTUD-APP\RENDER\HK2_2025.json";
+                    string jsonPath = AppConfig.TkbHK2JsonPath;
                     if (System.IO.File.Exists(jsonPath))
                     {
                         string jsonContent = System.IO.File.ReadAllText(jsonPath);
@@ -444,7 +444,7 @@ namespace StudentReminderApp.Views.Dialogs
 
                                             DateTime firstWeekStart = DateTime.Today;
                                             try {
-                                                string twPath = @"D:\IT\HỌC\PBL3\PBL3-LTUD-APP\RENDER\TimeWeekStart.json";
+                                                string twPath = AppConfig.TimeWeekStartJsonPath;
                                                 if (System.IO.File.Exists(twPath)) {
                                                     var twRoot = Newtonsoft.Json.Linq.JObject.Parse(System.IO.File.ReadAllText(twPath));
                                                     string startDateStr = twRoot["firstWeekStartDate"]?.ToString();
@@ -473,7 +473,7 @@ namespace StudentReminderApp.Views.Dialogs
                                                     TimeSpan tEnd = new TimeSpan(9,0,0);
                                                     if (startP > 0) {
                                                         try {
-                                                            string timeJsonPath = @"D:\IT\HỌC\PBL3\PBL3-LTUD-APP\RENDER\TimePeriod.json";
+                                                            string timeJsonPath = AppConfig.TimePeriodJsonPath;
                                                             if (System.IO.File.Exists(timeJsonPath)) {
                                                                 var tRoot = Newtonsoft.Json.Linq.JObject.Parse(System.IO.File.ReadAllText(timeJsonPath));
                                                                 var periods = tRoot["periods"] as Newtonsoft.Json.Linq.JArray;

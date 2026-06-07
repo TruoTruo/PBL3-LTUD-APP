@@ -138,7 +138,7 @@ namespace StudentReminderApp.Views.Pages
 
         // ── QUẢN LÝ DANH MỤC LÕI (Cột JSON) ─────────────────────────
         private OrganizationData _orgData = new();
-        private readonly string _orgJsonPath = @"D:\IT\HỌC\PBL3\PBL3-LTUD-APP\RENDER\Profile\Organization.json";
+        private readonly string _orgJsonPath = AppConfig.OrganizationJsonPath;
 
         private void LoadDanhMuc()
         {

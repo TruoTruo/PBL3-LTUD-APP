@@ -32,10 +32,9 @@ namespace StudentReminderApp.Views.Pages
 
         private void LoadDanhMuc()
         {
-            string renderFolder = @"D:\IT\HỌC\PBL3\PBL3-LTUD-APP\RENDER\Profile";
             try
             {
-                string path = System.IO.Path.Combine(renderFolder, "Organization.json");
+                string path = AppConfig.OrganizationJsonPath;
                 if (System.IO.File.Exists(path))
                 {
                     string json = System.IO.File.ReadAllText(path);
