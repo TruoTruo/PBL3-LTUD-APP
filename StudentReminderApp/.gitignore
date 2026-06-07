@@ -44,3 +44,8 @@ FakesAssemblies/
 
 # GhostDoc plugin setting file
 *.GhostDoc.xml
+
+# Secure environment variables and local configurations
+.env
+*.env
+*AppConfig.local.cs
