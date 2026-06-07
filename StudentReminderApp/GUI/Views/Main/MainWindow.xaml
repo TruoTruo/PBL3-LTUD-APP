@@ -18,7 +18,7 @@
         </Grid.ColumnDefinitions>
 
         <!-- SIDEBAR -->
-        <Border Grid.Column="0" Width="72" Background="{DynamicResource TextPrimaryBrush}" CornerRadius="36" Margin="16,16,0,16" Padding="0,32">
+        <Border Grid.Column="0" Width="72" Background="{DynamicResource SidebarBrush}" CornerRadius="36" Margin="16,16,16,16" Padding="0,32">
             <DockPanel>
                 <!-- TOP GROUP (Avatar + Main Nav) -->
                 <StackPanel DockPanel.Dock="Top" HorizontalAlignment="Center">

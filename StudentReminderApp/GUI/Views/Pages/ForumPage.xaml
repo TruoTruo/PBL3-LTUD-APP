@@ -57,19 +57,19 @@
                             <Border Name="Border" Padding="16,8" Margin="0,0,8,0" CornerRadius="8,8,0,0" Background="Transparent" BorderThickness="0,0,0,3" BorderBrush="Transparent">
                                 <ContentPresenter x:Name="ContentSite" VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Header" Margin="10,2"/>
                             </Border>
-                            <ControlTemplate.Triggers>
-                                <Trigger Property="IsSelected" Value="True">
-                                    <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource TextPrimaryBrush}" />
-                                    <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}" />
-                                </Trigger>
-                                <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter TargetName="Border" Property="Background" Value="#F1F5F9" />
-                                </Trigger>
-                            </ControlTemplate.Triggers>
-                        </ControlTemplate>
-                    </Setter.Value>
-                </Setter>
-            </Style>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource TextPrimaryBrush}" />
+                                <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}" />
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Border" Property="Background" Value="{DynamicResource SurfaceBrush}" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
         </TabControl.Resources>
 
         <!-- ══════════════════════════════════════════
@@ -646,6 +646,7 @@
                             <TextBlock
                                 VerticalAlignment="Center"
                                 FontSize="14" FontWeight="SemiBold"
+                                Foreground="Black"
                                 Text="🛡️ Bài chờ duyệt: " />
                             <Border
                                 Margin="4,0,0,0" Padding="8,2"

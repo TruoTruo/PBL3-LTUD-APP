@@ -13,7 +13,6 @@ namespace StudentReminderApp.ViewModels
 {
     public class ClassItem
     {
-        public long?  IdLop  { get; set; }
         public string TenLop { get; set; } = string.Empty;
     }
 
@@ -133,9 +132,9 @@ namespace StudentReminderApp.ViewModels
                 Application.Current.Dispatcher.Invoke(() =>
                 {
                     ClassList.Clear();
-                    ClassList.Add(new ClassItem { IdLop = null, TenLop = "Tất cả lớp" });
+                    ClassList.Add(new ClassItem { TenLop = "Tất cả lớp" });
                     foreach (var (id, ten) in lopTask.Result)
-                        ClassList.Add(new ClassItem { IdLop = id, TenLop = ten });
+                        ClassList.Add(new ClassItem { TenLop = ten });
 
                     if (_selectedClass == null) { _selectedClass = ClassList[0]; OnPropertyChanged(nameof(SelectedClass)); }
 
@@ -159,7 +158,7 @@ namespace StudentReminderApp.ViewModels
         private bool ApplyFilter(object obj)
         {
             if (obj is not StudentModel sv) return false;
-            if (_selectedClass?.IdLop != null && sv.IdLop != _selectedClass.IdLop) return false;
+            if (!string.IsNullOrEmpty(_selectedClass?.TenLop) && _selectedClass.TenLop != "Tất cả lớp" && sv.TenLop != _selectedClass.TenLop) return false;
             if (_showBannedOnly     && !sv.IsBanned)   return false;
             if (_showUnverifiedOnly &&  sv.IsVerified)  return false;
             if (!string.IsNullOrWhiteSpace(_searchText))

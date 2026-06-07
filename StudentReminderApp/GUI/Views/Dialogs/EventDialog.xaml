@@ -53,12 +53,12 @@
             <Setter Property="Background">
                 <Setter.Value>
                     <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                        <GradientStop Color="#475569" Offset="0" />
-                        <GradientStop Color="#1e293b" Offset="1" />
+                        <GradientStop Color="#1E3A8A" Offset="0" />
+                        <GradientStop Color="#0A192F" Offset="1" />
                     </LinearGradientBrush>
                 </Setter.Value>
             </Setter>
-            <Setter Property="Foreground" Value="{DynamicResource SurfaceBrush}"/>
+            <Setter Property="Foreground" Value="White"/>
             <Setter Property="FontWeight" Value="SemiBold"/>
             <Setter Property="FontSize" Value="14"/>
             <Setter Property="Padding" Value="32,10"/>
@@ -135,6 +135,80 @@
         <Style x:Key="InputModern" TargetType="TextBox" BasedOn="{StaticResource InputLineStyle}">
             <Setter Property="TextAlignment" Value="Center"/>
         </Style>
+
+        <!-- Style cho ComboBox bo góc tối màu -->
+        <Style x:Key="ModernComboBoxStyle" TargetType="ComboBox">
+            <Setter Property="Height" Value="36"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}"/>
+            <Setter Property="Background" Value="{DynamicResource PrimaryLightBrush}"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ComboBox">
+                        <Grid>
+                            <ToggleButton x:Name="ToggleButton" Focusable="false" Background="{TemplateBinding Background}" IsChecked="{Binding Path=IsDropDownOpen,Mode=TwoWay,RelativeSource={RelativeSource TemplatedParent}}" ClickMode="Press">
+                                <ToggleButton.Template>
+                                    <ControlTemplate TargetType="ToggleButton">
+                                        <Border Background="{TemplateBinding Background}" BorderBrush="Transparent" BorderThickness="0" CornerRadius="6" Padding="10,0">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*" />
+                                                    <ColumnDefinition Width="Auto" />
+                                                </Grid.ColumnDefinitions>
+                                                <ContentPresenter Content="{TemplateBinding Content}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                                <TextBlock Grid.Column="1" FontFamily="Segoe MDL2 Assets" Text="&#xE70D;" Foreground="{DynamicResource TextSecondaryBrush}" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,5,0" FontSize="10"/>
+                                            </Grid>
+                                        </Border>
+                                    </ControlTemplate>
+                                </ToggleButton.Template>
+                                <ToggleButton.Content>
+                                    <TextBlock Text="{TemplateBinding Text}" Foreground="{TemplateBinding Foreground}" FontSize="{TemplateBinding FontSize}" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                                </ToggleButton.Content>
+                            </ToggleButton>
+                            <Popup Name="Popup" Placement="Bottom" IsOpen="{TemplateBinding IsDropDownOpen}" AllowsTransparency="True" Focusable="False" PopupAnimation="Slide">
+                                <Grid Name="DropDown" SnapsToDevicePixels="True" MinWidth="{TemplateBinding ActualWidth}" MaxHeight="{TemplateBinding MaxDropDownHeight}">
+                                    <Border x:Name="DropDownBorder" Background="{DynamicResource SurfaceBrush}" BorderThickness="1" BorderBrush="{DynamicResource BorderBrush}" CornerRadius="6" Margin="0,4,0,4">
+                                        <Border.Effect>
+                                            <DropShadowEffect BlurRadius="10" ShadowDepth="2" Opacity="0.1" />
+                                        </Border.Effect>
+                                        <ScrollViewer Margin="0,6,0,6" SnapsToDevicePixels="True">
+                                            <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Contained" />
+                                        </ScrollViewer>
+                                    </Border>
+                                </Grid>
+                            </Popup>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="ModernComboBoxItemStyle" TargetType="ComboBoxItem">
+            <Setter Property="Padding" Value="10,8"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ComboBoxItem">
+                        <Border x:Name="Border" Background="Transparent" Padding="{TemplateBinding Padding}" CornerRadius="4" Margin="4,2">
+                            <ContentPresenter />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Border" Property="Background" Value="{DynamicResource BgBrush}"/>
+                            </Trigger>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter TargetName="Border" Property="Background" Value="{DynamicResource BgBrush}"/>
+                                <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}"/>
+                                <Setter Property="FontWeight" Value="SemiBold"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </Window.Resources>
 
     <!-- Modal Card Container -->
@@ -183,18 +257,16 @@
                         
                         <StackPanel Grid.Column="0">
                             <TextBlock Text="LOẠI SỰ KIỆN" FontSize="12" FontWeight="SemiBold" Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,0,0,8"/>
-                            <ComboBox x:Name="CmbType" Padding="10,8" FontSize="14" BorderThickness="0" Background="#f1f5f9" SelectionChanged="CmbType_SelectionChanged">
+                            <ComboBox x:Name="CmbType" Padding="10,8" FontSize="14" Style="{StaticResource ModernComboBoxStyle}" ItemContainerStyle="{StaticResource ModernComboBoxItemStyle}" SelectionChanged="CmbType_SelectionChanged">
                                 <ComboBoxItem Tag="PERSONAL" Content="&#x1F4CB; Cá nhân"/>
                                 <ComboBoxItem Tag="ACADEMIC" Content="&#x1F4DA; Học tập"/>
-                                <ComboBoxItem Tag="EXAM" Content="&#x1F4DD; Lịch thi"/>
-                                <ComboBoxItem Tag="DEADLINE" Content="&#x23F2; Deadline"/>
                                 <ComboBoxItem Tag="REMINDER" Content="&#x23F0; Nhắc nhở"/>
                             </ComboBox>
                         </StackPanel>
                         
                         <StackPanel Grid.Column="2">
                             <TextBlock Text="LẶP LẠI" FontSize="12" FontWeight="SemiBold" Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,0,0,8"/>
-                            <ComboBox x:Name="CmbRecurrence" Padding="10,8" FontSize="14" BorderThickness="0" Background="#f1f5f9">
+                            <ComboBox x:Name="CmbRecurrence" Padding="10,8" FontSize="14" Style="{StaticResource ModernComboBoxStyle}" ItemContainerStyle="{StaticResource ModernComboBoxItemStyle}">
                                 <ComboBoxItem Tag="NONE" Content="Không lặp lại"/>
                                 <ComboBoxItem Tag="DAILY" Content="Hàng ngày"/>
                                 <ComboBoxItem Tag="WEEKLY" Content="Hàng tuần"/>
@@ -207,8 +279,7 @@
                     <StackPanel Margin="0,0,0,24">
                         <TextBlock Text="TAGS SỰ KIỆN" FontSize="12" FontWeight="SemiBold" Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,0,0,8"/>
                         <!-- Select Rounded -->
-                        <Border BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1" CornerRadius="20" HorizontalAlignment="Left" MinWidth="150" Background="Transparent">
-                            <ComboBox x:Name="TagsDropdownToggle" Text="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" IsEditable="True" IsReadOnly="True" Background="Transparent" BorderThickness="0" Padding="16,8" FontSize="14" Foreground="{DynamicResource TextPrimaryBrush}">
+                        <ComboBox x:Name="TagsDropdownToggle" Tag="Chọn Tag..." Text="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" IsEditable="True" IsReadOnly="True" Padding="10,8" FontSize="14" Style="{StaticResource ModernComboBoxStyle}" HorizontalAlignment="Left" MinWidth="150">
                                 <ComboBoxItem Padding="0">
                                     <ItemsControl x:Name="TagsListControl">
                                         <ItemsControl.ItemTemplate>
@@ -219,14 +290,13 @@
                                     </ItemsControl>
                                 </ComboBoxItem>
                             </ComboBox>
-                        </Border>
                     </StackPanel>
 
                     <!-- MÀU SẮC -->
                     <StackPanel Margin="0,0,0,24">
                         <TextBlock Text="MÀU SẮC" FontSize="12" FontWeight="SemiBold" Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,0,0,8"/>
                         <StackPanel Orientation="Horizontal">
-                            <RadioButton x:Name="RbColorBlue" Background="#1A73E8" GroupName="Colors" IsChecked="True" Style="{StaticResource ColorRadioStyle}"/>
+                            <RadioButton x:Name="RbColorBlue" Background="#E11D48" GroupName="Colors" IsChecked="True" Style="{StaticResource ColorRadioStyle}"/>
                             <RadioButton x:Name="RbColorRed" Background="#D93025" GroupName="Colors" Style="{StaticResource ColorRadioStyle}"/>
                             <RadioButton x:Name="RbColorGreen" Background="#1E8E3E" GroupName="Colors" Style="{StaticResource ColorRadioStyle}"/>
                             <RadioButton x:Name="RbColorYellow" Background="#F9AB00" GroupName="Colors" Style="{StaticResource ColorRadioStyle}"/>

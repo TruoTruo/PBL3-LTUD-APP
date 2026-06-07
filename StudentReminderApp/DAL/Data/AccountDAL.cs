@@ -18,12 +18,11 @@ namespace StudentReminderApp.DAL
                 SELECT 
                     a.id_acc, a.username, r.role_name,
                     u.ho_ten, u.email, u.sdt, u.ngay_sinh, 
-                    u.nganh_hoc, u.truong_hoc, u.khoa, l.ten_lop, 
+                    u.nganh_hoc, u.truong_hoc, u.khoa, u.ten_lop, 
                     u.nhom, u.que_quan, u.avatar_url
                 FROM ACCOUNT a
                 LEFT JOIN ROLES r ON a.id_role = r.id_role
                 LEFT JOIN [USER] u ON a.id_acc = u.id_acc
-                LEFT JOIN LOP_SINH_VIEN l ON u.id_lop = l.id_lop
                 ORDER BY a.id_role ASC, u.ho_ten ASC";
 
             try
@@ -229,7 +228,7 @@ namespace StudentReminderApp.DAL
         public User GetUserByIdAcc(long idAcc)
         {
             const string sql = @"
-                SELECT id_acc, ho_ten, email, sdt, ngay_sinh, id_lop, nganh_hoc, truong_hoc, khoa, nhom, que_quan, avatar_url
+                SELECT id_acc, ho_ten, email, sdt, ngay_sinh, ten_lop, nganh_hoc, truong_hoc, khoa, nhom, que_quan, avatar_url
                 FROM   [USER]
                 WHERE  id_acc = @id";
             try
@@ -250,8 +249,7 @@ namespace StudentReminderApp.DAL
                                 u.Email    = r["email"]     == DBNull.Value ? string.Empty : r["email"].ToString();
                                 u.Sdt      = r["sdt"]       == DBNull.Value ? string.Empty : r["sdt"].ToString();
                                 u.NgaySinh = r["ngay_sinh"] == DBNull.Value ? (DateTime?)null : Convert.ToDateTime(r["ngay_sinh"]);
-                                u.IdLop    = r["id_lop"]    == DBNull.Value ? (long?)null    : Convert.ToInt64(r["id_lop"]);
-                                u.TenLop   = string.Empty;
+                                u.TenLop   = r["ten_lop"]   == DBNull.Value ? string.Empty : r["ten_lop"].ToString();
                                 u.NganhHoc = r["nganh_hoc"] == DBNull.Value ? string.Empty : r["nganh_hoc"].ToString();
                                 u.TruongHoc = r["truong_hoc"] == DBNull.Value ? string.Empty : r["truong_hoc"].ToString();
                                 u.Khoa = r["khoa"] == DBNull.Value ? string.Empty : r["khoa"].ToString();
@@ -282,8 +280,7 @@ namespace StudentReminderApp.DAL
                        ISNULL(u.email,    '') AS email,
                        ISNULL(u.sdt,      '') AS sdt,
                        u.ngay_sinh,
-                       u.id_lop,
-                       ISNULL(l.ten_lop,  '') AS ten_lop,
+                       ISNULL(u.ten_lop,  '') AS ten_lop,
                        ISNULL(u.nganh_hoc,'') AS nganh_hoc,
                        ISNULL(u.truong_hoc,'') AS truong_hoc,
                        ISNULL(u.khoa,'') AS khoa,
@@ -291,7 +288,6 @@ namespace StudentReminderApp.DAL
                        ISNULL(u.que_quan,'') AS que_quan,
                        ISNULL(u.avatar_url,'') AS avatar_url
                 FROM   [USER] u
-                LEFT JOIN LOP_SINH_VIEN l ON l.id_lop = u.id_lop
                 WHERE  u.id_acc = @idAcc";
             try
             {
@@ -311,7 +307,6 @@ namespace StudentReminderApp.DAL
                                 u.Email    = r["email"]     == DBNull.Value ? string.Empty : r["email"].ToString();
                                 u.Sdt      = r["sdt"]       == DBNull.Value ? string.Empty : r["sdt"].ToString();
                                 u.NgaySinh = r["ngay_sinh"] == DBNull.Value ? (DateTime?)null : Convert.ToDateTime(r["ngay_sinh"]);
-                                u.IdLop    = r["id_lop"]    == DBNull.Value ? (long?)null    : Convert.ToInt64(r["id_lop"]);
                                 u.TenLop   = r["ten_lop"]   == DBNull.Value ? string.Empty   : r["ten_lop"].ToString();
                                 u.NganhHoc = r["nganh_hoc"] == DBNull.Value ? string.Empty   : r["nganh_hoc"].ToString();
                                 u.TruongHoc = r["truong_hoc"] == DBNull.Value ? string.Empty   : r["truong_hoc"].ToString();
@@ -386,7 +381,7 @@ namespace StudentReminderApp.DAL
                 SELECT SCOPE_IDENTITY();";
 
             const string sqlUser = @"
-                INSERT INTO [USER] (id_acc, ho_ten, email, sdt, id_lop)
+                INSERT INTO [USER] (id_acc, ho_ten, email, sdt, ten_lop)
                 VALUES (@idAcc, @hoTen, @email, @sdt, NULL);";
 
             using (SqlConnection conn = GetConnection())

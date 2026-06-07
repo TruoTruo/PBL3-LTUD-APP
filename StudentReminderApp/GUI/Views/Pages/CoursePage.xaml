@@ -109,6 +109,7 @@
 
         <Style TargetType="DataGridRow">
             <Setter Property="Background" Value="{DynamicResource SurfaceBrush}" />
+            <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}" />
             <Setter Property="BorderThickness" Value="0,0,0,1" />
             <Setter Property="BorderBrush" Value="{DynamicResource BorderBrush}" />
             <Style.Triggers>
@@ -367,8 +368,8 @@
                                 BorderThickness="1" 
                                 BorderBrush="{DynamicResource BorderBrush}"
                                 Background="{DynamicResource SurfaceBrush}" 
-                                RowBackground="White" 
-                                AlternatingRowBackground="White"
+                                RowBackground="{DynamicResource SurfaceBrush}" 
+                                AlternatingRowBackground="{DynamicResource SurfaceBrush}"
                                 MinRowHeight="45" 
                                 ColumnHeaderHeight="45" 
                                 SelectionMode="Single"
@@ -400,6 +401,7 @@
                                 <Style TargetType="DataGridCell">
                                     <Setter Property="BorderThickness" Value="0"/>
                                     <Setter Property="Padding" Value="5"/>
+                                    <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}"/>
                                     <Setter Property="Template">
                                         <Setter.Value>
                                             <ControlTemplate TargetType="DataGridCell">
@@ -647,8 +649,8 @@
                                   GridLinesVisibility="Horizontal"
                                   HeadersVisibility="Column"
                                   ColumnHeaderHeight="40"
-                                  RowBackground="White"
-                                  AlternatingRowBackground="#FAFAFA"
+                                  RowBackground="{DynamicResource SurfaceBrush}"
+                                  AlternatingRowBackground="{DynamicResource BgBrush}"
                                   BorderThickness="0"
                                   MinRowHeight="36"
                                   FontSize="11.5"
@@ -770,8 +772,8 @@
                                   GridLinesVisibility="Horizontal"
                                   HeadersVisibility="Column"
                                   ColumnHeaderHeight="40"
-                                  RowBackground="White"
-                                  AlternatingRowBackground="#FAFAFA"
+                                  RowBackground="{DynamicResource SurfaceBrush}"
+                                  AlternatingRowBackground="{DynamicResource BgBrush}"
                                   BorderThickness="0"
                                   MinRowHeight="36"
                                   FontSize="11.5"

@@ -25,12 +25,10 @@ namespace StudentReminderApp.DAL
                     u.ho_ten,
                     ISNULL(u.email, '') AS email,
                     ISNULL(u.sdt,   '') AS sdt,
-                    ISNULL(l.ten_lop,   N'Chưa phân lớp') AS ten_lop,
-                    ISNULL(l.nien_khoa, '')                AS nien_khoa,
-                    u.id_lop
+                    ISNULL(u.ten_lop,   N'Chưa phân lớp') AS ten_lop,
+                    ''                                     AS nien_khoa
                 FROM ACCOUNT a
                 JOIN [USER]  u ON a.id_acc  = u.id_acc
-                LEFT JOIN LOP_SINH_VIEN l ON u.id_lop = l.id_lop
                 JOIN ROLES   r ON a.id_role = r.id_role
                 WHERE r.role_name = N'Student'
                 ORDER BY a.created_at DESC";
@@ -52,7 +50,6 @@ namespace StudentReminderApp.DAL
                         Sdt        = r["sdt"].ToString()       ?? "",
                         TenLop     = r["ten_lop"].ToString()   ?? "",
                         NienKhoa   = r["nien_khoa"].ToString() ?? "",
-                        IdLop      = r["id_lop"]     != DBNull.Value ? Convert.ToInt64(r["id_lop"])        : null,
                         LockUntil  = r["lock_until"] != DBNull.Value ? Convert.ToDateTime(r["lock_until"]) : null,
                         Status     = r["status"].ToString()    ?? "Active",
                         IsVerified = r["is_verified"] != DBNull.Value && Convert.ToBoolean(r["is_verified"]),
@@ -95,17 +92,17 @@ namespace StudentReminderApp.DAL
         // Cập nhật lớp của sinh viên (từ Profile hoặc Admin)
         // idLop = null → xóa lớp (Chưa phân lớp)
         // ─────────────────────────────────────────────────────────
-        public bool UpdateStudentClass(long idAcc, long? idLop)
+        public bool UpdateStudentClass(long idAcc, string? tenLop)
         {
-            const string sql = "UPDATE [USER] SET id_lop = @idLop WHERE id_acc = @idAcc";
+            const string sql = "UPDATE [USER] SET ten_lop = @tenLop WHERE id_acc = @idAcc";
             try
             {
                 using var conn = GetConnection();
                 if (conn.State == ConnectionState.Closed) conn.Open();
                 using var cmd = new SqlCommand(sql, conn);
                 cmd.Parameters.Add("@idAcc", SqlDbType.BigInt).Value = idAcc;
-                cmd.Parameters.Add("@idLop", SqlDbType.BigInt).Value =
-                    idLop.HasValue ? (object)idLop.Value : DBNull.Value;
+                cmd.Parameters.Add("@tenLop", SqlDbType.NVarChar).Value =
+                    string.IsNullOrEmpty(tenLop) ? DBNull.Value : (object)tenLop;
                 return cmd.ExecuteNonQuery() > 0;
             }
             catch (Exception ex)

@@ -70,7 +70,7 @@
                 <TextBlock Text="Please fill in the details below" FontSize="14" Foreground="#777777" HorizontalAlignment="Center" Margin="0,0,0,25"/>
 
                 <TextBlock Text="HỌ VÀ TÊN *" FontSize="13" FontWeight="SemiBold" FontFamily="Segoe UI" Foreground="#777777" Margin="0,0,0,4"/>
-                <TextBox x:Name="TxtHoTen" Height="36" Background="Transparent" FontSize="16" Padding="0,8,0,8" Margin="0,0,0,12">
+                <TextBox x:Name="TxtHoTen" Height="36" Background="Transparent" FontSize="16" Padding="0,8,0,8" Margin="0,0,0,12" Foreground="{DynamicResource TextPrimaryBrush}" CaretBrush="{DynamicResource TextPrimaryBrush}">
                     <TextBox.Style>
                         <Style TargetType="TextBox">
                             <Setter Property="BorderBrush" Value="#D1D1D1"/>
@@ -86,7 +86,7 @@
                 </TextBox>
 
                 <TextBlock Text="ĐỊA CHỈ GMAIL *" FontSize="13" FontWeight="SemiBold" FontFamily="Segoe UI" Foreground="#777777" Margin="0,0,0,4"/>
-                <TextBox x:Name="TxtEmail" Height="36" Background="Transparent" FontSize="16" Padding="0,8,0,8" Margin="0,0,0,12">
+                <TextBox x:Name="TxtEmail" Height="36" Background="Transparent" FontSize="16" Padding="0,8,0,8" Margin="0,0,0,12" Foreground="{DynamicResource TextPrimaryBrush}" CaretBrush="{DynamicResource TextPrimaryBrush}">
                     <TextBox.Style>
                         <Style TargetType="TextBox">
                             <Setter Property="BorderBrush" Value="#D1D1D1"/>
@@ -102,7 +102,7 @@
                 </TextBox>
 
                 <TextBlock Text="MÃ SỐ SINH VIÊN (MSSV) *" FontSize="13" FontWeight="SemiBold" FontFamily="Segoe UI" Foreground="#777777" Margin="0,0,0,4"/>
-                <TextBox x:Name="TxtMssv" Height="36" Background="Transparent" FontSize="16" Padding="0,8,0,8" Margin="0,0,0,4" MaxLength="9">
+                <TextBox x:Name="TxtMssv" Height="36" Background="Transparent" FontSize="16" Padding="0,8,0,8" Margin="0,0,0,4" MaxLength="9" Foreground="{DynamicResource TextPrimaryBrush}" CaretBrush="{DynamicResource TextPrimaryBrush}">
                     <TextBox.Style>
                         <Style TargetType="TextBox">
                             <Setter Property="BorderBrush" Value="#D1D1D1"/>
@@ -119,7 +119,7 @@
                 <TextBlock Text="MSSV gồm 9 chữ số, bắt đầu bằng '102'" FontSize="11" Foreground="#999999" Margin="0,0,0,12"/>
 
                 <TextBlock Text="MẬT KHẨU *" FontSize="13" FontWeight="SemiBold" FontFamily="Segoe UI" Foreground="#777777" Margin="0,0,0,4"/>
-                <PasswordBox x:Name="TxtPwd" Height="36" Background="Transparent" FontSize="16" Padding="0,8,0,8" Margin="0,0,0,12">
+                <PasswordBox x:Name="TxtPwd" Height="36" Background="Transparent" FontSize="16" Padding="0,8,0,8" Margin="0,0,0,12" Foreground="{DynamicResource TextPrimaryBrush}" CaretBrush="{DynamicResource TextPrimaryBrush}">
                     <PasswordBox.Style>
                         <Style TargetType="PasswordBox">
                             <Setter Property="BorderBrush" Value="#D1D1D1"/>
@@ -135,7 +135,7 @@
                 </PasswordBox>
 
                 <TextBlock Text="XÁC NHẬN MẬT KHẨU *" FontSize="13" FontWeight="SemiBold" FontFamily="Segoe UI" Foreground="#777777" Margin="0,0,0,4"/>
-                <PasswordBox x:Name="TxtConfirm" Height="36" Background="Transparent" FontSize="16" Padding="0,8,0,8" Margin="0,0,0,12">
+                <PasswordBox x:Name="TxtConfirm" Height="36" Background="Transparent" FontSize="16" Padding="0,8,0,8" Margin="0,0,0,12" Foreground="{DynamicResource TextPrimaryBrush}" CaretBrush="{DynamicResource TextPrimaryBrush}">
                     <PasswordBox.Style>
                         <Style TargetType="PasswordBox">
                             <Setter Property="BorderBrush" Value="#D1D1D1"/>

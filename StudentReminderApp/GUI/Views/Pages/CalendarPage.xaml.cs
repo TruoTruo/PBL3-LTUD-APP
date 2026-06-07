@@ -413,11 +413,11 @@ namespace StudentReminderApp.Views.Pages
 
             var cell = new Border
             {
-                BorderBrush = new SolidColorBrush(Color.FromRgb(218, 220, 224)),
                 BorderThickness = new Thickness(0, 0, 1, 1),
-                Background = Brushes.White,
                 Padding = new Thickness(0, 4, 0, 0), Cursor = Cursors.Hand
             };
+            cell.SetResourceReference(Border.BorderBrushProperty, "BorderBrush");
+            cell.Background = Brushes.Transparent; // Tránh nền trắng
 
             var panel = new StackPanel();
             
@@ -430,20 +430,28 @@ namespace StudentReminderApp.Views.Pages
                 Margin = new Thickness(0, 0, 0, 2)
             };
             
-            dayNumContainer.Child = new TextBlock {
+            var txtDay = new TextBlock {
                 Text = date.Day.ToString(), 
                 FontSize = 12, FontWeight = FontWeights.Medium,
-                HorizontalAlignment = HorizontalAlignment.Center, VerticalAlignment = VerticalAlignment.Center,
-                Foreground = isToday ? Brushes.White : 
-                             isOtherMonth ? new SolidColorBrush(Color.FromRgb(112, 117, 122)) : new SolidColorBrush(Color.FromRgb(60, 64, 67))
+                HorizontalAlignment = HorizontalAlignment.Center, VerticalAlignment = VerticalAlignment.Center
             };
+            
+            if (isToday)
+                txtDay.Foreground = Brushes.White;
+            else if (isOtherMonth)
+                txtDay.SetResourceReference(TextBlock.ForegroundProperty, "TextSecondaryBrush");
+            else
+                txtDay.SetResourceReference(TextBlock.ForegroundProperty, "TextPrimaryBrush");
+
+            dayNumContainer.Child = txtDay;
             panel.Children.Add(dayNumContainer);
 
             foreach (var ev in events.Take(3)) panel.Children.Add(CreateEventChip(ev));
 
             if (events.Count > 3)
             {
-                var more = new TextBlock { Text = $"{events.Count - 3} sự kiện khác", FontSize = 11, FontWeight = FontWeights.SemiBold, Foreground = new SolidColorBrush(Color.FromRgb(60, 64, 67)), Margin = new Thickness(8, 2, 0, 0) };
+                var more = new TextBlock { Text = $"{events.Count - 3} sự kiện khác", FontSize = 11, FontWeight = FontWeights.SemiBold, Margin = new Thickness(8, 2, 0, 0) };
+                more.SetResourceReference(TextBlock.ForegroundProperty, "TextPrimaryBrush");
                 more.MouseUp += (s, e) => {
                     e.Handled = true;
                     ShowPopupAllEvents(date, events, (UIElement)s);

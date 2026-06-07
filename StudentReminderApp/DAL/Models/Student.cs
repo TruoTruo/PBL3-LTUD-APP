@@ -21,12 +21,6 @@ namespace StudentReminderApp.Models
             set { _tenLop = value; OnPropertyChanged(); }
         }
 
-        private long? _idLop;
-        public long? IdLop
-        {
-            get => _idLop;
-            set { _idLop = value; OnPropertyChanged(); }
-        }
 
         // ── STATUS ───────────────────────────────────────────────
         private string _status = "Active";

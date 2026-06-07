@@ -9,7 +9,6 @@ namespace StudentReminderApp.Models
         public string?   Email    { get; set; }
         public string?   Sdt      { get; set; }
         public DateTime? NgaySinh { get; set; }
-        public long?     IdLop    { get; set; }
         public string?   TenLop   { get; set; }
         public string?   NganhHoc { get; set; }
         public string?   TruongHoc { get; set; }

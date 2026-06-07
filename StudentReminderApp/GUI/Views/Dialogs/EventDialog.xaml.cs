@@ -117,13 +117,12 @@ namespace StudentReminderApp.Views.Dialogs
         {
             var grid = new Grid { Margin = new Thickness(0, 0, 0, 16) };
             grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
-            grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(20) });
-            grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
             grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
 
-            var stCol1 = new StackPanel { };
-            Grid.SetColumn(stCol1, 0);
+            var mainStack = new StackPanel { Margin = new Thickness(0, 0, 0, 0) };
+            Grid.SetColumn(mainStack, 0);
             
+            var stCol1 = new StackPanel { Margin = new Thickness(0, 0, 0, 12) };
             var grid1 = new Grid { Margin = new Thickness(0, 0, 0, 4) };
             grid1.Children.Add(new TextBlock { Text = "BẮT ĐẦU *", Style = (Style)FindResource("FieldLabel"), HorizontalAlignment = HorizontalAlignment.Left, VerticalAlignment = VerticalAlignment.Center, Margin = new Thickness(0) });
             var chkAllDay = new CheckBox { Content = "Cả ngày", HorizontalAlignment = HorizontalAlignment.Right, VerticalAlignment = VerticalAlignment.Center, Foreground = new SolidColorBrush(Color.FromRgb(95, 99, 104)), IsChecked = isAllDay };
@@ -132,34 +131,43 @@ namespace StudentReminderApp.Views.Dialogs
 
             var grid2 = new Grid { Margin = new Thickness(0, 4, 0, 0) };
             grid2.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
-            grid2.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(80) });
-            var dpStart = new DatePicker { Height = 36, Margin = new Thickness(0, 0, 8, 0), BorderThickness = new Thickness(0, 0, 0, 1), BorderBrush = new SolidColorBrush(Color.FromRgb(224, 224, 224)), Background = Brushes.Transparent, SelectedDate = start };
-            var txtStart = new TextBox { Height = 36, BorderThickness = new Thickness(0, 0, 0, 1), BorderBrush = new SolidColorBrush(Color.FromRgb(224, 224, 224)), Background = Brushes.Transparent, HorizontalContentAlignment = HorizontalAlignment.Center, VerticalContentAlignment = VerticalAlignment.Center, FontSize = 14, Text = startTime.ToString(@"hh\:mm") };
-            Grid.SetColumn(dpStart, 0); Grid.SetColumn(txtStart, 1);
-            grid2.Children.Add(dpStart); grid2.Children.Add(txtStart);
+            grid2.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
+            var dpStart = new DatePicker { Height = 36, Margin = new Thickness(0, 0, 16, 0), BorderThickness = new Thickness(0, 0, 0, 1), BorderBrush = new SolidColorBrush(Color.FromRgb(224, 224, 224)), Background = Brushes.Transparent, SelectedDate = start };
+            Grid.SetColumn(dpStart, 0);
+            grid2.Children.Add(dpStart);
+
+            var timeStartPanel = CreateTimePickerPanel(startTime, "Start");
+            Grid.SetColumn(timeStartPanel, 1);
+            grid2.Children.Add(timeStartPanel);
             stCol1.Children.Add(grid2);
 
             var stCol2 = new StackPanel { };
-            Grid.SetColumn(stCol2, 2);
-            stCol2.Children.Add(new TextBlock { Text = "KẾT THÚC *", Style = (Style)FindResource("FieldLabel") });
+            stCol2.Children.Add(new TextBlock { Text = "KẾT THÚC *", Style = (Style)FindResource("FieldLabel"), Margin = new Thickness(0,0,0,4) });
             
             var grid3 = new Grid { Margin = new Thickness(0, 4, 0, 0) };
             grid3.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
-            grid3.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(80) });
-            var dpEnd = new DatePicker { Height = 36, Margin = new Thickness(0, 0, 8, 0), BorderThickness = new Thickness(0, 0, 0, 1), BorderBrush = new SolidColorBrush(Color.FromRgb(224, 224, 224)), Background = Brushes.Transparent, SelectedDate = end };
-            var txtEnd = new TextBox { Height = 36, BorderThickness = new Thickness(0, 0, 0, 1), BorderBrush = new SolidColorBrush(Color.FromRgb(224, 224, 224)), Background = Brushes.Transparent, HorizontalContentAlignment = HorizontalAlignment.Center, VerticalContentAlignment = VerticalAlignment.Center, FontSize = 14, Text = endTime.ToString(@"hh\:mm") };
-            Grid.SetColumn(dpEnd, 0); Grid.SetColumn(txtEnd, 1);
-            grid3.Children.Add(dpEnd); grid3.Children.Add(txtEnd);
+            grid3.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
+            var dpEnd = new DatePicker { Height = 36, Margin = new Thickness(0, 0, 16, 0), BorderThickness = new Thickness(0, 0, 0, 1), BorderBrush = new SolidColorBrush(Color.FromRgb(224, 224, 224)), Background = Brushes.Transparent, SelectedDate = end };
+            Grid.SetColumn(dpEnd, 0);
+            grid3.Children.Add(dpEnd);
+
+            var timeEndPanel = CreateTimePickerPanel(endTime, "End");
+            Grid.SetColumn(timeEndPanel, 1);
+            grid3.Children.Add(timeEndPanel);
             stCol2.Children.Add(grid3);
 
-            var btnDel = new Button { Content = "✕", Width = 38, Height = 38, Background = Brushes.Transparent, BorderThickness = new Thickness(0), Cursor = Cursors.Hand, Margin = new Thickness(8, 20, 0, 0) };
-            Grid.SetColumn(btnDel, 3);
+            mainStack.Children.Add(stCol1);
+            mainStack.Children.Add(stCol2);
+            grid.Children.Add(mainStack);
+
+            var btnDel = new Button { Content = "✕", Width = 38, Height = 38, Background = Brushes.Transparent, Foreground = Brushes.Red, BorderThickness = new Thickness(0), Cursor = Cursors.Hand, Margin = new Thickness(16, 0, 0, 0), VerticalAlignment = VerticalAlignment.Center };
+            Grid.SetColumn(btnDel, 1);
             btnDel.Click += (s, ev) => SchedulePanel.Children.Remove(grid);
-            if (SchedulePanel.Children.Count == 0) btnDel.Visibility = Visibility.Collapsed;
+            grid.Children.Add(btnDel);
             
-            chkAllDay.Checked += (s, ev) => { txtStart.Visibility = Visibility.Collapsed; txtEnd.Visibility = Visibility.Collapsed; };
-            chkAllDay.Unchecked += (s, ev) => { txtStart.Visibility = Visibility.Visible; txtEnd.Visibility = Visibility.Visible; };
-            if (isAllDay) { txtStart.Visibility = Visibility.Collapsed; txtEnd.Visibility = Visibility.Collapsed; }
+            chkAllDay.Checked += (s, ev) => { timeStartPanel.Visibility = Visibility.Collapsed; timeEndPanel.Visibility = Visibility.Collapsed; };
+            chkAllDay.Unchecked += (s, ev) => { timeStartPanel.Visibility = Visibility.Visible; timeEndPanel.Visibility = Visibility.Visible; };
+            if (isAllDay) { timeStartPanel.Visibility = Visibility.Collapsed; timeEndPanel.Visibility = Visibility.Collapsed; }
 
             dpStart.SelectedDateChanged += (s, ev) => {
                 if (ev.AddedItems.Count > 0 && ev.RemovedItems.Count > 0) {
@@ -172,11 +180,47 @@ namespace StudentReminderApp.Views.Dialogs
                 }
             };
 
-            grid.Children.Add(stCol1);
-            grid.Children.Add(stCol2);
-            grid.Children.Add(btnDel);
-
             SchedulePanel.Children.Add(grid);
+        }
+
+        private StackPanel CreateTimePickerPanel(TimeSpan time, string prefix)
+        {
+            var panel = new StackPanel { Orientation = Orientation.Horizontal };
+            var style = (Style)FindResource("ModernComboBoxStyle");
+            var itemStyle = (Style)FindResource("ModernComboBoxItemStyle");
+            var bg = (Brush)FindResource("PrimaryLightBrush");
+            var fg = (Brush)FindResource("TextPrimaryBrush");
+
+            var cmbHour = new ComboBox { Name = prefix + "Hour", Width = 64, Height = 36, Padding = new Thickness(8), BorderThickness = new Thickness(0), Background = bg, Foreground = fg, FontSize = 14, Style = style, ItemContainerStyle = itemStyle, IsEditable = true, IsReadOnly = true };
+            var cmbMin = new ComboBox { Name = prefix + "Min", Width = 64, Height = 36, Padding = new Thickness(8), BorderThickness = new Thickness(0), Background = bg, Foreground = fg, FontSize = 14, Style = style, ItemContainerStyle = itemStyle, IsEditable = true, IsReadOnly = true };
+            var cmbSec = new ComboBox { Name = prefix + "Sec", Width = 64, Height = 36, Padding = new Thickness(8), BorderThickness = new Thickness(0), Background = bg, Foreground = fg, FontSize = 14, Style = style, ItemContainerStyle = itemStyle, IsEditable = true, IsReadOnly = true };
+
+            for (int i = 0; i < 24; i++) cmbHour.Items.Add(new ComboBoxItem { Content = i.ToString("D2") });
+            for (int i = 0; i < 60; i++) cmbMin.Items.Add(new ComboBoxItem { Content = i.ToString("D2") });
+            for (int i = 0; i < 60; i++) cmbSec.Items.Add(new ComboBoxItem { Content = i.ToString("D2") });
+
+            cmbHour.Text = time.Hours.ToString("D2");
+            cmbMin.Text = time.Minutes.ToString("D2");
+            cmbSec.Text = time.Seconds.ToString("D2");
+
+            panel.Children.Add(cmbHour);
+            panel.Children.Add(new TextBlock { Text = ":", VerticalAlignment = VerticalAlignment.Center, Margin = new Thickness(4,0,4,0), FontWeight = FontWeights.Bold });
+            panel.Children.Add(cmbMin);
+            panel.Children.Add(new TextBlock { Text = ":", VerticalAlignment = VerticalAlignment.Center, Margin = new Thickness(4,0,4,0), FontWeight = FontWeights.Bold });
+            panel.Children.Add(cmbSec);
+
+            return panel;
+        }
+
+        private TimeSpan GetTimeFromPanel(StackPanel panel)
+        {
+            int h = 0, m = 0, s = 0;
+            if (panel.Children.Count >= 5) {
+                if (panel.Children[0] is ComboBox cbH && int.TryParse(cbH.Text, out int parsedH)) h = parsedH;
+                if (panel.Children[2] is ComboBox cbM && int.TryParse(cbM.Text, out int parsedM)) m = parsedM;
+                if (panel.Children[4] is ComboBox cbS && int.TryParse(cbS.Text, out int parsedS)) s = parsedS;
+            }
+            return new TimeSpan(h, m, s);
         }
 
         private void BtnAddSchedule_Click(object sender, RoutedEventArgs e)
@@ -302,13 +346,13 @@ namespace StudentReminderApp.Views.Dialogs
             grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
             grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
             var txtValue = new TextBox { Text = value.ToString(), Height = 38, Margin = new Thickness(0,0,8,0), VerticalContentAlignment = VerticalAlignment.Center, Style = (Style)FindResource("InputModern") };
-            var cmbUnit = new ComboBox { Height = 38, Margin = new Thickness(0,0,8,0) };
+            var cmbUnit = new ComboBox { Height = 38, Margin = new Thickness(0,0,8,0), Style = (Style)FindResource("ModernComboBoxStyle"), ItemContainerStyle = (Style)FindResource("ModernComboBoxItemStyle") };
             cmbUnit.Items.Add(new ComboBoxItem { Content = "Phút", Tag = "MINUTES" });
             cmbUnit.Items.Add(new ComboBoxItem { Content = "Giờ", Tag = "HOURS" });
             cmbUnit.Items.Add(new ComboBoxItem { Content = "Ngày", Tag = "DAYS" });
             foreach(ComboBoxItem item in cmbUnit.Items) { if (item.Tag?.ToString() == unit) item.IsSelected = true; }
             if (cmbUnit.SelectedIndex == -1) cmbUnit.SelectedIndex = 0;
-            var btnDel = new Button { Content = "✕", Width = 38, Height = 38, Background = System.Windows.Media.Brushes.Transparent, BorderThickness = new Thickness(0), Cursor = Cursors.Hand };
+            var btnDel = new Button { Content = "✕", Width = 38, Height = 38, Background = System.Windows.Media.Brushes.Transparent, Foreground = System.Windows.Media.Brushes.Red, BorderThickness = new Thickness(0), Cursor = Cursors.Hand };
             btnDel.Click += (s, ev) => ReminderPanel.Children.Remove(grid);
             Grid.SetColumn(txtValue, 0); Grid.SetColumn(cmbUnit, 1); Grid.SetColumn(btnDel, 2);
             grid.Children.Add(txtValue); grid.Children.Add(cmbUnit); grid.Children.Add(btnDel);
@@ -492,18 +536,19 @@ namespace StudentReminderApp.Views.Dialogs
             DateTime endUtc = DateTime.UtcNow.AddHours(1);
             if (SchedulePanel.Children.Count > 0 && SchedulePanel.Children[0] is Grid rowFirst)
             {
-                var stCol1 = rowFirst.Children[0] as StackPanel;
-                var stCol2 = rowFirst.Children[1] as StackPanel;
+                var mainStack = rowFirst.Children[0] as StackPanel;
+                var stCol1 = mainStack.Children[0] as StackPanel;
+                var stCol2 = mainStack.Children[1] as StackPanel;
                 var grid1 = stCol1.Children[0] as Grid;
                 var chkAllDay = grid1.Children[1] as CheckBox;
                 var grid2 = stCol1.Children[1] as Grid;
                 var dpStart = grid2.Children[0] as DatePicker;
-                var txtStart = grid2.Children[1] as TextBox;
+                var timeStartPanel = grid2.Children[1] as StackPanel;
                 var grid3 = stCol2.Children[1] as Grid;
                 var dpEnd = grid3.Children[0] as DatePicker;
-                var txtEnd = grid3.Children[1] as TextBox;
+                var timeEndPanel = grid3.Children[1] as StackPanel;
                 TimeSpan stTime = TimeSpan.Zero, enTime = new TimeSpan(23, 59, 59);
-                if (chkAllDay.IsChecked != true) { TimeSpan.TryParse(txtStart.Text, out stTime); TimeSpan.TryParse(txtEnd.Text, out enTime); }
+                if (chkAllDay.IsChecked != true) { stTime = GetTimeFromPanel(timeStartPanel); enTime = GetTimeFromPanel(timeEndPanel); }
                 startUtc = ((dpStart.SelectedDate ?? DateTime.Today).Date.Add(stTime)).ToUniversalTime();
                 endUtc = ((dpEnd.SelectedDate ?? DateTime.Today).Date.Add(enTime)).ToUniversalTime();
             }
@@ -578,30 +623,27 @@ namespace StudentReminderApp.Views.Dialogs
 
             foreach (Grid row in SchedulePanel.Children)
             {
-                var stCol1 = row.Children[0] as StackPanel;
-                var stCol2 = row.Children[1] as StackPanel;
+                var mainStack = row.Children[0] as StackPanel;
+                var stCol1 = mainStack.Children[0] as StackPanel;
+                var stCol2 = mainStack.Children[1] as StackPanel;
                 
                 var grid1 = stCol1.Children[0] as Grid;
                 var chkAllDay = grid1.Children[1] as CheckBox;
                 var grid2 = stCol1.Children[1] as Grid;
                 var dpStart = grid2.Children[0] as DatePicker;
-                var txtStart = grid2.Children[1] as TextBox;
+                var timeStartPanel = grid2.Children[1] as StackPanel;
 
                 var grid3 = stCol2.Children[1] as Grid;
                 var dpEnd = grid3.Children[0] as DatePicker;
-                var txtEnd = grid3.Children[1] as TextBox;
+                var timeEndPanel = grid3.Children[1] as StackPanel;
 
                 TimeSpan startTime = TimeSpan.Zero;
                 TimeSpan endTime = new TimeSpan(23, 59, 59);
 
                 if (chkAllDay.IsChecked != true)
                 {
-                    if (!TimeSpan.TryParse(txtStart.Text, out startTime) || 
-                        !TimeSpan.TryParse(txtEnd.Text, out endTime))
-                    {
-                        ShowError("Giờ sai định dạng HH:mm (VD: 08:30)");
-                        return;
-                    }
+                    startTime = GetTimeFromPanel(timeStartPanel);
+                    endTime = GetTimeFromPanel(timeEndPanel);
                 }
 
                 DateTime start = (dpStart.SelectedDate ?? DateTime.Today).Date.Add(startTime);

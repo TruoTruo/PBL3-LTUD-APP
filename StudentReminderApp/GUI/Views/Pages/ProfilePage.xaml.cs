@@ -25,48 +25,63 @@ namespace StudentReminderApp.Views.Pages
         public ProfilePage()
         {
             InitializeComponent();
-            Loaded += (s, e) => { LoadClasses(); LoadDanhMuc(); LoadProfile(); };
+            Loaded += (s, e) => { LoadDanhMuc(); LoadProfile(); };
         }
 
-        // ── Load danh sách lớp vào ComboBox ──────────────────────
-        private void LoadClasses()
-        {
-            var rawList = _stuBll.GetAllClasses();
-            _classList.Clear();
-            _classList.Add(new ClassItem { IdLop = null, TenLop = "— Chưa phân lớp —" });
-            foreach (var (id, ten) in rawList)
-                _classList.Add(new ClassItem { IdLop = id, TenLop = ten });
-
-            CmbClass.ItemsSource       = _classList;
-            CmbClass.DisplayMemberPath = "TenLop";
-            CmbClass.SelectedValuePath = "IdLop";
-        }
+        private Models.OrganizationData _orgData = new();
 
         private void LoadDanhMuc()
         {
-            // Trường
+            string renderFolder = @"D:\IT\HỌC\PBL3\PBL3-LTUD-APP\RENDER\Profile";
+            try
+            {
+                string path = System.IO.Path.Combine(renderFolder, "Organization.json");
+                if (System.IO.File.Exists(path))
+                {
+                    string json = System.IO.File.ReadAllText(path);
+                    _orgData = Newtonsoft.Json.JsonConvert.DeserializeObject<Models.OrganizationData>(json) ?? new Models.OrganizationData();
+                }
+            }
+            catch { }
+
+            // Lấy danh sách Trường
             CmbTruong.Items.Clear();
             CmbTruong.Items.Add(new ComboBoxItem { Content = "— Chọn trường —" });
-            foreach (var item in _danhMucDal.GetByCategory("TRUONG"))
-                CmbTruong.Items.Add(new ComboBoxItem { Content = item.Value });
-            
-            // Khoa
+            foreach (var truong in _orgData.Truongs)
+            {
+                CmbTruong.Items.Add(new ComboBoxItem { Content = truong.Name });
+            }
+
+            // Xóa các combobox khác
             CmbKhoa.Items.Clear();
             CmbKhoa.Items.Add(new ComboBoxItem { Content = "— Chọn khoa —" });
-            foreach (var item in _danhMucDal.GetByCategory("KHOA"))
-                CmbKhoa.Items.Add(new ComboBoxItem { Content = item.Value });
 
-            // Ngành học
             CmbNganhHoc.Items.Clear();
             CmbNganhHoc.Items.Add(new ComboBoxItem { Content = "— Chọn ngành học —" });
-            foreach (var item in _danhMucDal.GetByCategory("NGANH"))
-                CmbNganhHoc.Items.Add(new ComboBoxItem { Content = item.Value });
 
-            // Nhóm
+            CmbClass.Items.Clear();
+            CmbClass.Items.Add(new ComboBoxItem { Content = "— Chọn lớp —" });
+
             CmbNhom.Items.Clear();
             CmbNhom.Items.Add(new ComboBoxItem { Content = "— Chọn nhóm —" });
-            foreach (var item in _danhMucDal.GetByCategory("NHOM"))
-                CmbNhom.Items.Add(new ComboBoxItem { Content = item.Value });
+            var uniqueGroups = new HashSet<string>();
+            if (_orgData?.Truongs != null) {
+                foreach (var t in _orgData.Truongs) {
+                    if (t.Khoas != null) foreach (var k in t.Khoas) {
+                        if (k.Nganhs != null) foreach (var n in k.Nganhs) {
+                            if (n.Lops != null) foreach (var l in n.Lops) {
+                                if (l.Nhoms != null) foreach (var g in l.Nhoms) {
+                                    if (!string.IsNullOrWhiteSpace(g)) uniqueGroups.Add(g);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            foreach (var g in uniqueGroups) {
+                CmbNhom.Items.Add(new ComboBoxItem { Content = g });
+            }
+            CmbNhom.IsEnabled = true;
         }
 
         // ── Load profile ──────────────────────────────────────────
@@ -212,17 +227,16 @@ namespace StudentReminderApp.Views.Pages
             }
 
             // ── Chọn lớp trong ComboBox ───────────────────────────
-            // user.IdLop đã được load từ DB cùng LEFT JOIN → không còn null nữa
-            SelectClass(user.IdLop);
+            SelectClass(user.TenLop);
         }
 
-        private void SelectClass(long? idLop)
+        private void SelectClass(string? tenLop)
         {
-            if (idLop.HasValue)
+            if (!string.IsNullOrEmpty(tenLop))
             {
-                foreach (var item in _classList)
+                foreach (ComboBoxItem item in CmbClass.Items)
                 {
-                    if (item.IdLop == idLop) { CmbClass.SelectedItem = item; return; }
+                    if (item.Content?.ToString() == tenLop) { CmbClass.SelectedItem = item; return; }
                 }
             }
             CmbClass.SelectedIndex = 0;
@@ -285,12 +299,13 @@ namespace StudentReminderApp.Views.Pages
             else
                 user.Nhom = null;
 
-            long? newIdLop = (CmbClass.SelectedItem is ClassItem sel && sel.IdLop.HasValue)
-                ? sel.IdLop : null;
-            user.IdLop = newIdLop;
+            string? newTenLop = null;
+            if (CmbClass.SelectedIndex > 0)
+                newTenLop = ((ComboBoxItem)CmbClass.SelectedItem).Content.ToString();
+            user.TenLop = newTenLop;
 
             _userDal.Update(user);
-            _stuBll.UpdateStudentClass(acc.IdAcc, newIdLop);
+            _stuBll.UpdateStudentClass(acc.IdAcc, newTenLop);
 
             // Reload từ DB để lấy TenLop mới nhất → cập nhật session
             var refreshed = _authBll.GetUserWithClass(acc.IdAcc);
@@ -304,44 +319,92 @@ namespace StudentReminderApp.Views.Pages
 
         private void CmbTruong_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            CmbKhoa.Items.Clear();
+            CmbKhoa.Items.Add(new ComboBoxItem { Content = "— Chọn khoa —" });
+            
             if (CmbTruong.SelectedIndex > 0)
             {
+                var truongName = ((ComboBoxItem)CmbTruong.SelectedItem).Content.ToString();
+                var truong = _orgData.Truongs.Find(t => t.Name == truongName);
+                if (truong != null)
+                {
+                    foreach (var khoa in truong.Khoas)
+                    {
+                        CmbKhoa.Items.Add(new ComboBoxItem { Content = khoa.Name });
+                    }
+                }
                 CmbKhoa.IsEnabled = true;
             }
             else
             {
                 CmbKhoa.IsEnabled = false;
-                CmbKhoa.SelectedIndex = 0;
             }
+            CmbKhoa.SelectedIndex = 0;
         }
 
         private void CmbKhoa_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (CmbKhoa.SelectedIndex > 0)
+            CmbNganhHoc.Items.Clear();
+            CmbNganhHoc.Items.Add(new ComboBoxItem { Content = "— Chọn ngành học —" });
+
+            if (CmbKhoa.SelectedIndex > 0 && CmbTruong.SelectedIndex > 0)
             {
+                var truongName = ((ComboBoxItem)CmbTruong.SelectedItem).Content.ToString();
+                var khoaName = ((ComboBoxItem)CmbKhoa.SelectedItem).Content.ToString();
+                
+                var truong = _orgData.Truongs.Find(t => t.Name == truongName);
+                var khoa = truong?.Khoas.Find(k => k.Name == khoaName);
+                
+                if (khoa != null)
+                {
+                    foreach (var nganh in khoa.Nganhs)
+                    {
+                        CmbNganhHoc.Items.Add(new ComboBoxItem { Content = nganh.Name });
+                    }
+                }
                 CmbNganhHoc.IsEnabled = true;
-                CmbClass.IsEnabled = true;
             }
             else
             {
                 CmbNganhHoc.IsEnabled = false;
-                CmbNganhHoc.SelectedIndex = 0;
-                CmbClass.IsEnabled = false;
-                CmbClass.SelectedIndex = 0;
             }
+            CmbNganhHoc.SelectedIndex = 0;
         }
 
         private void CmbNganhHoc_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (CmbNganhHoc.SelectedIndex > 0)
+            CmbClass.Items.Clear();
+            CmbClass.Items.Add(new ComboBoxItem { Content = "— Chọn lớp —" });
+
+            if (CmbNganhHoc.SelectedIndex > 0 && CmbKhoa.SelectedIndex > 0 && CmbTruong.SelectedIndex > 0)
             {
+                var truongName = ((ComboBoxItem)CmbTruong.SelectedItem).Content.ToString();
+                var khoaName = ((ComboBoxItem)CmbKhoa.SelectedItem).Content.ToString();
+                var nganhName = ((ComboBoxItem)CmbNganhHoc.SelectedItem).Content.ToString();
+                
+                var truong = _orgData.Truongs.Find(t => t.Name == truongName);
+                var khoa = truong?.Khoas.Find(k => k.Name == khoaName);
+                var nganh = khoa?.Nganhs.Find(n => n.Name == nganhName);
+                
+                if (nganh != null)
+                {
+                    foreach (var lop in nganh.Lops)
+                    {
+                        CmbClass.Items.Add(new ComboBoxItem { Content = lop.Name });
+                    }
+                }
                 CmbClass.IsEnabled = true;
             }
             else
             {
                 CmbClass.IsEnabled = false;
-                CmbClass.SelectedIndex = 0;
             }
+            CmbClass.SelectedIndex = 0;
+        }
+
+        private void CmbClass_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            // Bỏ ràng buộc: Nhóm không còn bị phụ thuộc vào Lớp và Khoa
         }
 
         // ── Đổi mật khẩu ─────────────────────────────────────────

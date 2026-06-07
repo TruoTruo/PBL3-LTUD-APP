@@ -34,10 +34,10 @@ namespace StudentReminderApp.BLL
         /// Cập nhật lớp cho sinh viên.
         /// Gọi từ cả Admin (StudentViewModel) lẫn sinh viên tự cập nhật (ProfilePage).
         /// </summary>
-        public bool UpdateStudentClass(long idAcc, long? idLop)
+        public bool UpdateStudentClass(long idAcc, string? tenLop)
         {
             if (idAcc <= 0) return false;
-            try { return _dal.UpdateStudentClass(idAcc, idLop); }
+            try { return _dal.UpdateStudentClass(idAcc, tenLop); }
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine("StudentBLL.UpdateStudentClass: " + ex.Message);

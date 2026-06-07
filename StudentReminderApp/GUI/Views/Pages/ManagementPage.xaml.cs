@@ -136,246 +136,199 @@ namespace StudentReminderApp.Views.Pages
             }
         }
 
-        // ── QUẢN LÝ DANH MỤC LÕI ───────────────────────────────────────
-        private string _selectedJsonFilePath = "";
+        // ── QUẢN LÝ DANH MỤC LÕI (Cột JSON) ─────────────────────────
+        private OrganizationData _orgData = new();
+        private readonly string _orgJsonPath = @"D:\IT\HỌC\PBL3\PBL3-LTUD-APP\RENDER\Profile\Organization.json";
 
         private void LoadDanhMuc()
         {
-            if (CboCategory != null && CboCategory.SelectedItem is ComboBoxItem selected && selected.Tag != null)
+            if (System.IO.File.Exists(_orgJsonPath))
             {
-                string tag = selected.Tag.ToString();
-                if (tag == "LOP")
+                try
                 {
-                    _danhMucList = _danhMucDal.GetAllClasses();
-                    if (ColNienKhoa != null) ColNienKhoa.Width = GridLength.Auto;
-                    if (TxtNienKhoa != null) TxtNienKhoa.Visibility = Visibility.Visible;
-                    if (TxtNienKhoaPlaceholder != null) TxtNienKhoaPlaceholder.Visibility = Visibility.Visible;
-                    if (SpJsonFile != null) SpJsonFile.Visibility = Visibility.Collapsed;
-                    if (DgDanhMuc != null && DgDanhMuc.Columns.Count > 2) DgDanhMuc.Columns[2].Header = "Niên khóa (Lớp)";
+                    string json = System.IO.File.ReadAllText(_orgJsonPath);
+                    _orgData = Newtonsoft.Json.JsonConvert.DeserializeObject<OrganizationData>(json) ?? new OrganizationData();
                 }
-                else if (tag == "NGANH")
-                {
-                    _danhMucList = _danhMucDal.GetByCategory(tag);
-                    foreach (var item in _danhMucList)
-                    {
-                        item.NienKhoa = $@"RENDER\{item.Value}.json";
-                    }
-                    if (ColNienKhoa != null) ColNienKhoa.Width = GridLength.Auto;
-                    if (TxtNienKhoa != null) TxtNienKhoa.Visibility = Visibility.Collapsed;
-                    if (TxtNienKhoaPlaceholder != null) TxtNienKhoaPlaceholder.Visibility = Visibility.Collapsed;
-                    if (SpJsonFile != null) SpJsonFile.Visibility = Visibility.Visible;
-                    if (DgDanhMuc != null && DgDanhMuc.Columns.Count > 2) DgDanhMuc.Columns[2].Header = "Đường dẫn File JSON";
-                }
-                else
-                {
-                    _danhMucList = _danhMucDal.GetByCategory(tag);
-                    foreach (var item in _danhMucList) item.NienKhoa = "";
-                    if (ColNienKhoa != null) ColNienKhoa.Width = new GridLength(0);
-                    if (TxtNienKhoa != null) TxtNienKhoa.Visibility = Visibility.Collapsed;
-                    if (TxtNienKhoaPlaceholder != null) TxtNienKhoaPlaceholder.Visibility = Visibility.Collapsed;
-                    if (SpJsonFile != null) SpJsonFile.Visibility = Visibility.Collapsed;
-                    if (DgDanhMuc != null && DgDanhMuc.Columns.Count > 2) DgDanhMuc.Columns[2].Header = "";
-                }
-                if (DgDanhMuc != null) DgDanhMuc.ItemsSource = _danhMucList;
+                catch { _orgData = new OrganizationData(); }
             }
-        }
-
-        private void ClearJsonFile()
-        {
-            _selectedJsonFilePath = "";
-            if (TxtJsonFile != null) TxtJsonFile.Text = "";
-            if (TxtJsonFilePlaceholder != null) TxtJsonFilePlaceholder.Visibility = Visibility.Visible;
-        }
-
-        private void CboCategory_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            LoadDanhMuc();
-            if (TxtDanhMucValue != null) TxtDanhMucValue.Text = "";
-            if (TxtNienKhoa != null) TxtNienKhoa.Text = "";
-            ClearJsonFile();
-        }
-
-        private void DgDanhMuc_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (DgDanhMuc.SelectedItem is DanhMucItem item)
+            else
             {
-                TxtDanhMucValue.Text = item.Value;
-                TxtNienKhoa.Text = item.NienKhoa;
-                
-                if (TxtDanhMucValuePlaceholder != null)
-                    TxtDanhMucValuePlaceholder.Visibility = Visibility.Hidden;
-                if (TxtNienKhoaPlaceholder != null)
-                    TxtNienKhoaPlaceholder.Visibility = string.IsNullOrEmpty(item.NienKhoa) ? Visibility.Visible : Visibility.Hidden;
-            }
-        }
-
-        private void TxtDanhMucValue_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            if (TxtDanhMucValuePlaceholder != null)
-                TxtDanhMucValuePlaceholder.Visibility = string.IsNullOrEmpty(TxtDanhMucValue.Text) ? Visibility.Visible : Visibility.Hidden;
-        }
-
-        private void TxtNienKhoa_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            if (TxtNienKhoaPlaceholder != null)
-                TxtNienKhoaPlaceholder.Visibility = string.IsNullOrEmpty(TxtNienKhoa.Text) ? Visibility.Visible : Visibility.Hidden;
-        }
-
-        private void BtnAddDanhMuc_Click(object sender, RoutedEventArgs e)
-        {
-            string rawValue = TxtDanhMucValue.Text.Trim();
-            if (string.IsNullOrEmpty(rawValue))
-            {
-                MessageBox.Show("Vui lòng nhập giá trị! (Có thể nhập nhiều giá trị cách nhau bằng dấu phẩy)", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
-                return;
+                _orgData = new OrganizationData();
             }
 
-            string tag = ((ComboBoxItem)CboCategory.SelectedItem).Tag.ToString();
+            LstTruong.ItemsSource = _orgData.Truongs;
+            LstTruong.Items.Refresh();
+        }
 
-            if (tag == "NGANH" && string.IsNullOrEmpty(_selectedJsonFilePath))
-            {
-                MessageBox.Show("Vui lòng đính kèm file JSON (Đây là điều kiện bắt buộc đối với Ngành Học)!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
-                return;
-            }
-
+        private void BtnSaveOrg_Click(object sender, RoutedEventArgs e)
+        {
             try
             {
-                var values = rawValue.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-                int count = 0;
-                foreach (var v in values)
-                {
-                    string value = v.Trim();
-                    if (string.IsNullOrEmpty(value)) continue;
-
-                    if (tag == "LOP")
-                    {
-                        _danhMucDal.AddClass(value, TxtNienKhoa.Text.Trim());
-                    }
-                    else
-                    {
-                        _danhMucDal.AddDanhMucChung(tag, value);
-                        if (tag == "NGANH" && !string.IsNullOrEmpty(_selectedJsonFilePath) && System.IO.File.Exists(_selectedJsonFilePath))
-                        {
-                            string targetDir = FindRenderFolder();
-                            if (!string.IsNullOrEmpty(targetDir))
-                            {
-                                try {
-                                    string targetFile = System.IO.Path.Combine(targetDir, value + ".json");
-                                    System.IO.File.Copy(_selectedJsonFilePath, targetFile, true);
-                                } catch { }
-                            }
-                        }
-                    }
-                    count++;
-                }
-
-                if (count > 0)
-                {
-                    MessageBox.Show($"Đã thêm thành công {count} mục!", "Thành công", MessageBoxButton.OK, MessageBoxImage.Information);
-                    TxtDanhMucValue.Text = "";
-                    TxtNienKhoa.Text = "";
-                    ClearJsonFile();
-                    LoadDanhMuc();
-                }
-                else
-                {
-                    MessageBox.Show("Vui lòng nhập giá trị hợp lệ!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
-                }
+                string json = Newtonsoft.Json.JsonConvert.SerializeObject(_orgData, Newtonsoft.Json.Formatting.Indented);
+                System.IO.File.WriteAllText(_orgJsonPath, json);
+                MessageBox.Show("Đã lưu thay đổi vào Organization.json thành công!", "Thành công", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Lỗi: {ex.Message}", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show($"Lỗi khi lưu JSON: {ex.Message}", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
-        private string FindRenderFolder()
+        // ── Trường ──
+        private void LstTruong_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            string current = AppDomain.CurrentDomain.BaseDirectory;
-            for (int i = 0; i < 6; i++)
+            if (LstTruong.SelectedItem is TruongData t)
             {
-                string path = System.IO.Path.Combine(current, "RENDER");
-                if (System.IO.Directory.Exists(path)) return path;
-                current = System.IO.Path.GetFullPath(System.IO.Path.Combine(current, ".."));
+                LstKhoa.ItemsSource = t.Khoas;
+                LstKhoa.Items.Refresh();
             }
-            return "";
+            else
+            {
+                LstKhoa.ItemsSource = null;
+            }
+            LstNganh.ItemsSource = null;
+            LstLop.ItemsSource = null;
+            LstNhom.ItemsSource = null;
         }
 
-        private void BtnSelectJson_Click(object sender, RoutedEventArgs e)
+        private void BtnAddTruong_Click(object sender, RoutedEventArgs e)
         {
-            var dialog = new Microsoft.Win32.OpenFileDialog
-            {
-                Filter = "JSON Files|*.json|All Files|*.*",
-                Title = "Chọn file dữ liệu môn học (.json)"
-            };
-
-            if (dialog.ShowDialog() == true)
-            {
-                _selectedJsonFilePath = dialog.FileName;
-                TxtJsonFile.Text = System.IO.Path.GetFileName(dialog.FileName);
-                if (TxtJsonFilePlaceholder != null) TxtJsonFilePlaceholder.Visibility = Visibility.Collapsed;
-            }
+            string name = TxtNewTruong.Text.Trim();
+            if (string.IsNullOrEmpty(name)) return;
+            if (_orgData.Truongs.Exists(x => x.Name == name)) return;
+            _orgData.Truongs.Add(new TruongData { Name = name });
+            LstTruong.Items.Refresh();
+            TxtNewTruong.Clear();
         }
 
-        private void BtnUpdateDanhMuc_Click(object sender, RoutedEventArgs e)
+        private void BtnDelTruong_Click(object sender, RoutedEventArgs e)
         {
-            if (DgDanhMuc.SelectedItem is not DanhMucItem item)
+            if (LstTruong.SelectedItem is TruongData t)
             {
-                MessageBox.Show("Vui lòng chọn một mục để cập nhật!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
-                return;
-            }
-
-            string value = TxtDanhMucValue.Text.Trim();
-            if (string.IsNullOrEmpty(value))
-            {
-                MessageBox.Show("Vui lòng nhập giá trị!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
-                return;
-            }
-
-            string tag = ((ComboBoxItem)CboCategory.SelectedItem).Tag.ToString();
-            try
-            {
-                if (tag == "LOP")
-                {
-                    _danhMucDal.UpdateClass(item.Id, value, TxtNienKhoa.Text.Trim());
-                }
-                else
-                {
-                    _danhMucDal.UpdateDanhMucChung(item.Id, value);
-                }
-                MessageBox.Show("Cập nhật thành công!", "Thành công", MessageBoxButton.OK, MessageBoxImage.Information);
-                LoadDanhMuc();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Lỗi: {ex.Message}", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                _orgData.Truongs.Remove(t);
+                LstTruong.Items.Refresh();
             }
         }
 
-        private void BtnDeleteDanhMuc_Click(object sender, RoutedEventArgs e)
+        // ── Khoa ──
+        private void LstKhoa_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (sender is Button btn && btn.Tag is DanhMucItem item)
+            if (LstKhoa.SelectedItem is KhoaData k)
             {
-                var result = MessageBox.Show($"Bạn có chắc muốn xóa '{item.Value}' không?\nLưu ý: Thao tác này có thể ảnh hưởng đến các dữ liệu đang sử dụng danh mục này.", 
-                    "Xác nhận xóa", MessageBoxButton.YesNo, MessageBoxImage.Warning);
-                
-                if (result == MessageBoxResult.Yes)
-                {
-                    string tag = ((ComboBoxItem)CboCategory.SelectedItem).Tag.ToString();
-                    try
-                    {
-                        if (tag == "LOP")
-                            _danhMucDal.DeleteClass(item.Id);
-                        else
-                            _danhMucDal.DeleteDanhMucChung(item.Id);
+                LstNganh.ItemsSource = k.Nganhs;
+                LstNganh.Items.Refresh();
+            }
+            else
+            {
+                LstNganh.ItemsSource = null;
+            }
+            LstLop.ItemsSource = null;
+            LstNhom.ItemsSource = null;
+        }
 
-                        MessageBox.Show("Xóa thành công!", "Thành công", MessageBoxButton.OK, MessageBoxImage.Information);
-                        LoadDanhMuc();
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show($"Lỗi khi xóa: {ex.Message}", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
-                    }
-                }
+        private void BtnAddKhoa_Click(object sender, RoutedEventArgs e)
+        {
+            if (LstTruong.SelectedItem is not TruongData t) return;
+            string name = TxtNewKhoa.Text.Trim();
+            if (string.IsNullOrEmpty(name) || t.Khoas.Exists(x => x.Name == name)) return;
+            t.Khoas.Add(new KhoaData { Name = name });
+            LstKhoa.Items.Refresh();
+            TxtNewKhoa.Clear();
+        }
+
+        private void BtnDelKhoa_Click(object sender, RoutedEventArgs e)
+        {
+            if (LstTruong.SelectedItem is TruongData t && LstKhoa.SelectedItem is KhoaData k)
+            {
+                t.Khoas.Remove(k);
+                LstKhoa.Items.Refresh();
+            }
+        }
+
+        // ── Ngành ──
+        private void LstNganh_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (LstNganh.SelectedItem is NganhData n)
+            {
+                LstLop.ItemsSource = n.Lops;
+                LstLop.Items.Refresh();
+            }
+            else
+            {
+                LstLop.ItemsSource = null;
+            }
+            LstNhom.ItemsSource = null;
+        }
+
+        private void BtnAddNganh_Click(object sender, RoutedEventArgs e)
+        {
+            if (LstKhoa.SelectedItem is not KhoaData k) return;
+            string name = TxtNewNganh.Text.Trim();
+            if (string.IsNullOrEmpty(name) || k.Nganhs.Exists(x => x.Name == name)) return;
+            k.Nganhs.Add(new NganhData { Name = name });
+            LstNganh.Items.Refresh();
+            TxtNewNganh.Clear();
+        }
+
+        private void BtnDelNganh_Click(object sender, RoutedEventArgs e)
+        {
+            if (LstKhoa.SelectedItem is KhoaData k && LstNganh.SelectedItem is NganhData n)
+            {
+                k.Nganhs.Remove(n);
+                LstNganh.Items.Refresh();
+            }
+        }
+
+        // ── Lớp ──
+        private void LstLop_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (LstLop.SelectedItem is LopData l)
+            {
+                LstNhom.ItemsSource = l.Nhoms;
+                LstNhom.Items.Refresh();
+            }
+            else
+            {
+                LstNhom.ItemsSource = null;
+            }
+        }
+
+        private void BtnAddLop_Click(object sender, RoutedEventArgs e)
+        {
+            if (LstNganh.SelectedItem is not NganhData n) return;
+            string name = TxtNewLop.Text.Trim();
+            if (string.IsNullOrEmpty(name) || n.Lops.Exists(x => x.Name == name)) return;
+            n.Lops.Add(new LopData { Name = name });
+            LstLop.Items.Refresh();
+            TxtNewLop.Clear();
+        }
+
+        private void BtnDelLop_Click(object sender, RoutedEventArgs e)
+        {
+            if (LstNganh.SelectedItem is NganhData n && LstLop.SelectedItem is LopData l)
+            {
+                n.Lops.Remove(l);
+                LstLop.Items.Refresh();
+            }
+        }
+
+        // ── Nhóm ──
+        private void BtnAddNhom_Click(object sender, RoutedEventArgs e)
+        {
+            if (LstLop.SelectedItem is not LopData l) return;
+            string name = TxtNewNhom.Text.Trim();
+            if (string.IsNullOrEmpty(name) || l.Nhoms.Contains(name)) return;
+            l.Nhoms.Add(name);
+            LstNhom.Items.Refresh();
+            TxtNewNhom.Clear();
+        }
+
+        private void BtnDelNhom_Click(object sender, RoutedEventArgs e)
+        {
+            if (LstLop.SelectedItem is LopData l && LstNhom.SelectedItem is string nhom)
+            {
+                l.Nhoms.Remove(nhom);
+                LstNhom.Items.Refresh();
             }
         }
     }
