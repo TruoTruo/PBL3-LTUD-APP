@@ -164,7 +164,7 @@ namespace StudentReminderApp.Views.Dialogs {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/StudentReminderApp;component/gui/views/dialogs/userdetailsdialog.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/StudentReminderApp;V1.0.0.0;component/gui/views/dialogs/userdetailsdialog.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\..\..\GUI\Views\Dialogs\UserDetailsDialog.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

@@ -70,7 +70,7 @@ namespace StudentReminderApp.Views.Pages {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/StudentReminderApp;component/gui/views/pages/studentmanagementpage.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/StudentReminderApp;V1.0.0.0;component/gui/views/pages/studentmanagementpage.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\..\..\GUI\Views\Pages\StudentManagementPage.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);
