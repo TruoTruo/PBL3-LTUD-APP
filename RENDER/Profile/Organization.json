@@ -1,0 +1,34 @@
+{
+  "Truongs": [
+    {
+      "Name": "Trường ĐH Bách Khoa Đà Nẵng",
+      "Khoas": [
+        {
+          "Name": "Công Nghệ Thông Tin",
+          "Nganhs": [
+            {
+              "Name": "24T_NHAT_KY_SU",
+              "Lops": [
+                {
+                  "Name": "24T_NHAT2",
+                  "Nhoms": []
+                }
+              ]
+            },
+            {
+              "Name": "24T_NHAT_CU_NHAN",
+              "Lops": [
+                {
+                  "Name": "24T_NHAT2",
+                  "Nhoms": [
+                    "2499"
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

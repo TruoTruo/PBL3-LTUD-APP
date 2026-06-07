@@ -21,38 +21,38 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Resources\Colors.xaml" />
-    <Resource Include="Resources\Styles.xaml" />
-    <Resource Include="Resources\Images\APUIp.jpg" />
-    <Resource Include="Resources\Images\user.png" />
-    <Resource Include="Resources\Images\logo.jpg" />
-    <Resource Include="Resources\Icons\image-gallery.png" />
-    <Resource Include="Resources\Icons\smiling-face.png" />
-    <Resource Include="Resources\Icons\rgb.png" />
+    <Resource Include="GUI\Resources\Colors.xaml" />
+    <Resource Include="GUI\Resources\Styles.xaml" />
+    <Resource Include="GUI\Resources\Images\APUIp.jpg" />
+    <Resource Include="GUI\Resources\Images\user.png" />
+    <Resource Include="GUI\Resources\Images\logo.jpg" />
+    <Resource Include="GUI\Resources\Icons\image-gallery.png" />
+    <Resource Include="GUI\Resources\Icons\smiling-face.png" />
+    <Resource Include="GUI\Resources\Icons\rgb.png" />
     
-    <Content Include="Views\Pages\*.json">
+    <Content Include="GUI\Views\Pages\*.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\*.html">
+    <Content Include="GUI\Assets\*.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
 
-    <Page Update="Views\Pages\ForumPage.xaml">
+    <Page Update="GUI\Views\Pages\ForumPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
 
-    <Page Update="Views\Dialogs\CreatePostDialog.xaml">
+    <Page Update="GUI\Views\Dialogs\CreatePostDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
 
-    <Compile Update="Views\Pages\ForumPage.xaml.cs">
+    <Compile Update="GUI\Views\Pages\ForumPage.xaml.cs">
       <DependentUpon>ForumPage.xaml</DependentUpon>
     </Compile>
-    <Compile Update="Views\Dialogs\CreatePostDialog.xaml.cs">
+    <Compile Update="GUI\Views\Dialogs\CreatePostDialog.xaml.cs">
       <DependentUpon>CreatePostDialog.xaml</DependentUpon>
     </Compile>
 
-    <Compile Update="Views\Pages\StudentManagementPage.xaml.cs">
+    <Compile Update="GUI\Views\Pages\StudentManagementPage.xaml.cs">
       <DependentUpon>StudentManagementPage.xaml</DependentUpon>
     </Compile>
   </ItemGroup>

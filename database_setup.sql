@@ -1,4 +1,4 @@
-﻿-- =============================================
+-- =============================================
 -- StudentReminderApp - Full Database Setup
 -- Chạy script này trong SQL Server Management Studio
 -- Database: PBL3
@@ -179,7 +179,11 @@ CREATE TABLE PERSONAL_EVENT
     start_time DATETIME NOT NULL,
     end_time DATETIME NOT NULL,
     recurrence_rule NVARCHAR(255),
-    event_type NVARCHAR(50) CHECK (event_type IN ('ACADEMIC','PERSONAL','DEADLINE')),
+    event_type NVARCHAR(50) CHECK (event_type IN ('ACADEMIC','PERSONAL','DEADLINE','REMINDER')),
+    color_category VARCHAR(20) DEFAULT '#1A73E8',
+    is_completed BIT DEFAULT 0,
+    is_all_day BIT DEFAULT 0,
+    GroupId NVARCHAR(255),
     CONSTRAINT FK_Event_User FOREIGN KEY (id_acc) REFERENCES [USER](id_acc)
 );
 CREATE INDEX idx_user_events ON PERSONAL_EVENT(id_acc, start_time);
@@ -243,27 +247,19 @@ CREATE TABLE BAI_VIET
     so_luot_thich INT,
     status        NVARCHAR(50),
     background_color NVARCHAR(20) DEFAULT 'Transparent',
-    status NVARCHAR(50),
     CONSTRAINT FK_BV_User FOREIGN KEY (id_acc) REFERENCES [USER](id_acc)
 
 );
-
-ALTER TABLE BAI_VIET ALTER COLUMN IdPostGoc BIGINT;
-GO
 
 ALTER TABLE BAI_VIET 
 ADD is_anonymous BIT DEFAULT 0;
 GO
 
--- Cập nhật các bài viết cũ mặc định là không ẩn danh
 UPDATE BAI_VIET SET is_anonymous = 0 WHERE is_anonymous IS NULL;
 GO
 
--- Thêm cột để nhận biết đây là bài chia sẻ (nếu chưa có)
--- IdPostGoc: ID của bài gốc, nếu = 0 hoặc NULL thì là bài viết tự đăng
--- NoiDungShare: Lời nhắn của người chia sẻ (UserComment trong code của bạn)
 ALTER TABLE BAI_VIET 
-ADD IdPostGoc INT NULL,
+ADD IdPostGoc BIGINT NULL,
     NoiDungShare NVARCHAR(MAX) NULL,
     IsPublic BIT DEFAULT 1;
 GO
@@ -1082,6 +1078,7 @@ BEGIN
 END
 GO
 PRINT '✔ sp_GetAllStudents';
+GO
 
 -- sp_BanStudent (khóa kèm thời hạn)
 CREATE OR ALTER PROCEDURE sp_BanStudent
@@ -1098,6 +1095,7 @@ BEGIN
 END
 GO
 PRINT '✔ sp_BanStudent';
+GO
 
 -- sp_UnbanStudent
 CREATE OR ALTER PROCEDURE sp_UnbanStudent
@@ -1113,6 +1111,7 @@ BEGIN
 END
 GO
 PRINT '✔ sp_UnbanStudent';
+GO
 
 -- sp_VerifyStudent
 CREATE OR ALTER PROCEDURE sp_VerifyStudent
@@ -1125,6 +1124,7 @@ BEGIN
 END
 GO
 PRINT '✔ sp_VerifyStudent';
+GO
 
 -- sp_UpdateStudentClass
 CREATE OR ALTER PROCEDURE sp_UpdateStudentClass
