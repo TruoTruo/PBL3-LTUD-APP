@@ -53,7 +53,7 @@ namespace StudentReminderApp.Views.Dialogs
         {
             if (AvatarEllipse != null)
             {
-                string avatarPath = "/Resources/Images/user.png";
+                string avatarPath = "/GUI/Resources/Images/user.png";
                 if (!isAnonymous && SessionManager.CurrentUser != null && !string.IsNullOrEmpty(SessionManager.CurrentUser.AvatarUrl))
                 {
                     avatarPath = SessionManager.CurrentUser.AvatarUrl;

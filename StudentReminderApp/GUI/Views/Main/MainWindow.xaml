@@ -25,7 +25,7 @@
                     <!-- Logo -->
                     <Border Width="52" Height="52" CornerRadius="26" BorderBrush="#334155" BorderThickness="1" Margin="0,0,0,32">
                         <Border.Background>
-                            <ImageBrush x:Name="AvatarBrush" ImageSource="/Resources/Images/logo.jpg" Stretch="UniformToFill"/>
+                            <ImageBrush x:Name="AvatarBrush" ImageSource="/GUI/Resources/Images/logo.jpg" Stretch="UniformToFill"/>
                         </Border.Background>
                     </Border>
                     <!-- Ẩn text nhưng vẫn giữ x:Name để không lỗi code-behind -->

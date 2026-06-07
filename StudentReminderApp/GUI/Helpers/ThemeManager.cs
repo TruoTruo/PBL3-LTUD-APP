@@ -15,7 +15,7 @@ namespace StudentReminderApp.Helpers
 
             var newThemeDict = new ResourceDictionary
             {
-                Source = new Uri($"pack://application:,,,/StudentReminderApp;component/Resources/Themes/{(isDark ? "DarkTheme" : "LightTheme")}.xaml", UriKind.Absolute)
+                Source = new Uri($"pack://application:,,,/StudentReminderApp;component/GUI/Resources/Themes/{(isDark ? "DarkTheme" : "LightTheme")}.xaml", UriKind.Absolute)
             };
 
             // Remove all dictionaries except Styles.xaml

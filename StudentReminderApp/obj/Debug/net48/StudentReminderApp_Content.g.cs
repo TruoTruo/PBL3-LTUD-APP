@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("assets/login_animation.html")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("gui/assets/login_animation.html")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("webview2loader.dll")]
 
 

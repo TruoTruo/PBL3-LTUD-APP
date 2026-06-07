@@ -21,7 +21,7 @@
             <!-- Logo dạng Text hiện đại -->
             <Border Width="80" Height="80" CornerRadius="20" HorizontalAlignment="Center" Margin="0,0,0,20">
                 <Border.Background>
-                    <ImageBrush ImageSource="/Resources/Images/logo.jpg" Stretch="UniformToFill"/>
+                    <ImageBrush ImageSource="/GUI/Resources/Images/logo.jpg" Stretch="UniformToFill"/>
                 </Border.Background>
             </Border>
             <TextBlock Text="STUDENT REMINDER" FontSize="36" FontWeight="Black" Foreground="#FF000000" HorizontalAlignment="Center"/>

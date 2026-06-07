@@ -170,7 +170,7 @@
                                             VerticalAlignment="Top"
                                             ClipToBounds="True"
                                             CornerRadius="16">
-                                        <Image Source="/Resources/Images/user.png"
+                                        <Image Source="/GUI/Resources/Images/user.png"
                                                Stretch="UniformToFill"/>
                                     </Border>
 
@@ -244,7 +244,7 @@
                             Margin="0,0,10,0"
                             ClipToBounds="True"
                             CornerRadius="16">
-                        <Image Source="/Resources/Images/user.png"
+                        <Image Source="/GUI/Resources/Images/user.png"
                                Stretch="UniformToFill"/>
                     </Border>
 

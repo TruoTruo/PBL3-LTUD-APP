@@ -208,7 +208,7 @@ namespace StudentReminderApp.Models
         {
             get
             {
-                string defaultImg = "pack://application:,,,/Resources/Images/user.png";
+                string defaultImg = "pack://application:,,,/GUI/Resources/Images/user.png";
                 if (IsAnonymous || string.IsNullOrWhiteSpace(AuthorAvatar)) return defaultImg;
                 return AuthorAvatar;
             }

@@ -157,7 +157,7 @@
                             Width="40"
                             Height="40">
                             <Ellipse.Fill>
-                                <ImageBrush ImageSource="/Resources/Images/user.png" Stretch="UniformToFill" />
+                                <ImageBrush ImageSource="/GUI/Resources/Images/user.png" Stretch="UniformToFill" />
                             </Ellipse.Fill>
                         </Ellipse>
                         <StackPanel Margin="10,0" VerticalAlignment="Center">
@@ -262,7 +262,7 @@
                         </StackPanel>
 
                         <StackPanel Orientation="Horizontal">
-                            <Image Width="30" Height="30" Cursor="Hand" Source="/Resources/Icons/rgb.png" 
+                            <Image Width="30" Height="30" Cursor="Hand" Source="/GUI/Resources/Icons/rgb.png" 
                                    MouseLeftButtonDown="ToggleColorPicker_Click" />
                         </StackPanel>
                     </StackPanel>
@@ -274,11 +274,11 @@
                     <Grid>
                         <TextBlock Text="Thêm vào bài viết của bạn" VerticalAlignment="Center" FontWeight="Bold" FontSize="14"/>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                            <Image Source="/Resources/Icons/image-gallery.png" Width="24" Height="24" Margin="8,0" Cursor="Hand" MouseLeftButtonDown="SelectFile_Click"/>
+                            <Image Source="/GUI/Resources/Icons/image-gallery.png" Width="24" Height="24" Margin="8,0" Cursor="Hand" MouseLeftButtonDown="SelectFile_Click"/>
                             
                             <Grid>
                                 <Image x:Name="ImgEmoji" 
-                                       Source="/Resources/Icons/smiling-face.png" 
+                                       Source="/GUI/Resources/Icons/smiling-face.png" 
                                        Width="24" Height="24" Margin="8,0" Cursor="Hand" 
                                        PreviewMouseLeftButtonUp="ToggleEmojiPopup_Click"/>
 

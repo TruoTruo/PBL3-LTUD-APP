@@ -120,7 +120,7 @@
                                 <Image
                                     HorizontalAlignment="Center"
                                     VerticalAlignment="Top"
-                                    Source="/Resources/Images/APUIp.jpg"
+                                    Source="/GUI/Resources/Images/APUIp.jpg"
                                     Stretch="Uniform" />
                                 <Border Height="120" VerticalAlignment="Bottom">
                                     <Border.Background>
@@ -168,7 +168,7 @@
                                     Margin="0,0,12,0"
                                     ClipToBounds="True"
                                     CornerRadius="22.5">
-                                    <Image Source="/Resources/Images/user.png" Stretch="UniformToFill" />
+                                    <Image Source="/GUI/Resources/Images/user.png" Stretch="UniformToFill" />
                                 </Border>
                                 <Border
                                     x:Name="PostInputTrigger"
@@ -827,7 +827,7 @@
                 </StackPanel>
             </TabItem.Header>
             <Frame NavigationUIVisibility="Hidden"
-                   Source="/Views/Pages/StudentManagementPage.xaml"/>
+                   Source="/GUI/Views/Pages/StudentManagementPage.xaml"/>
         </TabItem>
 
         <!-- ══════════════════════════════════════════════════════
@@ -841,7 +841,7 @@
                 </StackPanel>
             </TabItem.Header>
             <Frame NavigationUIVisibility="Hidden"
-                   Source="/Views/Pages/ForumLogPage.xaml"/>
+                   Source="/GUI/Views/Pages/ForumLogPage.xaml"/>
         </TabItem>
 
     </TabControl>

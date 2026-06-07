@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NETFRAMEWORK;NET48;NET30_OR_GREATER;NET35_OR_GREATER;NET40_OR_GREATER;NET45_OR_GREATER;NET451_OR_GREATER;NET452_OR_GREATER;NET46_OR_GREATER;NET461_OR_GREATER;NET462_OR_GREATER;NET47_OR_GREATER;NET471_OR_GREATER;NET472_OR_GREATER;NET48_OR_GREATER
 D:\IT\HỌC\PBL3\PBL3-LTUD-APP\StudentReminderApp\App.xaml
-27549324676
-2273251491
-81703174209
+27-1516859491
+2-768879934
+81-412401855
 301060078438
-Resources\Themes\DarkTheme.xaml;Resources\Themes\LightTheme.xaml;Views\Auth\AuthWindow.xaml;Views\Auth\ForgotPasswordView.xaml;Views\Auth\LoginView.xaml;Views\Auth\RegisterView.xaml;Views\Dialogs\CommentDialog.xaml;Views\Dialogs\CreatePostDialog.xaml;Views\Dialogs\EventDialog.xaml;Views\Dialogs\ImageCropperDialog.xaml;Views\Dialogs\NotificationPopup.xaml;Views\Dialogs\ScheduleAdvisorWindow.xaml;Views\Dialogs\ShareDialog.xaml;Views\Dialogs\UserDetailsDialog.xaml;Views\Main\MainWindow.xaml;Views\Main\SplashWindow.xaml;Views\Main\ThemeToggleButton.xaml;Views\Pages\AdvisorPage.xaml;Views\Pages\CalendarPage.xaml;Views\Pages\CoursePage.xaml;Views\Pages\DashboardPage.xaml;Views\Pages\ForumLogPage.xaml;Views\Pages\ForumPage.xaml;Views\Pages\ManagementPage.xaml;Views\Pages\PreferencePage.xaml;Views\Pages\ProfilePage.xaml;Views\Pages\StudentManagementPage.xaml;
+GUI\Resources\Themes\DarkTheme.xaml;GUI\Resources\Themes\LightTheme.xaml;GUI\Views\Auth\AuthWindow.xaml;GUI\Views\Auth\ForgotPasswordView.xaml;GUI\Views\Auth\LoginView.xaml;GUI\Views\Auth\RegisterView.xaml;GUI\Views\Dialogs\CommentDialog.xaml;GUI\Views\Dialogs\CreatePostDialog.xaml;GUI\Views\Dialogs\EventDialog.xaml;GUI\Views\Dialogs\ImageCropperDialog.xaml;GUI\Views\Dialogs\NotificationPopup.xaml;GUI\Views\Dialogs\ScheduleAdvisorWindow.xaml;GUI\Views\Dialogs\ShareDialog.xaml;GUI\Views\Dialogs\UserDetailsDialog.xaml;GUI\Views\Main\MainWindow.xaml;GUI\Views\Main\SplashWindow.xaml;GUI\Views\Main\ThemeToggleButton.xaml;GUI\Views\Pages\AdvisorPage.xaml;GUI\Views\Pages\CalendarPage.xaml;GUI\Views\Pages\CoursePage.xaml;GUI\Views\Pages\DashboardPage.xaml;GUI\Views\Pages\ForumLogPage.xaml;GUI\Views\Pages\ForumPage.xaml;GUI\Views\Pages\ManagementPage.xaml;GUI\Views\Pages\PreferencePage.xaml;GUI\Views\Pages\ProfilePage.xaml;GUI\Views\Pages\StudentManagementPage.xaml;
 
 False
 
