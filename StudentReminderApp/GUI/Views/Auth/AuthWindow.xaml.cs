@@ -19,7 +19,7 @@ namespace StudentReminderApp.Views.Auth
         async void InitializeAsync()
         {
             await AnimationWebView.EnsureCoreWebView2Async(null);
-            string htmlPath = System.IO.Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "Assets", "login_animation.html");
+            string htmlPath = System.IO.Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "GUI", "Assets", "login_animation.html");
             AnimationWebView.Source = new System.Uri(htmlPath);
         }
 

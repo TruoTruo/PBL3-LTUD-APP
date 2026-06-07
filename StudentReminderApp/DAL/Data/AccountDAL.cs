@@ -189,7 +189,7 @@ namespace StudentReminderApp.DAL
                 FROM   ACCOUNT a
                 LEFT JOIN ROLES r ON r.id_role = a.id_role
                 INNER JOIN [USER] u ON a.id_acc = u.id_acc
-                WHERE  u.email = @email";
+                WHERE  (u.email = @email OR a.username = @email)";
             try
             {
                 using (SqlConnection conn = GetConnection())

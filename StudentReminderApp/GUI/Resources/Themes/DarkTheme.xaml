@@ -4,9 +4,9 @@
     <Color x:Key="PrimaryColor">#FFFFFF</Color>
     <Color x:Key="PrimaryLightColor">#333333</Color>
     <Color x:Key="PrimaryDarkColor">#E2E8F0</Color>
-    <Color x:Key="BgColor">#121212</Color>
-    <Color x:Key="SurfaceColor">#1E1E1E</Color>
-    <Color x:Key="BorderColor">#333333</Color>
+    <Color x:Key="BgColor">#0A0A0A</Color>
+    <Color x:Key="SurfaceColor">#202020</Color>
+    <Color x:Key="BorderColor">#3F3F46</Color>
     <Color x:Key="SidebarColor">#161616</Color>
     <Color x:Key="TextPrimaryColor">#FAFAFA</Color>
     <Color x:Key="TextSecondaryColor">#A1A1AA</Color>

@@ -33,7 +33,7 @@
                         <Border Grid.Row="0" Grid.Column="0" Style="{StaticResource Card}" CornerRadius="16" Padding="24">
                             <StackPanel>
                                 <StackPanel Orientation="Horizontal" Margin="0,0,0,16">
-                                    <Border Width="40" Height="40" CornerRadius="10" Background="#F1F5F9" Margin="0,0,12,0">
+                                    <Border Width="40" Height="40" CornerRadius="10" Background="{DynamicResource BgBrush}" Margin="0,0,12,0">
                                         <TextBlock Text="&#xE787;" FontFamily="Segoe MDL2 Assets" FontSize="18" Foreground="{DynamicResource TextSecondaryBrush}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                     </Border>
                                     <TextBlock Text="Sự kiện 7 ngày tới" FontSize="15" FontWeight="SemiBold" Foreground="{DynamicResource TextSecondaryBrush}" VerticalAlignment="Center"/>
@@ -45,7 +45,7 @@
                         <Border Grid.Row="0" Grid.Column="2" Style="{StaticResource Card}" CornerRadius="16" Padding="24">
                             <StackPanel>
                                 <StackPanel Orientation="Horizontal" Margin="0,0,0,16">
-                                    <Border Width="40" Height="40" CornerRadius="10" Background="#F1F5F9" Margin="0,0,12,0">
+                                    <Border Width="40" Height="40" CornerRadius="10" Background="{DynamicResource BgBrush}" Margin="0,0,12,0">
                                         <TextBlock Text="&#xE82D;" FontFamily="Segoe MDL2 Assets" FontSize="18" Foreground="{DynamicResource TextSecondaryBrush}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                     </Border>
                                     <TextBlock Text="Học phần đang học" FontSize="15" FontWeight="SemiBold" Foreground="{DynamicResource TextSecondaryBrush}" VerticalAlignment="Center"/>
@@ -57,7 +57,7 @@
                         <Border Grid.Row="2" Grid.Column="0" Style="{StaticResource Card}" CornerRadius="16" Padding="24">
                             <StackPanel>
                                 <StackPanel Orientation="Horizontal" Margin="0,0,0,16">
-                                    <Border Width="40" Height="40" CornerRadius="10" Background="#F1F5F9" Margin="0,0,12,0">
+                                    <Border Width="40" Height="40" CornerRadius="10" Background="{DynamicResource BgBrush}" Margin="0,0,12,0">
                                         <TextBlock Text="&#xE783;" FontFamily="Segoe MDL2 Assets" FontSize="18" Foreground="{DynamicResource TextSecondaryBrush}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                     </Border>
                                     <TextBlock Text="Sự kiện hôm nay" FontSize="15" FontWeight="SemiBold" Foreground="{DynamicResource TextSecondaryBrush}" VerticalAlignment="Center"/>
@@ -69,7 +69,7 @@
                         <Border Grid.Row="2" Grid.Column="2" Style="{StaticResource Card}" CornerRadius="16" Padding="24">
                             <StackPanel>
                                 <StackPanel Orientation="Horizontal" Margin="0,0,0,16">
-                                    <Border Width="40" Height="40" CornerRadius="10" Background="#F1F5F9" Margin="0,0,12,0">
+                                    <Border Width="40" Height="40" CornerRadius="10" Background="{DynamicResource BgBrush}" Margin="0,0,12,0">
                                         <TextBlock Text="&#xEA8F;" FontFamily="Segoe MDL2 Assets" FontSize="18" Foreground="{DynamicResource TextSecondaryBrush}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                     </Border>
                                     <TextBlock Text="Thông báo mới" FontSize="15" FontWeight="SemiBold" Foreground="{DynamicResource TextSecondaryBrush}" VerticalAlignment="Center"/>
@@ -167,7 +167,7 @@
                             <Border Grid.Row="0" Grid.Column="0" Background="{DynamicResource BgBrush}" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1" CornerRadius="12" Padding="16">
                                 <StackPanel>
                                     <StackPanel Orientation="Horizontal" Margin="0,0,0,12">
-                                        <Border Width="32" Height="32" CornerRadius="8" Background="#EFF6FF" Margin="0,0,10,0">
+                                        <Border Width="32" Height="32" CornerRadius="8" Background="{DynamicResource PrimaryLightBrush}" Margin="0,0,10,0">
                                             <TextBlock Text="&#xE9D9;" FontFamily="Segoe MDL2 Assets" FontSize="16" Foreground="#3B82F6" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                         </Border>
                                         <TextBlock Text="Nhắc nhở hôm nay" FontSize="14" FontWeight="SemiBold" Foreground="{DynamicResource TextPrimaryBrush}" VerticalAlignment="Center"/>
@@ -177,7 +177,7 @@
                                             <DataTemplate>
                                                 <CheckBox Content="{Binding Title}" IsChecked="{Binding IsChecked, Mode=TwoWay}" Checked="OnReminderChecked" Unchecked="OnReminderChecked"
                                                           Tag="{Binding IdEvent}"
-                                                          Foreground="#334155" FontSize="13" Margin="0,4"
+                                                          Foreground="{DynamicResource TextPrimaryBrush}" FontSize="13" Margin="0,4"
                                                           Cursor="Hand"/>
                                             </DataTemplate>
                                         </ItemsControl.ItemTemplate>
@@ -190,7 +190,7 @@
                             <Border Grid.Row="0" Grid.Column="2" Background="{DynamicResource BgBrush}" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1" CornerRadius="12" Padding="16">
                                 <StackPanel>
                                     <StackPanel Orientation="Horizontal" Margin="0,0,0,12">
-                                        <Border Width="32" Height="32" CornerRadius="8" Background="#FFF7ED" Margin="0,0,10,0">
+                                        <Border Width="32" Height="32" CornerRadius="8" Background="{DynamicResource PrimaryLightBrush}" Margin="0,0,10,0">
                                             <TextBlock Text="&#xE787;" FontFamily="Segoe MDL2 Assets" FontSize="16" Foreground="#F97316" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                         </Border>
                                         <TextBlock Text="Nhắc nhở ngày mai" FontSize="14" FontWeight="SemiBold" Foreground="{DynamicResource TextPrimaryBrush}" VerticalAlignment="Center"/>
@@ -200,7 +200,7 @@
                                             <DataTemplate>
                                                 <CheckBox Content="{Binding Title}" IsChecked="{Binding IsChecked, Mode=TwoWay}" Checked="OnReminderChecked" Unchecked="OnReminderChecked"
                                                           Tag="{Binding IdEvent}"
-                                                          Foreground="#334155" FontSize="13" Margin="0,4"
+                                                          Foreground="{DynamicResource TextPrimaryBrush}" FontSize="13" Margin="0,4"
                                                           Cursor="Hand"/>
                                             </DataTemplate>
                                         </ItemsControl.ItemTemplate>
@@ -213,7 +213,7 @@
                             <Border Grid.Row="2" Grid.Column="0" Background="{DynamicResource BgBrush}" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1" CornerRadius="12" Padding="16">
                                 <StackPanel>
                                     <StackPanel Orientation="Horizontal" Margin="0,0,0,12">
-                                        <Border Width="32" Height="32" CornerRadius="8" Background="#F0FDF4" Margin="0,0,10,0">
+                                        <Border Width="32" Height="32" CornerRadius="8" Background="{DynamicResource PrimaryLightBrush}" Margin="0,0,10,0">
                                             <TextBlock Text="&#xE8F1;" FontFamily="Segoe MDL2 Assets" FontSize="16" Foreground="#22C55E" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                         </Border>
                                         <TextBlock Text="Nhắc nhở tuần này" FontSize="14" FontWeight="SemiBold" Foreground="{DynamicResource TextPrimaryBrush}" VerticalAlignment="Center"/>
@@ -223,7 +223,7 @@
                                             <DataTemplate>
                                                 <CheckBox Content="{Binding Title}" IsChecked="{Binding IsChecked, Mode=TwoWay}" Checked="OnReminderChecked" Unchecked="OnReminderChecked"
                                                           Tag="{Binding IdEvent}"
-                                                          Foreground="#334155" FontSize="13" Margin="0,4"
+                                                          Foreground="{DynamicResource TextPrimaryBrush}" FontSize="13" Margin="0,4"
                                                           Cursor="Hand"/>
                                             </DataTemplate>
                                         </ItemsControl.ItemTemplate>
@@ -236,7 +236,7 @@
                             <Border Grid.Row="2" Grid.Column="2" Background="{DynamicResource BgBrush}" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1" CornerRadius="12" Padding="16">
                                 <StackPanel>
                                     <StackPanel Orientation="Horizontal" Margin="0,0,0,12">
-                                        <Border Width="32" Height="32" CornerRadius="8" Background="#FDF4FF" Margin="0,0,10,0">
+                                        <Border Width="32" Height="32" CornerRadius="8" Background="{DynamicResource PrimaryLightBrush}" Margin="0,0,10,0">
                                             <TextBlock Text="&#xE8BF;" FontFamily="Segoe MDL2 Assets" FontSize="16" Foreground="#A855F7" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                         </Border>
                                         <TextBlock Text="Nhắc nhở tháng này" FontSize="14" FontWeight="SemiBold" Foreground="{DynamicResource TextPrimaryBrush}" VerticalAlignment="Center"/>
@@ -246,7 +246,7 @@
                                             <DataTemplate>
                                                 <CheckBox Content="{Binding Title}" IsChecked="{Binding IsChecked, Mode=TwoWay}" Checked="OnReminderChecked" Unchecked="OnReminderChecked"
                                                           Tag="{Binding IdEvent}"
-                                                          Foreground="#334155" FontSize="13" Margin="0,4"
+                                                          Foreground="{DynamicResource TextPrimaryBrush}" FontSize="13" Margin="0,4"
                                                           Cursor="Hand"/>
                                             </DataTemplate>
                                         </ItemsControl.ItemTemplate>
