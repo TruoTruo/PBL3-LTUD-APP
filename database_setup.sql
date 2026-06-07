@@ -1,4 +1,4 @@
-﻿-- =============================================
+-- =============================================
 -- StudentReminderApp - Full Database Setup
 -- Chạy script này trong SQL Server Management Studio
 -- Database: PBL3
@@ -179,7 +179,11 @@ CREATE TABLE PERSONAL_EVENT
     start_time DATETIME NOT NULL,
     end_time DATETIME NOT NULL,
     recurrence_rule NVARCHAR(255),
-    event_type NVARCHAR(50) CHECK (event_type IN ('ACADEMIC','PERSONAL','DEADLINE')),
+    event_type NVARCHAR(50) CHECK (event_type IN ('ACADEMIC','PERSONAL','DEADLINE','REMINDER')),
+    color_category VARCHAR(20) DEFAULT '#1A73E8',
+    is_completed BIT DEFAULT 0,
+    is_all_day BIT DEFAULT 0,
+    GroupId NVARCHAR(255),
     CONSTRAINT FK_Event_User FOREIGN KEY (id_acc) REFERENCES [USER](id_acc)
 );
 CREATE INDEX idx_user_events ON PERSONAL_EVENT(id_acc, start_time);
