@@ -169,19 +169,6 @@ namespace StudentReminderApp.Views.Pages
                 }
             }
 
-            CmbNganhHoc.SelectedIndex = 0;
-            if (!string.IsNullOrEmpty(user.NganhHoc))
-            {
-                foreach (ComboBoxItem item in CmbNganhHoc.Items)
-                {
-                    if (item.Content.ToString() == user.NganhHoc)
-                    {
-                        CmbNganhHoc.SelectedItem = item;
-                        break;
-                    }
-                }
-            }
-
             CmbKhoa.SelectedIndex = 0;
             if (!string.IsNullOrEmpty(user.Khoa))
             {
@@ -195,6 +182,22 @@ namespace StudentReminderApp.Views.Pages
                 }
             }
 
+            CmbNganhHoc.SelectedIndex = 0;
+            if (!string.IsNullOrEmpty(user.NganhHoc))
+            {
+                foreach (ComboBoxItem item in CmbNganhHoc.Items)
+                {
+                    if (item.Content.ToString() == user.NganhHoc)
+                    {
+                        CmbNganhHoc.SelectedItem = item;
+                        break;
+                    }
+                }
+            }
+
+            // ── Chọn lớp trong ComboBox ───────────────────────────
+            SelectClass(user.TenLop);
+
             CmbNhom.SelectedIndex = 0;
             if (!string.IsNullOrEmpty(user.Nhom))
             {
@@ -207,9 +210,6 @@ namespace StudentReminderApp.Views.Pages
                     }
                 }
             }
-
-            // ── Chọn lớp trong ComboBox ───────────────────────────
-            SelectClass(user.TenLop);
         }
 
         private void SelectClass(string? tenLop)

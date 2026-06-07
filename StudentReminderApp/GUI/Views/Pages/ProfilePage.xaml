@@ -159,7 +159,7 @@
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
                 <StackPanel>
-                    <TextBlock Text="Hồ sơ cá nhân" FontSize="28" FontWeight="ExtraBold" Foreground="#0F172A"/>
+                    <TextBlock Text="Hồ sơ cá nhân" FontSize="28" FontWeight="ExtraBold" Foreground="{DynamicResource TextPrimaryBrush}"/>
                     <TextBlock Text="Quản lý, cá nhân hóa thông tin chính khóa và cấu hình tài khoản của bạn" 
                                FontSize="14" Foreground="#64748B" Margin="0,4,0,0"/>
                 </StackPanel>
@@ -197,7 +197,7 @@
                     
                     <!-- Info Text -->
                     <StackPanel Grid.Column="1" VerticalAlignment="Center">
-                        <TextBlock x:Name="TxtHeaderName" Text="Họ Tên Sinh Viên" FontSize="24" FontWeight="ExtraBold" Foreground="#0F172A"/>
+                        <TextBlock x:Name="TxtHeaderName" Text="Họ Tên Sinh Viên" FontSize="24" FontWeight="ExtraBold" Foreground="{DynamicResource TextPrimaryBrush}"/>
                         <TextBlock x:Name="TxtHeaderUsername" Text="@mssv" FontSize="14" FontWeight="Medium" Foreground="#94A3B8" Margin="0,2,0,12"/>
                         
                         <StackPanel Orientation="Horizontal">
@@ -275,11 +275,11 @@
                                     <fa:ImageAwesome Icon="User" Width="16" Foreground="#2563EB" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                 </Border>
                                 <StackPanel Grid.Column="1" VerticalAlignment="Center">
-                                    <TextBlock Text="Thông tin cá nhân &amp; Ngành học" FontSize="18" FontWeight="ExtraBold" Foreground="#0F172A"/>
+                                    <TextBlock Text="Thông tin cá nhân &amp; Ngành học" FontSize="18" FontWeight="ExtraBold" Foreground="{DynamicResource TextPrimaryBrush}"/>
                                     <TextBlock Text="Vui lòng kiểm tra kỹ lưỡng các thông tin hồ sơ của bạn" FontSize="12" Foreground="#94A3B8" Margin="0,2,0,0"/>
                                 </StackPanel>
                                 <Border Grid.Column="2" Background="{DynamicResource BgBrush}" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1" CornerRadius="12" Padding="12,6" VerticalAlignment="Center">
-                                    <TextBlock Text="Thông tin chính khóa" FontSize="12" FontWeight="Bold" Foreground="#0F172A"/>
+                                    <TextBlock Text="Thông tin chính khóa" FontSize="12" FontWeight="Bold" Foreground="{DynamicResource TextPrimaryBrush}"/>
                                 </Border>
                             </Grid>
                         </Border>
@@ -365,7 +365,7 @@
                                 <!-- Row 5: Lớp & Nhóm -->
                                 <StackPanel Grid.Row="8" Grid.Column="0">
                                     <TextBlock Text="LỚP SINH HOẠT" Style="{StaticResource ProFieldLabel}"/>
-                                    <ComboBox x:Name="CmbClass" Height="42" FontSize="14" DisplayMemberPath="TenLop" SelectedValuePath="IdLop" Style="{StaticResource ModernComboBoxStyle}" ItemContainerStyle="{StaticResource ModernComboBoxItemStyle}" IsEnabled="False"/>
+                                    <ComboBox x:Name="CmbClass" Height="42" FontSize="14" Style="{StaticResource ModernComboBoxStyle}" ItemContainerStyle="{StaticResource ModernComboBoxItemStyle}" IsEnabled="False" SelectionChanged="CmbClass_SelectionChanged"/>
                                 </StackPanel>
                                 <StackPanel Grid.Row="8" Grid.Column="2">
                                     <TextBlock Text="NHÓM HIỆN TẠI" Style="{StaticResource ProFieldLabel}"/>
@@ -417,7 +417,7 @@
                                     <fa:ImageAwesome Icon="Bell" Width="16" Foreground="#4F46E5" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                 </Border>
                                 <StackPanel Grid.Column="1" VerticalAlignment="Center">
-                                    <TextBlock Text="Cài đặt nhắc nhở" FontSize="18" FontWeight="ExtraBold" Foreground="#0F172A"/>
+                                    <TextBlock Text="Cài đặt nhắc nhở" FontSize="18" FontWeight="ExtraBold" Foreground="{DynamicResource TextPrimaryBrush}"/>
                                     <TextBlock Text="Nhận thông báo lịch thi, hạn nộp bài tập và đăng ký môn học" FontSize="12" Foreground="#94A3B8" Margin="0,2,0,0"/>
                                 </StackPanel>
                             </Grid>
@@ -486,7 +486,7 @@
                                     <fa:ImageAwesome Icon="Shield" Width="16" Foreground="#EA580C" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                 </Border>
                                 <StackPanel Grid.Column="1" VerticalAlignment="Center">
-                                    <TextBlock Text="Đổi mật khẩu tài khoản" FontSize="18" FontWeight="ExtraBold" Foreground="#0F172A"/>
+                                    <TextBlock Text="Đổi mật khẩu tài khoản" FontSize="18" FontWeight="ExtraBold" Foreground="{DynamicResource TextPrimaryBrush}"/>
                                     <TextBlock Text="Nên thay đổi mật khẩu định kỳ để nâng cao bảo mật tài khoản" FontSize="12" Foreground="#94A3B8" Margin="0,2,0,0"/>
                                 </StackPanel>
                             </Grid>

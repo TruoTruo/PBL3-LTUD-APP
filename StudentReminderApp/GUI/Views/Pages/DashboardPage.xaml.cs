@@ -76,12 +76,11 @@ namespace StudentReminderApp.Views.Pages
                     conn.Open();
                     string query = @"SELECT id_event, title, location, start_time, end_time, event_type, is_completed 
                                      FROM PERSONAL_EVENT 
-                                     WHERE id_acc=@uid AND start_time >= @start AND start_time <= @end";
+                                     WHERE id_acc=@uid AND start_time >= @start";
                     using (var cmd = new System.Data.SqlClient.SqlCommand(query, conn))
                     {
                         cmd.Parameters.AddWithValue("@uid", idAcc);
                         cmd.Parameters.AddWithValue("@start", DateTime.Today.ToUniversalTime()); 
-                        cmd.Parameters.AddWithValue("@end", DateTime.Today.AddDays(31).ToUniversalTime());
                         
                         using (var reader = cmd.ExecuteReader())
                         {
@@ -105,7 +104,7 @@ namespace StudentReminderApp.Views.Pages
             catch 
             {
                 // Fallback nếu có lỗi
-                upcoming = _eventBll.GetUpcoming(idAcc, 31) ?? new System.Collections.Generic.List<PersonalEvent>();
+                upcoming = _eventBll.GetUpcoming(idAcc, 365) ?? new System.Collections.Generic.List<PersonalEvent>();
             }
 
             // Chỉ đếm số lượng Lịch cá nhân cho ô thống kê "Sự kiện hôm nay"

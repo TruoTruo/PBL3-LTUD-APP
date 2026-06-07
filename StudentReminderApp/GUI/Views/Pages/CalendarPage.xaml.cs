@@ -120,12 +120,15 @@ namespace StudentReminderApp.Views.Pages
                                     Padding = new Thickness(15, 8, 15, 8), 
                                     Cursor = Cursors.Hand
                                 };
-                                itemBorder.MouseEnter += (s, ev) => itemBorder.Background = new SolidColorBrush(Color.FromRgb(241, 243, 244));
+                                itemBorder.MouseEnter += (s, ev) => itemBorder.SetResourceReference(Border.BackgroundProperty, "PrimaryLightBrush");
                                 itemBorder.MouseLeave += (s, ev) => itemBorder.Background = Brushes.Transparent;
                                 
                                 var sp = new StackPanel();
-                                var titleBlock = new TextBlock { Text = title, FontWeight = FontWeights.SemiBold, FontSize = 13, Foreground = new SolidColorBrush(Color.FromRgb(60, 64, 67)), TextTrimming = TextTrimming.CharacterEllipsis };
-                                var timeBlock = new TextBlock { Text = startLocal.ToString("dd/MM/yyyy HH:mm"), FontSize = 11, Foreground = new SolidColorBrush(Color.FromRgb(112, 117, 122)), Margin = new Thickness(0, 2, 0, 0) };
+                                var titleBlock = new TextBlock { Text = title, FontWeight = FontWeights.SemiBold, FontSize = 13, TextTrimming = TextTrimming.CharacterEllipsis };
+                                titleBlock.SetResourceReference(TextBlock.ForegroundProperty, "TextPrimaryBrush");
+                                
+                                var timeBlock = new TextBlock { Text = startLocal.ToString("dd/MM/yyyy HH:mm"), FontSize = 11, Margin = new Thickness(0, 2, 0, 0) };
+                                timeBlock.SetResourceReference(TextBlock.ForegroundProperty, "TextSecondaryBrush");
                                 
                                 sp.Children.Add(titleBlock);
                                 sp.Children.Add(timeBlock);
@@ -150,7 +153,9 @@ namespace StudentReminderApp.Views.Pages
                             
                             if (count == 0)
                             {
-                                SearchResultsPanel.Children.Add(new TextBlock { Text = "Không tìm thấy sự kiện", FontStyle = FontStyles.Italic, Foreground = Brushes.Gray, Margin = new Thickness(15, 10, 15, 10) });
+                                var noEventBlock = new TextBlock { Text = "Không tìm thấy sự kiện", FontStyle = FontStyles.Italic, Margin = new Thickness(15, 10, 15, 10) };
+                                noEventBlock.SetResourceReference(TextBlock.ForegroundProperty, "TextSecondaryBrush");
+                                SearchResultsPanel.Children.Add(noEventBlock);
                             }
                             
                             SearchResultsPopup.PlacementTarget = TxtSearchEvent;
@@ -170,8 +175,8 @@ namespace StudentReminderApp.Views.Pages
 
             DateTime monthStart = new DateTime(year, month, 1);
             DateTime monthEnd = new DateTime(year, month, DateTime.DaysInMonth(year, month));
-            DateTime scanStart = monthStart.AddDays(-7);
-            DateTime scanEnd = monthEnd.AddDays(7);
+            DateTime scanStart = monthStart.AddDays(-14);
+            DateTime scanEnd = monthEnd.AddDays(14);
 
             // 0.1 Lấy danh sách mapping Tag của các sự kiện trong tháng
             var eventTagsMapping = new Dictionary<long, List<long>>();
@@ -255,15 +260,19 @@ namespace StudentReminderApp.Views.Pages
                     using (var cmd = new System.Data.SqlClient.SqlCommand(sql, conn))
                     {
                         cmd.Parameters.AddWithValue("@uid", SessionManager.CurrentAccount.IdAcc);
-                        cmd.Parameters.AddWithValue("@scanEnd", scanEnd);
+                        cmd.Parameters.AddWithValue("@scanEnd", scanEnd.ToUniversalTime());
                         using (var reader = cmd.ExecuteReader())
                         {
                             while (reader.Read())
                             {
+                                DateTime stUtc = Convert.ToDateTime(reader["start_time"]);
+                                DateTime enUtc = Convert.ToDateTime(reader["end_time"]);
                                 var p = new PersonalEvent {
                                     IdEvent = Convert.ToInt64(reader["id_event"]), IdAcc = Convert.ToInt64(reader["id_acc"]),
-                                    Title = reader["title"].ToString(), StartTime = Convert.ToDateTime(reader["start_time"]),
-                                    EndTime = Convert.ToDateTime(reader["end_time"]), RecurrenceRule = reader["recurrence_rule"].ToString(),
+                                    Title = reader["title"].ToString(), 
+                                    StartTime = DateTime.SpecifyKind(stUtc, DateTimeKind.Utc).ToLocalTime(),
+                                    EndTime = DateTime.SpecifyKind(enUtc, DateTimeKind.Utc).ToLocalTime(),
+                                    RecurrenceRule = reader["recurrence_rule"].ToString(),
                                     EventType = reader["event_type"].ToString(), ColorCategory = reader["color_category"].ToString()
                                 };
                                 if (!rawEvents.Any(e => e.OriginalEvent is PersonalEvent pe && pe.IdEvent == p.IdEvent))
@@ -281,6 +290,7 @@ namespace StudentReminderApp.Views.Pages
             {
                 if (e.OriginalEvent is PersonalEvent p && !string.IsNullOrEmpty(p.RecurrenceRule) && p.RecurrenceRule != "NONE")
                 {
+                    // Trả lại lặp vô tận (DateTime.MaxValue) để sự kiện lấp đầy sang các tháng tiếp theo
                     DateTime recurrenceEndDate = p.EndTime.Date > p.StartTime.Date ? p.EndTime.Date : DateTime.MaxValue;
                     
                     TimeSpan duration = p.EndTime.TimeOfDay - p.StartTime.TimeOfDay;
@@ -1371,10 +1381,14 @@ namespace StudentReminderApp.Views.Pages
         private void ShowPopupAllEvents(DateTime date, List<CalendarItem> events, UIElement target)
         {
             var popup = new System.Windows.Controls.Primitives.Popup { AllowsTransparency = true, StaysOpen = false, PlacementTarget = target };
-            var border = new Border { Background = Brushes.White, CornerRadius = new CornerRadius(8), Padding = new Thickness(10), BorderThickness = new Thickness(1), BorderBrush = Brushes.LightGray };
+            var border = new Border { CornerRadius = new CornerRadius(8), Padding = new Thickness(10), BorderThickness = new Thickness(1) };
+            border.SetResourceReference(Border.BackgroundProperty, "SurfaceBrush");
+            border.SetResourceReference(Border.BorderBrushProperty, "BorderBrush");
             border.Effect = new DropShadowEffect { BlurRadius = 10, Opacity = 0.2 };
             var stack = new StackPanel { Width = 160 };
-            stack.Children.Add(new TextBlock { Text = date.ToString("dd/MM"), FontWeight = FontWeights.Bold, Margin = new Thickness(0,0,0,5) });
+            var titleText = new TextBlock { Text = date.ToString("dd/MM"), FontWeight = FontWeights.Bold, Margin = new Thickness(0,0,0,5) };
+            titleText.SetResourceReference(TextBlock.ForegroundProperty, "TextPrimaryBrush");
+            stack.Children.Add(titleText);
             foreach (var ev in events) stack.Children.Add(CreateEventChip(ev));
             border.Child = stack; popup.Child = border; popup.IsOpen = true;
         }
