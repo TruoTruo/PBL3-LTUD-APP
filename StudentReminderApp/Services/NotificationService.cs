@@ -45,7 +45,17 @@ namespace StudentReminderApp.Services
                 }
             }
 
-            string sql = @"SELECT e.id_event, e.title, e.start_time, e.location, r.minutes_before FROM PERSONAL_EVENT e JOIN EVENT_REMINDER r ON e.id_event = r.id_event WHERE e.id_acc = @uid AND e.start_time >= @now AND e.start_time <= DATEADD(day, 2, @now)";
+            string sql = @"
+                SELECT e.id_event, e.title, e.start_time, e.location, 
+                       COALESCE(r.minutes_before, c.mins_before, 15) as minutes_before,
+                       COALESCE(c.channel, 'PUSH') as channel,
+                       u.email, ISNULL(c.is_enabled, 1) as is_enabled
+                FROM PERSONAL_EVENT e 
+                LEFT JOIN EVENT_REMINDER r ON e.id_event = r.id_event 
+                LEFT JOIN REMINDER_CONFIG c ON e.id_acc = c.id_acc
+                LEFT JOIN [USER] u ON e.id_acc = u.id_acc
+                WHERE e.id_acc = @uid AND e.start_time >= @now AND e.start_time <= DATEADD(day, 2, @now)
+                AND (c.is_enabled = 1 OR r.minutes_before IS NOT NULL)";
 
             using (var conn = new SqlConnection(AppConfig.ConnectionString))
             {
@@ -58,18 +68,24 @@ namespace StudentReminderApp.Services
                             while (reader.Read()) {
                                 long id = Convert.ToInt64(reader["id_event"]);
                                 int mins = Convert.ToInt32(reader["minutes_before"]);
+                                string channel = reader["channel"].ToString();
+                                string email = reader["email"]?.ToString();
                                 
-                                // Đọc giờ UTC từ DB và chuyển về giờ Local
                                 DateTime startUtc = DateTime.SpecifyKind(Convert.ToDateTime(reader["start_time"]), DateTimeKind.Utc);
                                 DateTime startLocal = startUtc.ToLocalTime();
                                 DateTime reminderTimeUtc = startUtc.AddMinutes(-mins);
                                 
-                                // So sánh thời gian theo UTC
                                 if (nowUtc >= reminderTimeUtc && nowUtc <= reminderTimeUtc.AddMinutes(5)) {
                                     string key = $"{id}_{mins}";
                                     if (!_notifiedKeys.Contains(key)) {
                                         _notifiedKeys.Add(key);
-                                        ShowToast(reader["title"].ToString(), $"Sắp diễn ra lúc {startLocal:HH:mm} ({mins} phút nữa)\nTại: {reader["location"]}");
+                                        string msgBody = $"Sắp diễn ra lúc {startLocal:HH:mm} ({mins} phút nữa)\nTại: {reader["location"]}";
+                                        
+                                        if (channel == "EMAIL" && !string.IsNullOrWhiteSpace(email)) {
+                                            EmailService.SendEmail(email, $"Nhắc nhở: {reader["title"]}", msgBody);
+                                        } else {
+                                            ShowToast(reader["title"].ToString(), msgBody);
+                                        }
                                     }
                                 }
                             }

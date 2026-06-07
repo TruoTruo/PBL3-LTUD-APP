@@ -16,9 +16,16 @@ namespace StudentReminderApp.BLL
         public List<PersonalEvent> GetUpcoming(long idAcc, int days = 7)
         {
             var all  = _eventDal.GetByAccount(idAcc);
-            var from = DateTime.Today;
-            var to   = DateTime.Today.AddDays(days).AddTicks(-1);
-            return all.FindAll(e => e.StartTime >= from && e.StartTime <= to);
+            var from = DateTime.Today;  // Midnight of today
+            var to   = DateTime.Today.AddDays(days);  // Midnight of day+days
+            
+            // Filter events that start from today onwards up to the specified number of days
+            // Include events that start on or after today and before the end date
+            return all.FindAll(e => 
+            {
+                var eventDate = e.StartTime.Date;
+                return eventDate >= from.Date && eventDate < to.Date;
+            });
         }
 
         public (bool ok, string msg) Save(PersonalEvent e, int minsBeforeReminder = 15)
@@ -30,7 +37,6 @@ namespace StudentReminderApp.BLL
             if (e.IdEvent == 0)
             {
                 e.IdEvent = _eventDal.Insert(e);
-                _notifDal.CreateForEvent(e.IdAcc, e, minsBeforeReminder);
             }
             else
                 _eventDal.Update(e);

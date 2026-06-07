@@ -10,6 +10,24 @@ namespace StudentReminderApp.DAL
 {
     public class ForumDAL : BaseDAL
     {
+        private void LogUserAction(SqlConnection conn, long idAcc, string action, SqlTransaction tx = null)
+        {
+            try
+            {
+                string sql = "INSERT INTO USER_LOG (hanh_dong, id_acc, thoi_gian) VALUES (@action, @id, GETDATE())";
+                using (var cmd = new SqlCommand(sql, conn, tx))
+                {
+                    cmd.Parameters.AddWithValue("@action", action);
+                    cmd.Parameters.AddWithValue("@id", idAcc);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("Lỗi ghi log: " + ex.Message);
+            }
+        }
+
         // -------------------------------------------------------
         // HELPER: Đọc một hàng SqlDataReader → Post object
         // Tách ra để tái dùng giữa GetPosts / GetPendingPosts
@@ -31,6 +49,7 @@ namespace StudentReminderApp.DAL
                 IsLiked = r["IsLikedByMe"] != DBNull.Value && Convert.ToBoolean(r["IsLikedByMe"]),
                 IsAnonymous = r["is_anonymous"] != DBNull.Value && Convert.ToBoolean(r["is_anonymous"]),
                 AuthorName = r["ho_ten"]?.ToString() ?? "",
+                AuthorAvatar = r.GetOrdinal("avatar_url") >= 0 && r["avatar_url"] != DBNull.Value ? r["avatar_url"].ToString() : "",
                 FilePaths = new List<string>(),
                 // approval_status: mặc định 1 nếu cột chưa tồn tại (tương thích ngược)
                 ApprovalStatus = r.GetOrdinal("approval_status") >= 0 && r["approval_status"] != DBNull.Value
@@ -75,7 +94,7 @@ namespace StudentReminderApp.DAL
             var list = new List<Post>();
 
             const string sql = @"
-                SELECT bv.*, u.ho_ten,
+                SELECT bv.*, u.ho_ten, u.avatar_url,
                     (SELECT COUNT(*) FROM YEU_THICH WHERE id_bai_viet = bv.id_bai_viet) AS TotalLikes,
                     (SELECT COUNT(*) FROM BINH_LUAN  WHERE id_bai_viet = bv.id_bai_viet) AS TotalComments,
                     (SELECT COUNT(*) FROM BAI_VIET   WHERE IdPostGoc   = bv.id_bai_viet) AS TotalShares,
@@ -119,7 +138,7 @@ namespace StudentReminderApp.DAL
             var list = new List<Post>();
 
             const string sql = @"
-                SELECT bv.*, u.ho_ten,
+                SELECT bv.*, u.ho_ten, u.avatar_url,
                     (SELECT COUNT(*) FROM YEU_THICH WHERE id_bai_viet = bv.id_bai_viet) AS TotalLikes,
                     (SELECT COUNT(*) FROM BINH_LUAN  WHERE id_bai_viet = bv.id_bai_viet) AS TotalComments,
                     (SELECT COUNT(*) FROM BAI_VIET   WHERE IdPostGoc   = bv.id_bai_viet) AS TotalShares,
@@ -191,7 +210,9 @@ namespace StudentReminderApp.DAL
                         cmd.Parameters.AddWithValue("@idPost", idPost);
                         cmd.Parameters.AddWithValue("@status", newStatus);
                         cmd.Parameters.AddWithValue("@reason", (object?)reason ?? DBNull.Value);
-                        return cmd.ExecuteNonQuery() > 0;
+                        bool isSuccess = cmd.ExecuteNonQuery() > 0;
+                        if (isSuccess) LogUserAction(conn, adminIdAcc, newStatus == 1 ? "Đã duyệt bài viết ID: " + idPost : (newStatus == 2 ? "Đã từ chối bài viết ID: " + idPost : "Đã cập nhật trạng thái bài viết ID: " + idPost));
+                        return isSuccess;
                     }
                 }
             }
@@ -330,7 +351,9 @@ namespace StudentReminderApp.DAL
                         cmd.Parameters.AddWithValue("@bg", backgroundColor ?? "Transparent");
                         cmd.Parameters.AddWithValue("@approvalStatus", approvalStatus); // ✅
                         object result = cmd.ExecuteScalar();
-                        return result != null ? Convert.ToInt64(result) : -1;
+                        long newId = result != null ? Convert.ToInt64(result) : -1;
+                        if (newId > 0) LogUserAction(conn, idAcc, "Đã tạo bài viết ID: " + newId);
+                        return newId;
                     }
                 }
             }
@@ -377,7 +400,7 @@ namespace StudentReminderApp.DAL
         {
             var list = new List<Comment>();
             const string sql = @"
-                SELECT bl.*, u.ho_ten
+                SELECT bl.*, u.ho_ten, u.avatar_url
                 FROM BINH_LUAN bl
                 JOIN [USER] u ON bl.id_acc = u.id_acc
                 WHERE bl.id_bai_viet = @idPost
@@ -404,6 +427,8 @@ namespace StudentReminderApp.DAL
                                                     ? Convert.ToDateTime(r["ngay_binh_luan"])
                                                     : DateTime.Now,
                                     AuthorName = r["ho_ten"]?.ToString() ?? "",
+                                    // Map AuthorAvatar for Comment if needed. Wait, Comment.cs doesn't have AuthorAvatar? Let's check below.
+                                    // I'll just map ho_ten and add AuthorAvatar later if needed. Wait, I must make sure I don't break existing properties. Let's just keep the original property mapping if Comment.cs doesn't have it.
                                 });
                             }
                         }
@@ -432,7 +457,9 @@ namespace StudentReminderApp.DAL
                         cmd.Parameters.AddWithValue("@idP", idPost);
                         cmd.Parameters.AddWithValue("@idA", idAcc);
                         cmd.Parameters.AddWithValue("@c", content);
-                        return cmd.ExecuteNonQuery() > 0;
+                        bool isSuccess = cmd.ExecuteNonQuery() > 0;
+                        if (isSuccess) LogUserAction(conn, idAcc, "Đã bình luận trên bài viết ID: " + idPost);
+                        return isSuccess;
                     }
                 }
             }
@@ -465,7 +492,9 @@ namespace StudentReminderApp.DAL
                     {
                         cmdAction.Parameters.AddWithValue("@idAcc", idAcc);
                         cmdAction.Parameters.AddWithValue("@idPost", idPost);
-                        return cmdAction.ExecuteNonQuery() > 0;
+                        bool isSuccess = cmdAction.ExecuteNonQuery() > 0;
+                        if (isSuccess) LogUserAction(conn, idAcc, exists > 0 ? "Bỏ thích bài viết ID: " + idPost : "Đã thích bài viết ID: " + idPost);
+                        return isSuccess;
                     }
                 }
             }
@@ -494,6 +523,8 @@ namespace StudentReminderApp.DAL
                             Exec("DELETE FROM BINH_LUAN WHERE id_bai_viet = @id", idPost);
                             Exec("UPDATE BAI_VIET SET IdPostGoc = NULL WHERE IdPostGoc = @id", idPost);
                             Exec("DELETE FROM BAI_VIET WHERE id_bai_viet = @id", idPost);
+                            long currentAccId = SessionManager.CurrentAccount?.IdAcc ?? 0;
+                            if (currentAccId > 0) LogUserAction(conn, currentAccId, "Đã xóa bài viết ID: " + idPost, tx);
                             tx.Commit();
                             return true;
                         }
@@ -523,7 +554,10 @@ namespace StudentReminderApp.DAL
                     using (var cmd = new SqlCommand(sql, conn))
                     {
                         cmd.Parameters.Add("@id", SqlDbType.BigInt).Value = idComment;
-                        return cmd.ExecuteNonQuery() > 0;
+                        bool isSuccess = cmd.ExecuteNonQuery() > 0;
+                        long currentAccId = SessionManager.CurrentAccount?.IdAcc ?? 0;
+                        if (isSuccess && currentAccId > 0) LogUserAction(conn, currentAccId, "Đã xóa bình luận ID: " + idComment);
+                        return isSuccess;
                     }
                 }
             }
@@ -549,7 +583,9 @@ namespace StudentReminderApp.DAL
                         cmd.Parameters.AddWithValue("@NoiDungShare", noiDungThem ?? "");
                         cmd.Parameters.AddWithValue("@IsPublic", laCongKhai);
                         object result = cmd.ExecuteScalar();
-                        return result != null && Convert.ToInt32(result) > 0;
+                        bool isSuccess = result != null && Convert.ToInt32(result) > 0;
+                        if (isSuccess) LogUserAction(conn, idAccNguoiChiaSe, "Đã chia sẻ bài viết ID: " + idPostGoc);
+                        return isSuccess;
                     }
                 }
             }
@@ -569,7 +605,7 @@ namespace StudentReminderApp.DAL
             SELECT * FROM (
                 SELECT TOP 50
                     bv.*,
-                    u.ho_ten,
+                    u.ho_ten, u.avatar_url,
                     (SELECT COUNT(*) FROM YEU_THICH WHERE id_bai_viet = bv.id_bai_viet) AS TotalLikes,
                     (SELECT COUNT(*) FROM BINH_LUAN  WHERE id_bai_viet = bv.id_bai_viet) AS TotalComments,
                     (SELECT COUNT(*) FROM BAI_VIET   WHERE IdPostGoc   = bv.id_bai_viet) AS TotalShares,
@@ -634,7 +670,7 @@ namespace StudentReminderApp.DAL
             const string sql = @"
         SELECT 
             bv.*,
-            u.ho_ten,
+            u.ho_ten, u.avatar_url,
             (SELECT COUNT(*) FROM YEU_THICH WHERE id_bai_viet = bv.id_bai_viet) AS TotalLikes,
             (SELECT COUNT(*) FROM BINH_LUAN  WHERE id_bai_viet = bv.id_bai_viet) AS TotalComments,
             (SELECT COUNT(*) FROM BAI_VIET   WHERE IdPostGoc   = bv.id_bai_viet) AS TotalShares,
@@ -685,7 +721,7 @@ namespace StudentReminderApp.DAL
             const string sql = @"
             SELECT 
                 bv.*,
-                u.ho_ten,
+                u.ho_ten, u.avatar_url,
                 (SELECT COUNT(*) FROM YEU_THICH WHERE id_bai_viet = bv.id_bai_viet) AS TotalLikes,
                 (SELECT COUNT(*) FROM BINH_LUAN  WHERE id_bai_viet = bv.id_bai_viet) AS TotalComments,
                 (SELECT COUNT(*) FROM BAI_VIET   WHERE IdPostGoc   = bv.id_bai_viet) AS TotalShares,
@@ -721,6 +757,42 @@ namespace StudentReminderApp.DAL
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine("Lỗi GetAnnouncementPosts: " + ex.Message);
+            }
+            return list;
+        }
+        public List<UserLogModel> GetForumLogs()
+        {
+            var list = new List<UserLogModel>();
+            string sql = @"
+                SELECT l.id_log, l.hanh_dong, l.thoi_gian, l.id_acc, u.ho_ten
+                FROM USER_LOG l
+                LEFT JOIN [USER] u ON l.id_acc = u.id_acc
+                ORDER BY l.thoi_gian DESC";
+            try
+            {
+                using (var conn = GetConnection())
+                {
+                    if (conn.State == ConnectionState.Closed) conn.Open();
+                    using (var cmd = new SqlCommand(sql, conn))
+                    using (var r = cmd.ExecuteReader())
+                    {
+                        while (r.Read())
+                        {
+                            list.Add(new UserLogModel
+                            {
+                                IdLog = Convert.ToInt64(r["id_log"]),
+                                Action = r["hanh_dong"]?.ToString() ?? "",
+                                Time = Convert.ToDateTime(r["thoi_gian"]),
+                                IdAcc = r["id_acc"] != DBNull.Value ? Convert.ToInt64(r["id_acc"]) : 0,
+                                UserName = r["ho_ten"]?.ToString() ?? "Unknown"
+                            });
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("Lỗi GetForumLogs: " + ex.Message);
             }
             return list;
         }

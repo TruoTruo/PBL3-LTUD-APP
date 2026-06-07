@@ -218,5 +218,11 @@ namespace StudentReminderApp.BLL
             }
         }
 
+        public List<UserLogModel> GetForumLogs()
+        {
+            if (!IsCurrentUserAdmin()) return new List<UserLogModel>();
+            return _forumDAL.GetForumLogs();
+        }
+
     }
 }

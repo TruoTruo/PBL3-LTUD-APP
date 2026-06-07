@@ -4,7 +4,7 @@
         Title="Cắt ảnh đại diện" Height="600" Width="800"
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize"
-        Background="#F8FAFC">
+        Background="{DynamicResource BgBrush}">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -13,11 +13,11 @@
         </Grid.RowDefinitions>
 
         <!-- Header -->
-        <TextBlock Text="CẮT ẢNH ĐẠI DIỆN" FontSize="20" FontWeight="Bold" Foreground="#0F172A" Margin="24,16"/>
-        <TextBlock Text="Di chuyển khung chọn hoặc kéo các góc để phóng to / thu nhỏ ảnh đại diện" FontSize="14" Foreground="#64748B" Margin="24,45,0,16"/>
+        <TextBlock Text="CẮT ẢNH ĐẠI DIỆN" FontSize="20" FontWeight="Bold" Foreground="{DynamicResource TextPrimaryBrush}" Margin="24,16"/>
+        <TextBlock Text="Di chuyển khung chọn hoặc kéo các góc để phóng to / thu nhỏ ảnh đại diện" FontSize="14" Foreground="{DynamicResource TextSecondaryBrush}" Margin="24,45,0,16"/>
 
         <!-- Crop Area -->
-        <Border Grid.Row="1" Margin="24,0" Background="#E2E8F0" BorderBrush="#CBD5E1" BorderThickness="1" CornerRadius="8" ClipToBounds="True">
+        <Border Grid.Row="1" Margin="24,0" Background="{DynamicResource BorderBrush}" BorderBrush="#CBD5E1" BorderThickness="1" CornerRadius="8" ClipToBounds="True">
             <Canvas x:Name="ImageCanvas" Background="Transparent" MouseDown="Canvas_MouseDown" MouseMove="Canvas_MouseMove" MouseUp="Canvas_MouseUp" SizeChanged="Canvas_SizeChanged">
                 <Image x:Name="ImgSource" Stretch="Uniform"/>
                 <!-- Dim Overlay -->
@@ -26,16 +26,16 @@
                 <Rectangle x:Name="SelectionBox" Stroke="#2563EB" StrokeThickness="2" Fill="Transparent" Visibility="Collapsed" IsHitTestVisible="False"/>
                 
                 <!-- Corner Handles -->
-                <Ellipse x:Name="HandleTL" Width="12" Height="12" Fill="White" Stroke="#2563EB" StrokeThickness="2" Margin="-6,-6,0,0" Visibility="Collapsed" IsHitTestVisible="False"/>
-                <Ellipse x:Name="HandleTR" Width="12" Height="12" Fill="White" Stroke="#2563EB" StrokeThickness="2" Margin="-6,-6,0,0" Visibility="Collapsed" IsHitTestVisible="False"/>
-                <Ellipse x:Name="HandleBL" Width="12" Height="12" Fill="White" Stroke="#2563EB" StrokeThickness="2" Margin="-6,-6,0,0" Visibility="Collapsed" IsHitTestVisible="False"/>
-                <Ellipse x:Name="HandleBR" Width="12" Height="12" Fill="White" Stroke="#2563EB" StrokeThickness="2" Margin="-6,-6,0,0" Visibility="Collapsed" IsHitTestVisible="False"/>
+                <Ellipse x:Name="HandleTL" Width="12" Height="12" Fill="{DynamicResource SurfaceBrush}" Stroke="#2563EB" StrokeThickness="2" Margin="-6,-6,0,0" Visibility="Collapsed" IsHitTestVisible="False"/>
+                <Ellipse x:Name="HandleTR" Width="12" Height="12" Fill="{DynamicResource SurfaceBrush}" Stroke="#2563EB" StrokeThickness="2" Margin="-6,-6,0,0" Visibility="Collapsed" IsHitTestVisible="False"/>
+                <Ellipse x:Name="HandleBL" Width="12" Height="12" Fill="{DynamicResource SurfaceBrush}" Stroke="#2563EB" StrokeThickness="2" Margin="-6,-6,0,0" Visibility="Collapsed" IsHitTestVisible="False"/>
+                <Ellipse x:Name="HandleBR" Width="12" Height="12" Fill="{DynamicResource SurfaceBrush}" Stroke="#2563EB" StrokeThickness="2" Margin="-6,-6,0,0" Visibility="Collapsed" IsHitTestVisible="False"/>
             </Canvas>
         </Border>
 
         <!-- Footer Buttons -->
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="24,0">
-            <Button Content="Hủy" Width="100" Height="40" Background="White" BorderBrush="#CBD5E1" BorderThickness="1" FontWeight="Bold" Cursor="Hand" Click="BtnCancel_Click" Margin="0,0,16,0">
+            <Button Content="Hủy" Width="100" Height="40" Background="{DynamicResource SurfaceBrush}" BorderBrush="#CBD5E1" BorderThickness="1" FontWeight="Bold" Cursor="Hand" Click="BtnCancel_Click" Margin="0,0,16,0">
                 <Button.Template>
                     <ControlTemplate TargetType="Button">
                         <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1" CornerRadius="8">
@@ -44,7 +44,7 @@
                     </ControlTemplate>
                 </Button.Template>
             </Button>
-            <Button Content="Xác nhận" Width="120" Height="40" Background="#2563EB" Foreground="White" BorderThickness="0" FontWeight="Bold" Cursor="Hand" Click="BtnConfirm_Click">
+            <Button Content="Xác nhận" Width="120" Height="40" Background="#2563EB" Foreground="{DynamicResource SurfaceBrush}" BorderThickness="0" FontWeight="Bold" Cursor="Hand" Click="BtnConfirm_Click">
                 <Button.Template>
                     <ControlTemplate TargetType="Button">
                         <Border Background="{TemplateBinding Background}" CornerRadius="8">

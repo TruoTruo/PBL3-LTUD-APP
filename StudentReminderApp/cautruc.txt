@@ -1,0 +1,2643 @@
+Folder PATH listing
+Volume serial number is EC8D-26DE
+D:.
+ª   App.xaml
+ª   App.xaml.cs
+ª   AppConfig.cs
+ª   cautruc.txt
+ª   icon.ico
+ª   StudentReminderApp.csproj
+ª   StudentReminderApp.sln
+ª   
++---.github
+ª   +---agents
++---Assets
+ª       login_animation.html
+ª       
++---bin
+ª   +---Debug
+ª       +---net48
+ª           ª   BCrypt.Net-Next.dll
+ª           ª   FontAwesome.WPF.dll
+ª           ª   Microsoft.Web.WebView2.Core.dll
+ª           ª   Microsoft.Web.WebView2.WinForms.dll
+ª           ª   Microsoft.Web.WebView2.Wpf.dll
+ª           ª   Newtonsoft.Json.dll
+ª           ª   StudentReminderApp.exe
+ª           ª   StudentReminderApp.exe.config
+ª           ª   StudentReminderApp.pdb
+ª           ª   System.Buffers.dll
+ª           ª   System.Data.SqlClient.dll
+ª           ª   System.Memory.dll
+ª           ª   System.Numerics.Vectors.dll
+ª           ª   System.Runtime.CompilerServices.Unsafe.dll
+ª           ª   user_categories.json
+ª           ª   user_settings.txt
+ª           ª   WebView2Loader.dll
+ª           ª   
+ª           +---Assets
+ª           ª       login_animation.html
+ª           ª       
+ª           +---Avatars
+ª           ª       avatar_205_639163536349423068.JPG
+ª           ª       avatar_205_639163539110511284.JPG
+ª           ª       avatar_crop_639163544880996685.jpg
+ª           ª       avatar_crop_639163555200322937.jpg
+ª           ª       avatar_crop_639163557487389833.jpg
+ª           ª       avatar_crop_639163750463224624.jpg
+ª           ª       
+ª           +---runtimes
+ª           ª   +---win-x64
+ª           ª   ª   +---native
+ª           ª   ª           WebView2Loader.dll
+ª           ª   ª           
+ª           ª   +---win-x86
+ª           ª       +---native
+ª           +---StudentReminderApp.exe.WebView2
+ª           ª   +---EBWebView
+ª           ª       ª   BrowserMetrics-spare.pma
+ª           ª       ª   Last Version
+ª           ª       ª   Local State
+ª           ª       ª   Variations
+ª           ª       ª   
+ª           ª       +---AutoLaunchProtocolsComponent
+ª           ª       ª   +---1.0.0.10
+ª           ª       ª           manifest.json
+ª           ª       ª           protocols.json
+ª           ª       ª           
+ª           ª       +---CertificateRevocation
+ª           ª       ª   +---6498.2025.9.4
+ª           ª       ª           crl-set
+ª           ª       ª           manifest.json
+ª           ª       ª           
+ª           ª       +---component_crx_cache
+ª           ª       ª       000ac7dc9366969db9d1e41810a3a27c747a7623535d856eecc2de86cfed80c7
+ª           ª       ª       00af3f07b5abb71f6d30337e1eef62fa280f06ef19485c0cf6b72171f92ccc0a
+ª           ª       ª       720517793663c90e0dbd77cb42709bac49af733f83f73320ba89859d9b0310e0
+ª           ª       ª       a81d1959892ae4180554347df1b97834abba2e1a5e6b9aeba000ecea26eabecc
+ª           ª       ª       a922b7d113e67ce71528805d3c6780f7a207cada8ad56642047577358e46ba3d
+ª           ª       ª       bec8ead1da3c9600fe66bbcc0e7a9bed9a184c1be821b4d23570c6b7af7f0410
+ª           ª       ª       fa29a6d5775ff340900a65b39b02fc8b4b77d403c048d8debf22f2f5d09c61a0
+ª           ª       ª       metadata.json
+ª           ª       ª       
+ª           ª       +---Crashpad
+ª           ª       ª   ª   metadata
+ª           ª       ª   ª   settings.dat
+ª           ª       ª   ª   throttle_store.dat
+ª           ª       ª   ª   
+ª           ª       ª   +---attachments
+ª           ª       ª   +---reports
+ª           ª       +---Default
+ª           ª       ª   ª   BookmarkMergedSurfaceOrdering
+ª           ª       ª   ª   BrowsingTopicsSiteData
+ª           ª       ª   ª   BrowsingTopicsSiteData-journal
+ª           ª       ª   ª   BrowsingTopicsState
+ª           ª       ª   ª   DashTrackerDatabase
+ª           ª       ª   ª   DashTrackerDatabase-journal
+ª           ª       ª   ª   DIPS
+ª           ª       ª   ª   ExtensionActivityComp
+ª           ª       ª   ª   ExtensionActivityEdge
+ª           ª       ª   ª   ExtensionActivityEdge-journal
+ª           ª       ª   ª   Favicons
+ª           ª       ª   ª   Favicons-journal
+ª           ª       ª   ª   favorites_diagnostic.log
+ª           ª       ª   ª   heavy_ad_intervention_opt_out.db
+ª           ª       ª   ª   heavy_ad_intervention_opt_out.db-journal
+ª           ª       ª   ª   History
+ª           ª       ª   ª   History-journal
+ª           ª       ª   ª   LOCK
+ª           ª       ª   ª   LOG
+ª           ª       ª   ª   LOG.old
+ª           ª       ª   ª   Login Data
+ª           ª       ª   ª   Login Data For Account
+ª           ª       ª   ª   Login Data For Account-journal
+ª           ª       ª   ª   Login Data-journal
+ª           ª       ª   ª   Network Action Predictor
+ª           ª       ª   ª   Network Action Predictor-journal
+ª           ª       ª   ª   Preferences
+ª           ª       ª   ª   README
+ª           ª       ª   ª   Secure Preferences
+ª           ª       ª   ª   ServerCertificate
+ª           ª       ª   ª   ServerCertificate-journal
+ª           ª       ª   ª   SharedStorage
+ª           ª       ª   ª   Top Sites
+ª           ª       ª   ª   Top Sites-journal
+ª           ª       ª   ª   Vpn Tokens
+ª           ª       ª   ª   Vpn Tokens-journal
+ª           ª       ª   ª   Web Data
+ª           ª       ª   ª   Web Data-journal
+ª           ª       ª   ª   
+ª           ª       ª   +---AutofillAiModelCache
+ª           ª       ª   ª       LOCK
+ª           ª       ª   ª       LOG
+ª           ª       ª   ª       LOG.old
+ª           ª       ª   ª       
+ª           ª       ª   +---AutofillStrikeDatabase
+ª           ª       ª   ª       LOCK
+ª           ª       ª   ª       LOG
+ª           ª       ª   ª       LOG.old
+ª           ª       ª   ª       
+ª           ª       ª   +---blob_storage
+ª           ª       ª   ª   +---4d2319df-8825-405d-8e6c-f62a989d669b
+ª           ª       ª   +---BudgetDatabase
+ª           ª       ª   ª       LOCK
+ª           ª       ª   ª       LOG
+ª           ª       ª   ª       LOG.old
+ª           ª       ª   ª       
+ª           ª       ª   +---Cache
+ª           ª       ª   ª   +---Cache_Data
+ª           ª       ª   ª   +---No_Vary_Search
+ª           ª       ª   +---ClientCertificates
+ª           ª       ª   ª       LOCK
+ª           ª       ª   ª       LOG
+ª           ª       ª   ª       LOG.old
+ª           ª       ª   ª       
+ª           ª       ª   +---Code Cache
+ª           ª       ª   ª   +---js
+ª           ª       ª   ª   ª   ª   index
+ª           ª       ª   ª   ª   ª   
+ª           ª       ª   ª   ª   +---index-dir
+ª           ª       ª   ª   ª           the-real-index
+ª           ª       ª   ª   ª           
+ª           ª       ª   ª   +---wasm
+ª           ª       ª   ª       ª   index
+ª           ª       ª   ª       ª   
+ª           ª       ª   ª       +---index-dir
+ª           ª       ª   ª               the-real-index
+ª           ª       ª   ª               
+ª           ª       ª   +---commerce_subscription_db
+ª           ª       ª   ª       LOCK
+ª           ª       ª   ª       LOG
+ª           ª       ª   ª       LOG.old
+ª           ª       ª   ª       
+ª           ª       ª   +---DawnGraphiteCache
+ª           ª       ª   ª       data_0
+ª           ª       ª   ª       data_1
+ª           ª       ª   ª       data_2
+ª           ª       ª   ª       data_3
+ª           ª       ª   ª       index
+ª           ª       ª   ª       
+ª           ª       ª   +---DawnWebGPUCache
+ª           ª       ª   ª       data_0
+ª           ª       ª   ª       data_1
+ª           ª       ª   ª       data_2
+ª           ª       ª   ª       data_3
+ª           ª       ª   ª       index
+ª           ª       ª   ª       
+ª           ª       ª   +---discounts_db
+ª           ª       ª   ª       LOCK
+ª           ª       ª   ª       LOG
+ª           ª       ª   ª       LOG.old
+ª           ª       ª   ª       
+ª           ª       ª   +---discount_infos_db
+ª           ª       ª   ª       LOCK
+ª           ª       ª   ª       LOG
+ª           ª       ª   ª       LOG.old
+ª           ª       ª   ª       
+ª           ª       ª   +---EdgeJourneys
+ª           ª       ª   ª       EdgeJourneys.db
+ª           ª       ª   ª       
+ª           ª       ª   +---Extension Rules
+ª           ª       ª   ª       000003.log
+ª           ª       ª   ª       CURRENT
+ª           ª       ª   ª       LOCK
+ª           ª       ª   ª       LOG
+ª           ª       ª   ª       MANIFEST-000001
+ª           ª       ª   ª       
+ª           ª       ª   +---Extension Scripts
+ª           ª       ª   ª       000003.log
+ª           ª       ª   ª       CURRENT
+ª           ª       ª   ª       LOCK
+ª           ª       ª   ª       LOG
+ª           ª       ª   ª       MANIFEST-000001
+ª           ª       ª   ª       
+ª           ª       ª   +---Extension State
+ª           ª       ª   ª       000003.log
+ª           ª       ª   ª       CURRENT
+ª           ª       ª   ª       LOCK
+ª           ª       ª   ª       LOG
+ª           ª       ª   ª       LOG.old
+ª           ª       ª   ª       MANIFEST-000001
+ª           ª       ª   ª       
+ª           ª       ª   +---Feature Engagement Tracker
+ª           ª       ª   ª   +---AvailabilityDB
+ª           ª       ª   ª   ª       LOCK
+ª           ª       ª   ª   ª       LOG
+ª           ª       ª   ª   ª       LOG.old
+ª           ª       ª   ª   ª       
+ª           ª       ª   ª   +---EventDB
+ª           ª       ª   ª           LOCK
+ª           ª       ª   ª           LOG
+ª           ª       ª   ª           LOG.old
+ª           ª       ª   ª           
+ª           ª       ª   +---GPUCache
+ª           ª       ª   ª       data_0
+ª           ª       ª   ª       data_1
+ª           ª       ª   ª       data_2
+ª           ª       ª   ª       data_3
+ª           ª       ª   ª       index
+ª           ª       ª   ª       
+ª           ª       ª   +---Local Storage
+ª           ª       ª   ª   +---leveldb
+ª           ª       ª   ª           000003.log
+ª           ª       ª   ª           CURRENT
+ª           ª       ª   ª           LOCK
+ª           ª       ª   ª           LOG
+ª           ª       ª   ª           LOG.old
+ª           ª       ª   ª           MANIFEST-000001
+ª           ª       ª   ª           
+ª           ª       ª   +---Network
+ª           ª       ª   ª       Cookies
+ª           ª       ª   ª       Cookies-journal
+ª           ª       ª   ª       Device Bound Sessions
+ª           ª       ª   ª       Device Bound Sessions-journal
+ª           ª       ª   ª       Network Persistent State
+ª           ª       ª   ª       NetworkDataMigrated
+ª           ª       ª   ª       Reporting and NEL
+ª           ª       ª   ª       Reporting and NEL-journal
+ª           ª       ª   ª       SCT Auditing Pending Reports
+ª           ª       ª   ª       Sdch Dictionaries
+ª           ª       ª   ª       Trust Tokens
+ª           ª       ª   ª       Trust Tokens-journal
+ª           ª       ª   ª       
+ª           ª       ª   +---optimization_guide_hint_cache_store
+ª           ª       ª   ª       LOCK
+ª           ª       ª   ª       LOG
+ª           ª       ª   ª       LOG.old
+ª           ª       ª   ª       
+ª           ª       ª   +---parcel_tracking_db
+ª           ª       ª   ª       LOCK
+ª           ª       ª   ª       LOG
+ª           ª       ª   ª       LOG.old
+ª           ª       ª   ª       
+ª           ª       ª   +---PersistentOriginTrials
+ª           ª       ª   ª       LOCK
+ª           ª       ª   ª       LOG
+ª           ª       ª   ª       LOG.old
+ª           ª       ª   ª       
+ª           ª       ª   +---Safe Browsing Network
+ª           ª       ª   ª       NetworkDataMigrated
+ª           ª       ª   ª       Safe Browsing Cookies
+ª           ª       ª   ª       Safe Browsing Cookies-journal
+ª           ª       ª   ª       
+ª           ª       ª   +---Session Storage
+ª           ª       ª   ª       000003.log
+ª           ª       ª   ª       CURRENT
+ª           ª       ª   ª       LOCK
+ª           ª       ª   ª       LOG
+ª           ª       ª   ª       LOG.old
+ª           ª       ª   ª       MANIFEST-000001
+ª           ª       ª   ª       
+ª           ª       ª   +---Sessions
+ª           ª       ª   +---Shared Dictionary
+ª           ª       ª   ª   ª   db
+ª           ª       ª   ª   ª   db-journal
+ª           ª       ª   ª   ª   
+ª           ª       ª   ª   +---cache
+ª           ª       ª   ª       ª   index
+ª           ª       ª   ª       ª   
+ª           ª       ª   ª       +---index-dir
+ª           ª       ª   ª               the-real-index
+ª           ª       ª   ª               
+ª           ª       ª   +---shared_proto_db
+ª           ª       ª   ª   ª   000003.log
+ª           ª       ª   ª   ª   CURRENT
+ª           ª       ª   ª   ª   LOCK
+ª           ª       ª   ª   ª   LOG
+ª           ª       ª   ª   ª   LOG.old
+ª           ª       ª   ª   ª   MANIFEST-000001
+ª           ª       ª   ª   ª   
+ª           ª       ª   ª   +---metadata
+ª           ª       ª   ª           000003.log
+ª           ª       ª   ª           CURRENT
+ª           ª       ª   ª           LOCK
+ª           ª       ª   ª           LOG
+ª           ª       ª   ª           LOG.old
+ª           ª       ª   ª           MANIFEST-000001
+ª           ª       ª   ª           
+ª           ª       ª   +---Site Characteristics Database
+ª           ª       ª   ª       000003.log
+ª           ª       ª   ª       CURRENT
+ª           ª       ª   ª       LOCK
+ª           ª       ª   ª       LOG
+ª           ª       ª   ª       LOG.old
+ª           ª       ª   ª       MANIFEST-000001
+ª           ª       ª   ª       
+ª           ª       ª   +---Sync Data
+ª           ª       ª       +---LevelDB
+ª           ª       ª               000003.log
+ª           ª       ª               CURRENT
+ª           ª       ª               LOCK
+ª           ª       ª               LOG
+ª           ª       ª               LOG.old
+ª           ª       ª               MANIFEST-000001
+ª           ª       ª               
+ª           ª       +---extensions_crx_cache
+ª           ª       ª       metadata.json
+ª           ª       ª       
+ª           ª       +---GraphiteDawnCache
+ª           ª       ª       data_0
+ª           ª       ª       data_1
+ª           ª       ª       data_2
+ª           ª       ª       data_3
+ª           ª       ª       index
+ª           ª       ª       
+ª           ª       +---GrShaderCache
+ª           ª       ª       data_0
+ª           ª       ª       data_1
+ª           ª       ª       data_2
+ª           ª       ª       data_3
+ª           ª       ª       f_000001
+ª           ª       ª       index
+ª           ª       ª       
+ª           ª       +---hyphen-data
+ª           ª       ª   +---120.0.6050.0
+ª           ª       ª       ª   hyph-af.hyb
+ª           ª       ª       ª   hyph-as.hyb
+ª           ª       ª       ª   hyph-be.hyb
+ª           ª       ª       ª   hyph-bg.hyb
+ª           ª       ª       ª   hyph-bn.hyb
+ª           ª       ª       ª   hyph-cs.hyb
+ª           ª       ª       ª   hyph-cu.hyb
+ª           ª       ª       ª   hyph-cy.hyb
+ª           ª       ª       ª   hyph-da.hyb
+ª           ª       ª       ª   hyph-de-1901.hyb
+ª           ª       ª       ª   hyph-de-1996.hyb
+ª           ª       ª       ª   hyph-de-ch-1901.hyb
+ª           ª       ª       ª   hyph-el.hyb
+ª           ª       ª       ª   hyph-en-gb.hyb
+ª           ª       ª       ª   hyph-en-us.hyb
+ª           ª       ª       ª   hyph-es.hyb
+ª           ª       ª       ª   hyph-et.hyb
+ª           ª       ª       ª   hyph-eu.hyb
+ª           ª       ª       ª   hyph-fr.hyb
+ª           ª       ª       ª   hyph-ga.hyb
+ª           ª       ª       ª   hyph-gl.hyb
+ª           ª       ª       ª   hyph-gu.hyb
+ª           ª       ª       ª   hyph-hi.hyb
+ª           ª       ª       ª   hyph-hr.hyb
+ª           ª       ª       ª   hyph-hu.hyb
+ª           ª       ª       ª   hyph-hy.hyb
+ª           ª       ª       ª   hyph-it.hyb
+ª           ª       ª       ª   hyph-ka.hyb
+ª           ª       ª       ª   hyph-kn.hyb
+ª           ª       ª       ª   hyph-la.hyb
+ª           ª       ª       ª   hyph-lt.hyb
+ª           ª       ª       ª   hyph-lv.hyb
+ª           ª       ª       ª   hyph-ml.hyb
+ª           ª       ª       ª   hyph-mn-cyrl.hyb
+ª           ª       ª       ª   hyph-mr.hyb
+ª           ª       ª       ª   hyph-mul-ethi.hyb
+ª           ª       ª       ª   hyph-nb.hyb
+ª           ª       ª       ª   hyph-nl.hyb
+ª           ª       ª       ª   hyph-nn.hyb
+ª           ª       ª       ª   hyph-or.hyb
+ª           ª       ª       ª   hyph-pa.hyb
+ª           ª       ª       ª   hyph-pt.hyb
+ª           ª       ª       ª   hyph-ru.hyb
+ª           ª       ª       ª   hyph-sk.hyb
+ª           ª       ª       ª   hyph-sl.hyb
+ª           ª       ª       ª   hyph-sq.hyb
+ª           ª       ª       ª   hyph-sv.hyb
+ª           ª       ª       ª   hyph-ta.hyb
+ª           ª       ª       ª   hyph-te.hyb
+ª           ª       ª       ª   hyph-tk.hyb
+ª           ª       ª       ª   hyph-uk.hyb
+ª           ª       ª       ª   hyph-und-ethi.hyb
+ª           ª       ª       ª   manifest.json
+ª           ª       ª       ª   
+ª           ª       ª       +---_metadata
+ª           ª       ª               verified_contents.json
+ª           ª       ª               
+ª           ª       +---MEIPreload
+ª           ª       +---OriginTrials
+ª           ª       ª   +---0.0.1.7
+ª           ª       ª           manifest.json
+ª           ª       ª           
+ª           ª       +---PKIMetadata
+ª           ª       ª   +---46.0.0.0
+ª           ª       ª           crs.pb
+ª           ª       ª           ct_config.pb
+ª           ª       ª           kp_pinslist.pb
+ª           ª       ª           manifest.json
+ª           ª       ª           
+ª           ª       +---ShaderCache
+ª           ª       ª       data_0
+ª           ª       ª       data_1
+ª           ª       ª       data_2
+ª           ª       ª       data_3
+ª           ª       ª       index
+ª           ª       ª       
+ª           ª       +---Speech Recognition
+ª           ª       ª   +---1.15.0.1
+ª           ª       ª           manifest.json
+ª           ª       ª           Microsoft.CognitiveServices.Speech.core.dll
+ª           ª       ª           
+ª           ª       +---Subresource Filter
+ª           ª       ª   +---Indexed Rules
+ª           ª       ª   ª   +---37
+ª           ª       ª   ª       +---10.34.0.84
+ª           ª       ª   ª               LICENSE
+ª           ª       ª   ª               Ruleset Data
+ª           ª       ª   ª               
+ª           ª       ª   +---Unindexed Rules
+ª           ª       ª       +---10.34.0.84
+ª           ª       ª               adblock_snippet.js
+ª           ª       ª               Filtering Rules
+ª           ª       ª               Filtering Rules-AA
+ª           ª       ª               Filtering Rules-CA
+ª           ª       ª               LICENSE
+ª           ª       ª               manifest.json
+ª           ª       ª               Part-DE
+ª           ª       ª               Part-ES
+ª           ª       ª               Part-FR
+ª           ª       ª               Part-IT
+ª           ª       ª               Part-NL
+ª           ª       ª               Part-RU
+ª           ª       ª               Part-ZH
+ª           ª       ª               
+ª           ª       +---Trust Protection Lists
+ª           ª       +---TrustTokenKeyCommitments
+ª           ª       ª   +---2026.3.23.1
+ª           ª       ª       ª   keys.json
+ª           ª       ª       ª   LICENSE
+ª           ª       ª       ª   manifest.json
+ª           ª       ª       ª   
+ª           ª       ª       +---_metadata
+ª           ª       ª               verified_contents.json
+ª           ª       ª               
+ª           ª       +---WidevineCdm
+ª           +---Views
+ª               +---Pages
+ª                       kctdt_dacthu.json
+ª                       24T_NHAT_CUNHAN.json
+ª                       kctdt_trituenhantao.json
+ª                       
++---BLL
+ª       AccountBLL.cs
+ª       AdvisorBLL.cs
+ª       CourseBLL.cs
+ª       EventBLL.cs
+ª       ForumBLL.cs
+ª       StudentBLL.cs
+ª       
++---Converters
+ª       BoolConverters.cs
+ª       Converters.cs
+ª       
++---DAL
+ª       AccountDAL.cs
+ª       AdvisorDAL.cs
+ª       BaseDAL.cs
+ª       CourseDAL.cs
+ª       DanhMucDAL.cs
+ª       EventDAL.cs
+ª       ForumDAL.cs
+ª       NotificationDAL.cs
+ª       StudentDAL.cs
+ª       UserDAL.cs
+ª       
++---data
+ª       CNTTNHATCN.csv
+ª       
++---Helpers
+ª       RelayCommand.cs
+ª       ScheduleBitmaskHelper.cs
+ª       SessionManager.cs
+ª       
++---Models
+ª       Account.cs
+ª       AdvisorSummary.cs
+ª       CalendarItem.cs
+ª       Comment.cs
+ª       CourseClass.cs
+ª       EventTag.cs
+ª       LichChiTiet.cs
+ª       LopHocPhan.cs
+ª       MonHoc.cs
+ª       NotificationQueue.cs
+ª       PersonalEvent.cs
+ª       Post.cs
+ª       Student.cs
+ª       User.cs
+ª       UserManagementDto.cs
+ª       
++---obj
+ª   ª   project.assets.json
+ª   ª   project.nuget.cache
+ª   ª   StudentReminderApp.csproj.nuget.dgspec.json
+ª   ª   StudentReminderApp.csproj.nuget.g.props
+ª   ª   StudentReminderApp.csproj.nuget.g.targets
+ª   ª   StudentReminderApp_0d02v4o3_wpftmp.csproj.nuget.dgspec.json
+ª   ª   StudentReminderApp_0d02v4o3_wpftmp.csproj.nuget.g.props
+ª   ª   StudentReminderApp_0d02v4o3_wpftmp.csproj.nuget.g.targets
+ª   ª   StudentReminderApp_0ddzrpey_wpftmp.csproj.nuget.dgspec.json
+ª   ª   StudentReminderApp_0ddzrpey_wpftmp.csproj.nuget.g.props
+ª   ª   StudentReminderApp_0ddzrpey_wpftmp.csproj.nuget.g.targets
+ª   ª   StudentReminderApp_0hgfsoz5_wpftmp.csproj.nuget.dgspec.json
+ª   ª   StudentReminderApp_0hgfsoz5_wpftmp.csproj.nuget.g.props
+ª   ª   StudentReminderApp_0hgfsoz5_wpftmp.csproj.nuget.g.targets
+ª   ª   StudentReminderApp_11objj0q_wpftmp.csproj.nuget.dgspec.json
+ª   ª   StudentReminderApp_11objj0q_wpftmp.csproj.nuget.g.props
+ª   ª   StudentReminderApp_11objj0q_wpftmp.csproj.nuget.g.targets
+ª   ª   StudentReminderApp_1d2rueoi_wpftmp.csproj.nuget.dgspec.json
+ª   ª   StudentReminderApp_1d2rueoi_wpftmp.csproj.nuget.g.props
+ª   ª   StudentReminderApp_1d2rueoi_wpftmp.csproj.nuget.g.targets
+ª   ª   StudentReminderApp_1oalow52_wpftmp.csproj.nuget.dgspec.json
+ª   ª   StudentReminderApp_1oalow52_wpftmp.csproj.nuget.g.props
+ª   ª   StudentReminderApp_1oalow52_wpftmp.csproj.nuget.g.targets
+ª   ª   StudentReminderApp_2j3g2ezw_wpftmp.csproj.nuget.dgspec.json
+ª   ª   StudentReminderApp_2j3g2ezw_wpftmp.csproj.nuget.g.props
+ª   ª   StudentReminderApp_2j3g2ezw_wpftmp.csproj.nuget.g.targets
+ª   ª   StudentReminderApp_3aw1c22l_wpftmp.csproj.nuget.dgspec.json
+ª   ª   StudentReminderApp_3aw1c22l_wpftmp.csproj.nuget.g.props
+ª   ª   StudentReminderApp_3aw1c22l_wpftmp.csproj.nuget.g.targets
+ª   ª   StudentReminderApp_3tamq43p_wpftmp.csproj.nuget.dgspec.json
+ª   ª   StudentReminderApp_3tamq43p_wpftmp.csproj.nuget.g.props
+ª   ª   StudentReminderApp_3tamq43p_wpftmp.csproj.nuget.g.targets
+ª   ª   StudentReminderApp_4kuphzaw_wpftmp.csproj.nuget.dgspec.json
+ª   ª   StudentReminderApp_4kuphzaw_wpftmp.csproj.nuget.g.props
+ª   ª   StudentReminderApp_4kuphzaw_wpftmp.csproj.nuget.g.targets
+ª   ª   StudentReminderApp_4sm3jizs_wpftmp.csproj.nuget.dgspec.json
+ª   ª   StudentReminderApp_4sm3jizs_wpftmp.csproj.nuget.g.props
+ª   ª   StudentReminderApp_4sm3jizs_wpftmp.csproj.nuget.g.targets
+ª   ª   StudentReminderApp_5pgdk1lx_wpftmp.csproj.nuget.dgspec.json
+ª   ª   StudentReminderApp_5pgdk1lx_wpftmp.csproj.nuget.g.props
+ª   ª   StudentReminderApp_5pgdk1lx_wpftmp.csproj.nuget.g.targets
+ª   ª   StudentReminderApp_aid3drun_wpftmp.csproj.nuget.dgspec.json
+ª   ª   StudentReminderApp_aid3drun_wpftmp.csproj.nuget.g.props
+ª   ª   StudentReminderApp_aid3drun_wpftmp.csproj.nuget.g.targets
+ª   ª   StudentReminderApp_arlojfr5_wpftmp.csproj.nuget.dgspec.json
+ª   ª   StudentReminderApp_arlojfr5_wpftmp.csproj.nuget.g.props
+ª   ª   StudentReminderApp_arlojfr5_wpftmp.csproj.nuget.g.targets
+ª   ª   StudentReminderApp_avyy5ybr_wpftmp.csproj.nuget.dgspec.json
+ª   ª   StudentReminderApp_avyy5ybr_wpftmp.csproj.nuget.g.props
+ª   ª   StudentReminderApp_avyy5ybr_wpftmp.csproj.nuget.g.targets
+ª   ª   StudentReminderApp_bhlwi54r_wpftmp.csproj.nuget.dgspec.json
+ª   ª   StudentReminderApp_bhlwi54r_wpftmp.csproj.nuget.g.props
+ª   ª   StudentReminderApp_bhlwi54r_wpftmp.csproj.nuget.g.targets
+ª   ª   StudentReminderApp_bls4shgz_wpftmp.csproj.nuget.dgspec.json
+ª   ª   StudentReminderApp_bls4shgz_wpftmp.csproj.nuget.g.props
+ª   ª   StudentReminderApp_bls4shgz_wpftmp.csproj.nuget.g.targets
+ª   ª   StudentReminderApp_cpvx4pz2_wpftmp.csproj.nuget.dgspec.json
+ª   ª   StudentReminderApp_cpvx4pz2_wpftmp.csproj.nuget.g.props
+ª   ª   StudentReminderApp_cpvx4pz2_wpftmp.csproj.nuget.g.targets
+ª   ª   StudentReminderApp_crw3rxl3_wpftmp.csproj.nuget.dgspec.json
+ª   ª   StudentReminderApp_crw3rxl3_wpftmp.csproj.nuget.g.props
+ª   ª   StudentReminderApp_crw3rxl3_wpftmp.csproj.nuget.g.targets
+ª   ª   StudentReminderApp_ctnhayhh_wpftmp.csproj.nuget.dgspec.json
+ª   ª   StudentReminderApp_ctnhayhh_wpftmp.csproj.nuget.g.props
+ª   ª   StudentReminderApp_ctnhayhh_wpftmp.csproj.nuget.g.targets
+ª   ª   StudentReminderApp_dq0uoqzj_wpftmp.csproj.nuget.dgspec.json
+ª   ª   StudentReminderApp_dq0uoqzj_wpftmp.csproj.nuget.g.props
+ª   ª   StudentReminderApp_dq0uoqzj_wpftmp.csproj.nuget.g.targets
+ª   ª   StudentReminderApp_ec13rcwz_wpftmp.csproj.nuget.dgspec.json
+ª   ª   StudentReminderApp_ec13rcwz_wpftmp.csproj.nuget.g.props
+ª   ª   StudentReminderApp_ec13rcwz_wpftmp.csproj.nuget.g.targets
+ª   ª   StudentReminderApp_efur2pw0_wpftmp.csproj.nuget.dgspec.json
+ª   ª   StudentReminderApp_efur2pw0_wpftmp.csproj.nuget.g.props
+ª   ª   StudentReminderApp_efur2pw0_wpftmp.csproj.nuget.g.targets
+ª   ª   StudentReminderApp_eubq2unq_wpftmp.csproj.nuget.dgspec.json
+ª   ª   StudentReminderApp_eubq2unq_wpftmp.csproj.nuget.g.props
+ª   ª   StudentReminderApp_eubq2unq_wpftmp.csproj.nuget.g.targets
+ª   ª   StudentReminderApp_exwygi2y_wpftmp.csproj.nuget.dgspec.json
+ª   ª   StudentReminderApp_exwygi2y_wpftmp.csproj.nuget.g.props
+ª   ª   StudentReminderApp_exwygi2y_wpftmp.csproj.nuget.g.targets
+ª   ª   StudentReminderApp_fbdrytto_wpftmp.csproj.nuget.dgspec.json
+ª   ª   StudentReminderApp_fbdrytto_wpftmp.csproj.nuget.g.props
+ª   ª   StudentReminderApp_fbdrytto_wpftmp.csproj.nuget.g.targets
+ª   ª   StudentReminderApp_frtrywgs_wpftmp.csproj.nuget.dgspec.json
+ª   ª   StudentReminderApp_frtrywgs_wpftmp.csproj.nuget.g.props
+ª   ª   StudentReminderApp_frtrywgs_wpftmp.csproj.nuget.g.targets
+ª   ª   StudentReminderApp_g0xbutvz_wpftmp.csproj.nuget.dgspec.json
+ª   ª   StudentReminderApp_g0xbutvz_wpftmp.csproj.nuget.g.props
+ª   ª   StudentReminderApp_g0xbutvz_wpftmp.csproj.nuget.g.targets
+ª   ª   StudentReminderApp_gf3w52ga_wpftmp.csproj.nuget.dgspec.json
+ª   ª   StudentReminderApp_gf3w52ga_wpftmp.csproj.nuget.g.props
+ª   ª   StudentReminderApp_gf3w52ga_wpftmp.csproj.nuget.g.targets
+ª   ª   StudentReminderApp_gksx2pgr_wpftmp.csproj.nuget.dgspec.json
+ª   ª   StudentReminderApp_gksx2pgr_wpftmp.csproj.nuget.g.props
+ª   ª   StudentReminderApp_gksx2pgr_wpftmp.csproj.nuget.g.targets
+ª   ª   StudentReminderApp_gwexvrfx_wpftmp.csproj.nuget.dgspec.json
+ª   ª   StudentReminderApp_gwexvrfx_wpftmp.csproj.nuget.g.props
+ª   ª   StudentReminderApp_gwexvrfx_wpftmp.csproj.nuget.g.targets
+ª   ª   StudentReminderApp_i1nqfcsq_wpftmp.csproj.nuget.dgspec.json
+ª   ª   StudentReminderApp_i1nqfcsq_wpftmp.csproj.nuget.g.props
+ª   ª   StudentReminderApp_i1nqfcsq_wpftmp.csproj.nuget.g.targets
+ª   ª   StudentReminderApp_iidi14nv_wpftmp.csproj.nuget.dgspec.json
+ª   ª   StudentReminderApp_iidi14nv_wpftmp.csproj.nuget.g.props
+ª   ª   StudentReminderApp_iidi14nv_wpftmp.csproj.nuget.g.targets
+ª   ª   StudentReminderApp_isr3gots_wpftmp.csproj.nuget.dgspec.json
+ª   ª   StudentReminderApp_isr3gots_wpftmp.csproj.nuget.g.props
+ª   ª   StudentReminderApp_isr3gots_wpftmp.csproj.nuget.g.targets
+ª   ª   StudentReminderApp_j10ckers_wpftmp.csproj.nuget.dgspec.json
+ª   ª   StudentReminderApp_j30mqabf_wpftmp.csproj.nuget.dgspec.json
+ª   ª   StudentReminderApp_j30mqabf_wpftmp.csproj.nuget.g.props
+ª   ª   StudentReminderApp_j30mqabf_wpftmp.csproj.nuget.g.targets
+ª   ª   StudentReminderApp_j4x50lbt_wpftmp.csproj.nuget.dgspec.json
+ª   ª   StudentReminderApp_j4x50lbt_wpftmp.csproj.nuget.g.props
+ª   ª   StudentReminderApp_j4x50lbt_wpftmp.csproj.nuget.g.targets
+ª   ª   StudentReminderApp_jr5ton3g_wpftmp.csproj.nuget.dgspec.json
+ª   ª   StudentReminderApp_jr5ton3g_wpftmp.csproj.nuget.g.props
+ª   ª   StudentReminderApp_jr5ton3g_wpftmp.csproj.nuget.g.targets
+ª   ª   StudentReminderApp_jsotvsuu_wpftmp.csproj.nuget.dgspec.json
+ª   ª   StudentReminderApp_jsotvsuu_wpftmp.csproj.nuget.g.props
+ª   ª   StudentReminderApp_jsotvsuu_wpftmp.csproj.nuget.g.targets
+ª   ª   StudentReminderApp_jyp3mnzb_wpftmp.csproj.nuget.dgspec.json
+ª   ª   StudentReminderApp_jyp3mnzb_wpftmp.csproj.nuget.g.props
+ª   ª   StudentReminderApp_jyp3mnzb_wpftmp.csproj.nuget.g.targets
+ª   ª   StudentReminderApp_kx0vdbel_wpftmp.csproj.nuget.dgspec.json
+ª   ª   StudentReminderApp_kx0vdbel_wpftmp.csproj.nuget.g.props
+ª   ª   StudentReminderApp_kx0vdbel_wpftmp.csproj.nuget.g.targets
+ª   ª   StudentReminderApp_mgzw4zyg_wpftmp.csproj.nuget.dgspec.json
+ª   ª   StudentReminderApp_mgzw4zyg_wpftmp.csproj.nuget.g.props
+ª   ª   StudentReminderApp_mgzw4zyg_wpftmp.csproj.nuget.g.targets
+ª   ª   StudentReminderApp_n4jj41mz_wpftmp.csproj.nuget.dgspec.json
+ª   ª   StudentReminderApp_n4jj41mz_wpftmp.csproj.nuget.g.props
+ª   ª   StudentReminderApp_n4jj41mz_wpftmp.csproj.nuget.g.targets
+ª   ª   StudentReminderApp_na0c4lyc_wpftmp.csproj.nuget.dgspec.json
+ª   ª   StudentReminderApp_na0c4lyc_wpftmp.csproj.nuget.g.props
+ª   ª   StudentReminderApp_na0c4lyc_wpftmp.csproj.nuget.g.targets
+ª   ª   StudentReminderApp_nuy2seme_wpftmp.csproj.nuget.dgspec.json
+ª   ª   StudentReminderApp_nuy2seme_wpftmp.csproj.nuget.g.props
+ª   ª   StudentReminderApp_nuy2seme_wpftmp.csproj.nuget.g.targets
+ª   ª   StudentReminderApp_ou2vorqu_wpftmp.csproj.nuget.dgspec.json
+ª   ª   StudentReminderApp_ou2vorqu_wpftmp.csproj.nuget.g.props
+ª   ª   StudentReminderApp_ou2vorqu_wpftmp.csproj.nuget.g.targets
+ª   ª   StudentReminderApp_petzeza2_wpftmp.csproj.nuget.dgspec.json
+ª   ª   StudentReminderApp_petzeza2_wpftmp.csproj.nuget.g.props
+ª   ª   StudentReminderApp_petzeza2_wpftmp.csproj.nuget.g.targets
+ª   ª   StudentReminderApp_pk4gcs4r_wpftmp.csproj.nuget.dgspec.json
+ª   ª   StudentReminderApp_pk4gcs4r_wpftmp.csproj.nuget.g.props
+ª   ª   StudentReminderApp_pk4gcs4r_wpftmp.csproj.nuget.g.targets
+ª   ª   StudentReminderApp_pqjh5qzb_wpftmp.csproj.nuget.dgspec.json
+ª   ª   StudentReminderApp_pqjh5qzb_wpftmp.csproj.nuget.g.props
+ª   ª   StudentReminderApp_pqjh5qzb_wpftmp.csproj.nuget.g.targets
+ª   ª   StudentReminderApp_qsa4awhv_wpftmp.csproj.nuget.dgspec.json
+ª   ª   StudentReminderApp_qsa4awhv_wpftmp.csproj.nuget.g.props
+ª   ª   StudentReminderApp_qsa4awhv_wpftmp.csproj.nuget.g.targets
+ª   ª   StudentReminderApp_qzhfoosy_wpftmp.csproj.nuget.dgspec.json
+ª   ª   StudentReminderApp_qzhfoosy_wpftmp.csproj.nuget.g.props
+ª   ª   StudentReminderApp_qzhfoosy_wpftmp.csproj.nuget.g.targets
+ª   ª   StudentReminderApp_sgu4gor5_wpftmp.csproj.nuget.dgspec.json
+ª   ª   StudentReminderApp_sgu4gor5_wpftmp.csproj.nuget.g.props
+ª   ª   StudentReminderApp_sgu4gor5_wpftmp.csproj.nuget.g.targets
+ª   ª   StudentReminderApp_slod4v12_wpftmp.csproj.nuget.dgspec.json
+ª   ª   StudentReminderApp_slod4v12_wpftmp.csproj.nuget.g.props
+ª   ª   StudentReminderApp_slod4v12_wpftmp.csproj.nuget.g.targets
+ª   ª   StudentReminderApp_spov13by_wpftmp.csproj.nuget.dgspec.json
+ª   ª   StudentReminderApp_spov13by_wpftmp.csproj.nuget.g.props
+ª   ª   StudentReminderApp_spov13by_wpftmp.csproj.nuget.g.targets
+ª   ª   StudentReminderApp_sshnhzya_wpftmp.csproj.nuget.dgspec.json
+ª   ª   StudentReminderApp_sshnhzya_wpftmp.csproj.nuget.g.props
+ª   ª   StudentReminderApp_sshnhzya_wpftmp.csproj.nuget.g.targets
+ª   ª   StudentReminderApp_sthr22ne_wpftmp.csproj.nuget.dgspec.json
+ª   ª   StudentReminderApp_sthr22ne_wpftmp.csproj.nuget.g.props
+ª   ª   StudentReminderApp_sthr22ne_wpftmp.csproj.nuget.g.targets
+ª   ª   StudentReminderApp_th4lugdt_wpftmp.csproj.nuget.dgspec.json
+ª   ª   StudentReminderApp_th4lugdt_wpftmp.csproj.nuget.g.props
+ª   ª   StudentReminderApp_th4lugdt_wpftmp.csproj.nuget.g.targets
+ª   ª   StudentReminderApp_twyl12jb_wpftmp.csproj.nuget.dgspec.json
+ª   ª   StudentReminderApp_twyl12jb_wpftmp.csproj.nuget.g.props
+ª   ª   StudentReminderApp_twyl12jb_wpftmp.csproj.nuget.g.targets
+ª   ª   StudentReminderApp_ukrw5tjr_wpftmp.csproj.nuget.dgspec.json
+ª   ª   StudentReminderApp_ukrw5tjr_wpftmp.csproj.nuget.g.props
+ª   ª   StudentReminderApp_ukrw5tjr_wpftmp.csproj.nuget.g.targets
+ª   ª   StudentReminderApp_v2nenun4_wpftmp.csproj.nuget.dgspec.json
+ª   ª   StudentReminderApp_v2nenun4_wpftmp.csproj.nuget.g.props
+ª   ª   StudentReminderApp_v2nenun4_wpftmp.csproj.nuget.g.targets
+ª   ª   StudentReminderApp_vj3qvgve_wpftmp.csproj.nuget.dgspec.json
+ª   ª   StudentReminderApp_vj3qvgve_wpftmp.csproj.nuget.g.props
+ª   ª   StudentReminderApp_vj3qvgve_wpftmp.csproj.nuget.g.targets
+ª   ª   StudentReminderApp_vjcyzdl1_wpftmp.csproj.nuget.dgspec.json
+ª   ª   StudentReminderApp_vjcyzdl1_wpftmp.csproj.nuget.g.props
+ª   ª   StudentReminderApp_vjcyzdl1_wpftmp.csproj.nuget.g.targets
+ª   ª   StudentReminderApp_vrgemtop_wpftmp.csproj.nuget.dgspec.json
+ª   ª   StudentReminderApp_vrgemtop_wpftmp.csproj.nuget.g.props
+ª   ª   StudentReminderApp_vrgemtop_wpftmp.csproj.nuget.g.targets
+ª   ª   StudentReminderApp_x3k1chtu_wpftmp.csproj.nuget.dgspec.json
+ª   ª   StudentReminderApp_x3k1chtu_wpftmp.csproj.nuget.g.props
+ª   ª   StudentReminderApp_x3k1chtu_wpftmp.csproj.nuget.g.targets
+ª   ª   StudentReminderApp_xjuvdjdl_wpftmp.csproj.nuget.dgspec.json
+ª   ª   StudentReminderApp_xjuvdjdl_wpftmp.csproj.nuget.g.props
+ª   ª   StudentReminderApp_xjuvdjdl_wpftmp.csproj.nuget.g.targets
+ª   ª   StudentReminderApp_ycmi0t2d_wpftmp.csproj.nuget.dgspec.json
+ª   ª   StudentReminderApp_ycmi0t2d_wpftmp.csproj.nuget.g.props
+ª   ª   StudentReminderApp_ycmi0t2d_wpftmp.csproj.nuget.g.targets
+ª   ª   StudentReminderApp_zi145zek_wpftmp.csproj.nuget.dgspec.json
+ª   ª   StudentReminderApp_zi145zek_wpftmp.csproj.nuget.g.props
+ª   ª   StudentReminderApp_zi145zek_wpftmp.csproj.nuget.g.targets
+ª   ª   StudentReminderApp_zlsmkiqb_wpftmp.csproj.nuget.dgspec.json
+ª   ª   StudentReminderApp_zlsmkiqb_wpftmp.csproj.nuget.g.props
+ª   ª   StudentReminderApp_zlsmkiqb_wpftmp.csproj.nuget.g.targets
+ª   ª   StudentReminderApp_zuujgkca_wpftmp.csproj.nuget.dgspec.json
+ª   ª   StudentReminderApp_zuujgkca_wpftmp.csproj.nuget.g.props
+ª   ª   StudentReminderApp_zuujgkca_wpftmp.csproj.nuget.g.targets
+ª   ª   StudentReminderApp_zyftfrfx_wpftmp.csproj.nuget.dgspec.json
+ª   ª   StudentReminderApp_zyftfrfx_wpftmp.csproj.nuget.g.props
+ª   ª   StudentReminderApp_zyftfrfx_wpftmp.csproj.nuget.g.targets
+ª   ª   
+ª   +---Debug
+ª       +---net48
+ª           ª   .NETFramework,Version=v4.8.AssemblyAttributes.cs
+ª           ª   App.baml
+ª           ª   App.g.cs
+ª           ª   GeneratedInternalTypeHelper.g.cs
+ª           ª   StudentR.5E4BD3BF.Up2Date
+ª           ª   StudentReminderApp.AssemblyInfo.cs
+ª           ª   StudentReminderApp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp.assets.cache
+ª           ª   StudentReminderApp.csproj.AssemblyReference.cache
+ª           ª   StudentReminderApp.csproj.CoreCompileInputs.cache
+ª           ª   StudentReminderApp.csproj.FileListAbsolute.txt
+ª           ª   StudentReminderApp.exe
+ª           ª   StudentReminderApp.exe.withSupportedRuntime.config
+ª           ª   StudentReminderApp.g.resources
+ª           ª   StudentReminderApp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp.pdb
+ª           ª   StudentReminderApp.sourcelink.json
+ª           ª   StudentReminderApp_0c1cltk0_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_0c1cltk0_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_0c1cltk0_wpftmp.assets.cache
+ª           ª   StudentReminderApp_0c1cltk0_wpftmp.csproj.AssemblyReference.cache
+ª           ª   StudentReminderApp_0c1cltk0_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_0c1cltk0_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_0cgftake_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_0cgftake_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_0cgftake_wpftmp.assets.cache
+ª           ª   StudentReminderApp_0cgftake_wpftmp.csproj.AssemblyReference.cache
+ª           ª   StudentReminderApp_0cgftake_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_0cgftake_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_0d02v4o3_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_0d02v4o3_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_0d02v4o3_wpftmp.assets.cache
+ª           ª   StudentReminderApp_0d02v4o3_wpftmp.csproj.AssemblyReference.cache
+ª           ª   StudentReminderApp_0d02v4o3_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_0d02v4o3_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_0ddzrpey_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_0ddzrpey_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_0ddzrpey_wpftmp.assets.cache
+ª           ª   StudentReminderApp_0ddzrpey_wpftmp.csproj.AssemblyReference.cache
+ª           ª   StudentReminderApp_0ddzrpey_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_0ddzrpey_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_0hgfsoz5_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_0hgfsoz5_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_0hgfsoz5_wpftmp.assets.cache
+ª           ª   StudentReminderApp_0hgfsoz5_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_0hgfsoz5_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_11objj0q_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_11objj0q_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_11objj0q_wpftmp.assets.cache
+ª           ª   StudentReminderApp_11objj0q_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_11objj0q_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_1az0ues5_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_1az0ues5_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_1az0ues5_wpftmp.assets.cache
+ª           ª   StudentReminderApp_1az0ues5_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_1az0ues5_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_1d2rueoi_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_1d2rueoi_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_1d2rueoi_wpftmp.assets.cache
+ª           ª   StudentReminderApp_1d2rueoi_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_1d2rueoi_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_1f0ghx2z_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_1f0ghx2z_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_1f0ghx2z_wpftmp.assets.cache
+ª           ª   StudentReminderApp_1f0ghx2z_wpftmp.csproj.AssemblyReference.cache
+ª           ª   StudentReminderApp_1f0ghx2z_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_1f0ghx2z_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_1hom3t2b_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_1hom3t2b_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_1hom3t2b_wpftmp.assets.cache
+ª           ª   StudentReminderApp_1hom3t2b_wpftmp.csproj.AssemblyReference.cache
+ª           ª   StudentReminderApp_1hom3t2b_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_1hom3t2b_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_1mm2dnoy_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_1mm2dnoy_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_1mm2dnoy_wpftmp.assets.cache
+ª           ª   StudentReminderApp_1mm2dnoy_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_1mm2dnoy_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_1oalow52_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_1oalow52_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_1oalow52_wpftmp.assets.cache
+ª           ª   StudentReminderApp_1oalow52_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_1oalow52_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_1rgff3fm_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_1rgff3fm_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_1rgff3fm_wpftmp.assets.cache
+ª           ª   StudentReminderApp_1rgff3fm_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_1rgff3fm_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_1ru2aigb_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_1ru2aigb_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_1ru2aigb_wpftmp.assets.cache
+ª           ª   StudentReminderApp_1ru2aigb_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_1ru2aigb_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_1sfpwpat_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_1sfpwpat_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_1sfpwpat_wpftmp.assets.cache
+ª           ª   StudentReminderApp_1sfpwpat_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_1sfpwpat_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_1vg3c2wa_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_1vg3c2wa_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_1vg3c2wa_wpftmp.assets.cache
+ª           ª   StudentReminderApp_1vg3c2wa_wpftmp.csproj.AssemblyReference.cache
+ª           ª   StudentReminderApp_1vg3c2wa_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_1vg3c2wa_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_23d2spif_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_23d2spif_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_23d2spif_wpftmp.assets.cache
+ª           ª   StudentReminderApp_23d2spif_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_23d2spif_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_2bgmbpls_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_2bgmbpls_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_2bgmbpls_wpftmp.assets.cache
+ª           ª   StudentReminderApp_2bgmbpls_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_2bgmbpls_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_2iudpfz0_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_2iudpfz0_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_2iudpfz0_wpftmp.assets.cache
+ª           ª   StudentReminderApp_2iudpfz0_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_2iudpfz0_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_2j3g2ezw_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_2j3g2ezw_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_2j3g2ezw_wpftmp.assets.cache
+ª           ª   StudentReminderApp_2j3g2ezw_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_2j3g2ezw_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_34tbffp1_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_34tbffp1_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_34tbffp1_wpftmp.assets.cache
+ª           ª   StudentReminderApp_34tbffp1_wpftmp.csproj.AssemblyReference.cache
+ª           ª   StudentReminderApp_34tbffp1_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_34tbffp1_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_3aw1c22l_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_3aw1c22l_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_3aw1c22l_wpftmp.assets.cache
+ª           ª   StudentReminderApp_3aw1c22l_wpftmp.csproj.AssemblyReference.cache
+ª           ª   StudentReminderApp_3aw1c22l_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_3aw1c22l_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_3b0tll1e_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_3b0tll1e_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_3b0tll1e_wpftmp.assets.cache
+ª           ª   StudentReminderApp_3b0tll1e_wpftmp.csproj.AssemblyReference.cache
+ª           ª   StudentReminderApp_3b0tll1e_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_3b0tll1e_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_3pvfwwon_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_3pvfwwon_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_3pvfwwon_wpftmp.assets.cache
+ª           ª   StudentReminderApp_3pvfwwon_wpftmp.csproj.AssemblyReference.cache
+ª           ª   StudentReminderApp_3pvfwwon_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_3pvfwwon_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_3qlkvovd_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_3qlkvovd_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_3qlkvovd_wpftmp.assets.cache
+ª           ª   StudentReminderApp_3qlkvovd_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_3qlkvovd_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_3tamq43p_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_3tamq43p_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_3tamq43p_wpftmp.assets.cache
+ª           ª   StudentReminderApp_3tamq43p_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_3tamq43p_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_3ut4lgps_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_3ut4lgps_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_3ut4lgps_wpftmp.assets.cache
+ª           ª   StudentReminderApp_3ut4lgps_wpftmp.csproj.AssemblyReference.cache
+ª           ª   StudentReminderApp_3ut4lgps_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_3ut4lgps_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_3vty3qfl_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_3vty3qfl_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_3vty3qfl_wpftmp.assets.cache
+ª           ª   StudentReminderApp_3vty3qfl_wpftmp.csproj.AssemblyReference.cache
+ª           ª   StudentReminderApp_3vty3qfl_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_3vty3qfl_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_3xtw1e0c_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_3xtw1e0c_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_3xtw1e0c_wpftmp.assets.cache
+ª           ª   StudentReminderApp_3xtw1e0c_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_3xtw1e0c_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_4c2u2ata_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_4c2u2ata_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_4c2u2ata_wpftmp.assets.cache
+ª           ª   StudentReminderApp_4c2u2ata_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_4c2u2ata_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_4gxk53t0_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_4gxk53t0_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_4gxk53t0_wpftmp.assets.cache
+ª           ª   StudentReminderApp_4gxk53t0_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_4gxk53t0_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_4kpqw02d_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_4kpqw02d_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_4kpqw02d_wpftmp.assets.cache
+ª           ª   StudentReminderApp_4kpqw02d_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_4kpqw02d_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_4kuaif4l_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_4kuaif4l_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_4kuaif4l_wpftmp.assets.cache
+ª           ª   StudentReminderApp_4kuaif4l_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_4kuaif4l_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_4kuphzaw_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_4kuphzaw_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_4kuphzaw_wpftmp.assets.cache
+ª           ª   StudentReminderApp_4kuphzaw_wpftmp.csproj.AssemblyReference.cache
+ª           ª   StudentReminderApp_4kuphzaw_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_4kuphzaw_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_4mo1szfz_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_4mo1szfz_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_4mo1szfz_wpftmp.assets.cache
+ª           ª   StudentReminderApp_4mo1szfz_wpftmp.csproj.AssemblyReference.cache
+ª           ª   StudentReminderApp_4mo1szfz_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_4mo1szfz_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_4sm3jizs_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_4sm3jizs_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_4sm3jizs_wpftmp.assets.cache
+ª           ª   StudentReminderApp_4sm3jizs_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_4sm3jizs_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_4tlhaei4_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_4tlhaei4_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_4tlhaei4_wpftmp.assets.cache
+ª           ª   StudentReminderApp_4tlhaei4_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_4tlhaei4_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_4x1opgcu_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_4x1opgcu_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_4x1opgcu_wpftmp.assets.cache
+ª           ª   StudentReminderApp_4x1opgcu_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_4x1opgcu_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_4zlv5b1b_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_4zlv5b1b_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_4zlv5b1b_wpftmp.assets.cache
+ª           ª   StudentReminderApp_4zlv5b1b_wpftmp.csproj.AssemblyReference.cache
+ª           ª   StudentReminderApp_4zlv5b1b_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_4zlv5b1b_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_5dnzajd3_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_5dnzajd3_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_5dnzajd3_wpftmp.assets.cache
+ª           ª   StudentReminderApp_5dnzajd3_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_5dnzajd3_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_5ha3am00_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_5ha3am00_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_5ha3am00_wpftmp.assets.cache
+ª           ª   StudentReminderApp_5ha3am00_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_5ha3am00_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_5ijhjczb_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_5ijhjczb_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_5ijhjczb_wpftmp.assets.cache
+ª           ª   StudentReminderApp_5ijhjczb_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_5ijhjczb_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_5nzue33q_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_5nzue33q_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_5nzue33q_wpftmp.assets.cache
+ª           ª   StudentReminderApp_5nzue33q_wpftmp.csproj.AssemblyReference.cache
+ª           ª   StudentReminderApp_5nzue33q_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_5nzue33q_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_5oth2kzh_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_5oth2kzh_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_5oth2kzh_wpftmp.assets.cache
+ª           ª   StudentReminderApp_5oth2kzh_wpftmp.csproj.AssemblyReference.cache
+ª           ª   StudentReminderApp_5oth2kzh_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_5oth2kzh_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_5pdythnu_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_5pdythnu_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_5pdythnu_wpftmp.assets.cache
+ª           ª   StudentReminderApp_5pdythnu_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_5pdythnu_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_5pgdk1lx_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_5pgdk1lx_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_5pgdk1lx_wpftmp.assets.cache
+ª           ª   StudentReminderApp_5pgdk1lx_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_5pgdk1lx_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_5yhyklqf_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_5yhyklqf_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_5yhyklqf_wpftmp.assets.cache
+ª           ª   StudentReminderApp_5yhyklqf_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_5yhyklqf_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_a31bqyri_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_a31bqyri_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_a31bqyri_wpftmp.assets.cache
+ª           ª   StudentReminderApp_a31bqyri_wpftmp.csproj.AssemblyReference.cache
+ª           ª   StudentReminderApp_a31bqyri_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_a31bqyri_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_a4fiidam_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_a4fiidam_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_a4fiidam_wpftmp.assets.cache
+ª           ª   StudentReminderApp_a4fiidam_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_a4fiidam_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_ah02lmlz_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_ah02lmlz_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_ah02lmlz_wpftmp.assets.cache
+ª           ª   StudentReminderApp_ah02lmlz_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_ah02lmlz_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_aid3drun_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_aid3drun_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_aid3drun_wpftmp.assets.cache
+ª           ª   StudentReminderApp_aid3drun_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_aid3drun_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_ajftvldv_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_ajftvldv_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_ajftvldv_wpftmp.assets.cache
+ª           ª   StudentReminderApp_ajftvldv_wpftmp.csproj.AssemblyReference.cache
+ª           ª   StudentReminderApp_ajftvldv_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_ajftvldv_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_arlojfr5_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_arlojfr5_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_arlojfr5_wpftmp.assets.cache
+ª           ª   StudentReminderApp_arlojfr5_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_arlojfr5_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_at5r4lcf_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_at5r4lcf_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_at5r4lcf_wpftmp.assets.cache
+ª           ª   StudentReminderApp_at5r4lcf_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_at5r4lcf_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_avpttzkb_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_avpttzkb_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_avpttzkb_wpftmp.assets.cache
+ª           ª   StudentReminderApp_avpttzkb_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_avpttzkb_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_avyy5ybr_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_avyy5ybr_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_avyy5ybr_wpftmp.assets.cache
+ª           ª   StudentReminderApp_avyy5ybr_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_avyy5ybr_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_axnnckwx_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_axnnckwx_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_axnnckwx_wpftmp.assets.cache
+ª           ª   StudentReminderApp_axnnckwx_wpftmp.csproj.AssemblyReference.cache
+ª           ª   StudentReminderApp_axnnckwx_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_axnnckwx_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_ay4jbm43_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_ay4jbm43_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_ay4jbm43_wpftmp.assets.cache
+ª           ª   StudentReminderApp_ay4jbm43_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_ay4jbm43_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_bfecx1kr_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_bfecx1kr_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_bfecx1kr_wpftmp.assets.cache
+ª           ª   StudentReminderApp_bfecx1kr_wpftmp.csproj.AssemblyReference.cache
+ª           ª   StudentReminderApp_bfecx1kr_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_bfecx1kr_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_bhlwi54r_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_bhlwi54r_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_bhlwi54r_wpftmp.assets.cache
+ª           ª   StudentReminderApp_bhlwi54r_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_bhlwi54r_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_bhwie5qh_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_bhwie5qh_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_bhwie5qh_wpftmp.assets.cache
+ª           ª   StudentReminderApp_bhwie5qh_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_bhwie5qh_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_bjcvt3xx_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_bjcvt3xx_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_bjcvt3xx_wpftmp.assets.cache
+ª           ª   StudentReminderApp_bjcvt3xx_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_bjcvt3xx_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_bjkmafkv_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_bjkmafkv_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_bjkmafkv_wpftmp.assets.cache
+ª           ª   StudentReminderApp_bjkmafkv_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_bjkmafkv_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_bls4shgz_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_bls4shgz_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_bls4shgz_wpftmp.assets.cache
+ª           ª   StudentReminderApp_bls4shgz_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_bls4shgz_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_bxlpgcp5_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_bxlpgcp5_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_bxlpgcp5_wpftmp.assets.cache
+ª           ª   StudentReminderApp_bxlpgcp5_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_bxlpgcp5_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_bxqqrhxc_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_bxqqrhxc_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_bxqqrhxc_wpftmp.assets.cache
+ª           ª   StudentReminderApp_bxqqrhxc_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_bxqqrhxc_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_bynczp2a_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_bynczp2a_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_bynczp2a_wpftmp.assets.cache
+ª           ª   StudentReminderApp_bynczp2a_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_bynczp2a_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_bzfx5o42_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_bzfx5o42_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_bzfx5o42_wpftmp.assets.cache
+ª           ª   StudentReminderApp_bzfx5o42_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_bzfx5o42_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_c1b0uvd2_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_c1b0uvd2_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_c1b0uvd2_wpftmp.assets.cache
+ª           ª   StudentReminderApp_c1b0uvd2_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_c1b0uvd2_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_ca52144l_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_ca52144l_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_ca52144l_wpftmp.assets.cache
+ª           ª   StudentReminderApp_ca52144l_wpftmp.csproj.AssemblyReference.cache
+ª           ª   StudentReminderApp_ca52144l_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_ca52144l_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_cgdov5gx_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_cgdov5gx_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_cgdov5gx_wpftmp.assets.cache
+ª           ª   StudentReminderApp_cgdov5gx_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_cgdov5gx_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_chqjw4hw_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_chqjw4hw_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_chqjw4hw_wpftmp.assets.cache
+ª           ª   StudentReminderApp_chqjw4hw_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_chqjw4hw_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_chse4yr3_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_chse4yr3_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_chse4yr3_wpftmp.assets.cache
+ª           ª   StudentReminderApp_chse4yr3_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_chse4yr3_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_cnyqngmi_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_cnyqngmi_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_cnyqngmi_wpftmp.assets.cache
+ª           ª   StudentReminderApp_cnyqngmi_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_cnyqngmi_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_Content.g.cs
+ª           ª   StudentReminderApp_cox00v5y_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_cox00v5y_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_cox00v5y_wpftmp.assets.cache
+ª           ª   StudentReminderApp_cox00v5y_wpftmp.csproj.AssemblyReference.cache
+ª           ª   StudentReminderApp_cox00v5y_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_cox00v5y_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_cozema5r_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_cozema5r_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_cozema5r_wpftmp.assets.cache
+ª           ª   StudentReminderApp_cozema5r_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_cozema5r_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_cpvx4pz2_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_cpvx4pz2_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_cpvx4pz2_wpftmp.assets.cache
+ª           ª   StudentReminderApp_cpvx4pz2_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_cpvx4pz2_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_crw3rxl3_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_crw3rxl3_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_crw3rxl3_wpftmp.assets.cache
+ª           ª   StudentReminderApp_crw3rxl3_wpftmp.csproj.AssemblyReference.cache
+ª           ª   StudentReminderApp_crw3rxl3_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_crw3rxl3_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_crzyxq0q_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_crzyxq0q_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_crzyxq0q_wpftmp.assets.cache
+ª           ª   StudentReminderApp_crzyxq0q_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_crzyxq0q_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_ctnhayhh_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_ctnhayhh_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_ctnhayhh_wpftmp.assets.cache
+ª           ª   StudentReminderApp_ctnhayhh_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_ctnhayhh_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_cxratpuz_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_cxratpuz_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_cxratpuz_wpftmp.assets.cache
+ª           ª   StudentReminderApp_cxratpuz_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_cxratpuz_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_df4wnfrx_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_df4wnfrx_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_df4wnfrx_wpftmp.assets.cache
+ª           ª   StudentReminderApp_df4wnfrx_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_df4wnfrx_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_dhbrgjza_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_dhbrgjza_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_dhbrgjza_wpftmp.assets.cache
+ª           ª   StudentReminderApp_dhbrgjza_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_dhbrgjza_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_dkljl5fi_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_dkljl5fi_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_dkljl5fi_wpftmp.assets.cache
+ª           ª   StudentReminderApp_dkljl5fi_wpftmp.csproj.AssemblyReference.cache
+ª           ª   StudentReminderApp_dkljl5fi_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_dkljl5fi_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_dks1jssx_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_dks1jssx_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_dks1jssx_wpftmp.assets.cache
+ª           ª   StudentReminderApp_dks1jssx_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_dks1jssx_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_dq0uoqzj_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_dq0uoqzj_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_dq0uoqzj_wpftmp.assets.cache
+ª           ª   StudentReminderApp_dq0uoqzj_wpftmp.csproj.AssemblyReference.cache
+ª           ª   StudentReminderApp_dq0uoqzj_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_dq0uoqzj_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_dqymg2rn_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_dqymg2rn_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_dqymg2rn_wpftmp.assets.cache
+ª           ª   StudentReminderApp_dqymg2rn_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_dqymg2rn_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_du4ji5wn_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_du4ji5wn_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_du4ji5wn_wpftmp.assets.cache
+ª           ª   StudentReminderApp_du4ji5wn_wpftmp.csproj.AssemblyReference.cache
+ª           ª   StudentReminderApp_du4ji5wn_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_du4ji5wn_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_dupy3gzx_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_dupy3gzx_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_dupy3gzx_wpftmp.assets.cache
+ª           ª   StudentReminderApp_dupy3gzx_wpftmp.csproj.AssemblyReference.cache
+ª           ª   StudentReminderApp_dupy3gzx_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_dupy3gzx_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_dxu44053_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_dxu44053_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_dxu44053_wpftmp.assets.cache
+ª           ª   StudentReminderApp_dxu44053_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_dxu44053_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_e2elwahi_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_e2elwahi_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_e2elwahi_wpftmp.assets.cache
+ª           ª   StudentReminderApp_e2elwahi_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_e2elwahi_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_e3gggwn4_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_e3gggwn4_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_e3gggwn4_wpftmp.assets.cache
+ª           ª   StudentReminderApp_e3gggwn4_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_e3gggwn4_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_ec13rcwz_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_ec13rcwz_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_ec13rcwz_wpftmp.assets.cache
+ª           ª   StudentReminderApp_ec13rcwz_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_ec13rcwz_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_eebloprd_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_eebloprd_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_eebloprd_wpftmp.assets.cache
+ª           ª   StudentReminderApp_eebloprd_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_eebloprd_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_efdmbqj5_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_efdmbqj5_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_efdmbqj5_wpftmp.assets.cache
+ª           ª   StudentReminderApp_efdmbqj5_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_efdmbqj5_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_efur2pw0_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_efur2pw0_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_efur2pw0_wpftmp.assets.cache
+ª           ª   StudentReminderApp_efur2pw0_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_efur2pw0_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_ehlvet4a_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_ehlvet4a_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_ehlvet4a_wpftmp.assets.cache
+ª           ª   StudentReminderApp_ehlvet4a_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_ehlvet4a_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_ej5tdgv3_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_ej5tdgv3_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_ej5tdgv3_wpftmp.assets.cache
+ª           ª   StudentReminderApp_ej5tdgv3_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_ej5tdgv3_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_emfoo1pq_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_emfoo1pq_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_emfoo1pq_wpftmp.assets.cache
+ª           ª   StudentReminderApp_emfoo1pq_wpftmp.csproj.AssemblyReference.cache
+ª           ª   StudentReminderApp_emfoo1pq_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_emfoo1pq_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_eqyscxsq_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_eqyscxsq_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_eqyscxsq_wpftmp.assets.cache
+ª           ª   StudentReminderApp_eqyscxsq_wpftmp.csproj.AssemblyReference.cache
+ª           ª   StudentReminderApp_eqyscxsq_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_eqyscxsq_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_eubq2unq_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_eubq2unq_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_eubq2unq_wpftmp.assets.cache
+ª           ª   StudentReminderApp_eubq2unq_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_eubq2unq_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_exwygi2y_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_exwygi2y_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_exwygi2y_wpftmp.assets.cache
+ª           ª   StudentReminderApp_exwygi2y_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_exwygi2y_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_f0vgpna5_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_f0vgpna5_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_f0vgpna5_wpftmp.assets.cache
+ª           ª   StudentReminderApp_f0vgpna5_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_f0vgpna5_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_f4elkykn_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_f4elkykn_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_f4elkykn_wpftmp.assets.cache
+ª           ª   StudentReminderApp_f4elkykn_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_f4elkykn_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_fbdrytto_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_fbdrytto_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_fbdrytto_wpftmp.assets.cache
+ª           ª   StudentReminderApp_fbdrytto_wpftmp.csproj.AssemblyReference.cache
+ª           ª   StudentReminderApp_fbdrytto_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_fbdrytto_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_ffzfttga_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_ffzfttga_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_ffzfttga_wpftmp.assets.cache
+ª           ª   StudentReminderApp_ffzfttga_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_ffzfttga_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_fm2wu5ac_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_fm2wu5ac_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_fm2wu5ac_wpftmp.assets.cache
+ª           ª   StudentReminderApp_fm2wu5ac_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_fm2wu5ac_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_fn311hjq_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_fn311hjq_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_fn311hjq_wpftmp.assets.cache
+ª           ª   StudentReminderApp_fn311hjq_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_fn311hjq_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_fn3lkgcr_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_fn3lkgcr_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_fn3lkgcr_wpftmp.assets.cache
+ª           ª   StudentReminderApp_fn3lkgcr_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_fn3lkgcr_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_fr3xngad_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_fr3xngad_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_fr3xngad_wpftmp.assets.cache
+ª           ª   StudentReminderApp_fr3xngad_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_fr3xngad_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_frtrywgs_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_frtrywgs_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_frtrywgs_wpftmp.assets.cache
+ª           ª   StudentReminderApp_frtrywgs_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_frtrywgs_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_fwosd4fa_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_fwosd4fa_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_fwosd4fa_wpftmp.assets.cache
+ª           ª   StudentReminderApp_fwosd4fa_wpftmp.csproj.AssemblyReference.cache
+ª           ª   StudentReminderApp_fwosd4fa_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_fwosd4fa_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_g0bwoa4l_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_g0bwoa4l_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_g0bwoa4l_wpftmp.assets.cache
+ª           ª   StudentReminderApp_g0bwoa4l_wpftmp.csproj.AssemblyReference.cache
+ª           ª   StudentReminderApp_g0bwoa4l_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_g0bwoa4l_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_g0xbutvz_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_g0xbutvz_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_g0xbutvz_wpftmp.assets.cache
+ª           ª   StudentReminderApp_g0xbutvz_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_g0xbutvz_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_g1sz2lvd_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_g1sz2lvd_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_g1sz2lvd_wpftmp.assets.cache
+ª           ª   StudentReminderApp_g1sz2lvd_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_g1sz2lvd_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_g2ssumdh_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_g2ssumdh_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_g2ssumdh_wpftmp.assets.cache
+ª           ª   StudentReminderApp_g2ssumdh_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_g2ssumdh_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_g3rjhjy5_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_g3rjhjy5_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_g3rjhjy5_wpftmp.assets.cache
+ª           ª   StudentReminderApp_g3rjhjy5_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_g3rjhjy5_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_g4ygpwyd_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_g4ygpwyd_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_g4ygpwyd_wpftmp.assets.cache
+ª           ª   StudentReminderApp_g4ygpwyd_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_g4ygpwyd_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_gasyclzz_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_gasyclzz_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_gasyclzz_wpftmp.assets.cache
+ª           ª   StudentReminderApp_gasyclzz_wpftmp.csproj.AssemblyReference.cache
+ª           ª   StudentReminderApp_gasyclzz_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_gasyclzz_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_gbuy1f50_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_gbuy1f50_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_gbuy1f50_wpftmp.assets.cache
+ª           ª   StudentReminderApp_gbuy1f50_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_gbuy1f50_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_gf3w52ga_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_gf3w52ga_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_gf3w52ga_wpftmp.assets.cache
+ª           ª   StudentReminderApp_gf3w52ga_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_gf3w52ga_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_gksx2pgr_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_gksx2pgr_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_gksx2pgr_wpftmp.assets.cache
+ª           ª   StudentReminderApp_gksx2pgr_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_gksx2pgr_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_gmdokegk_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_gmdokegk_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_gmdokegk_wpftmp.assets.cache
+ª           ª   StudentReminderApp_gmdokegk_wpftmp.csproj.AssemblyReference.cache
+ª           ª   StudentReminderApp_gmdokegk_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_gmdokegk_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_gq11g0g5_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_gq11g0g5_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_gq11g0g5_wpftmp.assets.cache
+ª           ª   StudentReminderApp_gq11g0g5_wpftmp.csproj.AssemblyReference.cache
+ª           ª   StudentReminderApp_gq11g0g5_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_gq11g0g5_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_grccwffs_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_grccwffs_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_grccwffs_wpftmp.assets.cache
+ª           ª   StudentReminderApp_grccwffs_wpftmp.csproj.AssemblyReference.cache
+ª           ª   StudentReminderApp_grccwffs_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_grccwffs_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_gwexvrfx_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_gwexvrfx_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_gwexvrfx_wpftmp.assets.cache
+ª           ª   StudentReminderApp_gwexvrfx_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_gwexvrfx_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_gwhbnsvw_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_gwhbnsvw_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_gwhbnsvw_wpftmp.assets.cache
+ª           ª   StudentReminderApp_gwhbnsvw_wpftmp.csproj.AssemblyReference.cache
+ª           ª   StudentReminderApp_gwhbnsvw_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_gwhbnsvw_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_h00y4tp0_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_h00y4tp0_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_h00y4tp0_wpftmp.assets.cache
+ª           ª   StudentReminderApp_h00y4tp0_wpftmp.csproj.AssemblyReference.cache
+ª           ª   StudentReminderApp_h00y4tp0_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_h00y4tp0_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_h4ic3kg3_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_h4ic3kg3_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_h4ic3kg3_wpftmp.assets.cache
+ª           ª   StudentReminderApp_h4ic3kg3_wpftmp.csproj.AssemblyReference.cache
+ª           ª   StudentReminderApp_h4ic3kg3_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_h4ic3kg3_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_hmzuetjb_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_hmzuetjb_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_hmzuetjb_wpftmp.assets.cache
+ª           ª   StudentReminderApp_hmzuetjb_wpftmp.csproj.AssemblyReference.cache
+ª           ª   StudentReminderApp_hmzuetjb_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_hmzuetjb_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_hn3br4k4_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_hn3br4k4_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_hn3br4k4_wpftmp.assets.cache
+ª           ª   StudentReminderApp_hn3br4k4_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_hn3br4k4_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_hnlt04y4_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_hnlt04y4_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_hnlt04y4_wpftmp.assets.cache
+ª           ª   StudentReminderApp_hnlt04y4_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_hnlt04y4_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_hroxkjos_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_hroxkjos_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_hroxkjos_wpftmp.assets.cache
+ª           ª   StudentReminderApp_hroxkjos_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_hroxkjos_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_htvy1ikm_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_htvy1ikm_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_htvy1ikm_wpftmp.assets.cache
+ª           ª   StudentReminderApp_htvy1ikm_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_htvy1ikm_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_hvaa204y_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_hvaa204y_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_hvaa204y_wpftmp.assets.cache
+ª           ª   StudentReminderApp_hvaa204y_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_hvaa204y_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_i1nqfcsq_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_i1nqfcsq_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_i1nqfcsq_wpftmp.assets.cache
+ª           ª   StudentReminderApp_i1nqfcsq_wpftmp.csproj.AssemblyReference.cache
+ª           ª   StudentReminderApp_i1nqfcsq_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_i1nqfcsq_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_i1tu1auq_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_i1tu1auq_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_i1tu1auq_wpftmp.assets.cache
+ª           ª   StudentReminderApp_i1tu1auq_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_i1tu1auq_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_i2ggxb2t_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_i2ggxb2t_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_i2ggxb2t_wpftmp.assets.cache
+ª           ª   StudentReminderApp_i2ggxb2t_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_i2ggxb2t_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_i5xsxvgw_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_i5xsxvgw_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_i5xsxvgw_wpftmp.assets.cache
+ª           ª   StudentReminderApp_i5xsxvgw_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_i5xsxvgw_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_iciuc5vo_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_iciuc5vo_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_iciuc5vo_wpftmp.assets.cache
+ª           ª   StudentReminderApp_iciuc5vo_wpftmp.csproj.AssemblyReference.cache
+ª           ª   StudentReminderApp_iciuc5vo_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_iciuc5vo_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_iem3kzlr_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_iem3kzlr_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_iem3kzlr_wpftmp.assets.cache
+ª           ª   StudentReminderApp_iem3kzlr_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_iem3kzlr_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_iidi14nv_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_iidi14nv_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_iidi14nv_wpftmp.assets.cache
+ª           ª   StudentReminderApp_iidi14nv_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_iidi14nv_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_ilnl0j1o_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_ilnl0j1o_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_ilnl0j1o_wpftmp.assets.cache
+ª           ª   StudentReminderApp_ilnl0j1o_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_ilnl0j1o_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_iltp31ag_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_iltp31ag_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_iltp31ag_wpftmp.assets.cache
+ª           ª   StudentReminderApp_iltp31ag_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_iltp31ag_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_im2hbnoe_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_im2hbnoe_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_im2hbnoe_wpftmp.assets.cache
+ª           ª   StudentReminderApp_im2hbnoe_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_im2hbnoe_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_immnpm2g_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_immnpm2g_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_immnpm2g_wpftmp.assets.cache
+ª           ª   StudentReminderApp_immnpm2g_wpftmp.csproj.AssemblyReference.cache
+ª           ª   StudentReminderApp_immnpm2g_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_immnpm2g_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_ir1slmu2_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_ir1slmu2_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_ir1slmu2_wpftmp.assets.cache
+ª           ª   StudentReminderApp_ir1slmu2_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_ir1slmu2_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_isr3gots_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_isr3gots_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_isr3gots_wpftmp.assets.cache
+ª           ª   StudentReminderApp_isr3gots_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_isr3gots_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_ix12loow_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_ix12loow_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_ix12loow_wpftmp.assets.cache
+ª           ª   StudentReminderApp_ix12loow_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_ix12loow_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_izufa1o1_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_izufa1o1_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_izufa1o1_wpftmp.assets.cache
+ª           ª   StudentReminderApp_izufa1o1_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_izufa1o1_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_j10ckers_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_j10ckers_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_j10ckers_wpftmp.assets.cache
+ª           ª   StudentReminderApp_j10ckers_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_j10ckers_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_j30mqabf_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_j30mqabf_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_j30mqabf_wpftmp.assets.cache
+ª           ª   StudentReminderApp_j30mqabf_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_j30mqabf_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_j3vgdzv2_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_j3vgdzv2_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_j3vgdzv2_wpftmp.assets.cache
+ª           ª   StudentReminderApp_j3vgdzv2_wpftmp.csproj.AssemblyReference.cache
+ª           ª   StudentReminderApp_j3vgdzv2_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_j3vgdzv2_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_j4amzpdp_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_j4amzpdp_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_j4amzpdp_wpftmp.assets.cache
+ª           ª   StudentReminderApp_j4amzpdp_wpftmp.csproj.AssemblyReference.cache
+ª           ª   StudentReminderApp_j4amzpdp_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_j4amzpdp_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_j4x50lbt_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_j4x50lbt_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_j4x50lbt_wpftmp.assets.cache
+ª           ª   StudentReminderApp_j4x50lbt_wpftmp.csproj.AssemblyReference.cache
+ª           ª   StudentReminderApp_j4x50lbt_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_j4x50lbt_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_j513mroc_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_j513mroc_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_j513mroc_wpftmp.assets.cache
+ª           ª   StudentReminderApp_j513mroc_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_j513mroc_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_jdavi35f_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_jdavi35f_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_jdavi35f_wpftmp.assets.cache
+ª           ª   StudentReminderApp_jdavi35f_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_jdavi35f_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_jejpghct_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_jejpghct_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_jejpghct_wpftmp.assets.cache
+ª           ª   StudentReminderApp_jejpghct_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_jejpghct_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_jgqkt5is_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_jgqkt5is_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_jgqkt5is_wpftmp.assets.cache
+ª           ª   StudentReminderApp_jgqkt5is_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_jgqkt5is_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_jnbvzeyw_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_jnbvzeyw_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_jnbvzeyw_wpftmp.assets.cache
+ª           ª   StudentReminderApp_jnbvzeyw_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_jnbvzeyw_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_jnxbgsmd_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_jnxbgsmd_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_jnxbgsmd_wpftmp.assets.cache
+ª           ª   StudentReminderApp_jnxbgsmd_wpftmp.csproj.AssemblyReference.cache
+ª           ª   StudentReminderApp_jnxbgsmd_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_jnxbgsmd_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_jou5ivux_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_jou5ivux_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_jou5ivux_wpftmp.assets.cache
+ª           ª   StudentReminderApp_jou5ivux_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_jou5ivux_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_jowy1wdz_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_jowy1wdz_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_jowy1wdz_wpftmp.assets.cache
+ª           ª   StudentReminderApp_jowy1wdz_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_jowy1wdz_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_jr5ton3g_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_jr5ton3g_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_jr5ton3g_wpftmp.assets.cache
+ª           ª   StudentReminderApp_jr5ton3g_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_jr5ton3g_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_jsotvsuu_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_jsotvsuu_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_jsotvsuu_wpftmp.assets.cache
+ª           ª   StudentReminderApp_jsotvsuu_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_jsotvsuu_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_jyp3mnzb_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_jyp3mnzb_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_jyp3mnzb_wpftmp.assets.cache
+ª           ª   StudentReminderApp_jyp3mnzb_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_jyp3mnzb_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_k1czb0ch_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_k1czb0ch_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_k1czb0ch_wpftmp.assets.cache
+ª           ª   StudentReminderApp_k1czb0ch_wpftmp.csproj.AssemblyReference.cache
+ª           ª   StudentReminderApp_k1czb0ch_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_k1czb0ch_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_k3wdmisj_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_k3wdmisj_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_k3wdmisj_wpftmp.assets.cache
+ª           ª   StudentReminderApp_k3wdmisj_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_k3wdmisj_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_k3yygjza_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_k3yygjza_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_k3yygjza_wpftmp.assets.cache
+ª           ª   StudentReminderApp_k3yygjza_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_k3yygjza_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_k4iwhw5a_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_k4iwhw5a_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_k4iwhw5a_wpftmp.assets.cache
+ª           ª   StudentReminderApp_k4iwhw5a_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_k4iwhw5a_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_kcqb41yc_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_kcqb41yc_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_kcqb41yc_wpftmp.assets.cache
+ª           ª   StudentReminderApp_kcqb41yc_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_kcqb41yc_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_kfiginge_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_kfiginge_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_kfiginge_wpftmp.assets.cache
+ª           ª   StudentReminderApp_kfiginge_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_kfiginge_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_kihjjff2_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_kihjjff2_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_kihjjff2_wpftmp.assets.cache
+ª           ª   StudentReminderApp_kihjjff2_wpftmp.csproj.AssemblyReference.cache
+ª           ª   StudentReminderApp_kihjjff2_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_kihjjff2_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_klkluhgs_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_klkluhgs_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_klkluhgs_wpftmp.assets.cache
+ª           ª   StudentReminderApp_klkluhgs_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_klkluhgs_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_kmuevmjg_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_kmuevmjg_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_kmuevmjg_wpftmp.assets.cache
+ª           ª   StudentReminderApp_kmuevmjg_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_kmuevmjg_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_krdmudq1_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_krdmudq1_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_krdmudq1_wpftmp.assets.cache
+ª           ª   StudentReminderApp_krdmudq1_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_krdmudq1_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_kttjm0rb_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_kttjm0rb_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_kttjm0rb_wpftmp.assets.cache
+ª           ª   StudentReminderApp_kttjm0rb_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_kttjm0rb_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_kx0vdbel_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_kx0vdbel_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_kx0vdbel_wpftmp.assets.cache
+ª           ª   StudentReminderApp_kx0vdbel_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_kx0vdbel_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_laehn1ux_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_laehn1ux_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_laehn1ux_wpftmp.assets.cache
+ª           ª   StudentReminderApp_laehn1ux_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_laehn1ux_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_lbhyx3kr_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_lbhyx3kr_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_lbhyx3kr_wpftmp.assets.cache
+ª           ª   StudentReminderApp_lbhyx3kr_wpftmp.csproj.AssemblyReference.cache
+ª           ª   StudentReminderApp_lbhyx3kr_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_lbhyx3kr_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_lmoej3la_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_lmoej3la_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_lmoej3la_wpftmp.assets.cache
+ª           ª   StudentReminderApp_lmoej3la_wpftmp.csproj.AssemblyReference.cache
+ª           ª   StudentReminderApp_lmoej3la_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_lmoej3la_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_lnddxp42_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_lnddxp42_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_lnddxp42_wpftmp.assets.cache
+ª           ª   StudentReminderApp_lnddxp42_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_lnddxp42_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_lq3yzhnc_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_lq3yzhnc_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_lq3yzhnc_wpftmp.assets.cache
+ª           ª   StudentReminderApp_lq3yzhnc_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_lq3yzhnc_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_ludl1pnk_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_ludl1pnk_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_ludl1pnk_wpftmp.assets.cache
+ª           ª   StudentReminderApp_ludl1pnk_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_ludl1pnk_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_m0kyou5j_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_m0kyou5j_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_m0kyou5j_wpftmp.assets.cache
+ª           ª   StudentReminderApp_m0kyou5j_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_m0kyou5j_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_m5b5ulql_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_m5b5ulql_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_m5b5ulql_wpftmp.assets.cache
+ª           ª   StudentReminderApp_m5b5ulql_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_m5b5ulql_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_MarkupCompile.cache
+ª           ª   StudentReminderApp_MarkupCompile.lref
+ª           ª   StudentReminderApp_masze4vr_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_masze4vr_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_masze4vr_wpftmp.assets.cache
+ª           ª   StudentReminderApp_masze4vr_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_masze4vr_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_me34s2ws_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_me34s2ws_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_me34s2ws_wpftmp.assets.cache
+ª           ª   StudentReminderApp_me34s2ws_wpftmp.csproj.AssemblyReference.cache
+ª           ª   StudentReminderApp_me34s2ws_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_me34s2ws_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_mf30scto_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_mf30scto_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_mf30scto_wpftmp.assets.cache
+ª           ª   StudentReminderApp_mf30scto_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_mf30scto_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_mgzw4zyg_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_mgzw4zyg_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_mgzw4zyg_wpftmp.assets.cache
+ª           ª   StudentReminderApp_mgzw4zyg_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_mgzw4zyg_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_mhw2fbe5_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_mhw2fbe5_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_mhw2fbe5_wpftmp.assets.cache
+ª           ª   StudentReminderApp_mhw2fbe5_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_mhw2fbe5_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_mlivrwrl_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_mlivrwrl_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_mlivrwrl_wpftmp.assets.cache
+ª           ª   StudentReminderApp_mlivrwrl_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_mlivrwrl_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_msezz5bj_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_msezz5bj_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_msezz5bj_wpftmp.assets.cache
+ª           ª   StudentReminderApp_msezz5bj_wpftmp.csproj.AssemblyReference.cache
+ª           ª   StudentReminderApp_msezz5bj_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_msezz5bj_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_mt1finkj_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_mt1finkj_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_mt1finkj_wpftmp.assets.cache
+ª           ª   StudentReminderApp_mt1finkj_wpftmp.csproj.AssemblyReference.cache
+ª           ª   StudentReminderApp_mt1finkj_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_mt1finkj_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_mvir0d0t_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_mvir0d0t_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_mvir0d0t_wpftmp.assets.cache
+ª           ª   StudentReminderApp_mvir0d0t_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_mvir0d0t_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_mw1fzuqw_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_mw1fzuqw_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_mw1fzuqw_wpftmp.assets.cache
+ª           ª   StudentReminderApp_mw1fzuqw_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_mw1fzuqw_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_n00yxl4s_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_n00yxl4s_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_n00yxl4s_wpftmp.assets.cache
+ª           ª   StudentReminderApp_n00yxl4s_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_n00yxl4s_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_n30ly3fr_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_n30ly3fr_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_n30ly3fr_wpftmp.assets.cache
+ª           ª   StudentReminderApp_n30ly3fr_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_n30ly3fr_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_n4jj41mz_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_n4jj41mz_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_n4jj41mz_wpftmp.assets.cache
+ª           ª   StudentReminderApp_n4jj41mz_wpftmp.csproj.AssemblyReference.cache
+ª           ª   StudentReminderApp_n4jj41mz_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_n4jj41mz_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_n5akw1k0_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_n5akw1k0_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_n5akw1k0_wpftmp.assets.cache
+ª           ª   StudentReminderApp_n5akw1k0_wpftmp.csproj.AssemblyReference.cache
+ª           ª   StudentReminderApp_n5akw1k0_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_n5akw1k0_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_na0c4lyc_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_na0c4lyc_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_na0c4lyc_wpftmp.assets.cache
+ª           ª   StudentReminderApp_na0c4lyc_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_na0c4lyc_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_nasnpuia_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_nasnpuia_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_nasnpuia_wpftmp.assets.cache
+ª           ª   StudentReminderApp_nasnpuia_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_nasnpuia_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_ncsx4pgk_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_ncsx4pgk_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_ncsx4pgk_wpftmp.assets.cache
+ª           ª   StudentReminderApp_ncsx4pgk_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_ncsx4pgk_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_ndxctsd5_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_ndxctsd5_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_ndxctsd5_wpftmp.assets.cache
+ª           ª   StudentReminderApp_ndxctsd5_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_ndxctsd5_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_ng0ipyoj_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_ng0ipyoj_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_ng0ipyoj_wpftmp.assets.cache
+ª           ª   StudentReminderApp_ng0ipyoj_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_ng0ipyoj_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_nix03hce_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_nix03hce_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_nix03hce_wpftmp.assets.cache
+ª           ª   StudentReminderApp_nix03hce_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_nix03hce_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_nqqsxpnq_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_nqqsxpnq_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_nqqsxpnq_wpftmp.assets.cache
+ª           ª   StudentReminderApp_nqqsxpnq_wpftmp.csproj.AssemblyReference.cache
+ª           ª   StudentReminderApp_nqqsxpnq_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_nqqsxpnq_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_nuy2seme_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_nuy2seme_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_nuy2seme_wpftmp.assets.cache
+ª           ª   StudentReminderApp_nuy2seme_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_nuy2seme_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_ny4xws30_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_ny4xws30_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_ny4xws30_wpftmp.assets.cache
+ª           ª   StudentReminderApp_ny4xws30_wpftmp.csproj.AssemblyReference.cache
+ª           ª   StudentReminderApp_ny4xws30_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_ny4xws30_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_o05o3lmu_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_o05o3lmu_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_o05o3lmu_wpftmp.assets.cache
+ª           ª   StudentReminderApp_o05o3lmu_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_o05o3lmu_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_ot0idsa0_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_ot0idsa0_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_ot0idsa0_wpftmp.assets.cache
+ª           ª   StudentReminderApp_ot0idsa0_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_ot0idsa0_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_ou2vorqu_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_ou2vorqu_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_ou2vorqu_wpftmp.assets.cache
+ª           ª   StudentReminderApp_ou2vorqu_wpftmp.csproj.AssemblyReference.cache
+ª           ª   StudentReminderApp_ou2vorqu_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_ou2vorqu_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_ovi05bxf_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_ovi05bxf_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_ovi05bxf_wpftmp.assets.cache
+ª           ª   StudentReminderApp_ovi05bxf_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_ovi05bxf_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_owravi0y_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_owravi0y_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_owravi0y_wpftmp.assets.cache
+ª           ª   StudentReminderApp_owravi0y_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_owravi0y_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_p3vhbsff_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_p3vhbsff_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_p3vhbsff_wpftmp.assets.cache
+ª           ª   StudentReminderApp_p3vhbsff_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_p3vhbsff_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_p531n0vi_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_p531n0vi_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_p531n0vi_wpftmp.assets.cache
+ª           ª   StudentReminderApp_p531n0vi_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_p531n0vi_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_petzeza2_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_petzeza2_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_petzeza2_wpftmp.assets.cache
+ª           ª   StudentReminderApp_petzeza2_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_petzeza2_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_pgklff4b_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_pgklff4b_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_pgklff4b_wpftmp.assets.cache
+ª           ª   StudentReminderApp_pgklff4b_wpftmp.csproj.AssemblyReference.cache
+ª           ª   StudentReminderApp_pgklff4b_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_pgklff4b_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_pj5ifjr0_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_pj5ifjr0_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_pj5ifjr0_wpftmp.assets.cache
+ª           ª   StudentReminderApp_pj5ifjr0_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_pj5ifjr0_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_pk4gcs4r_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_pk4gcs4r_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_pk4gcs4r_wpftmp.assets.cache
+ª           ª   StudentReminderApp_pk4gcs4r_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_pk4gcs4r_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_pnsvcvzp_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_pnsvcvzp_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_pnsvcvzp_wpftmp.assets.cache
+ª           ª   StudentReminderApp_pnsvcvzp_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_pnsvcvzp_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_pqjh5cpt_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_pqjh5cpt_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_pqjh5cpt_wpftmp.assets.cache
+ª           ª   StudentReminderApp_pqjh5cpt_wpftmp.csproj.AssemblyReference.cache
+ª           ª   StudentReminderApp_pqjh5cpt_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_pqjh5cpt_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_pqjh5qzb_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_pqjh5qzb_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_pqjh5qzb_wpftmp.assets.cache
+ª           ª   StudentReminderApp_pqjh5qzb_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_pqjh5qzb_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_purflvka_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_purflvka_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_purflvka_wpftmp.assets.cache
+ª           ª   StudentReminderApp_purflvka_wpftmp.csproj.AssemblyReference.cache
+ª           ª   StudentReminderApp_purflvka_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_purflvka_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_pxhj50x1_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_pxhj50x1_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_pxhj50x1_wpftmp.assets.cache
+ª           ª   StudentReminderApp_pxhj50x1_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_pxhj50x1_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_py1yk4oo_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_py1yk4oo_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_py1yk4oo_wpftmp.assets.cache
+ª           ª   StudentReminderApp_py1yk4oo_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_py1yk4oo_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_pz0urc5t_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_pz0urc5t_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_pz0urc5t_wpftmp.assets.cache
+ª           ª   StudentReminderApp_pz0urc5t_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_pz0urc5t_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_q4z2ysm4_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_q4z2ysm4_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_q4z2ysm4_wpftmp.assets.cache
+ª           ª   StudentReminderApp_q4z2ysm4_wpftmp.csproj.AssemblyReference.cache
+ª           ª   StudentReminderApp_q4z2ysm4_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_q4z2ysm4_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_qcnjwoxc_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_qcnjwoxc_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_qcnjwoxc_wpftmp.assets.cache
+ª           ª   StudentReminderApp_qcnjwoxc_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_qcnjwoxc_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_qcowac4m_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_qcowac4m_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_qcowac4m_wpftmp.assets.cache
+ª           ª   StudentReminderApp_qcowac4m_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_qcowac4m_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_qnx42i10_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_qnx42i10_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_qnx42i10_wpftmp.assets.cache
+ª           ª   StudentReminderApp_qnx42i10_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_qnx42i10_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_qq5vlazr_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_qq5vlazr_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_qq5vlazr_wpftmp.assets.cache
+ª           ª   StudentReminderApp_qq5vlazr_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_qq5vlazr_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_qqdxzo24_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_qqdxzo24_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_qqdxzo24_wpftmp.assets.cache
+ª           ª   StudentReminderApp_qqdxzo24_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_qqdxzo24_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_qsa4awhv_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_qsa4awhv_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_qsa4awhv_wpftmp.assets.cache
+ª           ª   StudentReminderApp_qsa4awhv_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_qsa4awhv_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_qzhfoosy_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_qzhfoosy_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_qzhfoosy_wpftmp.assets.cache
+ª           ª   StudentReminderApp_qzhfoosy_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_qzhfoosy_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_r5czh4pc_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_r5czh4pc_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_r5czh4pc_wpftmp.assets.cache
+ª           ª   StudentReminderApp_r5czh4pc_wpftmp.csproj.AssemblyReference.cache
+ª           ª   StudentReminderApp_r5czh4pc_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_r5czh4pc_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_rkzbvo3e_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_rkzbvo3e_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_rkzbvo3e_wpftmp.assets.cache
+ª           ª   StudentReminderApp_rkzbvo3e_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_rkzbvo3e_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_rm3djfdh_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_rm3djfdh_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_rm3djfdh_wpftmp.assets.cache
+ª           ª   StudentReminderApp_rm3djfdh_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_rm3djfdh_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_rwphdjtk_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_rwphdjtk_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_rwphdjtk_wpftmp.assets.cache
+ª           ª   StudentReminderApp_rwphdjtk_wpftmp.csproj.AssemblyReference.cache
+ª           ª   StudentReminderApp_rwphdjtk_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_rwphdjtk_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_rxzsaa4b_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_rxzsaa4b_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_rxzsaa4b_wpftmp.assets.cache
+ª           ª   StudentReminderApp_rxzsaa4b_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_rxzsaa4b_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_s055iuy4_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_s055iuy4_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_s055iuy4_wpftmp.assets.cache
+ª           ª   StudentReminderApp_s055iuy4_wpftmp.csproj.AssemblyReference.cache
+ª           ª   StudentReminderApp_s055iuy4_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_s055iuy4_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_s2gbmrr5_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_s2gbmrr5_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_s2gbmrr5_wpftmp.assets.cache
+ª           ª   StudentReminderApp_s2gbmrr5_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_s2gbmrr5_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_s4luwvh0_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_s4luwvh0_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_s4luwvh0_wpftmp.assets.cache
+ª           ª   StudentReminderApp_s4luwvh0_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_s4luwvh0_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_s5ss5jti_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_s5ss5jti_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_s5ss5jti_wpftmp.assets.cache
+ª           ª   StudentReminderApp_s5ss5jti_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_s5ss5jti_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_sfip0ivo_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_sfip0ivo_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_sfip0ivo_wpftmp.assets.cache
+ª           ª   StudentReminderApp_sfip0ivo_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_sfip0ivo_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_sgu4gor5_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_sgu4gor5_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_sgu4gor5_wpftmp.assets.cache
+ª           ª   StudentReminderApp_sgu4gor5_wpftmp.csproj.AssemblyReference.cache
+ª           ª   StudentReminderApp_sgu4gor5_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_sgu4gor5_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_sh4zds0g_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_sh4zds0g_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_sh4zds0g_wpftmp.assets.cache
+ª           ª   StudentReminderApp_sh4zds0g_wpftmp.csproj.AssemblyReference.cache
+ª           ª   StudentReminderApp_sh4zds0g_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_sh4zds0g_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_sj355kdi_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_sj355kdi_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_sj355kdi_wpftmp.assets.cache
+ª           ª   StudentReminderApp_sj355kdi_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_sj355kdi_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_slod4v12_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_slod4v12_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_slod4v12_wpftmp.assets.cache
+ª           ª   StudentReminderApp_slod4v12_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_slod4v12_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_smxjotlf_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_smxjotlf_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_smxjotlf_wpftmp.assets.cache
+ª           ª   StudentReminderApp_smxjotlf_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_smxjotlf_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_spov13by_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_spov13by_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_spov13by_wpftmp.assets.cache
+ª           ª   StudentReminderApp_spov13by_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_spov13by_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_sqpg3u2t_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_sqpg3u2t_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_sqpg3u2t_wpftmp.assets.cache
+ª           ª   StudentReminderApp_sqpg3u2t_wpftmp.csproj.AssemblyReference.cache
+ª           ª   StudentReminderApp_sqpg3u2t_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_sqpg3u2t_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_sshnhzya_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_sshnhzya_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_sshnhzya_wpftmp.assets.cache
+ª           ª   StudentReminderApp_sshnhzya_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_sshnhzya_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_sthr22ne_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_sthr22ne_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_sthr22ne_wpftmp.assets.cache
+ª           ª   StudentReminderApp_sthr22ne_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_sthr22ne_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_stxsr0wn_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_stxsr0wn_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_stxsr0wn_wpftmp.assets.cache
+ª           ª   StudentReminderApp_stxsr0wn_wpftmp.csproj.AssemblyReference.cache
+ª           ª   StudentReminderApp_stxsr0wn_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_stxsr0wn_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_suqpqcjh_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_suqpqcjh_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_suqpqcjh_wpftmp.assets.cache
+ª           ª   StudentReminderApp_suqpqcjh_wpftmp.csproj.AssemblyReference.cache
+ª           ª   StudentReminderApp_suqpqcjh_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_suqpqcjh_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_swtt3yol_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_swtt3yol_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_swtt3yol_wpftmp.assets.cache
+ª           ª   StudentReminderApp_swtt3yol_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_swtt3yol_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_szznvaca_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_szznvaca_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_szznvaca_wpftmp.assets.cache
+ª           ª   StudentReminderApp_szznvaca_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_szznvaca_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_t0jwzymg_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_t0jwzymg_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_t0jwzymg_wpftmp.assets.cache
+ª           ª   StudentReminderApp_t0jwzymg_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_t0jwzymg_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_t1fnuj0g_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_t1fnuj0g_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_t1fnuj0g_wpftmp.assets.cache
+ª           ª   StudentReminderApp_t1fnuj0g_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_t1fnuj0g_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_tbgxttue_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_tbgxttue_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_tbgxttue_wpftmp.assets.cache
+ª           ª   StudentReminderApp_tbgxttue_wpftmp.csproj.AssemblyReference.cache
+ª           ª   StudentReminderApp_tbgxttue_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_tbgxttue_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_th4lugdt_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_th4lugdt_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_th4lugdt_wpftmp.assets.cache
+ª           ª   StudentReminderApp_th4lugdt_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_th4lugdt_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_thootj24_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_thootj24_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_thootj24_wpftmp.assets.cache
+ª           ª   StudentReminderApp_thootj24_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_thootj24_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_tijrcsa5_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_tijrcsa5_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_tijrcsa5_wpftmp.assets.cache
+ª           ª   StudentReminderApp_tijrcsa5_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_tijrcsa5_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_tj0qljuy_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_tj0qljuy_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_tj0qljuy_wpftmp.assets.cache
+ª           ª   StudentReminderApp_tj0qljuy_wpftmp.csproj.AssemblyReference.cache
+ª           ª   StudentReminderApp_tj0qljuy_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_tj0qljuy_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_tu2jfbnm_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_tu2jfbnm_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_tu2jfbnm_wpftmp.assets.cache
+ª           ª   StudentReminderApp_tu2jfbnm_wpftmp.csproj.AssemblyReference.cache
+ª           ª   StudentReminderApp_tu2jfbnm_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_tu2jfbnm_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_tucu4sbf_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_tucu4sbf_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_tucu4sbf_wpftmp.assets.cache
+ª           ª   StudentReminderApp_tucu4sbf_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_tucu4sbf_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_tvszzrsy_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_tvszzrsy_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_tvszzrsy_wpftmp.assets.cache
+ª           ª   StudentReminderApp_tvszzrsy_wpftmp.csproj.AssemblyReference.cache
+ª           ª   StudentReminderApp_tvszzrsy_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_tvszzrsy_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_twyl12jb_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_twyl12jb_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_twyl12jb_wpftmp.assets.cache
+ª           ª   StudentReminderApp_twyl12jb_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_twyl12jb_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_tzzjaqk3_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_tzzjaqk3_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_tzzjaqk3_wpftmp.assets.cache
+ª           ª   StudentReminderApp_tzzjaqk3_wpftmp.csproj.AssemblyReference.cache
+ª           ª   StudentReminderApp_tzzjaqk3_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_tzzjaqk3_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_u2adzgfc_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_u2adzgfc_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_u2adzgfc_wpftmp.assets.cache
+ª           ª   StudentReminderApp_u2adzgfc_wpftmp.csproj.AssemblyReference.cache
+ª           ª   StudentReminderApp_u2adzgfc_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_u2adzgfc_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_u5hw0au1_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_u5hw0au1_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_u5hw0au1_wpftmp.assets.cache
+ª           ª   StudentReminderApp_u5hw0au1_wpftmp.csproj.AssemblyReference.cache
+ª           ª   StudentReminderApp_u5hw0au1_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_u5hw0au1_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_ugfaacru_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_ugfaacru_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_ugfaacru_wpftmp.assets.cache
+ª           ª   StudentReminderApp_ugfaacru_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_ugfaacru_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_ugohjrik_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_ugohjrik_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_ugohjrik_wpftmp.assets.cache
+ª           ª   StudentReminderApp_ugohjrik_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_ugohjrik_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_ukrw5tjr_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_ukrw5tjr_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_ukrw5tjr_wpftmp.assets.cache
+ª           ª   StudentReminderApp_ukrw5tjr_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_ukrw5tjr_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_v0wffe14_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_v0wffe14_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_v0wffe14_wpftmp.assets.cache
+ª           ª   StudentReminderApp_v0wffe14_wpftmp.csproj.AssemblyReference.cache
+ª           ª   StudentReminderApp_v0wffe14_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_v0wffe14_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_v2nenun4_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_v2nenun4_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_v2nenun4_wpftmp.assets.cache
+ª           ª   StudentReminderApp_v2nenun4_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_v2nenun4_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_v5rgncgp_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_v5rgncgp_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_v5rgncgp_wpftmp.assets.cache
+ª           ª   StudentReminderApp_v5rgncgp_wpftmp.csproj.AssemblyReference.cache
+ª           ª   StudentReminderApp_v5rgncgp_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_v5rgncgp_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_vb0hq3tf_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_vb0hq3tf_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_vb0hq3tf_wpftmp.assets.cache
+ª           ª   StudentReminderApp_vb0hq3tf_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_vb0hq3tf_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_vbzzcvc0_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_vbzzcvc0_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_vbzzcvc0_wpftmp.assets.cache
+ª           ª   StudentReminderApp_vbzzcvc0_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_vbzzcvc0_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_vj3qvgve_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_vj3qvgve_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_vj3qvgve_wpftmp.assets.cache
+ª           ª   StudentReminderApp_vj3qvgve_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_vj3qvgve_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_vjcyzdl1_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_vjcyzdl1_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_vjcyzdl1_wpftmp.assets.cache
+ª           ª   StudentReminderApp_vjcyzdl1_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_vjcyzdl1_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_vjlonoel_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_vjlonoel_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_vjlonoel_wpftmp.assets.cache
+ª           ª   StudentReminderApp_vjlonoel_wpftmp.csproj.AssemblyReference.cache
+ª           ª   StudentReminderApp_vjlonoel_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_vjlonoel_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_vkavwm43_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_vkavwm43_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_vkavwm43_wpftmp.assets.cache
+ª           ª   StudentReminderApp_vkavwm43_wpftmp.csproj.AssemblyReference.cache
+ª           ª   StudentReminderApp_vkavwm43_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_vkavwm43_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_vnhzesmr_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_vnhzesmr_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_vnhzesmr_wpftmp.assets.cache
+ª           ª   StudentReminderApp_vnhzesmr_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_vnhzesmr_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_vqyp5z1f_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_vqyp5z1f_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_vqyp5z1f_wpftmp.assets.cache
+ª           ª   StudentReminderApp_vqyp5z1f_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_vqyp5z1f_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_vrgemtop_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_vrgemtop_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_vrgemtop_wpftmp.assets.cache
+ª           ª   StudentReminderApp_vrgemtop_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_vrgemtop_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_w22gyags_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_w22gyags_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_w22gyags_wpftmp.assets.cache
+ª           ª   StudentReminderApp_w22gyags_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_w22gyags_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_wcqzg2uc_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_wcqzg2uc_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_wcqzg2uc_wpftmp.assets.cache
+ª           ª   StudentReminderApp_wcqzg2uc_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_wcqzg2uc_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_wf4m1tz3_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_wf4m1tz3_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_wf4m1tz3_wpftmp.assets.cache
+ª           ª   StudentReminderApp_wf4m1tz3_wpftmp.csproj.AssemblyReference.cache
+ª           ª   StudentReminderApp_wf4m1tz3_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_wf4m1tz3_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_whvhxtvm_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_whvhxtvm_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_whvhxtvm_wpftmp.assets.cache
+ª           ª   StudentReminderApp_whvhxtvm_wpftmp.csproj.AssemblyReference.cache
+ª           ª   StudentReminderApp_whvhxtvm_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_whvhxtvm_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_wn0xikzz_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_wn0xikzz_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_wn0xikzz_wpftmp.assets.cache
+ª           ª   StudentReminderApp_wn0xikzz_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_wn0xikzz_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_wtabu5ax_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_wtabu5ax_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_wtabu5ax_wpftmp.assets.cache
+ª           ª   StudentReminderApp_wtabu5ax_wpftmp.csproj.AssemblyReference.cache
+ª           ª   StudentReminderApp_wtabu5ax_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_wtabu5ax_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_wvm2uok4_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_wvm2uok4_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_wvm2uok4_wpftmp.assets.cache
+ª           ª   StudentReminderApp_wvm2uok4_wpftmp.csproj.AssemblyReference.cache
+ª           ª   StudentReminderApp_wvm2uok4_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_wvm2uok4_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_wvrnp0yy_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_wvrnp0yy_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_wvrnp0yy_wpftmp.assets.cache
+ª           ª   StudentReminderApp_wvrnp0yy_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_wvrnp0yy_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_wwjez0e0_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_wwjez0e0_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_wwjez0e0_wpftmp.assets.cache
+ª           ª   StudentReminderApp_wwjez0e0_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_wwjez0e0_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_wz2bq4kh_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_wz2bq4kh_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_wz2bq4kh_wpftmp.assets.cache
+ª           ª   StudentReminderApp_wz2bq4kh_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_wz2bq4kh_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_x14s4dgi_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_x14s4dgi_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_x14s4dgi_wpftmp.assets.cache
+ª           ª   StudentReminderApp_x14s4dgi_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_x14s4dgi_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_x3k1chtu_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_x3k1chtu_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_x3k1chtu_wpftmp.assets.cache
+ª           ª   StudentReminderApp_x3k1chtu_wpftmp.csproj.AssemblyReference.cache
+ª           ª   StudentReminderApp_x3k1chtu_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_x3k1chtu_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_xavljhi2_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_xavljhi2_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_xavljhi2_wpftmp.assets.cache
+ª           ª   StudentReminderApp_xavljhi2_wpftmp.csproj.AssemblyReference.cache
+ª           ª   StudentReminderApp_xavljhi2_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_xavljhi2_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_xdyuxeno_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_xdyuxeno_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_xdyuxeno_wpftmp.assets.cache
+ª           ª   StudentReminderApp_xdyuxeno_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_xdyuxeno_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_xdz21w5v_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_xdz21w5v_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_xdz21w5v_wpftmp.assets.cache
+ª           ª   StudentReminderApp_xdz21w5v_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_xdz21w5v_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_xgyk4fag_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_xgyk4fag_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_xgyk4fag_wpftmp.assets.cache
+ª           ª   StudentReminderApp_xgyk4fag_wpftmp.csproj.AssemblyReference.cache
+ª           ª   StudentReminderApp_xgyk4fag_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_xgyk4fag_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_xjuvdjdl_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_xjuvdjdl_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_xjuvdjdl_wpftmp.assets.cache
+ª           ª   StudentReminderApp_xjuvdjdl_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_xjuvdjdl_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_xmz1krml_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_xmz1krml_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_xmz1krml_wpftmp.assets.cache
+ª           ª   StudentReminderApp_xmz1krml_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_xmz1krml_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_xp322rt3_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_xp322rt3_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_xp322rt3_wpftmp.assets.cache
+ª           ª   StudentReminderApp_xp322rt3_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_xp322rt3_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_xweupwex_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_xweupwex_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_xweupwex_wpftmp.assets.cache
+ª           ª   StudentReminderApp_xweupwex_wpftmp.csproj.AssemblyReference.cache
+ª           ª   StudentReminderApp_xweupwex_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_xweupwex_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_y0lorki3_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_y0lorki3_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_y0lorki3_wpftmp.assets.cache
+ª           ª   StudentReminderApp_y0lorki3_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_y0lorki3_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_y0zv3q2q_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_y0zv3q2q_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_y0zv3q2q_wpftmp.assets.cache
+ª           ª   StudentReminderApp_y0zv3q2q_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_y0zv3q2q_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_y3w4nco0_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_y3w4nco0_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_y3w4nco0_wpftmp.assets.cache
+ª           ª   StudentReminderApp_y3w4nco0_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_y3w4nco0_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_yagsbjrf_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_yagsbjrf_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_yagsbjrf_wpftmp.assets.cache
+ª           ª   StudentReminderApp_yagsbjrf_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_yagsbjrf_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_yb2yq10b_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_yb2yq10b_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_yb2yq10b_wpftmp.assets.cache
+ª           ª   StudentReminderApp_yb2yq10b_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_yb2yq10b_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_ycmi0t2d_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_ycmi0t2d_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_ycmi0t2d_wpftmp.assets.cache
+ª           ª   StudentReminderApp_ycmi0t2d_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_ycmi0t2d_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_yigjl3fc_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_yigjl3fc_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_yigjl3fc_wpftmp.assets.cache
+ª           ª   StudentReminderApp_yigjl3fc_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_yigjl3fc_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_yuhxs5qa_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_yuhxs5qa_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_yuhxs5qa_wpftmp.assets.cache
+ª           ª   StudentReminderApp_yuhxs5qa_wpftmp.csproj.AssemblyReference.cache
+ª           ª   StudentReminderApp_yuhxs5qa_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_yuhxs5qa_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_yvmb15dk_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_yvmb15dk_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_yvmb15dk_wpftmp.assets.cache
+ª           ª   StudentReminderApp_yvmb15dk_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_yvmb15dk_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_yyhhkg5e_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_yyhhkg5e_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_yyhhkg5e_wpftmp.assets.cache
+ª           ª   StudentReminderApp_yyhhkg5e_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_yyhhkg5e_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_yypjiwr1_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_yypjiwr1_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_yypjiwr1_wpftmp.assets.cache
+ª           ª   StudentReminderApp_yypjiwr1_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_yypjiwr1_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_z0ckbbwi_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_z0ckbbwi_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_z0ckbbwi_wpftmp.assets.cache
+ª           ª   StudentReminderApp_z0ckbbwi_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_z0ckbbwi_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_z4e5cqra_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_z4e5cqra_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_z4e5cqra_wpftmp.assets.cache
+ª           ª   StudentReminderApp_z4e5cqra_wpftmp.csproj.AssemblyReference.cache
+ª           ª   StudentReminderApp_z4e5cqra_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_z4e5cqra_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_zai045wc_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_zai045wc_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_zai045wc_wpftmp.assets.cache
+ª           ª   StudentReminderApp_zai045wc_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_zai045wc_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_zcsjmedl_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_zcsjmedl_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_zcsjmedl_wpftmp.assets.cache
+ª           ª   StudentReminderApp_zcsjmedl_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_zcsjmedl_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_zi145zek_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_zi145zek_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_zi145zek_wpftmp.assets.cache
+ª           ª   StudentReminderApp_zi145zek_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_zi145zek_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_zlsmkiqb_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_zlsmkiqb_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_zlsmkiqb_wpftmp.assets.cache
+ª           ª   StudentReminderApp_zlsmkiqb_wpftmp.csproj.AssemblyReference.cache
+ª           ª   StudentReminderApp_zlsmkiqb_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_zlsmkiqb_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_zuujgkca_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_zuujgkca_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_zuujgkca_wpftmp.assets.cache
+ª           ª   StudentReminderApp_zuujgkca_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_zuujgkca_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_zwujnmw4_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_zwujnmw4_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_zwujnmw4_wpftmp.assets.cache
+ª           ª   StudentReminderApp_zwujnmw4_wpftmp.csproj.AssemblyReference.cache
+ª           ª   StudentReminderApp_zwujnmw4_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_zwujnmw4_wpftmp.sourcelink.json
+ª           ª   StudentReminderApp_zyftfrfx_wpftmp.AssemblyInfo.cs
+ª           ª   StudentReminderApp_zyftfrfx_wpftmp.AssemblyInfoInputs.cache
+ª           ª   StudentReminderApp_zyftfrfx_wpftmp.assets.cache
+ª           ª   StudentReminderApp_zyftfrfx_wpftmp.csproj.AssemblyReference.cache
+ª           ª   StudentReminderApp_zyftfrfx_wpftmp.GeneratedMSBuildEditorConfig.editorconfig
+ª           ª   StudentReminderApp_zyftfrfx_wpftmp.sourcelink.json
+ª           ª   
+ª           +---Resources
+ª           ª       Colors.baml
+ª           ª       Styles.baml
+ª           ª       
+ª           +---Views
+ª               +---Auth
+ª               ª       AuthWindow.baml
+ª               ª       AuthWindow.g.cs
+ª               ª       ForgotPasswordView.baml
+ª               ª       ForgotPasswordView.g.cs
+ª               ª       LoginView.baml
+ª               ª       LoginView.g.cs
+ª               ª       RegisterView.baml
+ª               ª       RegisterView.g.cs
+ª               ª       
+ª               +---Dialogs
+ª               ª       CommentDialog.baml
+ª               ª       CommentDialog.g.cs
+ª               ª       CreatePostDialog.baml
+ª               ª       CreatePostDialog.g.cs
+ª               ª       EventDialog.baml
+ª               ª       EventDialog.g.cs
+ª               ª       ImageCropperDialog.baml
+ª               ª       ImageCropperDialog.g.cs
+ª               ª       NotificationPopup.baml
+ª               ª       NotificationPopup.g.cs
+ª               ª       ScheduleAdvisorWindow.baml
+ª               ª       ScheduleAdvisorWindow.g.cs
+ª               ª       ShareDialog.baml
+ª               ª       ShareDialog.g.cs
+ª               ª       UserDetailsDialog.baml
+ª               ª       UserDetailsDialog.g.cs
+ª               ª       
+ª               +---Main
+ª               ª       MainWindow.baml
+ª               ª       MainWindow.g.cs
+ª               ª       SplashWindow.baml
+ª               ª       SplashWindow.g.cs
+ª               ª       
+ª               +---Pages
+ª                       AdvisorPage.baml
+ª                       AdvisorPage.g.cs
+ª                       CalendarPage.baml
+ª                       CalendarPage.g.cs
+ª                       CoursePage.baml
+ª                       CoursePage.g.cs
+ª                       DashboardPage.baml
+ª                       DashboardPage.g.cs
+ª                       ForumPage.baml
+ª                       ForumPage.g.cs
+ª                       ManagementPage.baml
+ª                       ManagementPage.g.cs
+ª                       PreferencePage.baml
+ª                       PreferencePage.g.cs
+ª                       ProfilePage.baml
+ª                       ProfilePage.g.cs
+ª                       StudentManagementPage.baml
+ª                       StudentManagementPage.g.cs
+ª                       
++---Resources
+ª   ª   Colors.xaml
+ª   ª   Styles.xaml
+ª   ª   
+ª   +---Icons
+ª   ª       image-gallery.png
+ª   ª       rgb.png
+ª   ª       smiling-face.png
+ª   ª       
+ª   +---Images
+ª           APUIp.jpg
+ª           logo.jpg
+ª           user.png
+ª           
++---Services
+ª       DataService.cs
+ª       NotificationService.cs
+ª       OtpService.cs
+ª       ReminderService.cs
+ª       ScheduleDataService.cs
+ª       ScheduleOptimizerService.cs
+ª       
++---ViewModels
+ª       BaseViewModel.cs
+ª       CalendarViewModel.cs
+ª       CommentViewModel.cs
+ª       ForumViewModel.cs
+ª       ShareViewModel.cs
+ª       StudentViewModel.cs
+ª       
++---Views
+    +---Auth
+    ª       AuthWindow.xaml
+    ª       AuthWindow.xaml.cs
+    ª       ForgotPasswordView.xaml
+    ª       ForgotPasswordView.xaml.cs
+    ª       LoginView.xaml
+    ª       LoginView.xaml.cs
+    ª       RegisterView.xaml
+    ª       RegisterView.xaml.cs
+    ª       Settings.cs
+    ª       
+    +---Dialogs
+    ª       CommentDialog.xaml
+    ª       CommentDialog.xaml.cs
+    ª       CreatePostDialog.xaml
+    ª       CreatePostDialog.xaml.cs
+    ª       EventDialog.xaml
+    ª       EventDialog.xaml.cs
+    ª       ImageCropperDialog.xaml
+    ª       ImageCropperDialog.xaml.cs
+    ª       NotificationPopup.xaml
+    ª       NotificationPopup.xaml.cs
+    ª       RejectReasonDialog.cs
+    ª       ScheduleAdvisorWindow.xaml
+    ª       ScheduleAdvisorWindow.xaml.cs
+    ª       ShareDialog.xaml
+    ª       ShareDialog.xaml.cs
+    ª       UserDetailsDialog.xaml
+    ª       UserDetailsDialog.xaml.cs
+    ª       
+    +---Main
+    ª       MainWindow.xaml
+    ª       MainWindow.xaml.cs
+    ª       SplashWindow.xaml
+    ª       SplashWindow.xaml.cs
+    ª       
+    +---Pages
+            AdvisorPage.xaml
+            AdvisorPage.xaml.cs
+            CalendarPage.xaml
+            CalendarPage.xaml.cs
+            CoursePage.xaml
+            CoursePage.xaml.cs
+            DashboardPage.xaml
+            DashboardPage.xaml.cs
+            ForumPage.xaml
+            ForumPage.xaml.cs
+            kctdt_dacthu.json
+            24T_NHAT_CUNHAN.json
+            kctdt_trituenhantao.json
+            ManagementPage.xaml
+            ManagementPage.xaml.cs
+            PreferencePage.xaml
+            PreferencePage.xaml.cs
+            ProfilePage.xaml
+            ProfilePage.xaml.cs
+            StudentManagementPage.xaml
+            StudentManagementPage.xaml.cs
+            

@@ -123,6 +123,32 @@ namespace StudentReminderApp.Views.Pages
             }
         }
 
+        public string RegMainText
+        {
+            get
+            {
+                var reg = Registration;
+                if (reg.Contains("("))
+                {
+                    return reg.Substring(0, reg.IndexOf("(")).Trim();
+                }
+                return reg;
+            }
+        }
+
+        public string RegSubText
+        {
+            get
+            {
+                var reg = Registration;
+                if (reg.Contains("("))
+                {
+                    return reg.Substring(reg.IndexOf("(")).Trim();
+                }
+                return "";
+            }
+        }
+
         public bool CanEditStatus => !Registration.Contains("Chưa đủ ĐK") && Registration != "Cần đăng ký cùng";
 
         private string _statusText;
@@ -141,8 +167,8 @@ namespace StudentReminderApp.Views.Pages
                     OnPropertyChanged(nameof(DiemChu));
                     OnPropertyChanged(nameof(DiemSo));
                     OnPropertyChanged(nameof(Registration));
-                    OnPropertyChanged(nameof(RegistrationColor));
-                    OnPropertyChanged(nameof(CanEditStatus));
+                    OnPropertyChanged(nameof(RegMainText));
+                    OnPropertyChanged(nameof(RegSubText));
                 }
             }
         }  // Đã học, Đang học, Chưa học
@@ -151,12 +177,86 @@ namespace StudentReminderApp.Views.Pages
         public string FgColor { get; set; }     // Flat Foreground Text Color
         public string DiemChu { get; set; }
         public double DiemSo { get; set; }
+
+        private string _diemTong;
+        public string DiemTong
+        {
+            get => _diemTong;
+            set
+            {
+                if (_diemTong != value)
+                {
+                    _diemTong = value;
+                    UpdateGrades();
+                    OnPropertyChanged();
+                    OnPropertyChanged(nameof(DiemChu));
+                    OnPropertyChanged(nameof(DiemSo));
+                }
+            }
+        }
+
+        private void UpdateGrades()
+        {
+            if (double.TryParse(_diemTong?.Replace(",", "."), out double diem))
+            {
+                if (diem >= 8.5) { DiemChu = "A"; DiemSo = 4.0; }
+                else if (diem >= 8.0) { DiemChu = "B+"; DiemSo = 3.5; }
+                else if (diem >= 7.0) { DiemChu = "B"; DiemSo = 3.0; }
+                else if (diem >= 6.5) { DiemChu = "C+"; DiemSo = 2.5; }
+                else if (diem >= 5.5) { DiemChu = "C"; DiemSo = 2.0; }
+                else if (diem >= 5.0) { DiemChu = "D+"; DiemSo = 1.5; }
+                else if (diem >= 4.0) { DiemChu = "D"; DiemSo = 1.0; }
+                else { DiemChu = "F"; DiemSo = 0.0; }
+            }
+            else
+            {
+                // Mặc định hoặc lỗi parse
+                if (_statusText == "Đã học")
+                {
+                    DiemChu = "B+";
+                    DiemSo = 3.5;
+                }
+                else
+                {
+                    DiemChu = "-";
+                    DiemSo = 0;
+                }
+            }
+        }
         public string GiangVien { get; set; } = "N/A";
         public string ThoiKhoaBieu { get; set; } = "N/A";
         public string TuanHoc { get; set; } = "1-15";
         
         public long IdMonHoc { get; set; }  // Để lưu vào database
         public long IdSv { get; set; }      // Để lưu vào database
+        
+        private bool _isSelectedForEdit;
+        public bool IsSelectedForEdit
+        {
+            get => _isSelectedForEdit;
+            set
+            {
+                if (_isSelectedForEdit != value)
+                {
+                    _isSelectedForEdit = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private bool _isQuickEditMode;
+        public bool IsQuickEditMode
+        {
+            get => _isQuickEditMode;
+            set
+            {
+                if (_isQuickEditMode != value)
+                {
+                    _isQuickEditMode = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
         
         // Hàm cập nhật màu sắc dựa trên trạng thái
         private void UpdateColors()
@@ -165,8 +265,7 @@ namespace StudentReminderApp.Views.Pages
             { 
                 BgColor = "#D1FAE5"; // Màu xanh lá nhạt
                 FgColor = "#065F46"; // Màu xanh lá đậm
-                DiemChu = "B+"; 
-                DiemSo = 3.5;
+                UpdateGrades();
             }
             else if (_statusText == "Đang học") 
             { 
@@ -189,6 +288,8 @@ namespace StudentReminderApp.Views.Pages
             OnPropertyChanged(nameof(Registration));
             OnPropertyChanged(nameof(RegistrationColor));
             OnPropertyChanged(nameof(CanEditStatus));
+            OnPropertyChanged(nameof(RegMainText));
+            OnPropertyChanged(nameof(RegSubText));
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -221,10 +322,39 @@ namespace StudentReminderApp.Views.Pages
             }
         }
 
-        private void Config_Changed(object sender, RoutedEventArgs e)
+
+
+        private void BtnQuickEdit_Click(object sender, RoutedEventArgs e)
         {
-            // Sự kiện gọi khi đổi ComboBox Hệ đào tạo hoặc RadioButton Chuyên ngành
-            if (IsLoaded) RenderRoadmap();
+            bool isQuickEdit = BtnQuickEdit.IsChecked == true;
+            PanelQuickActions.Visibility = isQuickEdit ? Visibility.Visible : Visibility.Collapsed;
+            
+            foreach (var course in _allCourses)
+            {
+                course.IsQuickEditMode = isQuickEdit;
+                if (!isQuickEdit)
+                {
+                    course.IsSelectedForEdit = false;
+                }
+            }
+        }
+
+        private void BtnQuickAction_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button btn && btn.Tag is string statusText)
+            {
+                var selectedCourses = _allCourses.Where(c => c.IsSelectedForEdit).ToList();
+                if (selectedCourses.Count == 0) return;
+
+                foreach (var course in selectedCourses)
+                {
+                    course.StatusText = statusText;
+                    course.IsSelectedForEdit = false;
+                }
+
+                BtnQuickEdit.IsChecked = false;
+                BtnQuickEdit_Click(null, null);
+            }
         }
 
         // Event handler cho thay đổi trạng thái
@@ -306,6 +436,38 @@ namespace StudentReminderApp.Views.Pages
                 
                 RefreshDataGrids();
                 UpdateDashboard();
+                CalculateGPA();
+            }
+            if (e.PropertyName == nameof(CurriculumItem.DiemTong) && !_isRendering)
+            {
+                CalculateGPA();
+            }
+        }
+
+        private void CalculateGPA()
+        {
+            if (TxtGPA == null) return;
+            
+            double totalSoTC = 0;
+            double totalPoints = 0;
+
+            foreach (var c in _allCourses)
+            {
+                if (c.StatusText == "Đã học" && c.DiemSo >= 0 && !string.IsNullOrWhiteSpace(c.DiemTong))
+                {
+                    totalSoTC += c.SoTC;
+                    totalPoints += c.DiemSo * c.SoTC;
+                }
+            }
+
+            if (totalSoTC > 0)
+            {
+                double gpa = totalPoints / totalSoTC;
+                TxtGPA.Text = $"GPA Tích Lũy: {gpa:F2}";
+            }
+            else
+            {
+                TxtGPA.Text = "GPA Tích Lũy: 0.00";
             }
         }
 
@@ -353,10 +515,12 @@ namespace StudentReminderApp.Views.Pages
             _isRendering = true;
             LoadStatusesFromDB();
 
-            // Nạp dữ liệu JSON thực tế theo thiết lập hệ
-            string programId = "ai";
-            if (RbNhat != null && RbNhat.IsChecked == true) programId = "nhat";
-            else if (RbDacThu != null && RbDacThu.IsChecked == true) programId = "dacthu";
+            // Nạp dữ liệu JSON thực tế theo chuyên ngành của user
+            string programId = SessionManager.CurrentUser?.NganhHoc ?? "";
+            if (string.IsNullOrWhiteSpace(programId))
+            {
+                programId = "24T_NHAT_CUNHAN"; // Fallback default
+            }
 
             var programData = DataService.GetProgramData(programId);
             if (programData == null || programData.Semesters == null)
@@ -373,7 +537,7 @@ namespace StudentReminderApp.Views.Pages
                 foreach (var c in oldCourses) c.PropertyChanged -= Item_PropertyChanged;
             }
 
-            int maxSemester = (CmbHeDaoTao != null && CmbHeDaoTao.SelectedIndex == 0) ? 8 : 10;
+            int maxSemester = 15; // Lấy toàn bộ số học kỳ có trong file JSON (vì file JSON đã được thiết kế đúng Cử nhân/Kỹ sư)
             _allCourses.Clear();
 
             foreach (var sem in programData.Semesters.Where(s => s != null && s.Semester <= maxSemester))
@@ -473,7 +637,7 @@ namespace StudentReminderApp.Views.Pages
         double progress = totalCredits > 0 ? (passedCredits / totalCredits) * 100 : 0;
         if (progress > 100) progress = 100;
 
-        TxtCourseStatus.Text = $"📈 TIẾN ĐỘ HỌC TẬP: Đã tích lũy {passedCredits}/{totalCredits} Tín chỉ ({progress:F1}%) | Đang học: {learningCredits} Tín chỉ";
+        TxtCourseStatus.Text = $"TIẾN ĐỘ HỌC TẬP: Đã tích lũy {passedCredits}/{totalCredits} Tín chỉ ({progress:F1}%) | Đang học: {learningCredits} Tín chỉ";
     }
     }
 }

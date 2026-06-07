@@ -77,5 +77,15 @@ namespace StudentReminderApp.BLL
                 return false;
             }
         }
+        public bool UnverifyStudent(long idAcc)
+        {
+            if (!SessionManager.IsAdmin || idAcc <= 0) return false;
+            try   { return _dal.UnverifyStudent(idAcc); }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("StudentBLL.UnverifyStudent: " + ex.Message);
+                return false;
+            }
+        }
     }
 }

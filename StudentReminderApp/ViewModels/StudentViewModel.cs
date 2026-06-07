@@ -83,6 +83,7 @@ namespace StudentReminderApp.ViewModels
         public ICommand BanPermanentCommand { get; }
         public ICommand UnbanCommand        { get; }
         public ICommand VerifyCommand       { get; }
+        public ICommand UnverifyCommand     { get; }
         public ICommand RefreshCommand      { get; }
         public ICommand ClearFilterCommand  { get; }
 
@@ -110,6 +111,10 @@ namespace StudentReminderApp.ViewModels
                 obj => ExecuteVerify(obj as StudentModel),
                 obj => obj is StudentModel sv && !sv.IsVerified);
 
+            UnverifyCommand = new RelayCommand(
+                obj => ExecuteUnverify(obj as StudentModel),
+                obj => obj is StudentModel sv && sv.IsVerified);
+
             RefreshCommand     = new RelayCommand(async _ => await LoadDataAsync());
             ClearFilterCommand = new RelayCommand(_ => ClearAllFilters());
 
@@ -128,7 +133,7 @@ namespace StudentReminderApp.ViewModels
                 Application.Current.Dispatcher.Invoke(() =>
                 {
                     ClassList.Clear();
-                    ClassList.Add(new ClassItem { IdLop = null, TenLop = "📋 Tất cả lớp" });
+                    ClassList.Add(new ClassItem { IdLop = null, TenLop = "Tất cả lớp" });
                     foreach (var (id, ten) in lopTask.Result)
                         ClassList.Add(new ClassItem { IdLop = id, TenLop = ten });
 
@@ -237,6 +242,23 @@ namespace StudentReminderApp.ViewModels
             }
             else
                 MessageBox.Show("❌ Xác thực thất bại.", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
+
+        private void ExecuteUnverify(StudentModel? sv)
+        {
+            if (sv == null || !sv.IsVerified) return;
+            if (MessageBox.Show($"Hủy xác thực tài khoản \"{sv.HoTen}\" ({sv.Mssv})?",
+                    "Xác nhận", MessageBoxButton.YesNo, MessageBoxImage.Question) != MessageBoxResult.Yes) return;
+
+            if (_bll.UnverifyStudent(sv.IdAcc))
+            {
+                sv.IsVerified = false; 
+                StudentsView.Refresh(); 
+                UpdateFilteredCount();
+                MessageBox.Show($"✅ Đã hủy xác thực tài khoản {sv.HoTen}!", "Thành công", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            else
+                MessageBox.Show("❌ Thao tác thất bại.", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
         }
     }
 }

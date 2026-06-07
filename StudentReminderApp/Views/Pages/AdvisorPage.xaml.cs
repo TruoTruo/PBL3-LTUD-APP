@@ -70,7 +70,35 @@ namespace StudentReminderApp.Views.Pages
         public string Registration 
         { 
             get => _registration; 
-            set { if (_registration != value) { _registration = value; OnPropertyChanged(nameof(Registration)); } } 
+            set 
+            { 
+                if (_registration != value) 
+                { 
+                    _registration = value; 
+                    OnPropertyChanged(nameof(Registration)); 
+                    OnPropertyChanged(nameof(RegMainText));
+                    OnPropertyChanged(nameof(RegSubText));
+                } 
+            } 
+        }
+
+        public string RegMainText
+        {
+            get
+            {
+                if (_registration.StartsWith("Chưa đủ ĐK")) return "Chưa đủ ĐK";
+                return _registration;
+            }
+        }
+
+        public string RegSubText
+        {
+            get
+            {
+                if (_registration.Contains("(Thiếu Học trước)")) return "(Thiếu Học trước)";
+                if (_registration.Contains("(Thiếu ĐA trước)")) return "(Thiếu ĐA trước)";
+                return "";
+            }
         }
         
         private string _registrationColor = "#059669";
@@ -93,13 +121,16 @@ namespace StudentReminderApp.Views.Pages
                         string opt = ClassOptions[value];
                         SelectedClassSchedule = ClassSchedules.ContainsKey(opt) ? ClassSchedules[opt] : "";
                         SelectedClassRoom = ClassRooms.ContainsKey(opt) ? ClassRooms[opt] : "";
+                        SelectedClassWeek = ClassWeeks.ContainsKey(opt) ? ClassWeeks[opt] : "";
                     } else {
                         SelectedClassSchedule = "";
                         SelectedClassRoom = "";
+                        SelectedClassWeek = "";
                     }
                     OnPropertyChanged(nameof(SelectedClassIndex)); 
                     OnPropertyChanged(nameof(SelectedClassSchedule));
                     OnPropertyChanged(nameof(SelectedClassRoom));
+                    OnPropertyChanged(nameof(SelectedClassWeek));
                 } 
             } 
         }
@@ -109,6 +140,9 @@ namespace StudentReminderApp.Views.Pages
 
         public string SelectedClassRoom { get; private set; } = string.Empty;
         public Dictionary<string, string> ClassRooms { get; set; } = new Dictionary<string, string>();
+
+        public string SelectedClassWeek { get; private set; } = string.Empty;
+        public Dictionary<string, string> ClassWeeks { get; set; } = new Dictionary<string, string>();
 
         public ObservableCollection<string> LecturerOptions { get; set; } = new ObservableCollection<string>() { "— Bất kỳ —" };
         
@@ -173,8 +207,8 @@ namespace StudentReminderApp.Views.Pages
                 catch { }
             }
 
-            Services.DataService.Initialize();
-            var prog = Services.DataService.GetProgramData("nhat");
+            string programId = SessionManager.CurrentUser?.NganhHoc ?? "";
+            var prog = Services.DataService.GetProgramData(programId);
             
             foreach (var item in _courseSelections) item.PropertyChanged -= SelectionItem_PropertyChanged;
             _courseSelections.Clear();
@@ -232,8 +266,8 @@ namespace StudentReminderApp.Views.Pages
                     else _allLearningCourseIds.Remove(item.CourseId);
                 }
 
-                Services.DataService.Initialize();
-                var prog = Services.DataService.GetProgramData("nhat");
+                string programId = SessionManager.CurrentUser?.NganhHoc ?? "";
+                var prog = Services.DataService.GetProgramData(programId);
                 if (prog == null || prog.Semesters == null) break;
 
                 var courseDict = prog.Semesters
@@ -340,7 +374,7 @@ namespace StudentReminderApp.Views.Pages
                 if (System.IO.File.Exists(path))
                 {
                     string json = System.IO.File.ReadAllText(path);
-                    var allJsonCourses = new List<Tuple<string, string, string, string, string>>();
+                    var allJsonCourses = new List<Tuple<string, string, string, string, string, string>>();
                     string[] parts = json.Split(new[] { "\"id\":" }, StringSplitOptions.None);
                     for (int i = 1; i < parts.Length; i++)
                     {
@@ -348,6 +382,7 @@ namespace StudentReminderApp.Views.Pages
                         var groupMatch = System.Text.RegularExpressions.Regex.Match(parts[i], @"""group""\s*:\s*""([^""]+)""");
                         var gvMatch = System.Text.RegularExpressions.Regex.Match(parts[i], @"""lecturer_name""\s*:\s*""([^""]+)""");
                         if (!gvMatch.Success) gvMatch = System.Text.RegularExpressions.Regex.Match(parts[i], @"""lecturer""\s*:\s*""([^""]+)""");
+                        var weeksMatch = System.Text.RegularExpressions.Regex.Match(parts[i], @"""weeks""\s*:\s*""([^""]+)""");
                         
                         string scheduleStr = "";
                         var rooms = new HashSet<string>();
@@ -368,7 +403,7 @@ namespace StudentReminderApp.Views.Pages
 
                         if (idMatch.Success && groupMatch.Success)
                         {
-                            allJsonCourses.Add(new Tuple<string, string, string, string, string>(idMatch.Groups[1].Value, groupMatch.Groups[1].Value, gvMatch.Success ? gvMatch.Groups[1].Value : "Unknown", scheduleStr, roomStr));
+                            allJsonCourses.Add(new Tuple<string, string, string, string, string, string>(idMatch.Groups[1].Value, groupMatch.Groups[1].Value, gvMatch.Success ? gvMatch.Groups[1].Value : "Unknown", scheduleStr, roomStr, weeksMatch.Success ? weeksMatch.Groups[1].Value : ""));
                         }
                     }
                     var groupCounts = new Dictionary<string, int>();
@@ -386,6 +421,7 @@ namespace StudentReminderApp.Views.Pages
                                 item.ClassOptions.Add(optionStr);
                                 item.ClassSchedules[optionStr] = c.Item4;
                                 item.ClassRooms[optionStr] = c.Item5;
+                                item.ClassWeeks[optionStr] = c.Item6;
                                 addedOptions.Add(optionStr);
                             }
                             if (!string.IsNullOrWhiteSpace(c.Item3) && c.Item3 != "Unknown" && !item.LecturerOptions.Contains(c.Item3))
@@ -418,8 +454,7 @@ namespace StudentReminderApp.Views.Pages
                         {
                             for (int i = 0; i < item.ClassOptions.Count; i++)
                             {
-                                string classCode = item.ClassOptions[i].Split(' ')[0];
-                                if (classCode.EndsWith("2499"))
+                                if (item.ClassOptions[i].Contains("- Nhóm 99"))
                                 {
                                     item.SelectedClassIndex = i;
                                     found = true;
@@ -527,6 +562,7 @@ namespace StudentReminderApp.Views.Pages
                         string optionStr = item.ClassOptions[item.SelectedClassIndex];
                         string scheduleStr = item.ClassSchedules.ContainsKey(optionStr) ? item.ClassSchedules[optionStr] : "";
                         string roomStr = item.ClassRooms.ContainsKey(optionStr) ? item.ClassRooms[optionStr] : "";
+                        string weekStr = item.ClassWeeks.ContainsKey(optionStr) ? item.ClassWeeks[optionStr] : "";
                         string lecturer = "";
                         string group = "";
                         
@@ -543,6 +579,7 @@ namespace StudentReminderApp.Views.Pages
                             Group = group,
                             LecturerName = lecturer,
                             ScheduleStr = scheduleStr,
+                            WeekStr = weekStr,
                             RoomStr = roomStr
                         });
                     }

@@ -4,7 +4,7 @@
       xmlns:System="clr-namespace:System;assembly=mscorlib"
       xmlns:converters="clr-namespace:StudentReminderApp.Converters"
       Title="Lộ trình học tập"
-      Background="{StaticResource BgBrush}">
+      Background="{DynamicResource BgBrush}">
 
     <Page.Resources>
         <!-- Custom Flat RadioButton -->
@@ -16,7 +16,7 @@
             <Setter Property="FontWeight"
                     Value="SemiBold"/>
             <Setter Property="Foreground"
-                    Value="{StaticResource TextSecondaryBrush}"/>
+                    Value="{DynamicResource TextSecondaryBrush}"/>
         </Style>
 
         <!-- Custom TabItem Style for Modern Flat Look -->
@@ -41,20 +41,20 @@
                                      Value="True">
                                 <Setter TargetName="Border"
                                         Property="BorderBrush"
-                                        Value="{StaticResource PrimaryBrush}"/>
+                                        Value="{DynamicResource TextPrimaryBrush}"/>
                                 <Setter Property="TextElement.Foreground"
-                                        Value="{StaticResource PrimaryBrush}"/>
+                                        Value="{DynamicResource TextPrimaryBrush}"/>
                             </Trigger>
                             <Trigger Property="IsSelected"
                                      Value="False">
                                 <Setter Property="TextElement.Foreground"
-                                        Value="{StaticResource TextSecondaryBrush}"/>
+                                        Value="{DynamicResource TextSecondaryBrush}"/>
                             </Trigger>
                             <Trigger Property="IsMouseOver"
                                      Value="True">
                                 <Setter TargetName="Border"
                                         Property="Background"
-                                        Value="#F8FAFC"/>
+                                        Value="{DynamicResource BgBrush}"/>
                                 <Setter TargetName="Border"
                                         Property="CornerRadius"
                                         Value="6,6,0,0"/>
@@ -64,7 +64,7 @@
                 </Setter.Value>
             </Setter>
             <Setter Property="FontSize"
-                    Value="14"/>
+                    Value="13"/>
             <Setter Property="FontWeight"
                     Value="Bold"/>
         </Style>
@@ -77,12 +77,12 @@
         </x:Array>
 
         <Style TargetType="DataGridColumnHeader">
-            <Setter Property="Background" Value="White" />
-            <Setter Property="Foreground" Value="#374151" />
+            <Setter Property="Background" Value="{DynamicResource SurfaceBrush}" />
+            <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}" />
             <Setter Property="FontWeight" Value="SemiBold" />
             <Setter Property="FontSize" Value="11" />
             <Setter Property="Padding" Value="10,8" />
-            <Setter Property="BorderBrush" Value="#E5E7EB" />
+            <Setter Property="BorderBrush" Value="{DynamicResource BorderBrush}" />
             <Setter Property="BorderThickness" Value="0,0,0,1" />
             <Setter Property="HorizontalContentAlignment" Value="Left" />
         </Style>
@@ -108,16 +108,16 @@
         </Style>
 
         <Style TargetType="DataGridRow">
-            <Setter Property="Background" Value="White" />
+            <Setter Property="Background" Value="{DynamicResource SurfaceBrush}" />
             <Setter Property="BorderThickness" Value="0,0,0,1" />
-            <Setter Property="BorderBrush" Value="#E5E7EB" />
+            <Setter Property="BorderBrush" Value="{DynamicResource BorderBrush}" />
             <Style.Triggers>
                 <DataTrigger Binding="{Binding CanEditStatus}" Value="False">
                     <Setter Property="Opacity" Value="0.5" />
-                    <Setter Property="Background" Value="#F3F4F6" />
+                    <Setter Property="Background" Value="{DynamicResource BorderBrush}" />
                 </DataTrigger>
                 <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" Value="#F9FAFB" />
+                    <Setter Property="Background" Value="{DynamicResource BgBrush}" />
                 </Trigger>
                 <Trigger Property="IsSelected" Value="True">
                     <Setter Property="Background" Value="#DBEAFE" />
@@ -166,7 +166,7 @@
                             </ToggleButton>
                             <Popup Name="Popup" Placement="Bottom" IsOpen="{TemplateBinding IsDropDownOpen}" AllowsTransparency="True" Focusable="False" PopupAnimation="Slide">
                                 <Grid Name="DropDown" SnapsToDevicePixels="True" MinWidth="{TemplateBinding ActualWidth}" MaxHeight="{TemplateBinding MaxDropDownHeight}">
-                                    <Border x:Name="DropDownBorder" Background="White" BorderThickness="1" BorderBrush="#E5E7EB" CornerRadius="6">
+                                    <Border x:Name="DropDownBorder" Background="{DynamicResource SurfaceBrush}" BorderThickness="1" BorderBrush="{DynamicResource BorderBrush}" CornerRadius="6">
                                         <ScrollViewer Margin="0,4,0,4" SnapsToDevicePixels="True">
                                             <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Contained" />
                                         </ScrollViewer>
@@ -248,6 +248,7 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
+        <BooleanToVisibilityConverter x:Key="BoolToVis"/>
     </Page.Resources>
 
     <Grid x:Name="RootGrid" Margin="32,28">
@@ -266,107 +267,82 @@
 
             <StackPanel Grid.Column="0">
                 <TextBlock Text="Lộ trình Học tập Cá nhân"
-                           FontSize="22"
+                           FontSize="24"
                            FontWeight="Bold"
-                           Foreground="{StaticResource TextPrimaryBrush}"/>
+                           Foreground="{DynamicResource TextPrimaryBrush}"
+                           Margin="0,0,0,12"/>
                 <TextBlock x:Name="TxtStudentInfo"
                            Text="SV: Nguyễn Quang Hiền - 102240365"
                            FontWeight="SemiBold"
-                           FontSize="14"
-                           Foreground="{StaticResource PrimaryBrush}"
-                           Margin="0,4,0,8"/>
+                           FontSize="15"
+                           Foreground="{DynamicResource TextPrimaryBrush}"
+                           Margin="0,0,0,12"/>
 
-                <TextBlock x:Name="TxtCourseStatus"
-                           Text="Đang tải lộ trình học..."
-                           FontSize="13"
-                           Foreground="{StaticResource TextSecondaryBrush}"
-                           Margin="0,0,0,16"/>
-
-                <StackPanel Orientation="Horizontal"
-                            Margin="0,0,0,12">
-                    <TextBlock Text="Hệ đào tạo:"
-                               VerticalAlignment="Center"
-                               FontSize="13"
-                               Foreground="{StaticResource TextSecondaryBrush}"
-                               Margin="0,0,10,0"/>
-                    <ComboBox x:Name="CmbHeDaoTao"
-                              Width="180"
-                              Height="36"
-                              SelectionChanged="Config_Changed">
-                        <ComboBoxItem Content="Cử nhân (8 Học kỳ)"
-                                      IsSelected="True"/>
-                        <ComboBoxItem Content="Kỹ sư (10 Học kỳ)"/>
-                    </ComboBox>
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,24">
+                    <TextBlock Text="&#xE82D;" FontFamily="Segoe MDL2 Assets" FontSize="16" Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,0,8,0" VerticalAlignment="Center"/>
+                    <TextBlock x:Name="TxtCourseStatus"
+                               Text="TIẾN ĐỘ HỌC TẬP: Đang tải lộ trình học..."
+                               FontSize="14"
+                               Foreground="{DynamicResource TextSecondaryBrush}"
+                               VerticalAlignment="Center"/>
                 </StackPanel>
 
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Chuyên ngành:"
-                               VerticalAlignment="Center"
-                               FontSize="13"
-                               Foreground="{StaticResource TextSecondaryBrush}"
-                               Margin="0,0,10,0"/>
-                    <RadioButton x:Name="RbNhat"
-                                 Content="CNTT Nhật Bản"
-                                 IsChecked="True"
-                                 Checked="Config_Changed"/>
-                    <RadioButton x:Name="RbDacThu"
-                                 Content="CNTT Đặc thù"
-                                 Checked="Config_Changed"/>
-                    <RadioButton x:Name="RbAI"
-                                 Content="Trí tuệ nhân tạo (AI)"
-                                 Checked="Config_Changed"/>
-                </StackPanel>
+
             </StackPanel>
 
-            <!-- Môn đang đăng ký (Legend/Status) -->
-            <Border Grid.Column="1"
-                    Style="{StaticResource Card}"
-                    Padding="16,12"
-                    Background="#F8FAFC">
-                <StackPanel>
-                    <TextBlock Text="Chú giải màu sắc"
-                               FontSize="15"
-                               FontWeight="SemiBold"
-                               Margin="0,0,0,8"/>
-                    <StackPanel Orientation="Horizontal"
-                                Margin="0,4">
-                        <Border Width="12"
-                                Height="12"
-                                CornerRadius="6"
-                                Background="#FF3ACC5F"
-                                Margin="0,0,8,0"/>
-                        <TextBlock Text="Đã học (Qua môn)"/>
+            <!-- Môn đang đăng ký (Legend/Status) & Quick Edit Controls -->
+            <StackPanel Grid.Column="1" HorizontalAlignment="Right">
+                <Border BorderBrush="{DynamicResource BorderBrush}"
+                        BorderThickness="1"
+                        CornerRadius="8"
+                        Padding="16,12"
+                        Background="{DynamicResource SurfaceBrush}">
+                    <StackPanel>
+                        <TextBlock Text="Chú giải màu sắc"
+                                   FontSize="13"
+                                   FontWeight="Bold"
+                                   Foreground="#334155"
+                                   Margin="0,0,0,8"/>
+                        <StackPanel Orientation="Horizontal"
+                                    Margin="0,4">
+                            <Ellipse Width="6"
+                                     Height="6"
+                                     Fill="#10B981"
+                                     Margin="0,0,8,0" VerticalAlignment="Center"/>
+                            <TextBlock Text="Đã học (Qua môn)" FontSize="12" Foreground="{DynamicResource TextSecondaryBrush}" VerticalAlignment="Center"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal"
+                                    Margin="0,4">
+                            <Ellipse Width="6"
+                                     Height="6"
+                                     Fill="#FBBF24"
+                                     Margin="0,0,8,0" VerticalAlignment="Center"/>
+                            <TextBlock Text="Đang học kỳ này" FontSize="12" Foreground="{DynamicResource TextSecondaryBrush}" VerticalAlignment="Center"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal"
+                                    Margin="0,4">
+                            <Ellipse Width="6"
+                                     Height="6"
+                                     Fill="{DynamicResource TextMutedBrush}"
+                                     Margin="0,0,8,0" VerticalAlignment="Center"/>
+                            <TextBlock Text="Chưa học" FontSize="12" Foreground="{DynamicResource TextSecondaryBrush}" VerticalAlignment="Center"/>
+                        </StackPanel>
                     </StackPanel>
-                    <StackPanel Orientation="Horizontal"
-                                Margin="0,4">
-                        <Border Width="12"
-                                Height="12"
-                                CornerRadius="6"
-                                Background="#FEF3C7"
-                                Margin="0,0,8,0"/>
-                        <TextBlock Text="Đang học kỳ này"/>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal"
-                                Margin="0,4">
-                        <Border Width="12"
-                                Height="12"
-                                CornerRadius="6"
-                                Background="#F1F5F9"
-                                Margin="0,0,8,0"/>
-                        <TextBlock Text="Chưa học"/>
-                    </StackPanel>
-                </StackPanel>
-            </Border>
+                </Border>
+                
+            </StackPanel>
         </Grid>
 
         <!-- ================= MAIN CONTENT (TABS) ================= -->
-        <TabControl Grid.Row="1"
-                    Background="Transparent"
-                    BorderThickness="0">
+        <Grid Grid.Row="1">
+            <Border BorderBrush="{DynamicResource BorderBrush}" BorderThickness="0,0,0,1" Margin="0,38,0,0" VerticalAlignment="Top"/>
+            
+            <TabControl Background="Transparent"
+                        BorderThickness="0">
 
-            <!-- TAB 1: KHUNG CHƯƠNG TRÌNH -->
-            <TabItem Header="KHUNG CHƯƠNG TRÌNH">
-                <Border Style="{StaticResource Card}"
+                <!-- TAB 1: KHUNG CHƯƠNG TRÌNH -->
+                <TabItem Header="KHUNG CHƯƠNG TRÌNH">
+                    <Border BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1" CornerRadius="8" Background="{DynamicResource SurfaceBrush}"
                         Padding="0"
                         Margin="0,12,0,0">
                     <Grid>
@@ -376,7 +352,7 @@
                                    TextWrapping="Wrap"
                                    FontSize="14"
                                    FontWeight="SemiBold"
-                                   Foreground="{StaticResource TextSecondaryBrush}"
+                                   Foreground="{DynamicResource TextSecondaryBrush}"
                                    Padding="24"
                                    HorizontalAlignment="Center"
                                    VerticalAlignment="Center" />
@@ -384,14 +360,15 @@
                         <DataGrid x:Name="DgRoadmap" 
                                 AutoGenerateColumns="False" 
                                 CanUserAddRows="False" 
+                                CanUserSortColumns="False"
                                 HeadersVisibility="Column" 
                                 GridLinesVisibility="Horizontal" 
                                 HorizontalGridLinesBrush="#E2E8F0" 
                                 BorderThickness="1" 
-                                BorderBrush="#E2E8F0"
-                                Background="White" 
+                                BorderBrush="{DynamicResource BorderBrush}"
+                                Background="{DynamicResource SurfaceBrush}" 
                                 RowBackground="White" 
-                                AlternatingRowBackground="#F8FAFC"
+                                AlternatingRowBackground="White"
                                 MinRowHeight="45" 
                                 ColumnHeaderHeight="45" 
                                 SelectionMode="Single"
@@ -399,17 +376,23 @@
                                 ScrollViewer.HorizontalScrollBarVisibility="Auto"
                                 ScrollViewer.VerticalScrollBarVisibility="Auto"
                                 VirtualizingPanel.ScrollUnit="Pixel"
-                                Margin="0,10,0,0">
+                                Margin="0,4,0,0">
 
                             <DataGrid.Resources>
-                                <!-- Style Header: Hiện đại, chữ xám đậm, nền xám nhạt -->
+                                <!-- Override default selection colors -->
+                                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="#DBEAFE"/>
+                                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}" Color="#1E3A8A"/>
+                                <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}" Color="#F8FAFC"/>
+                                <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightTextBrushKey}" Color="#334155"/>
+
+                                <!-- Style Header: Clean white -->
                                 <Style TargetType="DataGridColumnHeader">
-                                    <Setter Property="Background" Value="#F1F5F9"/>
-                                    <Setter Property="Foreground" Value="#475569"/>
+                                    <Setter Property="Background" Value="{DynamicResource SurfaceBrush}"/>
+                                    <Setter Property="Foreground" Value="{DynamicResource TextSecondaryBrush}"/>
                                     <Setter Property="FontWeight" Value="SemiBold"/>
                                     <Setter Property="Padding" Value="10,0"/>
                                     <Setter Property="BorderThickness" Value="0,0,0,1"/>
-                                    <Setter Property="BorderBrush" Value="#CBD5E1"/>
+                                    <Setter Property="BorderBrush" Value="{DynamicResource BorderBrush}"/>
                                     <Setter Property="HorizontalContentAlignment" Value="Center"/>
                                 </Style>
                                 
@@ -428,8 +411,9 @@
                                     </Setter>
                                     <Style.Triggers>
                                         <Trigger Property="IsSelected" Value="True">
-                                            <Setter Property="Background" Value="#EFF6FF"/>
-                                            <Setter Property="Foreground" Value="#1E40AF"/>
+                                            <Setter Property="Background" Value="{DynamicResource BgBrush}"/>
+                                            <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}"/>
+                                            <Setter Property="FontWeight" Value="Bold"/>
                                         </Trigger>
                                     </Style.Triggers>
                                 </Style>
@@ -451,17 +435,28 @@
                                     </DataGridTextColumn.ElementStyle>
                                 </DataGridTextColumn>
                                 
-                                <!-- Thay cột Ký hiệu thành cột Xét điều kiện Đăng ký -->
-                                <DataGridTextColumn Header="ĐK được?" Binding="{Binding Registration}" Width="Auto" IsReadOnly="True">
-                                    <DataGridTextColumn.ElementStyle>
-                                        <Style TargetType="TextBlock">
-                                            <Setter Property="HorizontalAlignment" Value="Center"/>
-                                            <Setter Property="TextWrapping" Value="Wrap"/>
-                                            <Setter Property="FontWeight" Value="Bold"/>
-                                            <Setter Property="Foreground" Value="{Binding RegistrationColor}"/>
-                                        </Style>
-                                    </DataGridTextColumn.ElementStyle>
-                                </DataGridTextColumn>
+                                <!-- Cột Xét điều kiện Đăng ký -->
+                                <DataGridTemplateColumn Header="ĐK được?" Width="Auto" IsReadOnly="True">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                                                <TextBlock Text="{Binding RegMainText}" Foreground="{Binding RegistrationColor}" FontWeight="Bold" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center"/>
+                                                <TextBlock Text="{Binding RegSubText}" Foreground="{DynamicResource TextMutedBrush}" FontSize="11" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center">
+                                                    <TextBlock.Style>
+                                                        <Style TargetType="TextBlock">
+                                                            <Setter Property="Visibility" Value="Visible"/>
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding RegSubText}" Value="">
+                                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </TextBlock.Style>
+                                                </TextBlock>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
                                 <DataGridTextColumn Header="Mã HP" Binding="{Binding MaHocPhan}" Width="Auto" IsReadOnly="True"/>
                                 <DataGridTextColumn Header="Số tín chỉ" Binding="{Binding SoTC}" Width="Auto" IsReadOnly="True"/>
                                 
@@ -484,7 +479,7 @@
                                         <Style TargetType="TextBlock">
                                             <Setter Property="HorizontalAlignment" Value="Left"/>
                                             <Setter Property="TextWrapping" Value="Wrap"/>
-                                            <Setter Property="Foreground" Value="#475569"/>
+                                            <Setter Property="Foreground" Value="{DynamicResource TextSecondaryBrush}"/>
                                             <Setter Property="FontSize" Value="11"/>
                                         </Style>
                                     </DataGridTextColumn.ElementStyle>
@@ -496,7 +491,7 @@
                                         <Style TargetType="TextBlock">
                                             <Setter Property="HorizontalAlignment" Value="Left"/>
                                             <Setter Property="TextWrapping" Value="Wrap"/>
-                                            <Setter Property="Foreground" Value="#475569"/>
+                                            <Setter Property="Foreground" Value="{DynamicResource TextSecondaryBrush}"/>
                                             <Setter Property="FontSize" Value="11"/>
                                         </Style>
                                     </DataGridTextColumn.ElementStyle>
@@ -508,25 +503,113 @@
                                         <Style TargetType="TextBlock">
                                             <Setter Property="HorizontalAlignment" Value="Left"/>
                                             <Setter Property="TextWrapping" Value="Wrap"/>
-                                            <Setter Property="Foreground" Value="#475569"/>
+                                            <Setter Property="Foreground" Value="{DynamicResource TextSecondaryBrush}"/>
                                             <Setter Property="FontSize" Value="11"/>
                                         </Style>
                                     </DataGridTextColumn.ElementStyle>
                                 </DataGridTextColumn>
                                 
                                 <!-- Cột Trạng thái (Combo Box cho phép sửa) -->
-                                <DataGridTemplateColumn Header="Trạng thái" Width="110">
+                                <DataGridTemplateColumn Header="Trạng thái" Width="140">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
-                                            <ComboBox ItemsSource="{StaticResource StatusList}"
-                                                      SelectedItem="{Binding StatusText, UpdateSourceTrigger=PropertyChanged}"
-                                                      Style="{StaticResource PillComboBoxStyle}"
-                                                      Background="{Binding BgColor}"
-                                                      Foreground="{Binding FgColor}"
-                                                      IsEnabled="{Binding CanEditStatus}"
-                                                      Margin="2"
-                                                      VerticalAlignment="Center"
-                                                      HorizontalContentAlignment="Center"/>
+                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                                <CheckBox IsChecked="{Binding IsSelectedForEdit, UpdateSourceTrigger=PropertyChanged}"
+                                                          VerticalAlignment="Center"
+                                                          Margin="0,0,8,0"
+                                                          IsEnabled="{Binding CanEditStatus}">
+                                                    <CheckBox.Style>
+                                                        <Style TargetType="CheckBox">
+                                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                                            <Setter Property="Cursor" Value="Hand"/>
+                                                            <Setter Property="Template">
+                                                                <Setter.Value>
+                                                                    <ControlTemplate TargetType="CheckBox">
+                                                                        <Border x:Name="Bd" 
+                                                                                Width="18" Height="18" 
+                                                                                Background="{DynamicResource SurfaceBrush}" 
+                                                                                BorderBrush="#CBD5E1" 
+                                                                                BorderThickness="1.5" 
+                                                                                CornerRadius="4">
+                                                                            <Path x:Name="CheckMark" 
+                                                                                  Data="M 4 9 L 8 13 L 14 5" 
+                                                                                  Stroke="{DynamicResource SurfaceBrush}" 
+                                                                                  StrokeThickness="2" 
+                                                                                  StrokeStartLineCap="Round" 
+                                                                                  StrokeEndLineCap="Round" 
+                                                                                  StrokeLineJoin="Round"
+                                                                                  Visibility="Collapsed" 
+                                                                                  HorizontalAlignment="Center" 
+                                                                                  VerticalAlignment="Center"
+                                                                                  Margin="0,0,0,0"/>
+                                                                        </Border>
+                                                                        <ControlTemplate.Triggers>
+                                                                            <Trigger Property="IsChecked" Value="True">
+                                                                                <Setter TargetName="Bd" Property="Background" Value="{DynamicResource TextPrimaryBrush}"/>
+                                                                                <Setter TargetName="Bd" Property="BorderBrush" Value="{DynamicResource TextPrimaryBrush}"/>
+                                                                                <Setter TargetName="CheckMark" Property="Visibility" Value="Visible"/>
+                                                                            </Trigger>
+                                                                            <Trigger Property="IsMouseOver" Value="True">
+                                                                                <Setter TargetName="Bd" Property="BorderBrush" Value="{DynamicResource TextPrimaryBrush}"/>
+                                                                            </Trigger>
+                                                                            <Trigger Property="IsEnabled" Value="False">
+                                                                                <Setter TargetName="Bd" Property="Opacity" Value="0.5"/>
+                                                                            </Trigger>
+                                                                        </ControlTemplate.Triggers>
+                                                                    </ControlTemplate>
+                                                                </Setter.Value>
+                                                            </Setter>
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding IsQuickEditMode}" Value="True">
+                                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </CheckBox.Style>
+                                                </CheckBox>
+
+                                                <ComboBox ItemsSource="{StaticResource StatusList}"
+                                                          SelectedItem="{Binding StatusText, UpdateSourceTrigger=PropertyChanged}"
+                                                          Style="{StaticResource PillComboBoxStyle}"
+                                                          Background="{Binding BgColor}"
+                                                          Foreground="{Binding FgColor}"
+                                                          IsEnabled="{Binding CanEditStatus}"
+                                                          Margin="2"
+                                                          VerticalAlignment="Center"
+                                                          HorizontalContentAlignment="Center">
+                                                    <ComboBox.ItemContainerStyle>
+                                                        <Style TargetType="ComboBoxItem">
+                                                            <Setter Property="Padding" Value="12,6"/>
+                                                            <Setter Property="FontWeight" Value="SemiBold"/>
+                                                            <Setter Property="Template">
+                                                                <Setter.Value>
+                                                                    <ControlTemplate TargetType="ComboBoxItem">
+                                                                        <Border x:Name="Bd" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}">
+                                                                            <ContentPresenter HorizontalAlignment="Center"/>
+                                                                        </Border>
+                                                                        <ControlTemplate.Triggers>
+                                                                            <Trigger Property="IsHighlighted" Value="True">
+                                                                                <Setter TargetName="Bd" Property="Background" Value="#F1F5F9"/>
+                                                                            </Trigger>
+                                                                        </ControlTemplate.Triggers>
+                                                                    </ControlTemplate>
+                                                                </Setter.Value>
+                                                            </Setter>
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding}" Value="Đã học">
+                                                                    <Setter Property="Foreground" Value="#0F5132"/>
+                                                                </DataTrigger>
+                                                                <DataTrigger Binding="{Binding}" Value="Đang học">
+                                                                    <Setter Property="Foreground" Value="#664D03"/>
+                                                                </DataTrigger>
+                                                                <DataTrigger Binding="{Binding}" Value="Chưa học">
+                                                                    <Setter Property="Foreground" Value="{DynamicResource TextSecondaryBrush}"/>
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </ComboBox.ItemContainerStyle>
+                                                </ComboBox>
+                                            </StackPanel>
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellTemplate>
                                 </DataGridTemplateColumn>
@@ -555,6 +638,7 @@
                                   Grid.Row="1"
                                   AutoGenerateColumns="False"
                                   IsReadOnly="True"
+                                  CanUserSortColumns="False"
                                   CanUserResizeColumns="True"
                                   CanUserResizeRows="False"
                                   CanUserReorderColumns="False"
@@ -573,22 +657,87 @@
                                   ScrollViewer.CanContentScroll="True"
                                   VirtualizingPanel.ScrollUnit="Pixel">
                             <DataGrid.Columns>
-                                <DataGridTextColumn Header="Mã HP"
-                                                    Binding="{Binding MaHocPhan}"
-                                                    Width="120"
-                                                    Foreground="{StaticResource TextMutedBrush}"
-                                                    ElementStyle="{StaticResource WrapTextBlockStyle}" />
-                                <DataGridTextColumn Header="Tên học phần"
-                                                    Binding="{Binding TenHocPhan}"
-                                                    Width="2*"
-                                                    FontWeight="SemiBold"
-                                                    Foreground="{StaticResource TextPrimaryBrush}"
-                                                    ElementStyle="{StaticResource WrapTextBlockStyle}" />
-                                <DataGridTextColumn Header="Tín chỉ"
-                                                    Binding="{Binding SoTC, StringFormat={}{0:0.#} TC}"
-                                                    Width="90"
-                                                    Foreground="{StaticResource TextSecondaryBrush}"
-                                                    ElementStyle="{StaticResource WrapTextBlockStyle}" />
+                                <DataGridTextColumn Header="TT" Binding="{Binding SerialNumber}" Width="Auto" IsReadOnly="True"/>
+                                <DataGridTextColumn Header="Học kỳ" Binding="{Binding HocKy}" Width="Auto" IsReadOnly="True"/>
+                                
+                                <DataGridTextColumn Header="Tên học phần" Binding="{Binding TenHocPhan}" Width="2*" MinWidth="180" IsReadOnly="True">
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="HorizontalAlignment" Value="Left"/>
+                                            <Setter Property="TextWrapping" Value="Wrap"/>
+                                            <Setter Property="FontWeight" Value="SemiBold"/>
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
+                                
+                                <DataGridTemplateColumn Header="ĐK được?" Width="Auto" IsReadOnly="True">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                                                <TextBlock Text="{Binding RegMainText}" Foreground="{Binding RegistrationColor}" FontWeight="Bold" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center"/>
+                                                <TextBlock Text="{Binding RegSubText}" Foreground="{DynamicResource TextMutedBrush}" FontSize="11" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center">
+                                                    <TextBlock.Style>
+                                                        <Style TargetType="TextBlock">
+                                                            <Setter Property="Visibility" Value="Visible"/>
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding RegSubText}" Value="">
+                                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </TextBlock.Style>
+                                                </TextBlock>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTextColumn Header="Mã HP" Binding="{Binding MaHocPhan}" Width="Auto" IsReadOnly="True"/>
+                                <DataGridTextColumn Header="Số tín chỉ" Binding="{Binding SoTC}" Width="Auto" IsReadOnly="True"/>
+                                
+                                <DataGridTextColumn Header="Tự chọn" Binding="{Binding Optional}" Width="Auto" IsReadOnly="True">
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="TextWrapping" Value="Wrap"/>
+                                            <Setter Property="Foreground" Value="#D97706"/>
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
+                                
+                                <DataGridTextColumn Header="HT ĐA" Binding="{Binding HtDa}" Width="Auto" IsReadOnly="True"/>
+                                <DataGridTextColumn Header="TQ ĐA" Binding="{Binding TqDa}" Width="Auto" IsReadOnly="True"/>
+                                
+                                <DataGridTextColumn Header="Học trước" Binding="{Binding HocTruocStr}" Width="*" IsReadOnly="True">
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="HorizontalAlignment" Value="Left"/>
+                                            <Setter Property="TextWrapping" Value="Wrap"/>
+                                            <Setter Property="Foreground" Value="{DynamicResource TextSecondaryBrush}"/>
+                                            <Setter Property="FontSize" Value="11"/>
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
+                                
+                                <DataGridTextColumn Header="Song hành" Binding="{Binding SongHanhStr}" Width="*" IsReadOnly="True">
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="HorizontalAlignment" Value="Left"/>
+                                            <Setter Property="TextWrapping" Value="Wrap"/>
+                                            <Setter Property="Foreground" Value="{DynamicResource TextSecondaryBrush}"/>
+                                            <Setter Property="FontSize" Value="11"/>
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
+                                
+                                <DataGridTextColumn Header="Tiên quyết" Binding="{Binding TienQuyetStr}" Width="*" IsReadOnly="True">
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="HorizontalAlignment" Value="Left"/>
+                                            <Setter Property="TextWrapping" Value="Wrap"/>
+                                            <Setter Property="Foreground" Value="{DynamicResource TextSecondaryBrush}"/>
+                                            <Setter Property="FontSize" Value="11"/>
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
                             </DataGrid.Columns>
                         </DataGrid>
                     </Grid>
@@ -605,15 +754,14 @@
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
-                        <TextBlock Text="Lịch sử Học tập &amp; Điểm số"
-                                   FontSize="16"
-                                   FontWeight="Bold"
-                                   Padding="16,16,16,8"/>
-
-                        <DataGrid x:Name="DgHistory"
+                        <StackPanel Orientation="Horizontal" Margin="16,16,16,8">
+                            <TextBlock Text="Lịch sử Học tập &amp; Điểm số" FontSize="16" FontWeight="Bold" />
+                            <TextBlock x:Name="TxtGPA" Text="GPA Tích Lũy: 0.0" FontSize="15" FontWeight="SemiBold" Foreground="#059669" Margin="20,0,0,0" VerticalAlignment="Center"/>
+                        </StackPanel>                        <DataGrid x:Name="DgHistory"
                                   Grid.Row="1"
                                   AutoGenerateColumns="False"
                                   IsReadOnly="True"
+                                  CanUserSortColumns="False"
                                   CanUserResizeColumns="True"
                                   CanUserResizeRows="False"
                                   CanUserReorderColumns="False"
@@ -635,13 +783,13 @@
                                 <DataGridTextColumn Header="Mã HP"
                                                     Binding="{Binding MaHocPhan}"
                                                     Width="110"
-                                                    Foreground="{StaticResource TextMutedBrush}"
+                                                    Foreground="{DynamicResource TextMutedBrush}"
                                                     ElementStyle="{StaticResource WrapTextBlockStyle}" />
                                 <DataGridTextColumn Header="Tên học phần"
                                                     Binding="{Binding TenHocPhan}"
                                                     Width="2*"
                                                     FontWeight="SemiBold"
-                                                    Foreground="{StaticResource TextPrimaryBrush}"
+                                                    Foreground="{DynamicResource TextPrimaryBrush}"
                                                     ElementStyle="{StaticResource WrapTextBlockStyle}" />
                                 <DataGridTextColumn Header="Học kỳ"
                                                     Binding="{Binding HocKy}"
@@ -651,6 +799,16 @@
                                                     Binding="{Binding SoTC, StringFormat={}{0:0.#}}"
                                                     Width="70"
                                                     ElementStyle="{StaticResource WrapTextBlockStyle}" />
+                                <DataGridTemplateColumn Header="Điểm hệ 10" Width="100">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBox Text="{Binding DiemTong, UpdateSourceTrigger=PropertyChanged}" 
+                                                     HorizontalAlignment="Center" VerticalAlignment="Center" 
+                                                     Width="60" TextAlignment="Center"
+                                                     Padding="4,2" BorderBrush="#CBD5E1" BorderThickness="1"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
                                 <DataGridTextColumn Header="Điểm chữ"
                                                     Binding="{Binding DiemChu}"
                                                     Width="90">
@@ -683,5 +841,62 @@
                 </Border>
             </TabItem>
         </TabControl>
+        
+        <!-- Quick Edit Controls Overlay on top of Tab Headers -->
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,0,16,0">
+            <StackPanel.Resources>
+                <Style TargetType="Button" x:Key="PillBtn">
+                    <Setter Property="Cursor" Value="Hand"/>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="Button">
+                                <Border Background="{TemplateBinding Background}" CornerRadius="16" Padding="{TemplateBinding Padding}">
+                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Opacity" Value="0.8"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </StackPanel.Resources>
+            <ToggleButton x:Name="BtnQuickEdit" Padding="16,6" FontWeight="SemiBold" Click="BtnQuickEdit_Click">
+                <ToggleButton.Style>
+                    <Style TargetType="ToggleButton">
+                        <Setter Property="Content" Value="Chỉnh nhanh"/>
+                        <Setter Property="Background" Value="{DynamicResource BorderBrush}"/>
+                        <Setter Property="Foreground" Value="{DynamicResource TextSecondaryBrush}"/>
+                        <Setter Property="BorderBrush" Value="#CBD5E1"/>
+                        <Setter Property="Cursor" Value="Hand"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="ToggleButton">
+                                    <Border Background="{TemplateBinding Background}" CornerRadius="16" Padding="{TemplateBinding Padding}" BorderThickness="1" BorderBrush="{TemplateBinding BorderBrush}">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter Property="Content" Value="Hủy"/>
+                                <Setter Property="Background" Value="#DC2626"/>
+                                <Setter Property="BorderBrush" Value="#DC2626"/>
+                                <Setter Property="Foreground" Value="{DynamicResource SurfaceBrush}"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </ToggleButton.Style>
+            </ToggleButton>
+            <StackPanel x:Name="PanelQuickActions" Orientation="Horizontal" Visibility="Collapsed" Margin="8,0,0,0">
+                <Button Content="Đã học" Background="#D1FAE5" Foreground="#065F46" Padding="12,6" FontWeight="Bold" Margin="4,0" Click="BtnQuickAction_Click" Tag="Đã học" Style="{StaticResource PillBtn}"/>
+                <Button Content="Đang học" Background="#FEF3C7" Foreground="#92400E" Padding="12,6" FontWeight="Bold" Margin="4,0" Click="BtnQuickAction_Click" Tag="Đang học" Style="{StaticResource PillBtn}"/>
+                <Button Content="Chưa học" Background="#F1F5F9" Foreground="{DynamicResource TextSecondaryBrush}" Padding="12,6" FontWeight="Bold" Margin="4,0" Click="BtnQuickAction_Click" Tag="Chưa học" Style="{StaticResource PillBtn}"/>
+            </StackPanel>
+        </StackPanel>
+        </Grid>
     </Grid>
 </Page>

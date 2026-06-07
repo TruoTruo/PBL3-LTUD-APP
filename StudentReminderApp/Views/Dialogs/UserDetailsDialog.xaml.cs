@@ -37,6 +37,7 @@ namespace StudentReminderApp.Views.Dialogs
                     var bitmap = new BitmapImage();
                     bitmap.BeginInit();
                     bitmap.CacheOption = BitmapCacheOption.OnLoad;
+                    bitmap.CreateOptions = BitmapCreateOptions.IgnoreImageCache;
                     bitmap.UriSource = new Uri(user.AvatarUrl, UriKind.Absolute);
                     bitmap.EndInit();
                     ImgAvatar.Source = bitmap;

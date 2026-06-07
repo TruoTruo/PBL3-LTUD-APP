@@ -1,4 +1,4 @@
-﻿﻿﻿-- =============================================
+﻿-- =============================================
 -- StudentReminderApp - Full Database Setup
 -- Chạy script này trong SQL Server Management Studio
 -- Database: PBL3
@@ -39,6 +39,12 @@ CREATE TABLE [USER]
     ngay_sinh DATETIME,
     sdt VARCHAR(15),
     email VARCHAR(100),
+    nganh_hoc NVARCHAR(255) NULL,
+    truong_hoc NVARCHAR(255) NULL,
+    khoa NVARCHAR(255) NULL,
+    nhom NVARCHAR(50) NULL,
+    que_quan NVARCHAR(255) NULL,
+    avatar_url NVARCHAR(MAX) NULL,
     CONSTRAINT FK_User_Account FOREIGN KEY (id_acc) REFERENCES ACCOUNT(id_acc)
 );
 
@@ -54,16 +60,7 @@ CREATE TABLE USER_LOG
 );
 CREATE INDEX idx_user_activity ON USER_LOG(id_acc, thoi_gian);
 
--- USER_DEVICE
-CREATE TABLE USER_DEVICE
-(
-    id_device BIGINT PRIMARY KEY IDENTITY(1,1),
-    id_acc BIGINT NOT NULL,
-    fcm_token VARCHAR(255) NOT NULL,
-    device_type NVARCHAR(20) CHECK (device_type IN ('IOS','Android','Web')),
-    last_login DATETIME DEFAULT GETDATE(),
-    CONSTRAINT FK_Device_UserAcc FOREIGN KEY (id_acc) REFERENCES [USER](id_acc)
-);
+
 
 -- MON_HOC
 CREATE TABLE MON_HOC
@@ -84,6 +81,14 @@ CREATE TABLE GIANG_VIEN
     sdt VARCHAR(15),
     khoa NVARCHAR(100),
     rating FLOAT DEFAULT 5.0
+);
+
+-- DANH_MUC_CHUNG
+CREATE TABLE DANH_MUC_CHUNG
+(
+    Id INT PRIMARY KEY IDENTITY(1,1),
+    Category VARCHAR(50) NOT NULL,
+    Value NVARCHAR(255) NOT NULL
 );
 
 -- DANH_MUC_PHONG
@@ -168,8 +173,6 @@ CREATE TABLE PERSONAL_EVENT
 (
     id_event BIGINT PRIMARY KEY IDENTITY(1,1),
     id_acc BIGINT NOT NULL,
-    external_sync_id VARCHAR(255),
-    sync_version VARCHAR(50),
     title NVARCHAR(255) NOT NULL,
     description NVARCHAR(MAX),
     location NVARCHAR(255),
@@ -227,20 +230,7 @@ CREATE TABLE PREFERENCE
     CONSTRAINT FK_Pref_User FOREIGN KEY (id_acc) REFERENCES [USER](id_acc)
 );
 
--- DANH_GIA
-CREATE TABLE DANH_GIA
-(
-    id_danh_gia BIGINT PRIMARY KEY IDENTITY(1,1),
-    id_acc BIGINT NOT NULL,
-    id_giang_vien BIGINT NOT NULL,
-    so_sao INT,
-    noi_dung NVARCHAR(MAX),
-    is_anonymous BIT DEFAULT 0,
-    status NVARCHAR(20) CHECK (status IN ('Approved','Pending')),
-    created_at DATETIME DEFAULT GETDATE(),
-    CONSTRAINT FK_DG_User      FOREIGN KEY (id_acc)        REFERENCES [USER](id_acc),
-    CONSTRAINT FK_DG_GiangVien FOREIGN KEY (id_giang_vien) REFERENCES GIANG_VIEN(id_giang_vien)
-);
+
 
 -- BAI_VIET
 CREATE TABLE BAI_VIET

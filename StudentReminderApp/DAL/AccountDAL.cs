@@ -229,7 +229,7 @@ namespace StudentReminderApp.DAL
         public User GetUserByIdAcc(long idAcc)
         {
             const string sql = @"
-                SELECT id_acc, ho_ten, email, sdt, ngay_sinh, id_lop, nganh_hoc, truong_hoc, nhom, que_quan, avatar_url
+                SELECT id_acc, ho_ten, email, sdt, ngay_sinh, id_lop, nganh_hoc, truong_hoc, khoa, nhom, que_quan, avatar_url
                 FROM   [USER]
                 WHERE  id_acc = @id";
             try
@@ -254,6 +254,7 @@ namespace StudentReminderApp.DAL
                                 u.TenLop   = string.Empty;
                                 u.NganhHoc = r["nganh_hoc"] == DBNull.Value ? string.Empty : r["nganh_hoc"].ToString();
                                 u.TruongHoc = r["truong_hoc"] == DBNull.Value ? string.Empty : r["truong_hoc"].ToString();
+                                u.Khoa = r["khoa"] == DBNull.Value ? string.Empty : r["khoa"].ToString();
                                 u.Nhom = r["nhom"] == DBNull.Value ? string.Empty : r["nhom"].ToString();
                                 u.QueQuan = r["que_quan"] == DBNull.Value ? string.Empty : r["que_quan"].ToString();
                                 u.AvatarUrl = r["avatar_url"] == DBNull.Value ? string.Empty : r["avatar_url"].ToString();
@@ -285,6 +286,7 @@ namespace StudentReminderApp.DAL
                        ISNULL(l.ten_lop,  '') AS ten_lop,
                        ISNULL(u.nganh_hoc,'') AS nganh_hoc,
                        ISNULL(u.truong_hoc,'') AS truong_hoc,
+                       ISNULL(u.khoa,'') AS khoa,
                        ISNULL(u.nhom,'') AS nhom,
                        ISNULL(u.que_quan,'') AS que_quan,
                        ISNULL(u.avatar_url,'') AS avatar_url
@@ -313,6 +315,7 @@ namespace StudentReminderApp.DAL
                                 u.TenLop   = r["ten_lop"]   == DBNull.Value ? string.Empty   : r["ten_lop"].ToString();
                                 u.NganhHoc = r["nganh_hoc"] == DBNull.Value ? string.Empty   : r["nganh_hoc"].ToString();
                                 u.TruongHoc = r["truong_hoc"] == DBNull.Value ? string.Empty   : r["truong_hoc"].ToString();
+                                u.Khoa = r["khoa"] == DBNull.Value ? string.Empty   : r["khoa"].ToString();
                                 u.Nhom = r["nhom"] == DBNull.Value ? string.Empty   : r["nhom"].ToString();
                                 u.QueQuan = r["que_quan"] == DBNull.Value ? string.Empty   : r["que_quan"].ToString();
                                 u.AvatarUrl = r["avatar_url"] == DBNull.Value ? string.Empty   : r["avatar_url"].ToString();

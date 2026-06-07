@@ -15,7 +15,7 @@
 
             <TextBlock Text="Welcome back!"
                        FontSize="26" FontWeight="Bold"
-                       Foreground="#111111" HorizontalAlignment="Center"
+                       Foreground="{DynamicResource TextPrimaryBrush}" HorizontalAlignment="Center"
                        Margin="0,0,0,5"/>
             <TextBlock Text="Please enter your details"
                        FontSize="14" Foreground="#777777" HorizontalAlignment="Center"
@@ -89,8 +89,8 @@
             <Button Height="50" Cursor="Hand" Click="BtnLogin_Click" Margin="0,0,0,10">
                 <Button.Template>
                     <ControlTemplate TargetType="Button">
-                        <Border Background="#1A1A1A" CornerRadius="25">
-                            <TextBlock Text="Log In" Foreground="White" FontWeight="SemiBold" FontSize="15" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <Border Background="{DynamicResource TextPrimaryBrush}" CornerRadius="25">
+                            <TextBlock Text="Log In" Foreground="{DynamicResource SurfaceBrush}" FontWeight="SemiBold" FontSize="15" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
                     </ControlTemplate>
                 </Button.Template>
@@ -102,7 +102,7 @@
                         <Border Background="Transparent">
                             <TextBlock FontSize="13" Foreground="#777777">
                                 <Run Text="Don't have an account? "/>
-                                <Run Text="Sign Up" Foreground="#111111" FontWeight="SemiBold"/>
+                                <Run Text="Sign Up" Foreground="{DynamicResource TextPrimaryBrush}" FontWeight="SemiBold"/>
                             </TextBlock>
                         </Border>
                     </ControlTemplate>
