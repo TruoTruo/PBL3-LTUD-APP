@@ -199,7 +199,7 @@
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
                         <TextBlock Text="Trường" FontWeight="Bold" FontSize="14" Margin="0,0,0,8" Foreground="{DynamicResource TextSecondaryBrush}"/>
-                        <ListBox x:Name="LstTruong" Grid.Row="1" DisplayMemberPath="Name" Background="{DynamicResource SurfaceBrush}" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1" SelectionChanged="LstTruong_SelectionChanged" Margin="0,0,0,8"/>
+                        <ListBox x:Name="LstTruong" Grid.Row="1" DisplayMemberPath="Name" Background="{DynamicResource SurfaceBrush}" Foreground="{DynamicResource TextPrimaryBrush}" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1" SelectionChanged="LstTruong_SelectionChanged" Margin="0,0,0,8"/>
                         <Button Grid.Row="2" Content="Xóa chọn" Background="#FEF2F2" Foreground="#EF4444" BorderThickness="0" Margin="0,0,0,8" Padding="0,5" Click="BtnDelTruong_Click"/>
                         <Grid Grid.Row="3">
                             <Grid.ColumnDefinitions>
@@ -207,7 +207,7 @@
                                 <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
                             <TextBox x:Name="TxtNewTruong" Margin="0,0,4,0" Padding="4"/>
-                            <Button Grid.Column="1" Content="+" Width="30" Background="#3B82F6" Foreground="White" BorderThickness="0" Click="BtnAddTruong_Click"/>
+                            <Button Grid.Column="1" Content="+" Width="30" Background="#10B981" Foreground="White" BorderThickness="0" Click="BtnAddTruong_Click"/>
                         </Grid>
                     </Grid>
 
@@ -220,7 +220,7 @@
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
                         <TextBlock Text="Khoa" FontWeight="Bold" FontSize="14" Margin="0,0,0,8" Foreground="{DynamicResource TextSecondaryBrush}"/>
-                        <ListBox x:Name="LstKhoa" Grid.Row="1" DisplayMemberPath="Name" Background="{DynamicResource SurfaceBrush}" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1" SelectionChanged="LstKhoa_SelectionChanged" Margin="0,0,0,8"/>
+                        <ListBox x:Name="LstKhoa" Grid.Row="1" DisplayMemberPath="Name" Background="{DynamicResource SurfaceBrush}" Foreground="{DynamicResource TextPrimaryBrush}" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1" SelectionChanged="LstKhoa_SelectionChanged" Margin="0,0,0,8"/>
                         <Button Grid.Row="2" Content="Xóa chọn" Background="#FEF2F2" Foreground="#EF4444" BorderThickness="0" Margin="0,0,0,8" Padding="0,5" Click="BtnDelKhoa_Click"/>
                         <Grid Grid.Row="3">
                             <Grid.ColumnDefinitions>
@@ -228,7 +228,7 @@
                                 <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
                             <TextBox x:Name="TxtNewKhoa" Margin="0,0,4,0" Padding="4"/>
-                            <Button Grid.Column="1" Content="+" Width="30" Background="#3B82F6" Foreground="White" BorderThickness="0" Click="BtnAddKhoa_Click"/>
+                            <Button Grid.Column="1" Content="+" Width="30" Background="#10B981" Foreground="White" BorderThickness="0" Click="BtnAddKhoa_Click"/>
                         </Grid>
                     </Grid>
 
@@ -241,7 +241,7 @@
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
                         <TextBlock Text="Ngành" FontWeight="Bold" FontSize="14" Margin="0,0,0,8" Foreground="{DynamicResource TextSecondaryBrush}"/>
-                        <ListBox x:Name="LstNganh" Grid.Row="1" DisplayMemberPath="Name" Background="{DynamicResource SurfaceBrush}" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1" SelectionChanged="LstNganh_SelectionChanged" Margin="0,0,0,8"/>
+                        <ListBox x:Name="LstNganh" Grid.Row="1" DisplayMemberPath="Name" Background="{DynamicResource SurfaceBrush}" Foreground="{DynamicResource TextPrimaryBrush}" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1" SelectionChanged="LstNganh_SelectionChanged" Margin="0,0,0,8"/>
                         <Button Grid.Row="2" Content="Xóa chọn" Background="#FEF2F2" Foreground="#EF4444" BorderThickness="0" Margin="0,0,0,8" Padding="0,5" Click="BtnDelNganh_Click"/>
                         <Grid Grid.Row="3">
                             <Grid.ColumnDefinitions>
@@ -249,7 +249,7 @@
                                 <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
                             <TextBox x:Name="TxtNewNganh" Margin="0,0,4,0" Padding="4"/>
-                            <Button Grid.Column="1" Content="+" Width="30" Background="#3B82F6" Foreground="White" BorderThickness="0" Click="BtnAddNganh_Click"/>
+                            <Button Grid.Column="1" Content="+" Width="30" Background="#10B981" Foreground="White" BorderThickness="0" Click="BtnAddNganh_Click"/>
                         </Grid>
                     </Grid>
 
@@ -262,7 +262,7 @@
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
                         <TextBlock Text="Lớp" FontWeight="Bold" FontSize="14" Margin="0,0,0,8" Foreground="{DynamicResource TextSecondaryBrush}"/>
-                        <ListBox x:Name="LstLop" Grid.Row="1" DisplayMemberPath="Name" Background="{DynamicResource SurfaceBrush}" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1" SelectionChanged="LstLop_SelectionChanged" Margin="0,0,0,8"/>
+                        <ListBox x:Name="LstLop" Grid.Row="1" DisplayMemberPath="Name" Background="{DynamicResource SurfaceBrush}" Foreground="{DynamicResource TextPrimaryBrush}" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1" SelectionChanged="LstLop_SelectionChanged" Margin="0,0,0,8"/>
                         <Button Grid.Row="2" Content="Xóa chọn" Background="#FEF2F2" Foreground="#EF4444" BorderThickness="0" Margin="0,0,0,8" Padding="0,5" Click="BtnDelLop_Click"/>
                         <Grid Grid.Row="3">
                             <Grid.ColumnDefinitions>
@@ -270,7 +270,7 @@
                                 <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
                             <TextBox x:Name="TxtNewLop" Margin="0,0,4,0" Padding="4"/>
-                            <Button Grid.Column="1" Content="+" Width="30" Background="#3B82F6" Foreground="White" BorderThickness="0" Click="BtnAddLop_Click"/>
+                            <Button Grid.Column="1" Content="+" Width="30" Background="#10B981" Foreground="White" BorderThickness="0" Click="BtnAddLop_Click"/>
                         </Grid>
                     </Grid>
 
@@ -283,7 +283,7 @@
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
                         <TextBlock Text="Nhóm" FontWeight="Bold" FontSize="14" Margin="0,0,0,8" Foreground="{DynamicResource TextSecondaryBrush}"/>
-                        <ListBox x:Name="LstNhom" Grid.Row="1" Background="{DynamicResource SurfaceBrush}" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1" Margin="0,0,0,8"/>
+                        <ListBox x:Name="LstNhom" Grid.Row="1" Background="{DynamicResource SurfaceBrush}" Foreground="{DynamicResource TextPrimaryBrush}" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1" Margin="0,0,0,8"/>
                         <Button Grid.Row="2" Content="Xóa chọn" Background="#FEF2F2" Foreground="#EF4444" BorderThickness="0" Margin="0,0,0,8" Padding="0,5" Click="BtnDelNhom_Click"/>
                         <Grid Grid.Row="3">
                             <Grid.ColumnDefinitions>
@@ -291,7 +291,7 @@
                                 <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
                             <TextBox x:Name="TxtNewNhom" Margin="0,0,4,0" Padding="4"/>
-                            <Button Grid.Column="1" Content="+" Width="30" Background="#3B82F6" Foreground="White" BorderThickness="0" Click="BtnAddNhom_Click"/>
+                            <Button Grid.Column="1" Content="+" Width="30" Background="#10B981" Foreground="White" BorderThickness="0" Click="BtnAddNhom_Click"/>
                         </Grid>
                     </Grid>
                 </Grid>

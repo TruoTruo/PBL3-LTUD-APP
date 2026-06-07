@@ -12,6 +12,19 @@ namespace StudentReminderApp.Models
         public string   Sdt      { get; set; } = string.Empty;
         public string   NienKhoa { get; set; } = string.Empty;
         public DateTime CreatedAt { get; set; }
+        
+        private bool _hasPhoto;
+        public bool HasPhoto
+        {
+            get => _hasPhoto;
+            set
+            {
+                _hasPhoto = value;
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(HasPhotoIcon));
+                OnPropertyChanged(nameof(HasPhotoColor));
+            }
+        }
 
         // ── LỚP ──────────────────────────────────────────────────
         private string _tenLop = string.Empty;
@@ -83,6 +96,9 @@ namespace StudentReminderApp.Models
         public string VerifiedIcon  => IsVerified ? "✓" : "✗";
         public string VerifiedColor => IsVerified ? "#16A34A" : "#DC2626";
         public string VerifiedBg    => IsVerified ? "#DCFCE7" : "#FEE2E2";
+
+        public string HasPhotoIcon  => HasPhoto ? "✓" : "✗";
+        public string HasPhotoColor => HasPhoto ? "#16A34A" : "#DC2626";
 
         public string LockUntilDisplay
         {

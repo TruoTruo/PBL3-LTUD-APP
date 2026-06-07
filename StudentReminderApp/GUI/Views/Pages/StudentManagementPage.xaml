@@ -271,6 +271,11 @@
                     <TextBlock Text="❌ Chưa xác thực"/>
                 </ToggleButton>
 
+                <ToggleButton Style="{StaticResource ToggleFilterStyle}" Margin="0,0,8,0"
+                              IsChecked="{Binding ShowHasPhotoOnly}">
+                    <TextBlock Text="📸 Đã tải ảnh"/>
+                </ToggleButton>
+
                 <Button Style="{StaticResource FilterBtnStyle}" Background="Transparent"
                         Foreground="{DynamicResource TextSecondaryBrush}" BorderBrush="{DynamicResource BorderBrush}" Command="{Binding ClearFilterCommand}">
                     <TextBlock Text="✕ Xóa lọc"/>

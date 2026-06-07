@@ -54,6 +54,7 @@ namespace StudentReminderApp.ViewModels
             {
                 _showBannedOnly = value; OnPropertyChanged();
                 if (value && _showUnverifiedOnly) { _showUnverifiedOnly = false; OnPropertyChanged(nameof(ShowUnverifiedOnly)); }
+                if (value && _showHasPhotoOnly) { _showHasPhotoOnly = false; OnPropertyChanged(nameof(ShowHasPhotoOnly)); }
                 RefreshFilter();
             }
         }
@@ -66,6 +67,20 @@ namespace StudentReminderApp.ViewModels
             {
                 _showUnverifiedOnly = value; OnPropertyChanged();
                 if (value && _showBannedOnly) { _showBannedOnly = false; OnPropertyChanged(nameof(ShowBannedOnly)); }
+                if (value && _showHasPhotoOnly) { _showHasPhotoOnly = false; OnPropertyChanged(nameof(ShowHasPhotoOnly)); }
+                RefreshFilter();
+            }
+        }
+
+        private bool _showHasPhotoOnly;
+        public bool ShowHasPhotoOnly
+        {
+            get => _showHasPhotoOnly;
+            set
+            {
+                _showHasPhotoOnly = value; OnPropertyChanged();
+                if (value && _showBannedOnly) { _showBannedOnly = false; OnPropertyChanged(nameof(ShowBannedOnly)); }
+                if (value && _showUnverifiedOnly) { _showUnverifiedOnly = false; OnPropertyChanged(nameof(ShowUnverifiedOnly)); }
                 RefreshFilter();
             }
         }
@@ -139,7 +154,21 @@ namespace StudentReminderApp.ViewModels
                     if (_selectedClass == null) { _selectedClass = ClassList[0]; OnPropertyChanged(nameof(SelectedClass)); }
 
                     _allStudents.Clear();
-                    foreach (var sv in svTask.Result) _allStudents.Add(sv);
+                    string idCardDir = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "data", "idcards");
+                    string[] exts = { ".png", ".jpg", ".jpeg" };
+                    foreach (var sv in svTask.Result)
+                    {
+                        sv.HasPhoto = false;
+                        foreach (var ext in exts)
+                        {
+                            if (System.IO.File.Exists(System.IO.Path.Combine(idCardDir, $"idcard_{sv.IdAcc}{ext}")))
+                            {
+                                sv.HasPhoto = true;
+                                break;
+                            }
+                        }
+                        _allStudents.Add(sv);
+                    }
 
                     TotalCount = _allStudents.Count;
                     StudentsView.Refresh();
@@ -161,6 +190,7 @@ namespace StudentReminderApp.ViewModels
             if (!string.IsNullOrEmpty(_selectedClass?.TenLop) && _selectedClass.TenLop != "Tất cả lớp" && sv.TenLop != _selectedClass.TenLop) return false;
             if (_showBannedOnly     && !sv.IsBanned)   return false;
             if (_showUnverifiedOnly &&  sv.IsVerified)  return false;
+            if (_showHasPhotoOnly   && !sv.HasPhoto)    return false;
             if (!string.IsNullOrWhiteSpace(_searchText))
             {
                 string kw = _searchText.Trim().ToLower();
@@ -183,6 +213,7 @@ namespace StudentReminderApp.ViewModels
             SearchText = string.Empty;
             ShowBannedOnly = false;
             ShowUnverifiedOnly = false;
+            ShowHasPhotoOnly = false;
             if (ClassList.Count > 0) SelectedClass = ClassList[0];
         }
 

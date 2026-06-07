@@ -403,10 +403,10 @@
                                                         VerticalAlignment="Center">
                                                         <TextBlock
                                                             FontSize="15" FontWeight="Bold"
-                                                            Foreground="#050505"
+                                                            Foreground="{DynamicResource TextPrimaryBrush}"
                                                             Text="{Binding DisplayName}" />
                                                         <TextBlock
-                                                            FontSize="12" Foreground="#65676B"
+                                                            FontSize="12" Foreground="{DynamicResource TextSecondaryBrush}"
                                                             Text="{Binding TimeAgo}" />
                                                     </StackPanel>
 
@@ -488,7 +488,7 @@
                                                     <TextBlock.Style>
                                                         <Style TargetType="TextBlock">
                                                             <Setter Property="FontSize" Value="15" />
-                                                            <Setter Property="Foreground" Value="#050505" />
+                                                            <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}" />
                                                             <Style.Triggers>
                                                                 <DataTrigger Binding="{Binding IsColored}" Value="True">
                                                                     <Setter Property="FontSize" Value="24" />

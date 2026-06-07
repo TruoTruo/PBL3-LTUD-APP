@@ -1,4 +1,4 @@
-<Page x:Class="StudentReminderApp.Views.Pages.CalendarPage"
+﻿<Page x:Class="StudentReminderApp.Views.Pages.CalendarPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       Title="Lịch" Background="Transparent">

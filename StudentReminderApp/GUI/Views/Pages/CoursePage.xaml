@@ -364,7 +364,7 @@
                                 CanUserSortColumns="False"
                                 HeadersVisibility="Column" 
                                 GridLinesVisibility="Horizontal" 
-                                HorizontalGridLinesBrush="#E2E8F0" 
+                                HorizontalGridLinesBrush="{DynamicResource BorderBrush}" 
                                 BorderThickness="1" 
                                 BorderBrush="{DynamicResource BorderBrush}"
                                 Background="{DynamicResource SurfaceBrush}" 
@@ -647,26 +647,68 @@
                                   SelectionMode="Single"
                                   SelectionUnit="FullRow"
                                   GridLinesVisibility="Horizontal"
+                                  HorizontalGridLinesBrush="{DynamicResource BorderBrush}"
                                   HeadersVisibility="Column"
-                                  ColumnHeaderHeight="40"
+                                  ColumnHeaderHeight="45"
+                                  Background="{DynamicResource SurfaceBrush}"
                                   RowBackground="{DynamicResource SurfaceBrush}"
-                                  AlternatingRowBackground="{DynamicResource BgBrush}"
-                                  BorderThickness="0"
-                                  MinRowHeight="36"
-                                  FontSize="11.5"
+                                  AlternatingRowBackground="{DynamicResource SurfaceBrush}"
+                                  BorderThickness="1"
+                                  BorderBrush="{DynamicResource BorderBrush}"
+                                  MinRowHeight="45"
                                   ScrollViewer.HorizontalScrollBarVisibility="Auto"
                                   ScrollViewer.VerticalScrollBarVisibility="Auto"
                                   ScrollViewer.CanContentScroll="True"
                                   VirtualizingPanel.ScrollUnit="Pixel">
+                            <DataGrid.Resources>
+                                <!-- Override default selection colors -->
+                                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="#DBEAFE"/>
+                                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}" Color="#1E3A8A"/>
+                                <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}" Color="#F8FAFC"/>
+                                <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightTextBrushKey}" Color="#334155"/>
+
+                                <!-- Style Header: Clean white -->
+                                <Style TargetType="DataGridColumnHeader">
+                                    <Setter Property="Background" Value="{DynamicResource SurfaceBrush}"/>
+                                    <Setter Property="Foreground" Value="{DynamicResource TextSecondaryBrush}"/>
+                                    <Setter Property="FontWeight" Value="SemiBold"/>
+                                    <Setter Property="Padding" Value="10,0"/>
+                                    <Setter Property="BorderThickness" Value="0,0,0,1"/>
+                                    <Setter Property="BorderBrush" Value="{DynamicResource BorderBrush}"/>
+                                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                </Style>
+
+                                <!-- Style Cell: Bỏ viền đen bao quanh khi click chuột -->
+                                <Style TargetType="DataGridCell">
+                                    <Setter Property="BorderThickness" Value="0"/>
+                                    <Setter Property="Padding" Value="5"/>
+                                    <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}"/>
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="DataGridCell">
+                                                <Border Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}">
+                                                    <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                                </Border>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                    <Style.Triggers>
+                                        <Trigger Property="IsSelected" Value="True">
+                                            <Setter Property="Background" Value="{DynamicResource BgBrush}"/>
+                                            <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}"/>
+                                            <Setter Property="FontWeight" Value="Bold"/>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </DataGrid.Resources>
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="TT" Binding="{Binding SerialNumber}" Width="Auto" IsReadOnly="True"/>
                                 <DataGridTextColumn Header="Học kỳ" Binding="{Binding HocKy}" Width="Auto" IsReadOnly="True"/>
                                 
                                 <DataGridTextColumn Header="Tên học phần" Binding="{Binding TenHocPhan}" Width="2*" MinWidth="180" IsReadOnly="True">
                                     <DataGridTextColumn.ElementStyle>
-                                        <Style TargetType="TextBlock">
+                                        <Style TargetType="TextBlock" BasedOn="{StaticResource WrapTextBlockStyle}">
                                             <Setter Property="HorizontalAlignment" Value="Left"/>
-                                            <Setter Property="TextWrapping" Value="Wrap"/>
                                             <Setter Property="FontWeight" Value="SemiBold"/>
                                         </Style>
                                     </DataGridTextColumn.ElementStyle>
@@ -693,53 +735,56 @@
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellTemplate>
                                 </DataGridTemplateColumn>
-                                <DataGridTextColumn Header="Mã HP" Binding="{Binding MaHocPhan}" Width="Auto" IsReadOnly="True"/>
-                                <DataGridTextColumn Header="Số tín chỉ" Binding="{Binding SoTC}" Width="Auto" IsReadOnly="True"/>
+                                <DataGridTextColumn Header="Mã HP" Binding="{Binding MaHocPhan}" Width="Auto" IsReadOnly="True" ElementStyle="{StaticResource WrapTextBlockStyle}"/>
+                                <DataGridTextColumn Header="Số tín chỉ" Binding="{Binding SoTC}" Width="Auto" IsReadOnly="True" ElementStyle="{StaticResource WrapTextBlockStyle}"/>
                                 
                                 <DataGridTextColumn Header="Tự chọn" Binding="{Binding Optional}" Width="Auto" IsReadOnly="True">
                                     <DataGridTextColumn.ElementStyle>
-                                        <Style TargetType="TextBlock">
-                                            <Setter Property="TextWrapping" Value="Wrap"/>
+                                        <Style TargetType="TextBlock" BasedOn="{StaticResource WrapTextBlockStyle}">
                                             <Setter Property="Foreground" Value="#D97706"/>
                                         </Style>
                                     </DataGridTextColumn.ElementStyle>
                                 </DataGridTextColumn>
                                 
-                                <DataGridTextColumn Header="HT ĐA" Binding="{Binding HtDa}" Width="Auto" IsReadOnly="True"/>
-                                <DataGridTextColumn Header="TQ ĐA" Binding="{Binding TqDa}" Width="Auto" IsReadOnly="True"/>
+                                <DataGridTextColumn Header="HT ĐA" Binding="{Binding HtDa}" Width="Auto" IsReadOnly="True" ElementStyle="{StaticResource WrapTextBlockStyle}"/>
+                                <DataGridTextColumn Header="TQ ĐA" Binding="{Binding TqDa}" Width="Auto" IsReadOnly="True" ElementStyle="{StaticResource WrapTextBlockStyle}"/>
                                 
                                 <DataGridTextColumn Header="Học trước" Binding="{Binding HocTruocStr}" Width="*" IsReadOnly="True">
                                     <DataGridTextColumn.ElementStyle>
-                                        <Style TargetType="TextBlock">
+                                        <Style TargetType="TextBlock" BasedOn="{StaticResource WrapTextBlockStyle}">
                                             <Setter Property="HorizontalAlignment" Value="Left"/>
-                                            <Setter Property="TextWrapping" Value="Wrap"/>
                                             <Setter Property="Foreground" Value="{DynamicResource TextSecondaryBrush}"/>
-                                            <Setter Property="FontSize" Value="11"/>
                                         </Style>
                                     </DataGridTextColumn.ElementStyle>
                                 </DataGridTextColumn>
                                 
                                 <DataGridTextColumn Header="Song hành" Binding="{Binding SongHanhStr}" Width="*" IsReadOnly="True">
                                     <DataGridTextColumn.ElementStyle>
-                                        <Style TargetType="TextBlock">
+                                        <Style TargetType="TextBlock" BasedOn="{StaticResource WrapTextBlockStyle}">
                                             <Setter Property="HorizontalAlignment" Value="Left"/>
-                                            <Setter Property="TextWrapping" Value="Wrap"/>
                                             <Setter Property="Foreground" Value="{DynamicResource TextSecondaryBrush}"/>
-                                            <Setter Property="FontSize" Value="11"/>
                                         </Style>
                                     </DataGridTextColumn.ElementStyle>
                                 </DataGridTextColumn>
                                 
                                 <DataGridTextColumn Header="Tiên quyết" Binding="{Binding TienQuyetStr}" Width="*" IsReadOnly="True">
                                     <DataGridTextColumn.ElementStyle>
-                                        <Style TargetType="TextBlock">
+                                        <Style TargetType="TextBlock" BasedOn="{StaticResource WrapTextBlockStyle}">
                                             <Setter Property="HorizontalAlignment" Value="Left"/>
-                                            <Setter Property="TextWrapping" Value="Wrap"/>
                                             <Setter Property="Foreground" Value="{DynamicResource TextSecondaryBrush}"/>
-                                            <Setter Property="FontSize" Value="11"/>
                                         </Style>
                                     </DataGridTextColumn.ElementStyle>
                                 </DataGridTextColumn>
+                                
+                                <DataGridTemplateColumn Header="Trạng thái" Width="100">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Border Background="{Binding BgColor}" CornerRadius="12" Padding="8,4" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                <TextBlock Text="{Binding StatusText}" Foreground="{Binding FgColor}" FontWeight="Bold" FontSize="11" HorizontalAlignment="Center"/>
+                                            </Border>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
                             </DataGrid.Columns>
                         </DataGrid>
                     </Grid>
@@ -770,29 +815,81 @@
                                   SelectionMode="Single"
                                   SelectionUnit="FullRow"
                                   GridLinesVisibility="Horizontal"
+                                  HorizontalGridLinesBrush="{DynamicResource BorderBrush}"
                                   HeadersVisibility="Column"
-                                  ColumnHeaderHeight="40"
+                                  ColumnHeaderHeight="45"
+                                  Background="{DynamicResource SurfaceBrush}"
                                   RowBackground="{DynamicResource SurfaceBrush}"
-                                  AlternatingRowBackground="{DynamicResource BgBrush}"
-                                  BorderThickness="0"
-                                  MinRowHeight="36"
-                                  FontSize="11.5"
+                                  AlternatingRowBackground="{DynamicResource SurfaceBrush}"
+                                  BorderThickness="1"
+                                  BorderBrush="{DynamicResource BorderBrush}"
+                                  MinRowHeight="45"
                                   ScrollViewer.HorizontalScrollBarVisibility="Auto"
                                   ScrollViewer.VerticalScrollBarVisibility="Auto"
                                   ScrollViewer.CanContentScroll="True"
                                   VirtualizingPanel.ScrollUnit="Pixel">
+                            <DataGrid.Resources>
+                                <!-- Override default selection colors -->
+                                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="#DBEAFE"/>
+                                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}" Color="#1E3A8A"/>
+                                <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}" Color="#F8FAFC"/>
+                                <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightTextBrushKey}" Color="#334155"/>
+
+                                <!-- Style Header: Clean white -->
+                                <Style TargetType="DataGridColumnHeader">
+                                    <Setter Property="Background" Value="{DynamicResource SurfaceBrush}"/>
+                                    <Setter Property="Foreground" Value="{DynamicResource TextSecondaryBrush}"/>
+                                    <Setter Property="FontWeight" Value="SemiBold"/>
+                                    <Setter Property="Padding" Value="10,0"/>
+                                    <Setter Property="BorderThickness" Value="0,0,0,1"/>
+                                    <Setter Property="BorderBrush" Value="{DynamicResource BorderBrush}"/>
+                                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                </Style>
+
+                                <!-- Style Cell: Bỏ viền đen bao quanh khi click chuột -->
+                                <Style TargetType="DataGridCell">
+                                    <Setter Property="BorderThickness" Value="0"/>
+                                    <Setter Property="Padding" Value="5"/>
+                                    <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}"/>
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="DataGridCell">
+                                                <Border Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}">
+                                                    <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                                </Border>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                    <Style.Triggers>
+                                        <Trigger Property="IsSelected" Value="True">
+                                            <Setter Property="Background" Value="{DynamicResource BgBrush}"/>
+                                            <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}"/>
+                                            <Setter Property="FontWeight" Value="Bold"/>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </DataGrid.Resources>
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="Mã HP"
                                                     Binding="{Binding MaHocPhan}"
-                                                    Width="110"
-                                                    Foreground="{DynamicResource TextMutedBrush}"
-                                                    ElementStyle="{StaticResource WrapTextBlockStyle}" />
+                                                    Width="110">
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="TextBlock" BasedOn="{StaticResource WrapTextBlockStyle}">
+                                            <Setter Property="Foreground" Value="{DynamicResource TextSecondaryBrush}"/>
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
                                 <DataGridTextColumn Header="Tên học phần"
                                                     Binding="{Binding TenHocPhan}"
-                                                    Width="2*"
-                                                    FontWeight="SemiBold"
-                                                    Foreground="{DynamicResource TextPrimaryBrush}"
-                                                    ElementStyle="{StaticResource WrapTextBlockStyle}" />
+                                                    Width="2*">
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="TextBlock" BasedOn="{StaticResource WrapTextBlockStyle}">
+                                            <Setter Property="FontWeight" Value="SemiBold"/>
+                                            <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}"/>
+                                            <Setter Property="HorizontalAlignment" Value="Left"/>
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
                                 <DataGridTextColumn Header="Học kỳ"
                                                     Binding="{Binding HocKy}"
                                                     Width="70"

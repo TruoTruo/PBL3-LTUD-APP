@@ -501,7 +501,7 @@ namespace StudentReminderApp.Views.Pages
                         {
                             while (reader.Read())
                             {
-                                _dbStatuses[reader["ma_mon_hoc"].ToString()] = reader["trang_thai_hoc"].ToString();
+                                _dbStatuses[reader["ma_mon_hoc"].ToString().Trim()] = reader["trang_thai_hoc"].ToString().Trim();
                             }
                         }
                     }

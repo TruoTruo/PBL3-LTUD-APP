@@ -64,24 +64,6 @@ namespace StudentReminderApp.Views.Pages
 
             CmbNhom.Items.Clear();
             CmbNhom.Items.Add(new ComboBoxItem { Content = "— Chọn nhóm —" });
-            var uniqueGroups = new HashSet<string>();
-            if (_orgData?.Truongs != null) {
-                foreach (var t in _orgData.Truongs) {
-                    if (t.Khoas != null) foreach (var k in t.Khoas) {
-                        if (k.Nganhs != null) foreach (var n in k.Nganhs) {
-                            if (n.Lops != null) foreach (var l in n.Lops) {
-                                if (l.Nhoms != null) foreach (var g in l.Nhoms) {
-                                    if (!string.IsNullOrWhiteSpace(g)) uniqueGroups.Add(g);
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            foreach (var g in uniqueGroups) {
-                CmbNhom.Items.Add(new ComboBoxItem { Content = g });
-            }
-            CmbNhom.IsEnabled = true;
         }
 
         // ── Load profile ──────────────────────────────────────────
@@ -404,7 +386,35 @@ namespace StudentReminderApp.Views.Pages
 
         private void CmbClass_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            // Bỏ ràng buộc: Nhóm không còn bị phụ thuộc vào Lớp và Khoa
+            CmbNhom.Items.Clear();
+            CmbNhom.Items.Add(new ComboBoxItem { Content = "— Chọn nhóm —" });
+
+            if (CmbClass.SelectedIndex > 0 && CmbNganhHoc.SelectedIndex > 0 && CmbKhoa.SelectedIndex > 0 && CmbTruong.SelectedIndex > 0)
+            {
+                var truongName = ((ComboBoxItem)CmbTruong.SelectedItem).Content.ToString();
+                var khoaName = ((ComboBoxItem)CmbKhoa.SelectedItem).Content.ToString();
+                var nganhName = ((ComboBoxItem)CmbNganhHoc.SelectedItem).Content.ToString();
+                var lopName = ((ComboBoxItem)CmbClass.SelectedItem).Content.ToString();
+                
+                var truong = _orgData.Truongs.Find(t => t.Name == truongName);
+                var khoa = truong?.Khoas.Find(k => k.Name == khoaName);
+                var nganh = khoa?.Nganhs.Find(n => n.Name == nganhName);
+                var lop = nganh?.Lops.Find(l => l.Name == lopName);
+                
+                if (lop != null)
+                {
+                    foreach (var nhom in lop.Nhoms)
+                    {
+                        CmbNhom.Items.Add(new ComboBoxItem { Content = nhom });
+                    }
+                }
+                CmbNhom.IsEnabled = true;
+            }
+            else
+            {
+                CmbNhom.IsEnabled = false;
+            }
+            CmbNhom.SelectedIndex = 0;
         }
 
         // ── Đổi mật khẩu ─────────────────────────────────────────

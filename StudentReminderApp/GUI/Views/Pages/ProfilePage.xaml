@@ -325,9 +325,7 @@
                                 </StackPanel>
                                 <StackPanel Grid.Row="2" Grid.Column="2">
                                     <TextBlock Text="NGÀY SINH" Style="{StaticResource ProFieldLabel}"/>
-                                    <Border Background="{DynamicResource BgBrush}" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1.5" CornerRadius="8" Height="42" Padding="8,0">
-                                        <DatePicker x:Name="DpNgaySinh" FontSize="14" Foreground="{DynamicResource TextPrimaryBrush}" Background="Transparent" BorderThickness="0" VerticalContentAlignment="Center"/>
-                                    </Border>
+                                    <DatePicker x:Name="DpNgaySinh" Height="42" FontSize="14" BorderBrush="{DynamicResource BorderBrush}" Background="Transparent" VerticalContentAlignment="Center"/>
                                 </StackPanel>
 
                                 <!-- Row 3: MSSV & Trường -->
@@ -367,7 +365,7 @@
                                 <!-- Row 5: Lớp & Nhóm -->
                                 <StackPanel Grid.Row="8" Grid.Column="0">
                                     <TextBlock Text="LỚP SINH HOẠT" Style="{StaticResource ProFieldLabel}"/>
-                                    <ComboBox x:Name="CmbClass" Height="42" FontSize="14" Style="{StaticResource ModernComboBoxStyle}" ItemContainerStyle="{StaticResource ModernComboBoxItemStyle}" IsEnabled="False" SelectionChanged="CmbClass_SelectionChanged"/>
+                                    <ComboBox x:Name="CmbClass" Height="42" FontSize="14" DisplayMemberPath="TenLop" SelectedValuePath="IdLop" Style="{StaticResource ModernComboBoxStyle}" ItemContainerStyle="{StaticResource ModernComboBoxItemStyle}" IsEnabled="False"/>
                                 </StackPanel>
                                 <StackPanel Grid.Row="8" Grid.Column="2">
                                     <TextBlock Text="NHÓM HIỆN TẠI" Style="{StaticResource ProFieldLabel}"/>
