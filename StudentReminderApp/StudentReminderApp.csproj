@@ -3,6 +3,7 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>net48</TargetFramework>
     <UseWPF>true</UseWPF>
+    <UseWindowsForms>true</UseWindowsForms>
     <AssemblyName>StudentReminderApp</AssemblyName>
     <RootNamespace>StudentReminderApp</RootNamespace>
     <Nullable>enable</Nullable>

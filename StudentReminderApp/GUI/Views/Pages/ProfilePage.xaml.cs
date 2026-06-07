@@ -25,7 +25,7 @@ namespace StudentReminderApp.Views.Pages
         public ProfilePage()
         {
             InitializeComponent();
-            Loaded += (s, e) => { LoadDanhMuc(); LoadProfile(); };
+            Loaded += (s, e) => { LoadDanhMuc(); LoadProfile(); LoadReminderConfig(); };
         }
 
         private Models.OrganizationData _orgData = new();
@@ -304,6 +304,9 @@ namespace StudentReminderApp.Views.Pages
             CmbKhoa.Items.Clear();
             CmbKhoa.Items.Add(new ComboBoxItem { Content = "— Chọn khoa —" });
             
+            CmbNhom.Items.Clear();
+            CmbNhom.Items.Add(new ComboBoxItem { Content = "— Chọn nhóm —" });
+
             if (CmbTruong.SelectedIndex > 0)
             {
                 var truongName = ((ComboBoxItem)CmbTruong.SelectedItem).Content.ToString();
@@ -314,14 +317,21 @@ namespace StudentReminderApp.Views.Pages
                     {
                         CmbKhoa.Items.Add(new ComboBoxItem { Content = khoa.Name });
                     }
+                    foreach (var nhom in truong.Nhoms)
+                    {
+                        CmbNhom.Items.Add(new ComboBoxItem { Content = nhom });
+                    }
                 }
                 CmbKhoa.IsEnabled = true;
+                CmbNhom.IsEnabled = true;
             }
             else
             {
                 CmbKhoa.IsEnabled = false;
+                CmbNhom.IsEnabled = false;
             }
             CmbKhoa.SelectedIndex = 0;
+            CmbNhom.SelectedIndex = 0;
         }
 
         private void CmbKhoa_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -386,35 +396,6 @@ namespace StudentReminderApp.Views.Pages
 
         private void CmbClass_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            CmbNhom.Items.Clear();
-            CmbNhom.Items.Add(new ComboBoxItem { Content = "— Chọn nhóm —" });
-
-            if (CmbClass.SelectedIndex > 0 && CmbNganhHoc.SelectedIndex > 0 && CmbKhoa.SelectedIndex > 0 && CmbTruong.SelectedIndex > 0)
-            {
-                var truongName = ((ComboBoxItem)CmbTruong.SelectedItem).Content.ToString();
-                var khoaName = ((ComboBoxItem)CmbKhoa.SelectedItem).Content.ToString();
-                var nganhName = ((ComboBoxItem)CmbNganhHoc.SelectedItem).Content.ToString();
-                var lopName = ((ComboBoxItem)CmbClass.SelectedItem).Content.ToString();
-                
-                var truong = _orgData.Truongs.Find(t => t.Name == truongName);
-                var khoa = truong?.Khoas.Find(k => k.Name == khoaName);
-                var nganh = khoa?.Nganhs.Find(n => n.Name == nganhName);
-                var lop = nganh?.Lops.Find(l => l.Name == lopName);
-                
-                if (lop != null)
-                {
-                    foreach (var nhom in lop.Nhoms)
-                    {
-                        CmbNhom.Items.Add(new ComboBoxItem { Content = nhom });
-                    }
-                }
-                CmbNhom.IsEnabled = true;
-            }
-            else
-            {
-                CmbNhom.IsEnabled = false;
-            }
-            CmbNhom.SelectedIndex = 0;
         }
 
         // ── Đổi mật khẩu ─────────────────────────────────────────
@@ -449,10 +430,46 @@ namespace StudentReminderApp.Views.Pages
             if (!int.TryParse(TxtMinsBefore.Text, out int mins) || mins < 1)
             { ShowMsg(TxtReminderMsg, "Số phút không hợp lệ.", false); return; }
 
+            string channel = "PUSH";
+            if (CmbChannel.SelectedIndex == 1) channel = "EMAIL";
+            else if (CmbChannel.SelectedIndex == 2) channel = "BOTH";
+
             SaveReminderConfig(SessionManager.CurrentAccount.IdAcc, mins,
                 ChkEnabled.IsChecked == true,
-                CmbChannel.SelectedIndex == 0 ? "PUSH" : "EMAIL");
+                channel);
             ShowMsg(TxtReminderMsg, "✓ Đã lưu cài đặt!", true);
+        }
+
+        private void LoadReminderConfig()
+        {
+            var acc = SessionManager.CurrentAccount;
+            if (acc == null) return;
+
+            const string sql = "SELECT mins_before, is_enabled, channel FROM REMINDER_CONFIG WHERE id_acc=@acc";
+            try
+            {
+                using var conn = new SqlConnection(AppConfig.ConnectionString);
+                conn.Open();
+                using var cmd = new SqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("@acc", acc.IdAcc);
+                using var reader = cmd.ExecuteReader();
+                if (reader.Read())
+                {
+                    TxtMinsBefore.Text = reader["mins_before"].ToString();
+                    ChkEnabled.IsChecked = Convert.ToBoolean(reader["is_enabled"]);
+                    string channel = reader["channel"].ToString();
+                    if (channel == "EMAIL") CmbChannel.SelectedIndex = 1;
+                    else if (channel == "BOTH") CmbChannel.SelectedIndex = 2;
+                    else CmbChannel.SelectedIndex = 0;
+                    return; // Thoát sau khi load thành công
+                }
+            }
+            catch { /* Bỏ qua và dùng default bên dưới */ }
+
+            // Nếu có lỗi hoặc chưa có config, dùng giá trị mặc định
+            TxtMinsBefore.Text = "5";
+            ChkEnabled.IsChecked = true;
+            CmbChannel.SelectedIndex = 0;
         }
 
         // ── Helpers ───────────────────────────────────────────────
@@ -490,6 +507,12 @@ namespace StudentReminderApp.Views.Pages
         private static void SaveReminderConfig(long idAcc, int mins, bool isEnabled, string channel)
         {
             const string sql = @"
+                DECLARE @ConstraintName nvarchar(200);
+                SELECT TOP 1 @ConstraintName = name FROM sys.check_constraints 
+                WHERE parent_object_id = OBJECT_ID('REMINDER_CONFIG') AND definition LIKE '%channel%';
+                IF @ConstraintName IS NOT NULL
+                    EXEC('ALTER TABLE REMINDER_CONFIG DROP CONSTRAINT ' + @ConstraintName);
+
                 IF EXISTS (SELECT 1 FROM REMINDER_CONFIG WHERE id_acc=@acc)
                     UPDATE REMINDER_CONFIG SET mins_before=@m,is_enabled=@en,channel=@ch WHERE id_acc=@acc
                 ELSE

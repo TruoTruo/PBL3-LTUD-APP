@@ -439,14 +439,15 @@
                                 </Grid.RowDefinitions>
 
                                 <StackPanel Grid.Row="0" Grid.Column="0">
-                                    <TextBlock Text="NHẮC TRƯỚC (PHÚT)" Style="{StaticResource ProFieldLabel}"/>
-                                    <TextBox x:Name="TxtMinsBefore" Style="{StaticResource InputModern}" Text="15"/>
+                                    <TextBlock Text="THỜI GIAN NHẮC LẠI (PHÚT)" Style="{StaticResource ProFieldLabel}"/>
+                                    <TextBox x:Name="TxtMinsBefore" Style="{StaticResource InputModern}" Text="5"/>
                                 </StackPanel>
                                 <StackPanel Grid.Row="0" Grid.Column="2">
                                     <TextBlock Text="KÊNH THÔNG BÁO CHÍNH" Style="{StaticResource ProFieldLabel}"/>
                                     <ComboBox x:Name="CmbChannel" Height="42" FontSize="14" Style="{StaticResource ModernComboBoxStyle}" ItemContainerStyle="{StaticResource ModernComboBoxItemStyle}">
                                         <ComboBoxItem Content="PUSH (Popup hệ thống)" IsSelected="True"/>
                                         <ComboBoxItem Content="Email sinh viên"/>
+                                        <ComboBoxItem Content="Cả hai (Popup &amp; Email)"/>
                                     </ComboBox>
                                 </StackPanel>
 

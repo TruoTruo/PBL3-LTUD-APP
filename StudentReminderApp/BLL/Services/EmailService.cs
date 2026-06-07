@@ -6,10 +6,6 @@ namespace StudentReminderApp.Services
 {
     public class EmailService
     {
-        // Vui lòng thay thế bằng App Password thực tế của Gmail
-        private const string SenderEmail = "pbl3.student.reminder@gmail.com";
-        private const string SenderAppPassword = "zihf qowp zxcv asdf"; // Thay thế App Password vào đây
-
         public static void SendEmail(string toAddress, string subject, string body)
         {
             if (string.IsNullOrWhiteSpace(toAddress)) return;
@@ -23,19 +19,27 @@ namespace StudentReminderApp.Services
                     EnableSsl = true,
                     DeliveryMethod = SmtpDeliveryMethod.Network,
                     UseDefaultCredentials = false,
-                    Credentials = new NetworkCredential(SenderEmail, SenderAppPassword)
+                    Credentials = new NetworkCredential(AppConfig.SenderEmail, AppConfig.SenderAppPassword)
                 };
-                using var message = new MailMessage(SenderEmail, toAddress)
+                using var message = new MailMessage(AppConfig.SenderEmail, toAddress)
                 {
                     Subject = subject,
                     Body = body,
-                    IsBodyHtml = false
+                    IsBodyHtml = true
                 };
                 smtp.Send(message);
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine("Lỗi gửi email: " + ex.Message);
+                try
+                {
+                    string logPath = System.IO.Path.Combine(
+                        Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
+                        "StudentReminderApp_EmailLog.txt");
+                    string errorDetails = $"[{DateTime.Now}] Gửi tới: {toAddress}\nLỗi: {ex.Message}\nStack Trace:\n{ex.StackTrace}\n\n";
+                    System.IO.File.AppendAllText(logPath, errorDetails);
+                }
+                catch { /* Bỏ qua nếu không ghi được log */ }
             }
         }
     }

@@ -181,14 +181,16 @@ namespace StudentReminderApp.Views.Pages
             {
                 LstKhoa.ItemsSource = t.Khoas;
                 LstKhoa.Items.Refresh();
+                LstNhom.ItemsSource = t.Nhoms;
+                LstNhom.Items.Refresh();
             }
             else
             {
                 LstKhoa.ItemsSource = null;
+                LstNhom.ItemsSource = null;
             }
             LstNganh.ItemsSource = null;
             LstLop.ItemsSource = null;
-            LstNhom.ItemsSource = null;
         }
 
         private void BtnAddTruong_Click(object sender, RoutedEventArgs e)
@@ -223,7 +225,6 @@ namespace StudentReminderApp.Views.Pages
                 LstNganh.ItemsSource = null;
             }
             LstLop.ItemsSource = null;
-            LstNhom.ItemsSource = null;
         }
 
         private void BtnAddKhoa_Click(object sender, RoutedEventArgs e)
@@ -257,7 +258,6 @@ namespace StudentReminderApp.Views.Pages
             {
                 LstLop.ItemsSource = null;
             }
-            LstNhom.ItemsSource = null;
         }
 
         private void BtnAddNganh_Click(object sender, RoutedEventArgs e)
@@ -282,15 +282,6 @@ namespace StudentReminderApp.Views.Pages
         // ── Lớp ──
         private void LstLop_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (LstLop.SelectedItem is LopData l)
-            {
-                LstNhom.ItemsSource = l.Nhoms;
-                LstNhom.Items.Refresh();
-            }
-            else
-            {
-                LstNhom.ItemsSource = null;
-            }
         }
 
         private void BtnAddLop_Click(object sender, RoutedEventArgs e)
@@ -315,20 +306,54 @@ namespace StudentReminderApp.Views.Pages
         // ── Nhóm ──
         private void BtnAddNhom_Click(object sender, RoutedEventArgs e)
         {
-            if (LstLop.SelectedItem is not LopData l) return;
+            if (LstTruong.SelectedItem is not TruongData t) return;
             string name = TxtNewNhom.Text.Trim();
-            if (string.IsNullOrEmpty(name) || l.Nhoms.Contains(name)) return;
-            l.Nhoms.Add(name);
+            if (string.IsNullOrEmpty(name) || t.Nhoms.Contains(name)) return;
+            t.Nhoms.Add(name);
             LstNhom.Items.Refresh();
             TxtNewNhom.Clear();
+
+            // Cập nhật tự động vào file JSON
+            try
+            {
+                string json = Newtonsoft.Json.JsonConvert.SerializeObject(_orgData, Newtonsoft.Json.Formatting.Indented);
+                System.IO.File.WriteAllText(_orgJsonPath, json);
+            }
+            catch (Exception ex) { MessageBox.Show($"Lỗi khi lưu JSON: {ex.Message}", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error); }
+
+            // Cập nhật tự động vào Database (Category = NHOM)
+            try
+            {
+                _danhMucDal.AddDanhMucChung("NHOM", name);
+            }
+            catch (Exception ex) { MessageBox.Show($"Lỗi khi thêm vào Database: {ex.Message}", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error); }
         }
 
         private void BtnDelNhom_Click(object sender, RoutedEventArgs e)
         {
-            if (LstLop.SelectedItem is LopData l && LstNhom.SelectedItem is string nhom)
+            if (LstTruong.SelectedItem is TruongData t && LstNhom.SelectedItem is string nhom)
             {
-                l.Nhoms.Remove(nhom);
+                t.Nhoms.Remove(nhom);
                 LstNhom.Items.Refresh();
+
+                // Cập nhật tự động xóa khỏi file JSON
+                try
+                {
+                    string json = Newtonsoft.Json.JsonConvert.SerializeObject(_orgData, Newtonsoft.Json.Formatting.Indented);
+                    System.IO.File.WriteAllText(_orgJsonPath, json);
+                }
+                catch (Exception ex) { MessageBox.Show($"Lỗi khi lưu JSON: {ex.Message}", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error); }
+
+                // Cập nhật tự động xóa khỏi Database
+                try
+                {
+                    using var conn = new System.Data.SqlClient.SqlConnection(AppConfig.ConnectionString);
+                    conn.Open();
+                    using var cmd = new System.Data.SqlClient.SqlCommand("DELETE FROM DANH_MUC_CHUNG WHERE Category = 'NHOM' AND Value = @val", conn);
+                    cmd.Parameters.AddWithValue("@val", nhom);
+                    cmd.ExecuteNonQuery();
+                }
+                catch (Exception ex) { MessageBox.Show($"Lỗi khi xóa khỏi Database: {ex.Message}", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error); }
             }
         }
     }

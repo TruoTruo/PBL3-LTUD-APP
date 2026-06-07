@@ -11,6 +11,7 @@ namespace StudentReminderApp.Models
     {
         public string Name { get; set; }
         public List<KhoaData> Khoas { get; set; } = new();
+        public List<string> Nhoms { get; set; } = new();
     }
 
     public class KhoaData

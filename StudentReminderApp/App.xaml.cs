@@ -7,11 +7,50 @@ namespace StudentReminderApp
 {
     public partial class App : Application
     {
+        private System.Windows.Forms.NotifyIcon _notifyIcon = null!;
+
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
             Current.DispatcherUnhandledException += App_DispatcherUnhandledException;
             StudentReminderApp.Services.NotificationService.Start();
+
+            // Khởi tạo icon dưới khay hệ thống (System Tray)
+            _notifyIcon = new System.Windows.Forms.NotifyIcon();
+            _notifyIcon.Icon = System.Drawing.SystemIcons.Information; // Có thể thay bằng đường dẫn file .ico của bạn
+            _notifyIcon.Visible = true;
+            _notifyIcon.Text = "Student Reminder App đang chạy ngầm";
+            
+            // Bấm đúp chuột để mở lại cửa sổ
+            _notifyIcon.DoubleClick += (s, args) => ShowMainWindow();
+
+            // Thêm Menu chuột phải
+            var contextMenu = new System.Windows.Forms.ContextMenuStrip();
+            contextMenu.Items.Add("Mở ứng dụng", null, (s, args) => ShowMainWindow());
+            contextMenu.Items.Add("Thoát", null, (s, args) => {
+                _notifyIcon.Visible = false;
+                _notifyIcon.Dispose();
+                Current.Shutdown();
+            });
+            _notifyIcon.ContextMenuStrip = contextMenu;
+        }
+
+        private void ShowMainWindow()
+        {
+            if (MainWindow != null)
+            {
+                MainWindow.Show();
+                if (MainWindow.WindowState == WindowState.Minimized)
+                    MainWindow.WindowState = WindowState.Normal;
+                MainWindow.Activate();
+            }
+        }
+
+        protected override void OnExit(ExitEventArgs e)
+        {
+            if (_notifyIcon != null)
+                _notifyIcon.Dispose();
+            base.OnExit(e);
         }
 
         private void App_DispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
