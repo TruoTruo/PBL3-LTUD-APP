@@ -96,13 +96,13 @@
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                         <Ellipse Width="6" Height="6" Fill="#3B82F6" Margin="0,0,8,0"/>
                         <TextBlock Text="Cập nhật: " FontSize="12" Foreground="#64748B"/>
-                        <TextBlock x:Name="TxtLastUpdated" Text="Vừa xong" FontSize="12" FontWeight="SemiBold" Foreground="#334155"/>
+                        <TextBlock x:Name="TxtLastUpdated" Text="Vừa xong" FontSize="12" FontWeight="SemiBold" Foreground="{DynamicResource TextSecondaryBrush}"/>
                     </StackPanel>
                 </Border>
             </Grid>
 
             <!-- Premium Avatar Profile Header -->
-            <Border Background="White" CornerRadius="20" BorderBrush="#F1F5F9" BorderThickness="1" Padding="32" Margin="0,0,0,24" Effect="{StaticResource PremiumShadow}">
+            <Border Background="White" CornerRadius="20" BorderBrush="{DynamicResource BgBrush}" BorderThickness="1" Padding="32" Margin="0,0,0,24" Effect="{StaticResource PremiumShadow}">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto"/>
@@ -136,15 +136,15 @@
                                 </StackPanel>
                             </Border>
                             <!-- Sinh viên Badge -->
-                            <Border Background="#F1F5F9" BorderBrush="#E2E8F0" BorderThickness="1" CornerRadius="12" Padding="12,6" Margin="0,0,16,0">
+                            <Border Background="{DynamicResource BgBrush}" BorderBrush="#E2E8F0" BorderThickness="1" CornerRadius="12" Padding="12,6" Margin="0,0,16,0">
                                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                                    <fa:ImageAwesome Icon="GraduationCap" Width="14" Foreground="#334155" Margin="0,0,6,0"/>
-                                    <TextBlock x:Name="TxtBadgeRole" Text="Sinh viên" FontSize="12" FontWeight="Bold" Foreground="#334155"/>
+                                    <fa:ImageAwesome Icon="GraduationCap" Width="14" Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,0,6,0"/>
+                                    <TextBlock x:Name="TxtBadgeRole" Text="Sinh viên" FontSize="12" FontWeight="Bold" Foreground="{DynamicResource TextSecondaryBrush}"/>
                                 </StackPanel>
                             </Border>
                             
                             <!-- Actions -->
-                            <Button Content="Đổi ảnh" Background="#F1F5F9" Foreground="#334155" FontWeight="SemiBold" FontSize="12" Cursor="Hand" Click="BtnChangeAvatar_Click" Margin="0,0,8,0">
+                            <Button Content="Đổi ảnh" Background="{DynamicResource BgBrush}" Foreground="{DynamicResource TextSecondaryBrush}" FontWeight="SemiBold" FontSize="12" Cursor="Hand" Click="BtnChangeAvatar_Click" Margin="0,0,8,0">
                                 <Button.Template>
                                     <ControlTemplate TargetType="Button">
                                         <Border Background="{TemplateBinding Background}" CornerRadius="12" Padding="12,6">
@@ -166,7 +166,7 @@
                     </StackPanel>
                     
                     <!-- Status Indicator -->
-                    <Border Grid.Column="2" VerticalAlignment="Top" Background="#ECFDF5" BorderBrush="#A7F3D0" BorderThickness="1" CornerRadius="12" Padding="12,6">
+                    <Border Grid.Column="2" VerticalAlignment="Top" Background="{DynamicResource BgBrush}" BorderBrush="#A7F3D0" BorderThickness="1" CornerRadius="12" Padding="12,6">
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                             <Ellipse Width="8" Height="8" Fill="#10B981" Margin="0,0,6,0"/>
                             <TextBlock Text="ĐANG HOẠT ĐỘNG" FontSize="11" FontWeight="ExtraBold" Foreground="#047857"/>
@@ -188,10 +188,10 @@
             <StackPanel x:Name="ContainerInfo" Visibility="Visible">
                 
                 <!-- Personal Info Card -->
-                <Border Background="White" CornerRadius="16" BorderBrush="#F1F5F9" BorderThickness="1" Effect="{StaticResource PremiumShadow}" Margin="0,0,0,24">
+                <Border Background="White" CornerRadius="16" BorderBrush="{DynamicResource BgBrush}" BorderThickness="1" Effect="{StaticResource PremiumShadow}" Margin="0,0,0,24">
                     <StackPanel>
                         <!-- Card Header -->
-                        <Border Background="#F8FAFC" BorderThickness="0,0,0,1" BorderBrush="#F1F5F9" Padding="24" CornerRadius="16,16,0,0">
+                        <Border Background="#F8FAFC" BorderThickness="0,0,0,1" BorderBrush="{DynamicResource BgBrush}" Padding="24" CornerRadius="16,16,0,0">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto"/>
@@ -252,20 +252,20 @@
                                 </StackPanel>
                                 <StackPanel Grid.Row="2" Grid.Column="2">
                                     <TextBlock Text="NGÀY SINH" Style="{StaticResource ProFieldLabel}"/>
-                                    <DatePicker x:Name="DpNgaySinh" Height="42" FontSize="14" BorderBrush="#CBD5E1" Background="#F8FAFC" VerticalContentAlignment="Center"/>
+                                    <DatePicker x:Name="DpNgaySinh" Height="42" FontSize="14" BorderBrush="{DynamicResource BorderBrush}" Background="#F8FAFC" VerticalContentAlignment="Center"/>
                                 </StackPanel>
 
                                 <!-- Row 3: MSSV & Trường -->
                                 <StackPanel Grid.Row="4" Grid.Column="0">
                                     <StackPanel Orientation="Horizontal" Margin="0,0,0,8" VerticalAlignment="Center">
                                         <TextBlock Text="MÃ SỐ SINH VIÊN (MSSV) " FontSize="11" FontWeight="Bold" Foreground="#94A3B8"/>
-                                        <fa:ImageAwesome Icon="Lock" Width="10" Foreground="#CBD5E1"/>
+                                        <fa:ImageAwesome Icon="Lock" Width="10" Foreground="{DynamicResource BorderBrush}"/>
                                     </StackPanel>
                                     <TextBox x:Name="TxtEditMssv" Style="{StaticResource InputModern}"/>
                                 </StackPanel>
                                 <StackPanel Grid.Row="4" Grid.Column="2">
                                     <TextBlock Text="TRƯỜNG ĐẠI HỌC" Style="{StaticResource ProFieldLabel}"/>
-                                    <ComboBox x:Name="CmbTruong" Height="42" FontSize="14" VerticalContentAlignment="Center" Background="#F8FAFC" BorderBrush="#CBD5E1" SelectionChanged="CmbTruong_SelectionChanged">
+                                    <ComboBox x:Name="CmbTruong" Height="42" FontSize="14" VerticalContentAlignment="Center" Background="#F8FAFC" BorderBrush="{DynamicResource BorderBrush}" SelectionChanged="CmbTruong_SelectionChanged">
                                         <ComboBoxItem Content="— Chọn trường —"/>
                                         <ComboBoxItem Content="Trường ĐH Bách Khoa Đà Nẵng"/>
                                     </ComboBox>
@@ -274,14 +274,14 @@
                                 <!-- Row 4: Khoa & Ngành -->
                                 <StackPanel Grid.Row="6" Grid.Column="0">
                                     <TextBlock Text="KHOA" Style="{StaticResource ProFieldLabel}"/>
-                                    <ComboBox x:Name="CmbKhoa" Height="42" FontSize="14" VerticalContentAlignment="Center" Background="#F8FAFC" BorderBrush="#CBD5E1" SelectionChanged="CmbKhoa_SelectionChanged">
+                                    <ComboBox x:Name="CmbKhoa" Height="42" FontSize="14" VerticalContentAlignment="Center" Background="#F8FAFC" BorderBrush="{DynamicResource BorderBrush}" SelectionChanged="CmbKhoa_SelectionChanged">
                                         <ComboBoxItem Content="— Chọn khoa —"/>
                                         <ComboBoxItem Content="Công Nghệ Thông Tin"/>
                                     </ComboBox>
                                 </StackPanel>
                                 <StackPanel Grid.Row="6" Grid.Column="2">
                                     <TextBlock Text="NGÀNH HỌC CHÍNH" Style="{StaticResource ProFieldLabel}"/>
-                                    <ComboBox x:Name="CmbNganhHoc" Height="42" FontSize="14" VerticalContentAlignment="Center" Background="#F8FAFC" BorderBrush="#CBD5E1" IsEnabled="False" SelectionChanged="CmbNganhHoc_SelectionChanged">
+                                    <ComboBox x:Name="CmbNganhHoc" Height="42" FontSize="14" VerticalContentAlignment="Center" Background="#F8FAFC" BorderBrush="{DynamicResource BorderBrush}" IsEnabled="False" SelectionChanged="CmbNganhHoc_SelectionChanged">
                                         <ComboBoxItem Content="— Chọn ngành học —"/>
                                         <ComboBoxItem Content="CNTT Nhật Bản"/>
                                         <ComboBoxItem Content="CNTT Đặc Thù"/>
@@ -292,11 +292,11 @@
                                 <!-- Row 5: Lớp & Nhóm -->
                                 <StackPanel Grid.Row="8" Grid.Column="0">
                                     <TextBlock Text="LỚP SINH HOẠT" Style="{StaticResource ProFieldLabel}"/>
-                                    <ComboBox x:Name="CmbClass" Height="42" FontSize="14" DisplayMemberPath="TenLop" SelectedValuePath="IdLop" VerticalContentAlignment="Center" Background="#F8FAFC" BorderBrush="#CBD5E1" IsEnabled="False"/>
+                                    <ComboBox x:Name="CmbClass" Height="42" FontSize="14" DisplayMemberPath="TenLop" SelectedValuePath="IdLop" VerticalContentAlignment="Center" Background="#F8FAFC" BorderBrush="{DynamicResource BorderBrush}" IsEnabled="False"/>
                                 </StackPanel>
                                 <StackPanel Grid.Row="8" Grid.Column="2">
                                     <TextBlock Text="NHÓM HIỆN TẠI" Style="{StaticResource ProFieldLabel}"/>
-                                    <ComboBox x:Name="CmbNhom" Height="42" FontSize="14" VerticalContentAlignment="Center" Background="#F8FAFC" BorderBrush="#CBD5E1">
+                                    <ComboBox x:Name="CmbNhom" Height="42" FontSize="14" VerticalContentAlignment="Center" Background="#F8FAFC" BorderBrush="{DynamicResource BorderBrush}">
                                         <ComboBoxItem Content="— Chọn nhóm —"/>
                                         <ComboBoxItem Content="2499"/>
                                         <ComboBoxItem Content="2498"/>
@@ -306,7 +306,7 @@
                                 <!-- Row 6: Quê quán -->
                                 <StackPanel Grid.Row="10" Grid.Column="0" Grid.ColumnSpan="3">
                                     <TextBlock Text="QUÊ QUÁN (TỈNH/THÀNH PHỐ)" Style="{StaticResource ProFieldLabel}"/>
-                                    <ComboBox x:Name="CmbQueQuan" Height="42" FontSize="14" VerticalContentAlignment="Center" Background="#F8FAFC" BorderBrush="#CBD5E1"/>
+                                    <ComboBox x:Name="CmbQueQuan" Height="42" FontSize="14" VerticalContentAlignment="Center" Background="#F8FAFC" BorderBrush="{DynamicResource BorderBrush}"/>
                                 </StackPanel>
 
                                 <!-- Nút Lưu -->
@@ -331,16 +331,16 @@
             <!-- TAB 1.5: REMINDER -->
             <StackPanel x:Name="ContainerReminder" Visibility="Collapsed">
                 <!-- Reminder Card -->
-                <Border Background="White" CornerRadius="16" BorderBrush="#F1F5F9" BorderThickness="1" Effect="{StaticResource PremiumShadow}" Margin="0,0,0,24">
+                <Border Background="White" CornerRadius="16" BorderBrush="{DynamicResource BgBrush}" BorderThickness="1" Effect="{StaticResource PremiumShadow}" Margin="0,0,0,24">
                     <StackPanel>
                         <!-- Card Header -->
-                        <Border Background="#F8FAFC" BorderThickness="0,0,0,1" BorderBrush="#F1F5F9" Padding="24" CornerRadius="16,16,0,0">
+                        <Border Background="#F8FAFC" BorderThickness="0,0,0,1" BorderBrush="{DynamicResource BgBrush}" Padding="24" CornerRadius="16,16,0,0">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
-                                <Border Width="40" Height="40" Background="#EEF2FF" CornerRadius="12" Margin="0,0,16,0">
+                                <Border Width="40" Height="40" Background="{DynamicResource BgBrush}" CornerRadius="12" Margin="0,0,16,0">
                                     <fa:ImageAwesome Icon="Bell" Width="16" Foreground="#4F46E5" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                 </Border>
                                 <StackPanel Grid.Column="1" VerticalAlignment="Center">
@@ -371,13 +371,13 @@
                                 </StackPanel>
                                 <StackPanel Grid.Row="0" Grid.Column="2">
                                     <TextBlock Text="KÊNH THÔNG BÁO CHÍNH" Style="{StaticResource ProFieldLabel}"/>
-                                    <ComboBox x:Name="CmbChannel" Height="42" FontSize="14" VerticalContentAlignment="Center" Background="#F8FAFC" BorderBrush="#CBD5E1">
+                                    <ComboBox x:Name="CmbChannel" Height="42" FontSize="14" VerticalContentAlignment="Center" Background="#F8FAFC" BorderBrush="{DynamicResource BorderBrush}">
                                         <ComboBoxItem Content="PUSH (Popup hệ thống)" IsSelected="True"/>
                                         <ComboBoxItem Content="Email sinh viên"/>
                                     </ComboBox>
                                 </StackPanel>
 
-                                <CheckBox x:Name="ChkEnabled" Content="Kích hoạt thông báo đẩy tự động" Grid.Row="2" Grid.ColumnSpan="3" IsChecked="True" FontSize="14" FontWeight="SemiBold" Foreground="#334155" Margin="0,8,0,0"/>
+                                <CheckBox x:Name="ChkEnabled" Content="Kích hoạt thông báo đẩy tự động" Grid.Row="2" Grid.ColumnSpan="3" IsChecked="True" FontSize="14" FontWeight="SemiBold" Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,8,0,0"/>
 
                                 <StackPanel Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3" Orientation="Horizontal">
                                     <Button Content="Lưu cài đặt nhắc nhở" Background="#2563EB" Foreground="White" FontWeight="Bold" FontSize="14" Height="48" Padding="24,0" BorderThickness="0" Cursor="Hand" Click="BtnSaveReminder_Click">
@@ -400,16 +400,16 @@
             <!-- TAB 2: PASSWORD -->
             <StackPanel x:Name="ContainerPassword" Visibility="Collapsed">
                 <!-- Password Card -->
-                <Border Background="White" CornerRadius="16" BorderBrush="#F1F5F9" BorderThickness="1" Effect="{StaticResource PremiumShadow}" Margin="0,0,0,24">
+                <Border Background="White" CornerRadius="16" BorderBrush="{DynamicResource BgBrush}" BorderThickness="1" Effect="{StaticResource PremiumShadow}" Margin="0,0,0,24">
                     <StackPanel>
                         <!-- Card Header -->
-                        <Border Background="#F8FAFC" BorderThickness="0,0,0,1" BorderBrush="#F1F5F9" Padding="24" CornerRadius="16,16,0,0">
+                        <Border Background="#F8FAFC" BorderThickness="0,0,0,1" BorderBrush="{DynamicResource BgBrush}" Padding="24" CornerRadius="16,16,0,0">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
-                                <Border Width="40" Height="40" Background="#FFF7ED" CornerRadius="12" Margin="0,0,16,0">
+                                <Border Width="40" Height="40" Background="{DynamicResource BgBrush}" CornerRadius="12" Margin="0,0,16,0">
                                     <fa:ImageAwesome Icon="Shield" Width="16" Foreground="#EA580C" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                 </Border>
                                 <StackPanel Grid.Column="1" VerticalAlignment="Center">

@@ -51,9 +51,6 @@ D:\IT\HỌC\PBL3\PBL3-LTUD-APP\StudentReminderApp\obj\Debug\net48\StudentReminde
 D:\IT\HỌC\PBL3\PBL3-LTUD-APP\StudentReminderApp\obj\Debug\net48\StudentR.5E4BD3BF.Up2Date
 D:\IT\HỌC\PBL3\PBL3-LTUD-APP\StudentReminderApp\obj\Debug\net48\StudentReminderApp.exe
 D:\IT\HỌC\PBL3\PBL3-LTUD-APP\StudentReminderApp\obj\Debug\net48\StudentReminderApp.pdb
-D:\IT\HỌC\PBL3\PBL3-LTUD-APP\StudentReminderApp\bin\Debug\net48\Views\Pages\kctdt_dacthu.json
-D:\IT\HỌC\PBL3\PBL3-LTUD-APP\StudentReminderApp\bin\Debug\net48\Views\Pages\kctdt_nhat.json
-D:\IT\HỌC\PBL3\PBL3-LTUD-APP\StudentReminderApp\bin\Debug\net48\Views\Pages\kctdt_trituenhantao.json
 D:\IT\HỌC\PBL3\PBL3-LTUD-APP\StudentReminderApp\obj\Debug\net48\StudentReminderApp_Content.g.cs
 D:\IT\HỌC\PBL3\PBL3-LTUD-APP\StudentReminderApp\obj\Debug\net48\Views\Main\SplashWindow.baml
 D:\IT\HỌC\PBL3\PBL3-LTUD-APP\StudentReminderApp\obj\Debug\net48\Views\Main\SplashWindow.g.cs
@@ -80,3 +77,9 @@ D:\IT\HỌC\PBL3\PBL3-LTUD-APP\StudentReminderApp\bin\Debug\net48\Microsoft.Web.
 D:\IT\HỌC\PBL3\PBL3-LTUD-APP\StudentReminderApp\bin\Debug\net48\Microsoft.Web.WebView2.Wpf.dll
 D:\IT\HỌC\PBL3\PBL3-LTUD-APP\StudentReminderApp\bin\Debug\net48\WebView2Loader.dll
 D:\IT\HỌC\PBL3\PBL3-LTUD-APP\StudentReminderApp\bin\Debug\net48\runtimes\win-x64\native\WebView2Loader.dll
+D:\IT\HỌC\PBL3\PBL3-LTUD-APP\StudentReminderApp\obj\Debug\net48\Views\Pages\ForumLogPage.baml
+D:\IT\HỌC\PBL3\PBL3-LTUD-APP\StudentReminderApp\obj\Debug\net48\Views\Pages\ForumLogPage.g.cs
+D:\IT\HỌC\PBL3\PBL3-LTUD-APP\StudentReminderApp\obj\Debug\net48\Resources\Themes\DarkTheme.baml
+D:\IT\HỌC\PBL3\PBL3-LTUD-APP\StudentReminderApp\obj\Debug\net48\Resources\Themes\LightTheme.baml
+D:\IT\HỌC\PBL3\PBL3-LTUD-APP\StudentReminderApp\obj\Debug\net48\Views\Main\ThemeToggleButton.baml
+D:\IT\HỌC\PBL3\PBL3-LTUD-APP\StudentReminderApp\obj\Debug\net48\Views\Main\ThemeToggleButton.g.cs

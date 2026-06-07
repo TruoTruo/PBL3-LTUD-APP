@@ -22,7 +22,7 @@ namespace StudentReminderApp.Views.Auth.Components
         private void BtnBackToLogin_Click(object sender, RoutedEventArgs e)
         {
             if (Window.GetWindow(this) is AuthWindow parent)
-                parent.Navigate(new LoginView());
+                parent.Navigate(new LoginView(parent));
         }
 
         private void BtnSendOtp_Click(object sender, RoutedEventArgs e)

@@ -23,7 +23,7 @@
                     <ControlTemplate TargetType="Button">
                         <Border
                             Background="{TemplateBinding Background}"
-                            BorderBrush="#E2E8F0"
+                            BorderBrush="{DynamicResource BorderBrush}"
                             BorderThickness="1"
                             CornerRadius="6" />
                     </ControlTemplate>
@@ -39,7 +39,7 @@
                         <Border
                             x:Name="SwitchBackground"
                             Background="{TemplateBinding Background}"
-                            BorderBrush="#E2E8F0"
+                            BorderBrush="{DynamicResource BorderBrush}"
                             BorderThickness="1"
                             CornerRadius="12">
                             <Grid>
@@ -49,7 +49,7 @@
                                     Height="18"
                                     Margin="2"
                                     HorizontalAlignment="Left"
-                                    Fill="White">
+                                    Fill="{DynamicResource SurfaceBrush}">
                                     <Ellipse.RenderTransform>
                                         <TranslateTransform x:Name="ThumbTranslate" />
                                     </Ellipse.RenderTransform>
@@ -58,7 +58,7 @@
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsChecked" Value="True">
-                                <Setter TargetName="SwitchBackground" Property="Background" Value="#1877F2" />
+                                <Setter TargetName="SwitchBackground" Property="Background" Value="{DynamicResource TextPrimaryBrush}" />
                                 <Trigger.EnterActions>
                                     <BeginStoryboard>
                                         <Storyboard>
@@ -90,8 +90,8 @@
     </Window.Resources>
 
     <Border
-        Background="White"
-        BorderBrush="#E2E8F0"
+        Background="{DynamicResource SurfaceBrush}"
+        BorderBrush="{DynamicResource BorderBrush}"
         BorderThickness="1"
         CornerRadius="12">
         <Grid>
@@ -124,7 +124,7 @@
                         </Style>
                     </Button.Resources>
                 </Button>
-                <Separator VerticalAlignment="Bottom" Background="#E2E8F0" />
+                <Separator VerticalAlignment="Bottom" Background="{DynamicResource BorderBrush}" />
             </Grid>
 
             <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
@@ -153,9 +153,13 @@
 
                     <StackPanel Margin="15,10" Orientation="Horizontal">
                         <Ellipse
+                            x:Name="AvatarEllipse"
                             Width="40"
-                            Height="40"
-                            Fill="#1877F2" />
+                            Height="40">
+                            <Ellipse.Fill>
+                                <ImageBrush ImageSource="/Resources/Images/user.png" Stretch="UniformToFill" />
+                            </Ellipse.Fill>
+                        </Ellipse>
                         <StackPanel Margin="10,0" VerticalAlignment="Center">
                             <TextBlock
                                 x:Name="TxtUserName"
@@ -208,11 +212,11 @@
                             <ItemsControl ItemsSource="{Binding SelectedFiles}">
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
-                                        <Border Margin="0,5,0,10" BorderBrush="#E2E8F0" BorderThickness="1" CornerRadius="8" ClipToBounds="True">
+                                        <Border Margin="0,5,0,10" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1" CornerRadius="8" ClipToBounds="True">
                                             <Grid>
                                                 <Image MaxHeight="500" Source="{Binding FilePath}" Stretch="Uniform"
                                                        Visibility="{Binding IsImage, Converter={StaticResource BoolToVis}}" />
-                                                <Button Background="#F0F2F5" BorderThickness="0" Cursor="Hand"
+                                                <Button Background="{DynamicResource BgBrush}" BorderThickness="0" Cursor="Hand"
                                                         Command="{Binding DataContext.ViewFileCommand, RelativeSource={RelativeSource AncestorType=Window}}"
                                                         CommandParameter="{Binding}"
                                                         Visibility="{Binding IsNotImage, Converter={StaticResource BoolToVis}}">
@@ -222,7 +226,7 @@
                                                                 <DockPanel Margin="10">
                                                                     <TextBlock Margin="0,0,10,0" VerticalAlignment="Center" FontSize="20" Text="📄" />
                                                                     <StackPanel VerticalAlignment="Center">
-                                                                        <TextBlock FontWeight="SemiBold" Foreground="#1877F2" Text="{Binding FileName}"
+                                                                        <TextBlock FontWeight="SemiBold" Foreground="{DynamicResource TextPrimaryBrush}" Text="{Binding FileName}"
                                                                                    TextDecorations="Underline" TextTrimming="CharacterEllipsis" />
                                                                         <TextBlock FontSize="10" Foreground="Gray" Text="Nhấn để xem nội dung" />
                                                                     </StackPanel>
@@ -232,7 +236,7 @@
                                                     </Button.Template>
                                                 </Button>
                                                 <Button Width="24" Height="24" Margin="10" HorizontalAlignment="Right" VerticalAlignment="Top" Panel.ZIndex="1"
-                                                        Background="#CC000000" Foreground="White" Content="✕" Cursor="Hand"
+                                                        Background="#CC000000" Foreground="{DynamicResource SurfaceBrush}" Content="✕" Cursor="Hand"
                                                         Command="{Binding DataContext.RemoveFileCommand, RelativeSource={RelativeSource AncestorType=Window}}"
                                                         CommandParameter="{Binding}">
                                                     <Button.Resources>
@@ -249,7 +253,7 @@
 
                     <StackPanel Margin="15,10">
                         <StackPanel x:Name="ColorPickerPanel" Margin="0,5" Orientation="Horizontal" Visibility="Collapsed">
-                            <Button Background="White" Style="{StaticResource ColorCircleStyle}" Click="SelectColor_Click" Tag="Normal" />
+                            <Button Background="{DynamicResource SurfaceBrush}" Style="{StaticResource ColorCircleStyle}" Click="SelectColor_Click" Tag="Normal" />
                             <Button Background="#FF5252" Style="{StaticResource ColorCircleStyle}" Click="SelectColor_Click" Tag="Color" />
                             <Button Background="#448AFF" Style="{StaticResource ColorCircleStyle}" Click="SelectColor_Click" Tag="Color" />
                             <Button Background="#4CAF50" Style="{StaticResource ColorCircleStyle}" Click="SelectColor_Click" Tag="Color" />
@@ -265,8 +269,8 @@
                 </StackPanel>
             </ScrollViewer>
 
-            <StackPanel Grid.Row="2" Background="White">
-                <Border Margin="15,10" BorderBrush="#E2E8F0" BorderThickness="1" CornerRadius="8" Padding="12,8">
+            <StackPanel Grid.Row="2" Background="{DynamicResource SurfaceBrush}">
+                <Border Margin="15,10" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1" CornerRadius="8" Padding="12,8">
                     <Grid>
                         <TextBlock Text="Thêm vào bài viết của bạn" VerticalAlignment="Center" FontWeight="Bold" FontSize="14"/>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
@@ -283,7 +287,7 @@
                                        Placement="Top" StaysOpen="False" 
                                        AllowsTransparency="True" PopupAnimation="Fade" 
                                        VerticalOffset="-5">
-                                    <Border Background="White" CornerRadius="8" BorderThickness="1" BorderBrush="#E2E8F0" Width="220" Padding="5">
+                                    <Border Background="{DynamicResource SurfaceBrush}" CornerRadius="8" BorderThickness="1" BorderBrush="{DynamicResource BorderBrush}" Width="220" Padding="5">
                                         <Border.Effect><DropShadowEffect BlurRadius="10" ShadowDepth="1" Color="#CCCCCC"/></Border.Effect>
                                         <ListBox x:Name="EmojiListBox" BorderThickness="0" Background="Transparent" 
                                                  ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
@@ -297,7 +301,7 @@
                                                         <Setter.Value>
                                                             <ControlTemplate TargetType="ListBoxItem">
                                                                 <Border Name="Border" Padding="2" CornerRadius="4"><ContentPresenter /></Border>
-                                                                <ControlTemplate.Triggers><Trigger Property="IsMouseOver" Value="True"><Setter TargetName="Border" Property="Background" Value="#F0F2F5"/></Trigger></ControlTemplate.Triggers>
+                                                                <ControlTemplate.Triggers><Trigger Property="IsMouseOver" Value="True"><Setter TargetName="Border" Property="Background" Value="{DynamicResource BgBrush}"/></Trigger></ControlTemplate.Triggers>
                                                             </ControlTemplate>
                                                         </Setter.Value>
                                                     </Setter>
@@ -318,7 +322,7 @@
                     </Grid>
                 </Border>
 
-                <Button Content="Đăng" Margin="15,0,15,15" Height="40" Background="#1877F2" Foreground="White" FontWeight="Bold" Command="{Binding PostCommand}">
+                <Button Content="Đăng" Margin="15,0,15,15" Height="40" Background="{DynamicResource TextPrimaryBrush}" Foreground="{DynamicResource SurfaceBrush}" FontWeight="Bold" Command="{Binding PostCommand}">
                     <Button.Resources><Style TargetType="Border"><Setter Property="CornerRadius" Value="8"/></Style></Button.Resources>
                 </Button>
             </StackPanel>

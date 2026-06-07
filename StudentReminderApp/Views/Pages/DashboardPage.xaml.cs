@@ -1,4 +1,6 @@
 using System;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -9,14 +11,53 @@ using StudentReminderApp.Models;
 
 namespace StudentReminderApp.Views.Pages
 {
+    public class ReminderCheckItem : INotifyPropertyChanged
+    {
+        public long IdEvent { get; set; }
+        public string Title { get; set; } = string.Empty;
+
+        private bool _isChecked;
+        public bool IsChecked
+        {
+            get => _isChecked;
+            set { if (_isChecked != value) { _isChecked = value; OnPropertyChanged(nameof(IsChecked)); } }
+        }
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+        protected void OnPropertyChanged(string name) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+    }
+
+    public class ScheduleItem
+    {
+        public string TenMonHoc { get; set; } = "";
+        public string StartTime { get; set; } = "";
+        public string TenPhong { get; set; } = "";
+    }
+
+    public class EventItem
+    {
+        public string Title { get; set; } = "";
+        public string Location { get; set; } = "";
+        public DateTime StartTime { get; set; }
+        public string EventTypeIcon { get; set; } = "";
+    }
+
     public partial class DashboardPage : Page
     {
         private readonly EventBLL _eventBll = new EventBLL();
+        private bool _suppressCheckEvent = false;
 
         public DashboardPage() { InitializeComponent(); Loaded += (s, e) => LoadData(); }
 
         private void LoadData()
         {
+            // Kiểm tra xem người dùng đã đăng nhập chưa
+            if (SessionManager.CurrentAccount == null)
+            {
+                TxtGreeting.Text = "Vui lòng đăng nhập";
+                return;
+            }
+
             var idAcc = SessionManager.CurrentAccount.IdAcc;
             var user = SessionManager.CurrentUser;
             var hour = DateTime.Now.Hour;
@@ -25,10 +66,59 @@ namespace StudentReminderApp.Views.Pages
             TxtGreeting.Text = $"{greet}, {user?.HoTen ?? "bạn"}!";
             TxtDate.Text = $"Hôm nay là {DateTime.Now:dddd, dd/MM/yyyy}";
 
-            var upcoming = _eventBll.GetUpcoming(idAcc, 7);
-            var today = upcoming.Count(e => e.StartTime.Date == DateTime.Today);
+            // SỬA LỖI: Lấy trực tiếp từ database bắt đầu từ 00:00:00 hôm nay
+            // Hàm GetUpcoming có thể đang dùng GETDATE() làm sót các sự kiện đã qua trong ngày hôm nay.
+            var upcoming = new System.Collections.Generic.List<PersonalEvent>();
+            try
+            {
+                using (var conn = new System.Data.SqlClient.SqlConnection(AppConfig.ConnectionString))
+                {
+                    conn.Open();
+                    string query = @"SELECT id_event, title, location, start_time, end_time, event_type, is_completed 
+                                     FROM PERSONAL_EVENT 
+                                     WHERE id_acc=@uid AND start_time >= @start AND start_time <= @end";
+                    using (var cmd = new System.Data.SqlClient.SqlCommand(query, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@uid", idAcc);
+                        cmd.Parameters.AddWithValue("@start", DateTime.Today.ToUniversalTime()); 
+                        cmd.Parameters.AddWithValue("@end", DateTime.Today.AddDays(31).ToUniversalTime());
+                        
+                        using (var reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                upcoming.Add(new PersonalEvent
+                                {
+                                    IdEvent = reader["id_event"] != DBNull.Value ? Convert.ToInt64(reader["id_event"]) : 0,
+                                    Title = reader["title"]?.ToString() ?? string.Empty,
+                                    Location = reader["location"]?.ToString() ?? string.Empty,
+                                    StartTime = reader["start_time"] != DBNull.Value ? DateTime.SpecifyKind(Convert.ToDateTime(reader["start_time"]), DateTimeKind.Utc).ToLocalTime() : DateTime.MinValue,
+                                    EndTime = reader["end_time"] != DBNull.Value ? DateTime.SpecifyKind(Convert.ToDateTime(reader["end_time"]), DateTimeKind.Utc).ToLocalTime() : DateTime.MinValue,
+                                    EventType = reader["event_type"]?.ToString() ?? string.Empty,
+                                    IsCompleted = reader["is_completed"] != DBNull.Value && Convert.ToBoolean(reader["is_completed"])
+                                });
+                            }
+                        }
+                    }
+                }
+            }
+            catch 
+            {
+                // Fallback nếu có lỗi
+                upcoming = _eventBll.GetUpcoming(idAcc, 31) ?? new System.Collections.Generic.List<PersonalEvent>();
+            }
 
-            StatUpcoming.Text = upcoming.Count.ToString();
+            // Chỉ đếm số lượng Lịch cá nhân cho ô thống kê "Sự kiện hôm nay"
+            var today = upcoming.Count(e => e.StartTime.Date == DateTime.Today && e.EventType == "PERSONAL");
+            
+            // Chỉ hiển thị 7 ngày tới cho thống kê
+            var next7Days = upcoming.Where(e => e.StartTime.Date >= DateTime.Today && e.StartTime.Date < DateTime.Today.AddDays(8))
+                                    .OrderBy(e => e.StartTime).ToList();
+
+            // Chỉ lấy lịch CÁ NHÂN cho bảng Sự kiện sắp tới
+            var personalNext7Days = next7Days.Where(e => e.EventType == "PERSONAL").ToList();
+
+            StatUpcoming.Text = personalNext7Days.Count.ToString();
             StatEvents.Text = today.ToString();
 
             // Tính năng thông báo
@@ -55,15 +145,14 @@ namespace StudentReminderApp.Views.Pages
             StatCourses.Text = dangHoc.ToString();
 
             // Cập nhật danh sách sự kiện 7 ngày tới
-            if (upcoming.Count > 0)
+            if (personalNext7Days.Count > 0)
             {
-                EventList.ItemsSource = upcoming.Select(e => new {
-                    Title = e.Title,
+                EventList.ItemsSource = personalNext7Days.Select(e => new EventItem
+                {
+                    Title = e.Title ?? string.Empty,
                     Location = string.IsNullOrEmpty(e.Location) ? "Không có địa điểm" : e.Location,
                     StartTime = e.StartTime,
-                    EventTypeIcon = e.EventType == "ACADEMIC" ? "📚" :
-                                    e.EventType == "DEADLINE" ? "⚠" :
-                                    e.EventType == "EXAM" ? "📝" : "📅"
+                    EventTypeIcon = "📅"
                 }).ToList();
                 TxtNoEvent.Visibility = Visibility.Collapsed;
             }
@@ -76,8 +165,9 @@ namespace StudentReminderApp.Views.Pages
             // Cập nhật danh sách Lịch học và Lịch thi hôm nay
             var todayClasses = upcoming.Where(e => (e.EventType == "ACADEMIC" || e.EventType == "EXAM") && e.StartTime.Date == DateTime.Today)
                 .OrderBy(e => e.StartTime)
-                .Select(e => new {
-                    TenMonHoc = e.Title,
+                .Select(e => new ScheduleItem
+                {
+                    TenMonHoc = e.Title ?? string.Empty,
                     StartTime = e.StartTime.ToString("HH:mm") + " - " + e.EndTime.ToString("HH:mm"),
                     TenPhong = string.IsNullOrEmpty(e.Location) ? "Chưa rõ phòng" : e.Location
                 }).ToList();
@@ -97,8 +187,9 @@ namespace StudentReminderApp.Views.Pages
             DateTime tomorrow = DateTime.Today.AddDays(1);
             var tomorrowClasses = upcoming.Where(e => (e.EventType == "ACADEMIC" || e.EventType == "EXAM") && e.StartTime.Date == tomorrow)
                 .OrderBy(e => e.StartTime)
-                .Select(e => new {
-                    TenMonHoc = e.Title,
+                .Select(e => new ScheduleItem
+                {
+                    TenMonHoc = e.Title ?? string.Empty,
                     StartTime = e.StartTime.ToString("HH:mm") + " - " + e.EndTime.ToString("HH:mm"),
                     TenPhong = string.IsNullOrEmpty(e.Location) ? "Chưa rõ phòng" : e.Location
                 }).ToList();
@@ -112,6 +203,66 @@ namespace StudentReminderApp.Views.Pages
             {
                 TomorrowSchedule.ItemsSource = null;
                 TxtNoScheduleTomorrow.Visibility = Visibility.Visible;
+            }
+
+            // ── Checklist nhắc nhở 4 ô ──────────────────────────
+            // Lấy đủ sự kiện trong tháng hiện tại (31 ngày) - CHỈ LẤY LOẠI NHẮC NHỞ (REMINDER)
+            var allForMonth = upcoming.Where(e => e.EventType == "REMINDER").ToList(); 
+
+            // Hôm nay
+            LoadChecklist(CheckToday, TxtNoToday,
+                allForMonth.Where(e => e.StartTime.Date == DateTime.Today).ToList());
+
+            // Ngày mai
+            LoadChecklist(CheckTomorrow, TxtNoTomorrow,
+                allForMonth.Where(e => e.StartTime.Date == tomorrow).ToList());
+
+            // Tuần này (7 ngày tới, ngoại trừ hôm nay và ngày mai để tránh trùng lặp)
+            DateTime dayAfterTomorrow = DateTime.Today.AddDays(2);
+            DateTime endWeek = DateTime.Today.AddDays(7);
+            LoadChecklist(CheckWeek, TxtNoWeek,
+                allForMonth.Where(e => e.StartTime.Date >= dayAfterTomorrow && e.StartTime.Date < endWeek).ToList());
+
+            // Tháng này (ngoại trừ hôm nay và ngày mai)
+            LoadChecklist(CheckMonth, TxtNoMonth,
+                allForMonth.Where(e => e.StartTime.Month == DateTime.Today.Month
+                                    && e.StartTime.Year == DateTime.Today.Year
+                                    && e.StartTime.Date >= dayAfterTomorrow).ToList());
+        }
+
+        private void LoadChecklist(ItemsControl ctrl, TextBlock txtEmpty,
+            System.Collections.Generic.List<PersonalEvent> events)
+        {
+            _suppressCheckEvent = true;
+            var items = new ObservableCollection<ReminderCheckItem>(
+                events.Select(e => new ReminderCheckItem
+                {
+                    IdEvent = e.IdEvent,
+                    Title = e.Title ?? "",
+                    IsChecked = e.IsCompleted
+                }));
+            ctrl.ItemsSource = items;
+            txtEmpty.Visibility = items.Count == 0 ? Visibility.Visible : Visibility.Collapsed;
+            _suppressCheckEvent = false;
+        }
+
+        private void OnReminderChecked(object sender, RoutedEventArgs e)
+        {
+            if (_suppressCheckEvent) return;
+            if (sender is CheckBox cb && cb.Tag is long idEvent)
+            {
+                bool isChecked = cb.IsChecked == true;
+                try
+                {
+                    using var conn = new System.Data.SqlClient.SqlConnection(AppConfig.ConnectionString);
+                    conn.Open();
+                    using var cmd = new System.Data.SqlClient.SqlCommand(
+                        "UPDATE PERSONAL_EVENT SET is_completed=@v WHERE id_event=@id", conn);
+                    cmd.Parameters.AddWithValue("@v", isChecked);
+                    cmd.Parameters.AddWithValue("@id", idEvent);
+                    cmd.ExecuteNonQuery();
+                }
+                catch { }
             }
         }
 

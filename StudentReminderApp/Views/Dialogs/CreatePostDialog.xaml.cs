@@ -35,6 +35,7 @@ namespace StudentReminderApp.Views.Dialogs
             {
                 if (TxtUserName != null) TxtUserName.Text = SessionManager.CurrentUser.HoTen;
                 if (TxtPlaceholder != null) TxtPlaceholder.Text = $"{SessionManager.CurrentUser.HoTen} ơi, bạn đang nghĩ gì thế?";
+                UpdateAvatar(false);
             }
         }
 
@@ -43,7 +44,32 @@ namespace StudentReminderApp.Views.Dialogs
         private void BtnAnonymous_Toggle(object sender, RoutedEventArgs e)
         {
             if (TxtUserName == null || BtnAnonymous == null) return;
-            TxtUserName.Text = (BtnAnonymous.IsChecked == true) ? "Thành viên ẩn danh" : (SessionManager.CurrentUser?.HoTen ?? "Người dùng");
+            bool isAnon = BtnAnonymous.IsChecked == true;
+            TxtUserName.Text = isAnon ? "Thành viên ẩn danh" : (SessionManager.CurrentUser?.HoTen ?? "Người dùng");
+            UpdateAvatar(isAnon);
+        }
+
+        private void UpdateAvatar(bool isAnonymous)
+        {
+            if (AvatarEllipse != null)
+            {
+                string avatarPath = "/Resources/Images/user.png";
+                if (!isAnonymous && SessionManager.CurrentUser != null && !string.IsNullOrEmpty(SessionManager.CurrentUser.AvatarUrl))
+                {
+                    avatarPath = SessionManager.CurrentUser.AvatarUrl;
+                }
+                
+                try 
+                {
+                    var uri = new Uri(avatarPath, UriKind.RelativeOrAbsolute);
+                    if (!uri.IsAbsoluteUri)
+                    {
+                        uri = new Uri("pack://application:,,," + avatarPath);
+                    }
+                    AvatarEllipse.Fill = new ImageBrush(new System.Windows.Media.Imaging.BitmapImage(uri)) { Stretch = Stretch.UniformToFill };
+                }
+                catch { }
+            }
         }
 
         private void SelectFile_Click(object sender, MouseButtonEventArgs e)

@@ -182,5 +182,25 @@ namespace StudentReminderApp.DAL
                 return false;
             }
         }
+        // ─────────────────────────────────────────────────────────
+        // Hủy xác thực sinh viên
+        // ─────────────────────────────────────────────────────────
+        public bool UnverifyStudent(long idAcc)
+        {
+            const string sql = "UPDATE ACCOUNT SET is_verified=0 WHERE id_acc=@id";
+            try
+            {
+                using var conn = GetConnection();
+                if (conn.State == ConnectionState.Closed) conn.Open();
+                using var cmd = new SqlCommand(sql, conn);
+                cmd.Parameters.Add("@id", SqlDbType.BigInt).Value = idAcc;
+                return cmd.ExecuteNonQuery() > 0;
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("StudentDAL.UnverifyStudent: " + ex.Message);
+                return false;
+            }
+        }
     }
 }

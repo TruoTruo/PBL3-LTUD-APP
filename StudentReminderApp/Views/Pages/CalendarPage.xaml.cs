@@ -425,7 +425,7 @@ namespace StudentReminderApp.Views.Pages
             {
                 MinWidth = 24, Height = 24, CornerRadius = new CornerRadius(12),
                 Padding = date.Day == 1 ? new Thickness(6, 0, 6, 0) : new Thickness(0),
-                Background = isToday ? new SolidColorBrush(Color.FromRgb(26, 115, 232)) : Brushes.Transparent,
+                Background = isToday ? new SolidColorBrush(Color.FromRgb(239, 68, 68)) : Brushes.Transparent,
                 HorizontalAlignment = HorizontalAlignment.Center,
                 Margin = new Thickness(0, 0, 0, 2)
             };
@@ -469,7 +469,7 @@ namespace StudentReminderApp.Views.Pages
             TxtCurrentDayNumber.Text = _current.Day.ToString();
             if (_current.Date == DateTime.Today)
             {
-                TodayCircleBorder.Background = new SolidColorBrush(Color.FromRgb(26, 115, 232));
+                TodayCircleBorder.Background = new SolidColorBrush(Color.FromRgb(239, 68, 68));
                 TxtCurrentDayNumber.Foreground = Brushes.White;
             }
             else
@@ -697,7 +697,7 @@ namespace StudentReminderApp.Views.Pages
                 
                 var border = new Border
                 {
-                    Background = isToday ? new SolidColorBrush(Color.FromRgb(26, 115, 232)) : Brushes.Transparent,
+                    Background = isToday ? new SolidColorBrush(Color.FromRgb(239, 68, 68)) : Brushes.Transparent,
                     CornerRadius = new CornerRadius(23),
                     Width = 46,
                     Height = 46,
@@ -1403,6 +1403,13 @@ namespace StudentReminderApp.Views.Pages
                     var doc = Newtonsoft.Json.Linq.JArray.Parse(jsonString);
                     
                     DateTime startOfWeek = DateTime.Today;
+                    try {
+                        string timeJson = System.IO.File.ReadAllText(@"D:\IT\HỌC\PBL3\PBL3-LTUD-APP\RENDER\TimeWeekStart.json");
+                        var timeObj = Newtonsoft.Json.Linq.JObject.Parse(timeJson);
+                        if (DateTime.TryParse(timeObj["firstWeekStartDate"]?.ToString(), out DateTime parsed)) {
+                            startOfWeek = parsed;
+                        }
+                    } catch { }
                     while (startOfWeek.DayOfWeek != DayOfWeek.Monday) startOfWeek = startOfWeek.AddDays(-1);
 
                     string[] starts = { "07:00", "08:00", "09:00", "10:00", "11:00", "13:00", "14:00", "15:00", "16:00", "17:00" };
@@ -1417,6 +1424,7 @@ namespace StudentReminderApp.Views.Pages
                         string lecturer = element["LecturerName"]?.ToString();
                         string scheduleStr = element["ScheduleStr"]?.ToString();
                         string roomStr = element["RoomStr"]?.ToString();
+                        string weeksStr = element["WeekStr"]?.ToString();
 
                         if (string.IsNullOrWhiteSpace(scheduleStr)) continue;
 
@@ -1430,6 +1438,19 @@ namespace StudentReminderApp.Views.Pages
                                 if (m.Success) roomDict[int.Parse(m.Groups[1].Value)] = m.Groups[2].Value.Trim();
                             }
                         }
+
+                        var weekRanges = new List<(int start, int end)>();
+                        if (!string.IsNullOrWhiteSpace(weeksStr)) {
+                            foreach (var range in weeksStr.Split(new[] { ';', ',' }, StringSplitOptions.RemoveEmptyEntries)) {
+                                var mWeek = System.Text.RegularExpressions.Regex.Match(range, @"(\d+)-?(\d*)");
+                                if (mWeek.Success) {
+                                    int startW = int.Parse(mWeek.Groups[1].Value);
+                                    int endW = mWeek.Groups[2].Success && !string.IsNullOrEmpty(mWeek.Groups[2].Value) ? int.Parse(mWeek.Groups[2].Value) : startW;
+                                    weekRanges.Add((startW, endW));
+                                }
+                            }
+                        }
+                        if (weekRanges.Count == 0) weekRanges.Add((1, 15)); // Mặc định nếu không có
 
                         var sParts = scheduleStr.Split(new string[] { ", " }, StringSplitOptions.RemoveEmptyEntries);
                         foreach (var sp in sParts)
@@ -1446,27 +1467,33 @@ namespace StudentReminderApp.Views.Pages
                                     string startTimeStr = starts[startPeriod - 1];
                                     string endTimeStr = ends[endPeriod - 1];
 
-                                    DateTime eventDate = startOfWeek.AddDays(day - 2);
-                                    DateTime eventStart = eventDate.Add(TimeSpan.Parse(startTimeStr));
-                                    DateTime eventEnd = eventDate.Add(TimeSpan.Parse(endTimeStr));
-                                    string room = roomDict.ContainsKey(day) ? roomDict[day] : "";
-
-                                    var ev = new PersonalEvent
+                                    foreach (var wr in weekRanges)
                                     {
-                                        IdAcc = SessionManager.CurrentAccount.IdAcc,
-                                        Title = courseName,
-                                        Description = $"Mã lớp: {classCode}\nNhóm: {group}\nGiảng viên: {lecturer}",
-                                        Location = room,
-                                        StartTime = eventStart,
-                                        EndTime = eventEnd,
-                                        EventType = "ACADEMIC",
-                                        ColorCategory = "#EA4335",
-                                        RecurrenceRule = "FREQ=WEEKLY;INTERVAL=1;COUNT=15",
-                                        IsAllDay = false
-                                    };
+                                        DateTime rangeStartWeek = startOfWeek.AddDays((wr.start - 1) * 7);
+                                        int totalWeeks = wr.end - wr.start + 1;
 
-                                    _bll.Save(ev, 15); // Add event with 15 mins reminder
-                                    count++;
+                                        DateTime eventDate = rangeStartWeek.AddDays(day - 2);
+                                        DateTime eventStart = eventDate.Add(TimeSpan.Parse(startTimeStr));
+                                        DateTime eventEnd = eventDate.AddDays((totalWeeks - 1) * 7).Add(TimeSpan.Parse(endTimeStr));
+                                        string room = roomDict.ContainsKey(day) ? roomDict[day] : "";
+
+                                        var ev = new PersonalEvent
+                                        {
+                                            IdAcc = SessionManager.CurrentAccount.IdAcc,
+                                            Title = courseName,
+                                            Description = $"Mã lớp: {classCode}\nNhóm: {group}\nGiảng viên: {lecturer}",
+                                            Location = room,
+                                            StartTime = eventStart,
+                                            EndTime = eventEnd,
+                                            EventType = "ACADEMIC",
+                                            ColorCategory = "#EA4335",
+                                            RecurrenceRule = "WEEKLY",
+                                            IsAllDay = false
+                                        };
+
+                                        _bll.Save(ev, 15);
+                                        count++;
+                                    }
                                 }
                             }
                         }
@@ -1778,7 +1805,7 @@ namespace StudentReminderApp.Views.Pages
             grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
 
             var contentText = new TextBlock { Text = tagName, TextTrimming = TextTrimming.CharacterEllipsis, MaxWidth = 140 };
-            var chk = new CheckBox { Content = contentText, IsChecked = true, Foreground = new SolidColorBrush(Color.FromRgb(60, 64, 67)), FontSize = 13, VerticalAlignment = VerticalAlignment.Center };
+            var chk = new CheckBox { Content = contentText, IsChecked = true, Foreground = (Brush)FindResource("TextPrimaryBrush"), FontSize = 13, VerticalAlignment = VerticalAlignment.Center };
             chk.Tag = tagId;
             chk.Checked += Filter_Changed;
             chk.Unchecked += Filter_Changed;
@@ -1807,6 +1834,7 @@ namespace StudentReminderApp.Views.Pages
                 editBox.SelectAll();
                 
                 editBox.LostFocus += (s2, e2) => {
+                    if (grid.Children.Contains(chk)) return; // Prevent double firing
                     string newName = string.IsNullOrWhiteSpace(editBox.Text) ? "Tag mới" : editBox.Text;
                     ((TextBlock)chk.Content).Text = newName;
                     dal.UpdateTag(tagId, newName);

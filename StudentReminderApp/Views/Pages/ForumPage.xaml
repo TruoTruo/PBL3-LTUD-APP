@@ -4,12 +4,37 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:fa="http://schemas.fontawesome.io/icons/"
     xmlns:vm="clr-namespace:StudentReminderApp.ViewModels"
-    Background="#F0F2F5"
+    Background="{DynamicResource BgBrush}"
     mc:Ignorable="d">
 
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        <Style x:Key="ActionButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Padding" Value="8" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Foreground" Value="#65676B" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border" Background="{TemplateBinding Background}" CornerRadius="6">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" Margin="{TemplateBinding Padding}"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="{DynamicResource BgBrush}" />
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#E4E6EB" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </UserControl.Resources>
 
     <UserControl.DataContext>
@@ -19,18 +44,71 @@
     <!-- ═══════════════════════════════════════════════════════
          TabControl: Tab 1 = Diễn đàn (cũ), Tab 2 = Duyệt bài (Admin)
          ═══════════════════════════════════════════════════════ -->
-    <TabControl>
+    <TabControl Background="Transparent" BorderThickness="0" Margin="10,0,10,0">
+        <TabControl.Resources>
+            <Style TargetType="TabItem">
+                <Setter Property="FontSize" Value="16"/>
+                <Setter Property="FontWeight" Value="Bold"/>
+                <Setter Property="Foreground" Value="{DynamicResource TextSecondaryBrush}"/>
+                <Setter Property="Cursor" Value="Hand"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="TabItem">
+                            <Border Name="Border" Padding="16,8" Margin="0,0,8,0" CornerRadius="8,8,0,0" Background="Transparent" BorderThickness="0,0,0,3" BorderBrush="Transparent">
+                                <ContentPresenter x:Name="ContentSite" VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Header" Margin="10,2"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsSelected" Value="True">
+                                    <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource TextPrimaryBrush}" />
+                                    <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}" />
+                                </Trigger>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="Border" Property="Background" Value="#F1F5F9" />
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </TabControl.Resources>
 
         <!-- ══════════════════════════════════════════
              TAB 1: DIỄN ĐÀN — giữ nguyên giao diện cũ
              ══════════════════════════════════════════ -->
-        <TabItem Header="🏠 Diễn đàn">
-            <Grid x:Name="MainGrid">
-                <ScrollViewer
-                    x:Name="PostScrollViewer"
-                    HorizontalScrollBarVisibility="Disabled"
-                    VerticalScrollBarVisibility="Auto">
-                    <StackPanel x:Name="MainStackPanel">
+        <TabItem>
+            <TabItem.Header>
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                    <fa:ImageAwesome Icon="Home" Width="16" Height="16" Margin="0,0,8,0" Foreground="{Binding RelativeSource={RelativeSource AncestorType=TabItem}, Path=Foreground}"/>
+                    <TextBlock Text="Diễn đàn"/>
+                </StackPanel>
+            </TabItem.Header>
+            <Grid>
+                <!-- YÊU CẦU XÁC THỰC THẺ SINH VIÊN -->
+                <Border x:Name="VerificationOverlay" Background="{DynamicResource SurfaceBrush}" Panel.ZIndex="10" Visibility="Collapsed">
+                    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" MaxWidth="400">
+                        <TextBlock Text="🔒 Diễn đàn bị khóa" FontSize="28" FontWeight="Bold" Foreground="#1C1E21" HorizontalAlignment="Center" Margin="0,0,0,10"/>
+                        <TextBlock x:Name="TxtVerificationStatus" Text="Để bảo vệ cộng đồng sinh viên an toàn, bạn cần tải lên ảnh thẻ sinh viên để Quản trị viên duyệt trước khi có thể đọc và tham gia diễn đàn." FontSize="15" Foreground="#65676B" TextAlignment="Center" TextWrapping="Wrap" HorizontalAlignment="Center" Margin="0,0,0,25"/>
+                        
+                        <Image x:Name="ImgIdCardPreview" Height="150" Margin="0,0,0,20" Stretch="Uniform" Visibility="Collapsed"/>
+                        
+                        <Button x:Name="BtnUploadIdCard" Content="Tải lên ảnh Thẻ Sinh Viên" Padding="15,12" Background="{DynamicResource TextPrimaryBrush}" Foreground="{DynamicResource SurfaceBrush}" FontSize="15" FontWeight="SemiBold" Cursor="Hand" Click="BtnUploadIdCard_Click">
+                            <Button.Template>
+                                <ControlTemplate TargetType="Button">
+                                    <Border Background="{TemplateBinding Background}" CornerRadius="8">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Button.Template>
+                        </Button>
+                    </StackPanel>
+                </Border>
+
+                <Grid x:Name="MainGrid">
+                    <ScrollViewer
+                        x:Name="PostScrollViewer"
+                        HorizontalScrollBarVisibility="Disabled"
+                        VerticalScrollBarVisibility="Auto">
+                        <StackPanel x:Name="MainStackPanel">
 
                         <!-- HEADER ảnh bìa — GIỮ NGUYÊN -->
                         <Border
@@ -56,7 +134,7 @@
                                     <TextBlock
                                         FontSize="32"
                                         FontWeight="Bold"
-                                        Foreground="White"
+                                        Foreground="{DynamicResource SurfaceBrush}"
                                         Text="Nhóm Sinh viên Đại học">
                                         <TextBlock.Effect>
                                             <DropShadowEffect BlurRadius="10" Opacity="0.8" ShadowDepth="2" />
@@ -64,7 +142,7 @@
                                     </TextBlock>
                                     <TextBlock
                                         FontSize="14"
-                                        Foreground="#E2E8F0"
+                                        Foreground="{DynamicResource BorderBrush}"
                                         Text="Chia sẻ kiến thức • Kết nối bạn bè" />
                                 </StackPanel>
                             </Grid>
@@ -75,8 +153,8 @@
                             x:Name="CreatePostArea"
                             MaxWidth="500"
                             Margin="0,20,0,20"
-                            Background="White"
-                            BorderBrush="#E2E8F0"
+                            Background="{DynamicResource SurfaceBrush}"
+                            BorderBrush="{DynamicResource BorderBrush}"
                             BorderThickness="1"
                             CornerRadius="12">
                             <Grid Margin="15">
@@ -96,7 +174,7 @@
                                     x:Name="PostInputTrigger"
                                     Grid.Column="1"
                                     Height="45"
-                                    Background="#F0F2F5"
+                                    Background="{DynamicResource BgBrush}"
                                     CornerRadius="22.5"
                                     Cursor="Hand"
                                     MouseLeftButtonUp="OpenCreatePost_Click">
@@ -111,12 +189,12 @@
                                     x:Name="BtnCreatePost"
                                     Grid.Column="2"
                                     Margin="12,0,0,0"
-                                    Background="#1877F2"
+                                    Background="{DynamicResource TextPrimaryBrush}"
                                     Click="OpenCreatePost_Click"
                                     Content="Đăng bài"
                                     Cursor="Hand"
                                     FontWeight="Bold"
-                                    Foreground="White">
+                                    Foreground="{DynamicResource SurfaceBrush}">
                                     <Button.Template>
                                         <ControlTemplate TargetType="Button">
                                             <Border
@@ -143,7 +221,7 @@
                                             BorderThickness="0">
                                         <Button.Style>
                                             <Style TargetType="Button">
-                                                <Setter Property="Background" Value="White"/>
+                                                <Setter Property="Background" Value="{DynamicResource SurfaceBrush}"/>
                                                 <Setter Property="Foreground" Value="#65676B"/>
                                                 <Setter Property="FontWeight" Value="SemiBold"/>
                                                 <Setter Property="FontSize" Value="13"/>
@@ -163,8 +241,8 @@
                                                 </Setter>
                                                 <Style.Triggers>
                                                     <DataTrigger Binding="{Binding IsAllSelected}" Value="True">
-                                                        <Setter Property="Background" Value="#1877F2"/>
-                                                        <Setter Property="Foreground" Value="White"/>
+                                                        <Setter Property="Background" Value="{DynamicResource TextPrimaryBrush}"/>
+                                                        <Setter Property="Foreground" Value="{DynamicResource SurfaceBrush}"/>
                                                     </DataTrigger>
                                                 </Style.Triggers>
                                             </Style>
@@ -178,7 +256,7 @@
                                             BorderThickness="0">
                                         <Button.Style>
                                             <Style TargetType="Button">
-                                                <Setter Property="Background" Value="White"/>
+                                                <Setter Property="Background" Value="{DynamicResource SurfaceBrush}"/>
                                                 <Setter Property="Foreground" Value="#65676B"/>
                                                 <Setter Property="FontWeight" Value="SemiBold"/>
                                                 <Setter Property="FontSize" Value="13"/>
@@ -199,7 +277,7 @@
                                                 <Style.Triggers>
                                                     <DataTrigger Binding="{Binding IsHotSelected}" Value="True">
                                                         <Setter Property="Background" Value="#FF5722"/>
-                                                        <Setter Property="Foreground" Value="White"/>
+                                                        <Setter Property="Foreground" Value="{DynamicResource SurfaceBrush}"/>
                                                     </DataTrigger>
                                                 </Style.Triggers>
                                             </Style>
@@ -213,7 +291,7 @@
                                             BorderThickness="0">
                                         <Button.Style>
                                             <Style TargetType="Button">
-                                                <Setter Property="Background" Value="White"/>
+                                                <Setter Property="Background" Value="{DynamicResource SurfaceBrush}"/>
                                                 <Setter Property="Foreground" Value="#65676B"/>
                                                 <Setter Property="FontWeight" Value="SemiBold"/>
                                                 <Setter Property="FontSize" Value="13"/>
@@ -234,7 +312,7 @@
                                                 <Style.Triggers>
                                                     <DataTrigger Binding="{Binding IsStudentSelected}" Value="True">
                                                         <Setter Property="Background" Value="#4CAF50"/>
-                                                        <Setter Property="Foreground" Value="White"/>
+                                                        <Setter Property="Foreground" Value="{DynamicResource SurfaceBrush}"/>
                                                     </DataTrigger>
                                                 </Style.Triggers>
                                             </Style>
@@ -248,7 +326,7 @@
                                             BorderThickness="0">
                                         <Button.Style>
                                             <Style TargetType="Button">
-                                                <Setter Property="Background" Value="White"/>
+                                                <Setter Property="Background" Value="{DynamicResource SurfaceBrush}"/>
                                                 <Setter Property="Foreground" Value="#65676B"/>
                                                 <Setter Property="FontWeight" Value="SemiBold"/>
                                                 <Setter Property="FontSize" Value="13"/>
@@ -269,7 +347,7 @@
                                                 <Style.Triggers>
                                                     <DataTrigger Binding="{Binding IsAnnouncementSelected}" Value="True">
                                                         <Setter Property="Background" Value="#9C27B0"/>
-                                                        <Setter Property="Foreground" Value="White"/>
+                                                        <Setter Property="Foreground" Value="{DynamicResource SurfaceBrush}"/>
                                                     </DataTrigger>
                                                 </Style.Triggers>
                                             </Style>
@@ -291,8 +369,8 @@
                                 <DataTemplate>
                                     <Border
                                         Margin="0,0,0,15"
-                                        Background="White"
-                                        BorderBrush="#E2E8F0"
+                                        Background="{DynamicResource SurfaceBrush}"
+                                        BorderBrush="{DynamicResource BorderBrush}"
                                         BorderThickness="1"
                                         CornerRadius="12">
                                         <Grid>
@@ -352,7 +430,7 @@
                                                                         <Style TargetType="Border">
                                                                             <Style.Triggers>
                                                                                 <Trigger Property="IsMouseOver" Value="True">
-                                                                                    <Setter Property="Background" Value="#F0F2F5" />
+                                                                                    <Setter Property="Background" Value="{DynamicResource BgBrush}" />
                                                                                 </Trigger>
                                                                             </Style.Triggers>
                                                                         </Style>
@@ -415,7 +493,7 @@
                                                                 <DataTrigger Binding="{Binding IsColored}" Value="True">
                                                                     <Setter Property="FontSize" Value="24" />
                                                                     <Setter Property="FontWeight" Value="Bold" />
-                                                                    <Setter Property="Foreground" Value="White" />
+                                                                    <Setter Property="Foreground" Value="{DynamicResource SurfaceBrush}" />
                                                                     <Setter Property="TextAlignment" Value="Center" />
                                                                     <Setter Property="Margin" Value="30,60,30,60" />
                                                                 </DataTrigger>
@@ -429,7 +507,7 @@
                                             <ItemsControl Grid.Row="2" ItemsSource="{Binding ImagePaths}">
                                                 <ItemsControl.ItemTemplate>
                                                     <DataTemplate>
-                                                        <Border BorderBrush="#F0F2F5" BorderThickness="0,1,0,1">
+                                                        <Border BorderBrush="{DynamicResource BgBrush}" BorderThickness="0,1,0,1">
                                                             <Image MaxHeight="500" Source="{Binding}" Stretch="Uniform" />
                                                         </Border>
                                                     </DataTemplate>
@@ -441,7 +519,7 @@
                                                 Grid.Row="3"
                                                 Margin="15,10,15,0"
                                                 Padding="12"
-                                                Background="#F8F9FA"
+                                                Background="{DynamicResource BgBrush}"
                                                 BorderBrush="#CED0D4"
                                                 BorderThickness="1"
                                                 CornerRadius="10">
@@ -490,24 +568,19 @@
                                                             Text="{Binding ShareCount, StringFormat='{}{0} chia sẻ'}" />
                                                     </StackPanel>
                                                 </DockPanel>
-                                                <Rectangle Height="1" Margin="0,8,0,0" Fill="#E2E8F0" />
+                                                <Rectangle Height="1" Margin="0,8,0,0" Fill="{DynamicResource BorderBrush}" />
                                             </StackPanel>
 
                                             <!-- Nút hành động Like/Bình luận/Chia sẻ — GIỮ NGUYÊN -->
                                             <UniformGrid Grid.Row="5" Margin="5,0,5,5" Columns="3">
                                                 <Button
-                                                    Padding="8"
-                                                    Background="Transparent"
-                                                    BorderThickness="0"
                                                     Command="{Binding DataContext.LikeCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
-                                                    CommandParameter="{Binding}"
-                                                    Cursor="Hand">
+                                                    CommandParameter="{Binding}">
                                                     <Button.Style>
-                                                        <Style TargetType="Button">
-                                                            <Setter Property="Foreground" Value="#65676B" />
+                                                        <Style TargetType="Button" BasedOn="{StaticResource ActionButtonStyle}">
                                                             <Style.Triggers>
                                                                 <DataTrigger Binding="{Binding IsLiked}" Value="True">
-                                                                    <Setter Property="Foreground" Value="#1877F2" />
+                                                                    <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}" />
                                                                 </DataTrigger>
                                                             </Style.Triggers>
                                                         </Style>
@@ -519,12 +592,8 @@
                                                 </Button>
 
                                                 <Button
-                                                    Padding="8"
-                                                    Background="Transparent"
-                                                    BorderThickness="0"
-                                                    Click="CommentButton_Click"
-                                                    Cursor="Hand"
-                                                    Foreground="#65676B">
+                                                    Style="{StaticResource ActionButtonStyle}"
+                                                    Click="CommentButton_Click">
                                                     <StackPanel Orientation="Horizontal">
                                                         <TextBlock Text="💬 " />
                                                         <TextBlock FontWeight="SemiBold" Text="Bình luận" />
@@ -532,13 +601,9 @@
                                                 </Button>
 
                                                 <Button
-                                                    Padding="8"
-                                                    Background="Transparent"
-                                                    BorderThickness="0"
+                                                    Style="{StaticResource ActionButtonStyle}"
                                                     Click="ShareButton_Click"
-                                                    CommandParameter="{Binding}"
-                                                    Cursor="Hand"
-                                                    Foreground="#65676B">
+                                                    CommandParameter="{Binding}">
                                                     <StackPanel Orientation="Horizontal">
                                                         <TextBlock Text="↪️ " />
                                                         <TextBlock FontWeight="SemiBold" Text="Chia sẻ" />
@@ -555,13 +620,19 @@
                     </StackPanel>
                 </ScrollViewer>
             </Grid>
+            </Grid>
         </TabItem>
 
         <!-- ══════════════════════════════════════════════════════
              TAB 2: DUYỆT BÀI — CHỈ HIỆN KHI IsAdmin = true
              ══════════════════════════════════════════════════════ -->
-        <TabItem Header="🛡️ Duyệt bài"
-                 Visibility="{Binding IsAdmin, Converter={StaticResource BooleanToVisibilityConverter}}">
+        <TabItem Visibility="{Binding IsAdmin, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <TabItem.Header>
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                    <fa:ImageAwesome Icon="Shield" Width="16" Height="16" Margin="0,0,8,0" Foreground="{Binding RelativeSource={RelativeSource AncestorType=TabItem}, Path=Foreground}"/>
+                    <TextBlock Text="Duyệt bài"/>
+                </StackPanel>
+            </TabItem.Header>
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
@@ -580,18 +651,18 @@
                                 Margin="4,0,0,0" Padding="8,2"
                                 Background="#E65100" CornerRadius="10">
                                 <TextBlock
-                                    FontWeight="Bold" Foreground="White"
+                                    FontWeight="Bold" Foreground="{DynamicResource SurfaceBrush}"
                                     Text="{Binding PendingPosts.Count}" />
                             </Border>
                         </StackPanel>
                         <Button
                             DockPanel.Dock="Right"
                             Padding="14,6"
-                            Background="#1877F2"
+                            Background="{DynamicResource TextPrimaryBrush}"
                             Click="RefreshPending_Click"
                             Cursor="Hand"
                             FontWeight="SemiBold"
-                            Foreground="White">
+                            Foreground="{DynamicResource SurfaceBrush}">
                             <Button.Template>
                                 <ControlTemplate TargetType="Button">
                                     <Border
@@ -615,7 +686,7 @@
                                 <Border
                                     MaxWidth="600"
                                     Margin="20,0,20,12"
-                                    Background="White"
+                                    Background="{DynamicResource SurfaceBrush}"
                                     BorderBrush="#FF9800"
                                     BorderThickness="2"
                                     CornerRadius="12">
@@ -661,7 +732,7 @@
                                             </ItemsControl.ItemTemplate>
                                         </ItemsControl>
 
-                                        <Rectangle Height="1" Margin="0,8,0,10" Fill="#E2E8F0" />
+                                        <Rectangle Height="1" Margin="0,8,0,10" Fill="{DynamicResource BorderBrush}" />
 
                                         <!-- Nút hành động Admin -->
                                         <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
@@ -675,7 +746,7 @@
                                                 CommandParameter="{Binding}"
                                                 Cursor="Hand"
                                                 FontWeight="SemiBold"
-                                                Foreground="White">
+                                                Foreground="{DynamicResource SurfaceBrush}">
                                                 <Button.Template>
                                                     <ControlTemplate TargetType="Button">
                                                         <Border
@@ -698,7 +769,7 @@
                                                 CommandParameter="{Binding}"
                                                 Cursor="Hand"
                                                 FontWeight="SemiBold"
-                                                Foreground="White">
+                                                Foreground="{DynamicResource SurfaceBrush}">
                                                 <Button.Template>
                                                     <ControlTemplate TargetType="Button">
                                                         <Border
@@ -720,7 +791,7 @@
                                                 CommandParameter="{Binding}"
                                                 Cursor="Hand"
                                                 FontWeight="SemiBold"
-                                                Foreground="White">
+                                                Foreground="{DynamicResource SurfaceBrush}">
                                                 <Button.Template>
                                                     <ControlTemplate TargetType="Button">
                                                         <Border
@@ -746,12 +817,31 @@
         </TabItem>
 
         <!-- ══════════════════════════════════════════════════════
-             TAB 3: QUẢN LÝ SINH VIÊN — CHỈ HIỆN KHI IsAdmin = true
+             TAB 3: QUẢN LÝ — CHỈ HIỆN KHI IsAdmin = true
              ══════════════════════════════════════════════════════ -->
-        <TabItem Header="👥 Quản lý sinh viên"
-                 Visibility="{Binding IsAdmin, Converter={StaticResource BooleanToVisibilityConverter}}">
+        <TabItem Visibility="{Binding IsAdmin, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <TabItem.Header>
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                    <fa:ImageAwesome Icon="Users" Width="16" Height="16" Margin="0,0,8,0" Foreground="{Binding RelativeSource={RelativeSource AncestorType=TabItem}, Path=Foreground}"/>
+                    <TextBlock Text="Quản lý"/>
+                </StackPanel>
+            </TabItem.Header>
             <Frame NavigationUIVisibility="Hidden"
                    Source="/Views/Pages/StudentManagementPage.xaml"/>
+        </TabItem>
+
+        <!-- ══════════════════════════════════════════════════════
+             TAB 4: NHẬT KÝ DIỄN ĐÀN — CHỈ HIỆN KHI IsAdmin = true
+             ══════════════════════════════════════════════════════ -->
+        <TabItem Visibility="{Binding IsAdmin, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <TabItem.Header>
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                    <fa:ImageAwesome Icon="ListAlt" Width="16" Height="16" Margin="0,0,8,0" Foreground="{Binding RelativeSource={RelativeSource AncestorType=TabItem}, Path=Foreground}"/>
+                    <TextBlock Text="Nhật ký"/>
+                </StackPanel>
+            </TabItem.Header>
+            <Frame NavigationUIVisibility="Hidden"
+                   Source="/Views/Pages/ForumLogPage.xaml"/>
         </TabItem>
 
     </TabControl>

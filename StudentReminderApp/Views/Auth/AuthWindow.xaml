@@ -13,7 +13,7 @@
         MouseMove="Window_MouseMove">
 
     <!-- Nền của toàn app được bo góc và có hiệu ứng xuất hiện -->
-    <Border Background="#E2E8F0" CornerRadius="24" Opacity="0">
+    <Border Background="{DynamicResource BorderBrush}" CornerRadius="24" Opacity="0">
         <Border.RenderTransform>
             <TranslateTransform Y="30"/>
         </Border.RenderTransform>
@@ -39,7 +39,7 @@
 
             <!-- Thanh tiêu đề giả lập (Title Bar) -->
             <Grid Grid.Row="0">
-                <TextBlock x:Name="TitleText" Text="Đăng nhập — Student Reminder" VerticalAlignment="Center" Margin="24,0,0,0" Foreground="#64748B" FontWeight="SemiBold" FontSize="13"/>
+                <TextBlock x:Name="TitleText" Text="Đăng nhập — Student Reminder" VerticalAlignment="Center" Margin="24,0,0,0" Foreground="{DynamicResource TextSecondaryBrush}" FontWeight="SemiBold" FontSize="13"/>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,16,0">
                     <Button Content="—" Width="30" Height="30" Background="Transparent" BorderThickness="0" 
                             FontSize="16" Foreground="Gray" Cursor="Hand" Click="BtnMinimize_Click"/>
@@ -59,7 +59,7 @@
                     <wv2:WebView2 x:Name="AnimationWebView" DefaultBackgroundColor="Transparent"/>
                 </Border>
 
-                <Border Grid.Column="1" Background="White" CornerRadius="20" Margin="16,0,16,16">
+                <Border Grid.Column="1" Background="{DynamicResource SurfaceBrush}" CornerRadius="20" Margin="16,0,16,16">
                     <Border.Effect>
                         <DropShadowEffect Color="Black" BlurRadius="25" ShadowDepth="4" Opacity="0.15" Direction="270"/>
                     </Border.Effect>

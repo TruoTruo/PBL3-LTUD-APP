@@ -768,6 +768,16 @@ namespace StudentReminderApp.Views.Dialogs
             }
         }
 
+        private void Link_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            if (sender is TextBlock tb) tb.TextDecorations = TextDecorations.Underline;
+        }
+
+        private void Link_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            if (sender is TextBlock tb) tb.TextDecorations = null;
+        }
+
         private void ShowError(string msg)
         {
             TxtErr.Text = "⚠ " + msg;

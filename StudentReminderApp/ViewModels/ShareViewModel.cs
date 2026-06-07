@@ -14,7 +14,7 @@ namespace StudentReminderApp.ViewModels
         private Post _originalPost;
 
         public string CurrentUserName => SessionManager.CurrentUser?.HoTen ?? "Người dùng";
-        public string CurrentUserAvatar => "/Resources/Images/user.png";
+        public string CurrentUserAvatar => string.IsNullOrEmpty(SessionManager.CurrentUser?.AvatarUrl) ? "/Resources/Images/user.png" : SessionManager.CurrentUser.AvatarUrl;
 
         public ObservableCollection<string> PrivacyOptions { get; } = new ObservableCollection<string> { "🌎 Công khai", "🔒 Chỉ mình tôi" };
 

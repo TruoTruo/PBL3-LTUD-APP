@@ -18,13 +18,14 @@ namespace StudentReminderApp.Views.Pages
         private readonly UserDAL    _userDal = new UserDAL();
         private readonly StudentBLL _stuBll  = new StudentBLL();
         private readonly AccountBLL    _authBll = new AccountBLL();
+        private readonly DanhMucDAL _danhMucDal = new DanhMucDAL();
 
         private List<ClassItem> _classList = new();
 
         public ProfilePage()
         {
             InitializeComponent();
-            Loaded += (s, e) => { LoadClasses(); LoadProfile(); };
+            Loaded += (s, e) => { LoadClasses(); LoadDanhMuc(); LoadProfile(); };
         }
 
         // ── Load danh sách lớp vào ComboBox ──────────────────────
@@ -39,6 +40,33 @@ namespace StudentReminderApp.Views.Pages
             CmbClass.ItemsSource       = _classList;
             CmbClass.DisplayMemberPath = "TenLop";
             CmbClass.SelectedValuePath = "IdLop";
+        }
+
+        private void LoadDanhMuc()
+        {
+            // Trường
+            CmbTruong.Items.Clear();
+            CmbTruong.Items.Add(new ComboBoxItem { Content = "— Chọn trường —" });
+            foreach (var item in _danhMucDal.GetByCategory("TRUONG"))
+                CmbTruong.Items.Add(new ComboBoxItem { Content = item.Value });
+            
+            // Khoa
+            CmbKhoa.Items.Clear();
+            CmbKhoa.Items.Add(new ComboBoxItem { Content = "— Chọn khoa —" });
+            foreach (var item in _danhMucDal.GetByCategory("KHOA"))
+                CmbKhoa.Items.Add(new ComboBoxItem { Content = item.Value });
+
+            // Ngành học
+            CmbNganhHoc.Items.Clear();
+            CmbNganhHoc.Items.Add(new ComboBoxItem { Content = "— Chọn ngành học —" });
+            foreach (var item in _danhMucDal.GetByCategory("NGANH"))
+                CmbNganhHoc.Items.Add(new ComboBoxItem { Content = item.Value });
+
+            // Nhóm
+            CmbNhom.Items.Clear();
+            CmbNhom.Items.Add(new ComboBoxItem { Content = "— Chọn nhóm —" });
+            foreach (var item in _danhMucDal.GetByCategory("NHOM"))
+                CmbNhom.Items.Add(new ComboBoxItem { Content = item.Value });
         }
 
         // ── Load profile ──────────────────────────────────────────
@@ -84,6 +112,7 @@ namespace StudentReminderApp.Views.Pages
                     var bitmap = new BitmapImage();
                     bitmap.BeginInit();
                     bitmap.CacheOption = BitmapCacheOption.OnLoad;
+                    bitmap.CreateOptions = BitmapCreateOptions.IgnoreImageCache;
                     bitmap.UriSource = new Uri(user.AvatarUrl, UriKind.Absolute);
                     bitmap.EndInit();
                     ImgAvatar.Source = bitmap;

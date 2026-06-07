@@ -66,7 +66,7 @@
         <Grid VerticalAlignment="Center" Margin="40,20">
             <StackPanel>
                 <TextBlock Text="✦" FontSize="32" Foreground="Black" HorizontalAlignment="Center" Margin="0,0,0,10"/>
-                <TextBlock Text="Create an account" FontSize="26" FontWeight="Bold" Foreground="#111111" HorizontalAlignment="Center" Margin="0,0,0,5"/>
+                <TextBlock Text="Create an account" FontSize="26" FontWeight="Bold" Foreground="{DynamicResource TextPrimaryBrush}" HorizontalAlignment="Center" Margin="0,0,0,5"/>
                 <TextBlock Text="Please fill in the details below" FontSize="14" Foreground="#777777" HorizontalAlignment="Center" Margin="0,0,0,25"/>
 
                 <TextBlock Text="HỌ VÀ TÊN *" FontSize="13" FontWeight="SemiBold" FontFamily="Segoe UI" Foreground="#777777" Margin="0,0,0,4"/>
@@ -156,8 +156,8 @@
                 <Button Height="50" Cursor="Hand" Click="BtnRegister_Click" Margin="0,0,0,10">
                     <Button.Template>
                         <ControlTemplate TargetType="Button">
-                            <Border Background="#1A1A1A" CornerRadius="25">
-                                <TextBlock Text="Sign Up" Foreground="White" FontWeight="SemiBold" FontSize="15" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <Border Background="{DynamicResource TextPrimaryBrush}" CornerRadius="25">
+                                <TextBlock Text="Sign Up" Foreground="{DynamicResource SurfaceBrush}" FontWeight="SemiBold" FontSize="15" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                             </Border>
                         </ControlTemplate>
                     </Button.Template>
@@ -169,7 +169,7 @@
                             <Border Background="Transparent">
                                 <TextBlock FontSize="13" Foreground="#777777">
                                     <Run Text="Already have an account? "/>
-                                    <Run Text="Log In" Foreground="#111111" FontWeight="SemiBold"/>
+                                    <Run Text="Log In" Foreground="{DynamicResource TextPrimaryBrush}" FontWeight="SemiBold"/>
                                 </TextBlock>
                             </Border>
                         </ControlTemplate>

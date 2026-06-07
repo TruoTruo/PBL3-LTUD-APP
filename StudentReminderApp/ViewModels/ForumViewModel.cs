@@ -78,6 +78,8 @@ namespace StudentReminderApp.ViewModels
 
         // ── PHÂN QUYỀN ──────────────────────────────────────────
         public bool IsAdmin => SessionManager.IsAdmin;
+        public string CurrentUserAvatar => string.IsNullOrEmpty(SessionManager.CurrentUser?.AvatarUrl) ? "pack://application:,,,/Resources/Images/user.png" : SessionManager.CurrentUser.AvatarUrl;
+        public string CurrentUserName => SessionManager.CurrentUser?.HoTen ?? "Người dùng";
 
         // ── CATEGORY FILTER ─────────────────────────────────────
         private PostCategory _selectedCategory = PostCategory.All;

@@ -16,6 +16,21 @@ namespace StudentReminderApp.Views.Main
         {
             InitializeComponent();
             TxtUserName.Text = $"Xin chào, {SessionManager.CurrentUser?.HoTen ?? "Sinh viên"}";
+            
+            // Tải Avatar người dùng
+            if (!string.IsNullOrWhiteSpace(SessionManager.CurrentUser?.AvatarUrl))
+            {
+                try {
+                    var bitmap = new System.Windows.Media.Imaging.BitmapImage();
+                    bitmap.BeginInit();
+                    bitmap.CacheOption = System.Windows.Media.Imaging.BitmapCacheOption.OnLoad;
+                    bitmap.CreateOptions = System.Windows.Media.Imaging.BitmapCreateOptions.IgnoreImageCache;
+                    bitmap.UriSource = new System.Uri(SessionManager.CurrentUser.AvatarUrl, System.UriKind.RelativeOrAbsolute);
+                    bitmap.EndInit();
+                    AvatarBrush.ImageSource = bitmap;
+                } catch { }
+            }
+
             _reminder.NotificationReady += ShowPopup;
             _reminder.Start();
             SetActiveNav(BtnDashboard);
