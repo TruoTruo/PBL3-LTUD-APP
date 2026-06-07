@@ -67,6 +67,10 @@ namespace StudentReminderApp.BLL
             if (_dal.GetAccountByUsername(mssv.Trim()) != null)
                 return Tuple.Create(false, "MSSV này đã được đăng ký tài khoản.");
 
+            // Kiểm tra trùng Email
+            if (_dal.GetAccountByEmail(email.Trim()) != null)
+                return Tuple.Create(false, "Email này đã được sử dụng cho một tài khoản khác.");
+
             // Hash mật khẩu và lưu
             string hash  = BCrypt.Net.BCrypt.HashPassword(password);
             long   roleId = 2; // Student

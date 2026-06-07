@@ -1,3 +1,4 @@
+using System;
 namespace StudentReminderApp
 {
     public static class AppConfig
@@ -7,14 +8,16 @@ namespace StudentReminderApp
             "TrustServerCertificate=True;MultipleActiveResultSets=True;";
 
         // CẤU HÌNH GỬI EMAIL OTP
-        // 1. Điền Email của bạn vào đây.
-        public static string SenderEmail => "nvttruonghtb@gmail.com"; 
-        // 2. Điền App Password 16 ký tự của Gmail vào đây.
-        public static string SenderAppPassword => "hilickcbbwpljyyd"; 
+        // Ưu tiên đọc từ biến môi trường (Environment Variables) để bảo mật.
+        // Nếu bạn chạy ở máy cá nhân (Local), hãy đổi "YOUR_EMAIL_HERE" và "YOUR_APP_PASSWORD_HERE" thành thông tin của bạn.
+        // LƯU Ý: KHÔNG PUSH MẬT KHẨU THẬT LÊN GITHUB!
+        public static string SenderEmail => Environment.GetEnvironmentVariable("STUDENT_APP_EMAIL") ?? "YOUR_EMAIL_HERE"; 
+        
+        public static string SenderAppPassword => Environment.GetEnvironmentVariable("STUDENT_APP_PWD") ?? "YOUR_APP_PASSWORD_HERE"; 
 
         // CẤU HÌNH ĐƯỜNG DẪN THƯ MỤC RENDER
         // Thay đổi đường dẫn này khi bạn chuyển code sang máy khác
-        public static string RenderFolderPath => @"D:\IT\HỌC\PBL3\PBL3-LTUD-APP\RENDER";
+        public static string RenderFolderPath => @"D:\IT\HỌC\PBL3\PBL3-LTUD-APP\StudentReminderApp\RENDER";
         public static string OrganizationJsonPath => System.IO.Path.Combine(RenderFolderPath, "Profile", "Organization.json");
         public static string TimeWeekStartJsonPath => System.IO.Path.Combine(RenderFolderPath, "TimeWeekStart.json");
         public static string TkbHK2JsonPath => System.IO.Path.Combine(RenderFolderPath, "HK2_2025.json");

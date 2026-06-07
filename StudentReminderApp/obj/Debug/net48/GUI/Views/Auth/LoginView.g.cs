@@ -108,7 +108,7 @@ namespace StudentReminderApp.Views.Auth.Components {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/StudentReminderApp;V1.0.0.0;component/gui/views/auth/loginview.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/StudentReminderApp;component/gui/views/auth/loginview.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\..\..\GUI\Views\Auth\LoginView.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

@@ -12,6 +12,10 @@
                 {
                   "Name": "24T_NHAT2",
                   "Nhoms": []
+                },
+                {
+                  "Name": "24T_NHAT1",
+                  "Nhoms": []
                 }
               ]
             },
@@ -20,6 +24,10 @@
               "Lops": [
                 {
                   "Name": "24T_NHAT2",
+                  "Nhoms": []
+                },
+                {
+                  "Name": "24T_NHAT1",
                   "Nhoms": []
                 }
               ]
